@@ -4,13 +4,15 @@ XYs = 5; // Element Visual Size
 Xp = 1; // Start Pos X
 Yp = 1; // Start Pos Y
 var canvas;
-var play = true;
+//var play = true;
 
 //.apply de tao ra 1 mang l co length = N , map (value 1: apply value into l,
 //Number is value)
 //var l = Array.apply(null, {length: N}).map(Number.call, Number);
 
 var l = [9, 8, 7, 6, 9, 4, 3, 2, 1];
+var sort = bubbleSort(l);
+var run ;
 //suffle chinh la random ra so
 Array.prototype.shuffle = function () {
     //i = 100 vi lấy length của màng này =100
@@ -46,7 +48,7 @@ function rainbow(x) {
 function init() {
     canvas = document.getElementById('canvas');
     //l.shuffle();
-    var sort = bubbleSort(l);
+    
     // an anim function triggered every 60th of a second
     /* function anim() {
      //chay muot ma ham anim.giong nhu la thread.run
@@ -57,19 +59,23 @@ function init() {
      }
      anim();*/
 
-    function loadingAnimation() {
-        draw();
-        setTimeout(loadingAnimation, 2000);
-        sort.next();
+    run = setTimeout(loadingAnimation, 500);
+}
 
-    }
-    if (play) {
-        loadingAnimation();
-    }
+function play() {
+    canvas = document.getElementById('canvas');
+    run = setTimeout(loadingAnimation, 500);
 }
-function PauseAnimation() {
-    play = false;
-}
+
+function loadingAnimation() {
+        draw();
+        run = setTimeout(loadingAnimation, 500);
+        sort.next();
+    }
+
+//function PauseAnimation() {
+//    play = false;
+//}
 
 //ve,dc goi o init(main)
 function draw() {

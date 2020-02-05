@@ -15,9 +15,9 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <input type="submit" onclick="init();" value="Play " name="start"/>
-    <input type="submit" onclick="PauseAnimation();" value="Pause" />
-    <input type="submit" onclick="play();" value="Continue" />
+    <input type="submit" onclick="init();" value="Init" />
+    <input type="submit" onclick="clearInterval(run);" value="Pause" />
+    <input type="submit" onclick="play();" value="Play" />
     <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
    <!-- <body onload="init();">
         <div>Hello World!</div>
