@@ -7,14 +7,23 @@ and open the template in the editor.
 
 <html>
     <head>
+        <script>
+            
+        </script>
         <script type="text/javascript" src="bubblesortJS.js"></script>
         <title>Home</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body onload="init();">
+    <input type="submit" onclick="init();" value="Play " name="start"/>
+    <input type="submit" onclick="PauseAnimation();" value="Pause" />
+    <input type="submit" onclick="play();" value="Continue" />
+    <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
+   <!-- <body onload="init();">
         <div>Hello World!</div>
         <h1>Phần sửa của Mạnh</h1>
-        <canvas id="canvas" width="1500" height="1500"></canvas>
+        <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
     </body> 
+   -->
+
 </html>
