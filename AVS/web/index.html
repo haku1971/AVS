@@ -7,23 +7,32 @@ and open the template in the editor.
 
 <html>
     <head>
-        <script>
-            
-        </script>
+
         <script type="text/javascript" src="bubblesortJS.js"></script>
         <title>Home</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <input type="submit" onclick="init();" value="Play " name="start"/>
-    <input type="submit" onclick="PauseAnimation();" value="Pause" />
-    <input type="submit" onclick="play();" value="Continue" />
-    <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
-   <!-- <body onload="init();">
-        <div>Hello World!</div>
-        <h1>Phần sửa của Mạnh</h1>
-        <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
-    </body> 
-   -->
 
+    </head>
+
+    <!--<input id="txtSteps" type="text" name="name" value="" />-->
+
+    <input id="intLimitTextBox"/>
+    <input type="submit" onclick="chooseStep();" value="Jump to step" />
+    <input type="submit" onclick="init();" value="Init" />    
+    <input id="PauseOrCon" type="submit" onclick="Continue();" value="pause" />
+    <input type="submit" onclick="back();" value="<" />
+    <input type="submit" onclick="next();" value=">" />
+    <input id="txtElement" onkeydown="isNumberKey(event);" type="text" name="name" value="" />
+    <input type="submit" onclick="inputByUser();" value="Nhập data" />
+    <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
+    <!-- <body onload="init();">
+         <div>Hello World!</div>
+         <h1>Pháº§n sá»­a cá»§a Máº¡nh</h1>
+         <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
+     </body> 
+    -->
+    <p id="steps" ></p>
+    <script type="text/javascript" src="bubblesortJS.js"></script>
+  
 </html>
