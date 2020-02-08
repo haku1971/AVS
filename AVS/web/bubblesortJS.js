@@ -6,6 +6,7 @@ Yp = 1; // Start Pos Y
 var canvas;
 //var play = true;
 var currentstep = 0;
+var totalstep;
 //.apply de tao ra 1 mang l co length = N , map (value 1: apply value into l,
 //Number is value)
 //var l = Array.apply(null, {length: N}).map(Number.call, Number);
@@ -15,7 +16,7 @@ var l = [9, 8, 7, 6, 9, 4, 3, 2, 1];
 var run;
 var boolRun = true;
 var arr_by_user = [];
-var speed;
+var speed = 1000;
 //suffle chinh la random ra so
 Array.prototype.shuffle = function () {
     //i = 100 vi lấy length của màng này =100
@@ -37,7 +38,7 @@ Array.prototype.shuffle = function () {
 
 function init() {
     bubbleSort2(l);
-    speed =parseInt(document.getElementById("rangebar").value);
+//    speed = parseInt(document.getElementById("rangebar").value);
     canvas = document.getElementById('canvas');
     //l.shuffle();
     // an anim function triggered every 60th of a second
@@ -49,6 +50,7 @@ function init() {
      sort.next(); // call next iteration of the bubbleSort function
      }
      anim();*/
+
     draw(currentstep);
     run = setTimeout(loadingAnimation, speed);
     boolRun = true;
@@ -58,6 +60,7 @@ function init() {
 //tinh hinh la can 1 method hoac 1 phuong thuc co san nao do de gioi han 
 //gioi han viec next hoac prev
 //tuong tu cung chay san file javascript chi cho phep nhap vi tri 
+
 function next() {
     clearInterval(run);
     if (currentstep < mang.length - 1) {
@@ -66,9 +69,8 @@ function next() {
     }
 
     //check de cho phep next tiep hay ko
-
-    boolRun = true;
-    //sort.next();
+    boolRun = false;
+    document.getElementById("PauseOrCon").value = 'Resume';
 }
 
 //ham return ra 1 mang chua cac so ham nhan constructor la 1 mang
@@ -130,25 +132,30 @@ function back() {
         currentstep--;
         draw(currentstep);
     }
-    boolRun = true;
+    boolRun = false;
+    document.getElementById("PauseOrCon").value = 'Resume';
 }
 
-
-function Continue() {
+function restart() {
+    clearInterval(run);
+    currentstep = 0;
+    draw(currentstep);
+    run = setTimeout(loadingAnimation, speed);
+    document.getElementById("PauseOrCon").value = 'Pause';
+    boolRun = true;
+}
+function resume() {
 
     if (boolRun) {
-        //sau sẽ thay = image play pause hẳn hoi
-        document.getElementById("PauseOrCon").value = 'resume';
+        //đang trong trạng thái chạy
         clearInterval(run);
+        document.getElementById("PauseOrCon").value = 'Resume';
         boolRun = false;
     } else {
-        document.getElementById("PauseOrCon").value = 'pause';
+        //đang trong trạng thái pause
+        clearInterval(run);
+        document.getElementById("PauseOrCon").value = 'Pause';
         boolRun = true;
-        draw(currentstep);
-        //check de cho phep continue tiep hay ko
-        if (currentstep < mang.length - 1) {
-            currentstep++;
-        }
         run = setTimeout(loadingAnimation, speed);
     }
 }
@@ -175,8 +182,10 @@ function draw(currentstep) {
             ctx.fillRect((Xp * i * 16) * XYs, Yp * XYs * 5 - 20, 30, 30);
             ctx.fillStyle = "#000000";
             ctx.fillText(mang[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
-            if (i == hightlight[currentstep] + 1) {
-                if (color[currentstep] == true) {
+
+            //highlight
+            if (currentstep !== 0 && currentstep !== mang.length - 1 && i === highlight[currentstep] + 1) {
+                if (color[currentstep] === "swap") {
                     ctx.fillStyle = "#FF6767";
                     ctx.fillText(mang[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
                     ctx.fillText(mang[currentstep][i - 1], (Xp * (i - 1) * 16) * XYs + 10, Yp * XYs * 5, 60);
@@ -188,8 +197,18 @@ function draw(currentstep) {
                 //ctx.fillStyle = rainbow(l[i]);
             }
         }
-
     }
+    if (currentstep === totalstep) {
+        document.getElementById("btnNext").disabled = true;
+    } else {
+        document.getElementById("btnNext").disabled = false;
+    }
+    if (currentstep === 0) {
+        document.getElementById("btnPrev").disabled = true;
+    } else {
+        document.getElementById("btnPrev").disabled = false;
+    }
+    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/ " + (totalstep + 1);
 }
 
 
@@ -225,7 +244,7 @@ function draw(currentstep) {
  } while (swapped);
  }*/
 var mang = [];
-var hightlight = [];
+var highlight = [];
 var color = [];
 
 function newarray(array) {
@@ -239,31 +258,37 @@ function newarray(array) {
 
 function bubbleSort2(a) { // * is magic   
     var count = 0;
+    mang.push(newarray(l));
+    highlight.push(0);
+    color.push(0);
     for (var i = 0; i < a.length - 1; i++) {
         for (var j = 0; j < a.length - i - 1; j++) {
+            count++;
+            mang.push(newarray(l));
+            highlight.push(j);
+            color.push("normal");
             if (a[j] > a[j + 1]) {
                 var temp = a[j];
                 a[j] = a[j + 1];
                 a[j + 1] = temp;
-                color.push(true);
-            } else {
-                color.push(false);
+                color.push("swap");
+                mang.push(newarray(l));
+                highlight.push(j);
             }
-            mang.push(newarray(l));
-            count++;
-            hightlight.push(j);
         }
     }
+    mang.push(newarray(l));
+    totalstep = mang.length - 1;
+    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
 }
-//chinh spped
+//chinh speed khi user giu con tro chuot
 function changeSpeed() {
     var spMaxValue = parseInt(document.getElementById("rangebar").max);
     var spMinValue = parseInt(document.getElementById("rangebar").min);
     var spValue = parseInt(document.getElementById("rangebar").value);
     speed = Math.abs(spValue - (spMaxValue + spMinValue));
-    clearInterval(run);
-    run= setTimeout(loadingAnimation(),speed);
 }
+
 //chưa sửa được lỗi
 
 function setInputFilter(textbox, inputFilter) {
@@ -282,6 +307,11 @@ function setInputFilter(textbox, inputFilter) {
         });
     });
 }
+
+
+
+
+
 /*setInputFilter(document.getElementById("intLimitTextBox"), function(value) {
  return /^\d*$/.test(value) && (value === "" ||( parseInt(value) >=1 && parseInt(value) <= mang.length)); });*/
 setInputFilter(document.getElementById("intLimitTextBox"), function (value) {

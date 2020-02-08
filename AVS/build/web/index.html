@@ -17,26 +17,20 @@ and open the template in the editor.
     </head>
 
     <!--<input id="txtSteps" type="text" name="name" value="" />-->
+    <body onload="init();">
+        <input id="intLimitTextBox"/> <input type="submit" onclick="chooseStep();" value="Jump to step" />
+        <div id="txtStepcount" style="float: contour"></div>
+        <input type="submit" onclick="restart();" value="Restart" />    
+        <input id="PauseOrCon" type="submit" onclick="resume();" value="Pause" />
+        <input id="btnPrev" type="submit" onclick="back();" value="<" />
+        <input id="btnNext" type="submit" onclick="next();" value=">" />
+        <input id="txtElement" onkeydown="isNumberKey(event);" type="text" name="name" value="" />
+        <input type="submit" onclick="inputByUser();" value="Nhập data" />
+        <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
 
-    <input id="intLimitTextBox"/>
-    <input type="submit" onclick="chooseStep();" value="Jump to step" />
-    <input type="submit" onload="init();" value="Init" />    
-    <input id="PauseOrCon" type="submit" onclick="Continue();" value="pause" />
-    <input type="submit" onclick="back();" value="<" />
-    <input type="submit" onclick="next();" value=">" />
-    <input id="txtElement" onkeydown="isNumberKey(event);" type="text" name="name" value="" />
-    <input type="submit" onclick="inputByUser();" value="Nhập data" />
-    <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
-    <!-- <body onload="init();">
-         <div>Hello World!</div>
-         <h1>Pháº§n sá»­a cá»§a Máº¡nh</h1>
-         <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
-     </body> 
-    -->
-    <p>Default range slider:</p>
-    <input id="rangebar" type="range" onchange ="changeSpeed();" max="4000" min="500" value="1000">
+        <p>Speed</p>
+        <input id="rangebar" type="range" oninput="changeSpeed();" max="2000" min="100" value="1000">
 
-
-    <script type="text/javascript" src="bubblesortJS.js"></script>
-
+        <script type="text/javascript" src="bubblesortJS.js"></script>
+    </body> 
 </html>
