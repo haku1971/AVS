@@ -9,12 +9,13 @@ var currentstep = 0;
 //.apply de tao ra 1 mang l co length = N , map (value 1: apply value into l,
 //Number is value)
 //var l = Array.apply(null, {length: N}).map(Number.call, Number);
-var speed = 500;
+//var speed = 500;
 var l = [9, 8, 7, 6, 9, 4, 3, 2, 1];
 //var sort = bubbleSort(l);
 var run;
 var boolRun = true;
 var arr_by_user = [];
+var speed;
 //suffle chinh la random ra so
 Array.prototype.shuffle = function () {
     //i = 100 vi lấy length của màng này =100
@@ -36,6 +37,7 @@ Array.prototype.shuffle = function () {
 
 function init() {
     bubbleSort2(l);
+    speed =parseInt(document.getElementById("rangebar").value);
     canvas = document.getElementById('canvas');
     //l.shuffle();
     // an anim function triggered every 60th of a second
@@ -237,7 +239,6 @@ function newarray(array) {
 
 function bubbleSort2(a) { // * is magic   
     var count = 0;
-
     for (var i = 0; i < a.length - 1; i++) {
         for (var j = 0; j < a.length - i - 1; j++) {
             if (a[j] > a[j + 1]) {
@@ -254,27 +255,40 @@ function bubbleSort2(a) { // * is magic
         }
     }
 }
+//chinh spped
+function changeSpeed() {
+    var spMaxValue = parseInt(document.getElementById("rangebar").max);
+    var spMinValue = parseInt(document.getElementById("rangebar").min);
+    var spValue = parseInt(document.getElementById("rangebar").value);
+    speed = Math.abs(spValue - (spMaxValue + spMinValue));
+    clearInterval(run);
+    run= setTimeout(loadingAnimation(),speed);
+}
 //chưa sửa được lỗi
+
 function setInputFilter(textbox, inputFilter) {
-  ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
-    textbox.addEventListener(event, function() {
-      if (inputFilter(this.value)) {
-        this.oldValue = this.value;
-        this.oldSelectionStart = this.selectionStart;
-        this.oldSelectionEnd = this.selectionEnd;
-      } else if (this.hasOwnProperty("oldValue")) {
-        this.value = this.oldValue;
-        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-      } else {
-        this.value = "";
-      }
+    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+        textbox.addEventListener(event, function () {
+            if (inputFilter(this.value)) {
+                this.oldValue = this.value;
+                this.oldSelectionStart = this.selectionStart;
+                this.oldSelectionEnd = this.selectionEnd;
+            } else if (this.hasOwnProperty("oldValue")) {
+                this.value = this.oldValue;
+                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            } else {
+                this.value = "";
+            }
+        });
     });
-  });
 }
 /*setInputFilter(document.getElementById("intLimitTextBox"), function(value) {
-  return /^\d*$/.test(value) && (value === "" ||( parseInt(value) >=1 && parseInt(value) <= mang.length)); });*/
-setInputFilter(document.getElementById("intLimitTextBox"), function(value) {
-  return /^(\d+[, ]+)*$/.test(value); });
+ return /^\d*$/.test(value) && (value === "" ||( parseInt(value) >=1 && parseInt(value) <= mang.length)); });*/
+setInputFilter(document.getElementById("intLimitTextBox"), function (value) {
+    return /^(\d+[, ]+)*$/.test(value);
+});
+
+
 
 
 
