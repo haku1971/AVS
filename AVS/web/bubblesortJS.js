@@ -6,54 +6,57 @@ Yp = 1; // Start Pos Y
 var canvas;
 var currentstep = 0;
 var totalstep;
-var l = [9, 8, 7, 6, 9, 4, 3, 2, 1];
+var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1];
 var run;
 var boolRun = true;
 var arr_by_user = [];
 var speed = 1000;
+var eachStepArr = [];
+var highlight = [];
+var color = [];
 
 function shuffle() {
-    var i = l.length,
-            j, temp;
-    while (--i) {
-        j = Math.floor(Math.random() * (i + 1));
-        temp = l[i];
-        l[i] = l[j];
-        l[j] = temp;
+    var oldPos = initArray.length,
+            newPos, temp;
+    while (--oldPos) {
+        newPos = Math.floor(Math.random() * (oldPos + 1));
+        temp = initArray[oldPos];
+        initArray[oldPos] = initArray[newPos];
+        initArray[newPos] = temp;
     }
     init();
 }
 
-function integerArray(arr) {
-    var ar = [];
-    for (var i = 0; i < arr.length; i++) {
+function integerArray(stringArr) {
+    var intArr = [];
+    for (var i = 0; i < stringArr.length; i++) {
         //if check ma la co ki tu khong phai so
-        if (!isNormalInteger(arr[i])) {
+        if (!isNormalInteger(stringArr[i])) {
             //hien ra alert() len trang index
 
             return null;
         }
         //neu khong thi xay dung ra mot cai mang     
         else {
-            number_of_arr = parseInt(arr[i]);
-            ar.push(number_of_arr);
+            number = parseInt(stringArr[i]);
+            intArr.push(number);
         }
     }
 
-    return ar;
+    return intArr;
 }
 
 function inputByUser() {
     arr_by_user = document.getElementById("txtElement").value;
     arr_by_user = arr_by_user.split('.');
     if (integerArray(arr_by_user) !== null) {
-        l = integerArray(arr_by_user);
+        initArray = integerArray(arr_by_user);
     }
     init();
 }
 
 function init() {
-    bubbleSort2(l);
+    bubbleSort2(initArray);
     currentstep = -1;
     canvas = document.getElementById('canvas');
     draw(0);
@@ -65,7 +68,7 @@ function init() {
 
 function next() {
     clearInterval(run);
-    if (currentstep < mang.length - 1) {
+    if (currentstep < eachStepArr.length - 1) {
         currentstep++;
         draw(currentstep);
     }
@@ -111,7 +114,7 @@ function resume() {
 //hien thi ve
 function loadingAnimation() {
     //check de cho phep load tiep hay ko
-    if (currentstep < mang.length - 1) {
+    if (currentstep < eachStepArr.length - 1) {
         currentstep++;
         draw(currentstep);
     }
@@ -123,22 +126,22 @@ function loadingAnimation() {
 function draw(currentstep) {
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
-        for (var i = 0; i < mang[currentstep].length; i++) {
+        for (var i = 0; i < eachStepArr[currentstep].length; i++) {
             ctx.fillStyle = "#AAAAAA";
             ctx.fillRect((Xp * i * 16) * XYs, Yp * XYs * 5 - 20, 30, 30);
             ctx.fillStyle = "#000000";
-            ctx.fillText(mang[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
+            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
 
             //highlight
-            if (currentstep !== 0 && currentstep !== mang.length - 1 && i === highlight[currentstep] + 1) {
+            if (currentstep !== 0 && currentstep !== eachStepArr.length - 1 && i === highlight[currentstep] + 1) {
                 if (color[currentstep] === "swap") {
                     ctx.fillStyle = "#FF6767";
-                    ctx.fillText(mang[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
-                    ctx.fillText(mang[currentstep][i - 1], (Xp * (i - 1) * 16) * XYs + 10, Yp * XYs * 5, 60);
+                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
+                    ctx.fillText(eachStepArr[currentstep][i - 1], (Xp * (i - 1) * 16) * XYs + 10, Yp * XYs * 5, 60);
                 } else {
                     ctx.fillStyle = "#21A4F3";
-                    ctx.fillText(mang[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
-                    ctx.fillText(mang[currentstep][i - 1], (Xp * (i - 1) * 16) * XYs + 10, Yp * XYs * 5, 60);
+                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
+                    ctx.fillText(eachStepArr[currentstep][i - 1], (Xp * (i - 1) * 16) * XYs + 10, Yp * XYs * 5, 60);
                 }
             }
         }
@@ -158,9 +161,6 @@ function draw(currentstep) {
     document.getElementById("slideStep").value = currentstep;
 }
 
-var mang = [];
-var highlight = [];
-var color = [];
 
 function newarray(array) {
     var newarray = [];
@@ -174,16 +174,16 @@ function newarray(array) {
 function bubbleSort2(array) { // * is magic   
     temparray = newarray(array);
     var count = 0;
-    mang = [];
+    eachStepArr = [];
     highlight = [];
     color = [];
-    mang.push(newarray(l));
+    eachStepArr.push(newarray(temparray));
     highlight.push(0);
     color.push(0);
     for (var i = 0; i < temparray.length - 1; i++) {
         for (var j = 0; j < temparray.length - i - 1; j++) {
             count++;
-            mang.push(newarray(l));
+            eachStepArr.push(newarray(temparray));
             highlight.push(j);
             color.push("normal");
             if (temparray[j] > temparray[j + 1]) {
@@ -191,16 +191,16 @@ function bubbleSort2(array) { // * is magic
                 temparray[j] = temparray[j + 1];
                 temparray[j + 1] = temp;
                 color.push("swap");
-                mang.push(newarray(l));
+                eachStepArr.push(newarray(temparray));
                 highlight.push(j);
             }
         }
     }
-    mang.push(newarray(l));
-    totalstep = mang.length - 1;
+    eachStepArr.push(newarray(temparray));
+    totalstep = eachStepArr.length - 1;
     document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
-    document.getElementById("progressStep").max = mang.length - 1;
-    document.getElementById("slideStep").max = mang.length - 1;
+    document.getElementById("progressStep").max = eachStepArr.length - 1;
+    document.getElementById("slideStep").max = eachStepArr.length - 1;
 }
 
 //chinh speed khi user giu con tro chuot

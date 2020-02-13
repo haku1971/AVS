@@ -18,19 +18,23 @@ and open the template in the editor.
 
     <!--<input id="txtSteps" type="text" name="name" value="" />-->
     <body onload="init();">
-        <input id="intLimitTextBox"/> <input type="submit" onclick="chooseStep();" value="Jump to step" />
+        <progress id="progressStep" value="1"  max="100" > 0 </progress>
+        <p>Step</p>
+        <input id="slideStep" type="range" oninput="chooseStep();" max="0" min="0" value="1">
         <div id="txtStepcount" style="float: contour"></div>
-        <input type="submit" onclick="restart();" value="Restart" />    
+        <input type="submit" onclick="init();" value="Restart" />    
         <input id="PauseOrCon" type="submit" onclick="resume();" value="Pause" />
         <input id="btnPrev" type="submit" onclick="back();" value="<" />
         <input id="btnNext" type="submit" onclick="next();" value=">" />
         <input id="txtElement" onkeydown="isNumberKey(event);" type="text" name="name" value="" />
         <input type="submit" onclick="inputByUser();" value="Nhập data" />
+        <input id="btnShuffle" type="submit" onclick="shuffle();" value="Shuffle" />
         <canvas id="canvas" width="700" height="50" style="border:1px solid #000000;"></canvas>
 
         <p>Speed</p>
         <input id="rangebar" type="range" oninput="changeSpeed();" max="2000" min="100" value="1000">
-
+        
         <script type="text/javascript" src="bubblesortJS.js"></script>
+        
     </body> 
 </html>
