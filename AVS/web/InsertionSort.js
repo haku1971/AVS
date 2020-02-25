@@ -345,7 +345,7 @@ function changeSpeed() {
 
 
 function drawGraph(data) {
-    var my_canvas = document.getElementById("canvas2");
+    var my_canvas = document.getElementById("canvasGraph");
     var gctx = my_canvas.getContext("2d");
 
 //cái data này lúc sau sẽ là Get và json convert
