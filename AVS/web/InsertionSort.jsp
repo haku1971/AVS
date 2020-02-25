@@ -39,15 +39,15 @@
 
         <div>            
             <table>        
-                <tr> <td>  for (int j = 1; j < n; j++) {  </td></tr>
-                <tr><td> int key = array[j];  </td></tr>
-                <tr><td>  int i = j-1; </td> </tr>
-                <tr><td> while ( (i > -1) && ( array [i] > key ) ) {</td></tr>  
-                <tr> <td>    array [i+1] = array [i];  </td></tr>
-                <tr> <td>     i--;  </td></tr>
-                <tr><td>  }  </td></tr>
-                <tr><td>  array[i+1] = key;  </td></tr>
-                <tr> <td>      }        </td> </tr>
+                <tr id="line_1" > <td>  for (int j = 1; j < n; j++) {  </td></tr>
+                <tr id="line_2"><td> int key = array[j];  </td></tr>
+                <tr id="line_3"><td>  int i = j-1; </td> </tr>
+                <tr id="line_4"><td> while ( (i > -1) && ( array [i] > key ) ) {</td></tr>  
+                <tr id="line_5"> <td>    array [i+1] = array [i];  </td></tr>
+                <tr id="line_6"> <td>     i--;  </td></tr>
+                <tr id="line_7"><td>  }  </td></tr>
+                <tr id="line_8"><td>  array[i+1] = key;  </td></tr>
+                <tr id="line_9"> <td>      }        </td> </tr>
             </table>
         </div>
     </body>      

@@ -86,7 +86,7 @@ function init() {
         }
     }
     );
-    bubbleSort2(initArray);
+    bubbleSort(initArray);
     currentstep = -1;
     canvas = document.getElementById('canvasAnimation');
     draw(0);
@@ -94,6 +94,7 @@ function init() {
         clearInterval(run);
         loadingAnimation();
     }
+    boolRun = true;
     resume();
 
 }
@@ -284,13 +285,15 @@ function newsortedarray(sorted) {
     return newarray(tempwarray);
 }
 
-function bubbleSort2(array) { // * is magic  
+function bubbleSort(array) { // * is magic  
 
     var temparray = newarray(array);
     var count = 0;
     eachStepArr = [];
     highlightcheck = [];
     color = [];
+    highlightcode = [];
+    highlightsorted = [];
     eachStepArr.push(newarray(temparray));
     highlightcheck.push(0);
     color.push(0);
@@ -310,7 +313,7 @@ function bubbleSort2(array) { // * is magic
                 color.push("swap");
                 eachStepArr.push(newarray(temparray));
                 highlightcheck.push([j, j + 1]);
-                highlightcode.push(3);
+                highlightcode.push(4);
                 if (i > 0) {
                     highlightsorted.push(newsortedarray(i));
                 } else {

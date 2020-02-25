@@ -1,5 +1,5 @@
-var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
-//export var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
+var initarray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
+//export var initarray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
 var gapbetweennumber = 10;
 var N = 10; // Array Size
 var XYs = 5; // Element Visual Size
@@ -8,7 +8,6 @@ var Yp = 1; // Start Pos Y
 var canvas;
 var currentstep = 0;
 var totalstep;
-
 var run;
 var boolRun = true;
 var arr_by_user = [];
@@ -20,55 +19,15 @@ var highlightsorted = [];
 var color = [];
 //window.init = init;
 //window.shuffle = shuffle;
-//window.initArray = initArray;
+//window.initarray = initarray;
 //window.next = next;
 //window.back = back;
 //window.resume = resume;
 
 
-function shuffle() {
-    var oldPos = initArray.length,
-            newPos, temp;
-    while (--oldPos) {
-        newPos = Math.floor(Math.random() * (oldPos + 1));
-        temp = initArray[oldPos];
-        initArray[oldPos] = initArray[newPos];
-        initArray[newPos] = temp;
-    }
-    init();
-}
-
-function integerArray(stringArr) {
-    var intArr = [];
-    for (var i = 0; i < stringArr.length; i++) {
-        //if check ma la co ki tu khong phai so
-        if (!isNormalInteger(stringArr[i])) {
-            //hien ra alert() len trang index
-
-            return null;
-        }
-        //neu khong thi xay dung ra mot cai mang     
-        else {
-            number = parseInt(stringArr[i]);
-            intArr.push(number);
-        }
-    }
-
-    return intArr;
-}
-
-function inputByUser() {
-    arr_by_user = document.getElementById("txtElement").value;
-    arr_by_user = arr_by_user.split(',');
-    if (integerArray(arr_by_user) !== null) {
-        initArray = integerArray(arr_by_user);
-    }
-    init();
-}
-
 function init() {
-    var mydata = JSON.stringify(initArray);
-    console.log("datanormal: " + initArray);
+    var mydata = JSON.stringify(initarray);
+    console.log("datanormal: " + initarray);
     $.ajax({
         type: "POST",
         url: "SortStepServlet",
@@ -86,7 +45,7 @@ function init() {
         }
     }
     );
-    bubbleSort2(initArray);
+    insertionSort(initarray);
     currentstep = -1;
     canvas = document.getElementById('canvasAnimation');
     draw(0);
@@ -94,9 +53,107 @@ function init() {
         clearInterval(run);
         loadingAnimation();
     }
+    boolRun = true;
     resume();
-
 }
+
+function insertionSort(array) {
+    var temparray = newarray(array);
+    var count = 0;
+    eachStepArr = [];
+    highlightcheck = [];
+    highlightsorted = [];
+    highlightcode = [];
+    color = [];
+    eachStepArr.push(newarray(temparray));
+    highlightcheck.push(0);
+    highlightsorted.push(0);
+    color.push("key");
+    highlightcode.push(1);
+    var i, key, j, k;
+    for (i = 1; i < temparray.length; i++) {
+        key = temparray[i];
+        j = i - 1;
+        k = 0;
+        /* Move elements of arr[0..i-1], that are  
+         greater than key, to one position ahead  
+         of their current position */
+        eachStepArr.push(newarray(temparray));
+        highlightcheck.push([i]);
+        color.push("key");
+        highlightsorted.push([i]);
+        highlightcode.push(2);
+        while (j >= 0 && temparray[j] > key) {
+            temparray[j + 1] = temparray[j];
+            eachStepArr.push(newarray(temparray));
+            color.push("swap");
+            highlightcheck.push([i - k]);
+            highlightsorted.push([i]);
+            highlightcode.push(5);
+            k++;
+            j--;
+        }
+        temparray[j + 1] = key;
+        eachStepArr.push(newarray(temparray));
+        color.push("swap");
+        highlightcheck.push([i - k]);
+        highlightsorted.push([i]);
+        highlightcode.push(8);
+    }
+    console.log(highlightsorted);
+    console.log(eachStepArr);
+    highlightcode.push(9);
+    eachStepArr.push(newarray(temparray));
+    color.push(0);
+    highlightcheck.push(0);
+    totalstep = eachStepArr.length - 1;
+    highlightsorted.push(newSortedInsertionArray(initarray.length));
+    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
+    document.getElementById("progressStep").max = eachStepArr.length - 1;
+    document.getElementById("slideStep").max = eachStepArr.length - 1;
+}
+
+function shuffle() {
+    var oldPos = initarray.length,
+            newPos, temp;
+    while (--oldPos) {
+        newPos = Math.floor(Math.random() * (oldPos + 1));
+        temp = initarray[oldPos];
+        initarray[oldPos] = initarray[newPos];
+        initarray[newPos] = temp;
+    }
+    init();
+}
+
+function integerArray(stringArr) {
+    var intArr = [];
+    for (var i = 0; i < stringArr.length; i++) {
+//if check ma la co ki tu khong phai so
+        if (!isNormalInteger(stringArr[i])) {
+//hien ra alert() len trang index
+
+            return null;
+        }
+//neu khong thi xay dung ra mot cai mang     
+        else {
+            number = parseInt(stringArr[i]);
+            intArr.push(number);
+        }
+    }
+
+    return intArr;
+}
+
+function inputByUser() {
+    arr_by_user = document.getElementById("txtElement").value;
+    arr_by_user = arr_by_user.split(',');
+    if (integerArray(arr_by_user) !== null) {
+        initarray = integerArray(arr_by_user);
+    }
+    init();
+}
+
+
 
 function next() {
     clearInterval(run);
@@ -118,7 +175,7 @@ function chooseStep() {
 }
 
 function back() {
-    //mang da chay dc it nhat 2 phan tu
+//mang da chay dc it nhat 2 phan tu
     if (currentstep >= 1) {
         clearInterval(run);
         currentstep--;
@@ -130,12 +187,12 @@ function back() {
 
 function resume() {
     if (boolRun) {
-        //đang trong trạng thái chạy
+//đang trong trạng thái chạy
         clearInterval(run);
         document.getElementById("PauseOrCon").value = 'Play';
         boolRun = false;
     } else {
-        //đang trong trạng thái pause
+//đang trong trạng thái pause
         clearInterval(run);
         document.getElementById("PauseOrCon").value = 'Pause';
         boolRun = true;
@@ -145,7 +202,7 @@ function resume() {
 
 //hien thi ve
 function loadingAnimation() {
-    //check de cho phep load tiep hay ko
+//check de cho phep load tiep hay ko
     if (currentstep < eachStepArr.length - 1) {
         currentstep++;
         draw(currentstep);
@@ -163,21 +220,15 @@ function draw(step) {
         //xóa draw cũ
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(0, 0, canvaswidth, canvasheight);
-
         //vẽ mảng của step hiện tại
         drawInitCurrent(step, ctx);
 
-        //highlight
-        drawHighlightAnimation(step, ctx);
-
         //highlightsorted
         drawHighlightSorted(step, ctx);
-
+        //highlight
+        drawHighlightAnimation(step, ctx);
         //highlightcode
         highlightCode(step);
-
-
-
     }
     if (step === totalstep) {
         document.getElementById("btnNext").disabled = true;
@@ -188,7 +239,6 @@ function draw(step) {
         document.getElementById("btnPrev").disabled = true;
     } else {
         document.getElementById("btnPrev").disabled = false;
-
     }
     if (step > 0) {
         document.getElementById("txtStepcount").innerHTML = '' + (step + 1) + "/ " + (totalstep + 1);
@@ -205,7 +255,7 @@ function drawInitCurrent(currentstep, ctx) {
         ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
         ctx.fillStyle = "#000000";
         ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-        if (highlightcode[i] !== 0) {
+        if (i < highlightcode.length && highlightcode[i] !== 0) {
             var line_name = "line_" + highlightcode[i];
             document.getElementById(line_name).style.background = "None";
         }
@@ -259,11 +309,16 @@ function highlightCode(currentstep) {
             document.getElementById(line_name).style.background = "None";
         }
     });
+//    document.getElementById("line_1").style.background = "None";
     //hightlightcode 
-    if (highlightcode[currentstep] !== 0) {
+//    if (currentstep === 0) {
+//        document.getElementById("line_1").style.background = "Red";
+//    } else 
+    if (currentstep < highlightcode.length && highlightcode[currentstep] !== 0) {
         var line_name = "line_" + highlightcode[currentstep];
         document.getElementById(line_name).style.background = "Red";
     }
+
 }
 
 
@@ -272,73 +327,22 @@ function newarray(array) {
     array.forEach(function (item) {
         tempwarray.push(item);
     });
-
     return tempwarray;
 }
 
-function newsortedarray(sorted) {
+function newSortedInsertionArray(sorted) {
     var tempwarray = [];
     for (var i = sorted; i > 0; i--) {
-        tempwarray.push(initArray.length - i);
+        tempwarray.push(i - 1);
     }
     return newarray(tempwarray);
 }
 
-function bubbleSort2(array) { // * is magic  
 
-    var temparray = newarray(array);
-    var count = 0;
-    eachStepArr = [];
-    highlightcheck = [];
-    color = [];
-    eachStepArr.push(newarray(temparray));
-    highlightcheck.push(0);
-    color.push(0);
-    highlightcode.push(1);
-    highlightsorted.push(null);
-    for (var i = 0; i < temparray.length - 1; i++) {
-        for (var j = 0; j < temparray.length - i - 1; j++) {
-            count++;
-            eachStepArr.push(newarray(temparray));
-            highlightcheck.push([j, j + 1]);
-            color.push("normal");
-            highlightcode.push(2);
-            if (temparray[j] > temparray[j + 1]) {
-                var temp = temparray[j];
-                temparray[j] = temparray[j + 1];
-                temparray[j + 1] = temp;
-                color.push("swap");
-                eachStepArr.push(newarray(temparray));
-                highlightcheck.push([j, j + 1]);
-                highlightcode.push(3);
-                if (i > 0) {
-                    highlightsorted.push(newsortedarray(i));
-                } else {
-                    highlightsorted.push(null);
-                }
-            }
-            if (i > 0) {
-                highlightsorted.push(newsortedarray(i));
-            } else {
-                highlightsorted.push(null);
-            }
-        }
-    }
-    console.log(highlightsorted);
-    highlightcode.push(7);
-    eachStepArr.push(newarray(temparray));
-    totalstep = eachStepArr.length - 1;
-    highlightsorted.push(newsortedarray(initArray.length));
-    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
-    document.getElementById("progressStep").max = eachStepArr.length - 1;
-    document.getElementById("slideStep").max = eachStepArr.length - 1;
-
-}
 
 //chinh speed khi user giu con tro chuot
 function changeSpeed() {
     speed = 1000 / (parseInt(document.getElementById("rangebar").value));
-
 }
 
 //chưa sửa được lỗi
@@ -347,19 +351,17 @@ function changeSpeed() {
 function drawGraph(data) {
     var my_canvas = document.getElementById("canvasGraph");
     var gctx = my_canvas.getContext("2d");
-
 //cái data này lúc sau sẽ là Get và json convert
 //var data = [['Bubble Sort', 140], ['Selection sort', 150], ['Quick Sort', 170], ['Heap Sort', 110], ['Insertion sort', 170]];
 
 ///////// Settings  ////////// 
 
     var bar_width = 50;
-    var y_gap = 30;  // Gap below the graph 
+    var y_gap = 30; // Gap below the graph 
     var bar_gap = 100; // Gap between Bars including width of the bar
     var x = 20; // Margin of graph from left  
 
     var y = my_canvas.height - y_gap;
-
     my_canvas.width = data.length * (bar_gap) + x;
 ////////////end of settings ////
     gctx.moveTo(x - 5, y);
@@ -390,10 +392,9 @@ function drawGraph(data) {
 
         gctx.fillStyle = '#f52369'; // fill Colur of bar  
         gctx.shadowColor = '#000000'; // shadow color for bars 
-        gctx.fillRect(x1, y1, bar_width, data[i].number_of_step);// Filled bar 
+        gctx.fillRect(x1, y1, bar_width, data[i].number_of_step); // Filled bar 
 
         x = x + bar_gap;
-
     }
 }
 

@@ -39,17 +39,15 @@
 
         <div>            
             <table>        
-                <tr id="line_1"> <td>   for (int i = 0; i < arr.length - 1; i++)  { </td></tr>
-                <tr> <td> int index = i;  </td></tr>
-                <tr id="line_2"> <td>for (int j = i + 1; j < arr.length; j++){ </td> </tr>
-                <tr id="line_3"> <td>  if (arr[j] < arr[index]){ </td> </tr>
-                <tr> <td>       index = j;  </td></tr>
-                <tr> <td>   }  </td></tr>
-                <tr>   <td>}  </td></tr>
-                <tr> <td>  int smallerNumber = arr[index];  </td> </tr>
-                <tr> <td>  arr[index] = arr[i]; </td> </tr>
-                <tr><td>   arr[i] = smallerNumber; </td> </tr>
-                <tr> <td>}   </td>   </tr>
+                <tr id="line_1"> <td>   for (int i = 0; i < array.length - 1; i++)  { </td></tr>
+                <tr id="line_2"> <td> int index = i;  </td></tr>
+                <tr id="line_3"> <td>for (int j = i + 1; j < array.length; j++){ </td> </tr>
+                <tr id="line_4"> <td>  if (array[j] < array[index]){ </td> </tr>
+                <tr id="line_5"> <td>       index = j;  </td></tr>
+                <tr id="line_6"> <td>   }  </td></tr>
+                <tr id="line_7">   <td>}  </td></tr>
+                <tr id="line_8"> <td>  swap(array[i],array[index]); </td> </tr>
+                <tr id="line_9"> <td>}   </td>   </tr>
             </table>
         </div>
 

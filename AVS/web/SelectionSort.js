@@ -25,6 +25,100 @@ var color = [];
 //window.back = back;
 //window.resume = resume;
 
+function init() {
+    var mydata = JSON.stringify(initArray);
+    console.log("datanormal: " + initArray);
+    $.ajax({
+        type: "POST",
+        url: "SortStepServlet",
+        data: {name: mydata}
+        ,
+        dataType: "json",
+        //OK
+        success: function (data) {
+            console.log(data);
+            drawGraph(data);
+        }
+        ,
+        error: function (error) {
+            console.log("error", error);
+        }
+    }
+    );
+    selectionSort(initArray);
+    currentstep = -1;
+    canvas = document.getElementById('canvasAnimation');
+    draw(0);
+    if (boolRun) {
+        clearInterval(run);
+        loadingAnimation();
+    }
+//    boolRun = true;
+//    resume();
+
+}
+
+function selectionSort(array) {
+
+    var temparray = newarray(array);
+    var count = 0;
+    //init arrays
+    eachStepArr = [];
+    highlightcheck = [];
+    highlightsorted = [];
+    color = [];
+    highlightcode = [];
+
+    //first elements
+    eachStepArr.push(newarray(temparray));
+    highlightcheck.push(0);
+    color.push(0);
+    highlightcode.push(1);
+    highlightsorted.push(null);
+
+    for (var i = 0; i < temparray.length - 1; i++) {
+        var index = i;
+        eachStepArr.push(newarray(temparray));
+        highlightcheck.push(i);
+        color.push(0);
+        highlightcode.push(2);
+        highlightsorted.push([i]);
+        for (var j = i + 1; j < temparray.length; j++) {
+            eachStepArr.push(newarray(temparray));
+            highlightcheck.push([j]);
+            color.push("check");
+            highlightcode.push(3);
+            highlightsorted.push([i]);
+            if (temparray[j] < temparray[index]) {
+                index = j;
+                eachStepArr.push(newarray(temparray));
+                highlightcheck.push([j]);
+                color.push("swap");
+                highlightcode.push(5);
+                highlightsorted.push([i]);
+            }
+        }
+        var smallerNumber = temparray[index];
+        temparray[index] = temparray[i];
+        temparray[i] = smallerNumber;
+        eachStepArr.push(newarray(temparray));
+        highlightcheck.push([i,index]);
+        color.push("swap");
+        highlightcode.push(8);
+        highlightsorted.push([i]);
+    }
+    //last elements
+    highlightcode.push(9);
+    eachStepArr.push(newarray(temparray));
+    totalstep = eachStepArr.length - 1;
+    highlightsorted.push(newsortedarray(initArray.length));
+
+    //set step in userview
+    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
+    document.getElementById("progressStep").max = eachStepArr.length - 1;
+    document.getElementById("slideStep").max = eachStepArr.length - 1;
+
+}
 
 function shuffle() {
     var oldPos = initArray.length,
@@ -66,37 +160,7 @@ function inputByUser() {
     init();
 }
 
-function init() {
-    var mydata = JSON.stringify(initArray);
-    console.log("datanormal: " + initArray);
-    $.ajax({
-        type: "POST",
-        url: "SortStepServlet",
-        data: {name: mydata}
-        ,
-        dataType: "json",
-        //OK
-        success: function (data) {
-            console.log(data);
-            drawGraph(data);
-        }
-        ,
-        error: function (error) {
-            console.log("error", error);
-        }
-    }
-    );
-    bubbleSort2(initArray);
-    currentstep = -1;
-    canvas = document.getElementById('canvasAnimation');
-    draw(0);
-    if (boolRun) {
-        clearInterval(run);
-        loadingAnimation();
-    }
-    resume();
 
-}
 
 function next() {
     clearInterval(run);
@@ -166,12 +230,14 @@ function draw(step) {
 
         //vẽ mảng của step hiện tại
         drawInitCurrent(step, ctx);
+        
+        //highlightsorted
+        drawHighlightSorted(step, ctx);
 
         //highlight
         drawHighlightAnimation(step, ctx);
 
-        //highlightsorted
-        drawHighlightSorted(step, ctx);
+        
 
         //highlightcode
         highlightCode(step);
@@ -284,56 +350,7 @@ function newsortedarray(sorted) {
     return newarray(tempwarray);
 }
 
-function bubbleSort2(array) { // * is magic  
 
-    var temparray = newarray(array);
-    var count = 0;
-    eachStepArr = [];
-    highlightcheck = [];
-    color = [];
-    eachStepArr.push(newarray(temparray));
-    highlightcheck.push(0);
-    color.push(0);
-    highlightcode.push(1);
-    highlightsorted.push(null);
-    for (var i = 0; i < temparray.length - 1; i++) {
-        for (var j = 0; j < temparray.length - i - 1; j++) {
-            count++;
-            eachStepArr.push(newarray(temparray));
-            highlightcheck.push([j, j + 1]);
-            color.push("normal");
-            highlightcode.push(2);
-            if (temparray[j] > temparray[j + 1]) {
-                var temp = temparray[j];
-                temparray[j] = temparray[j + 1];
-                temparray[j + 1] = temp;
-                color.push("swap");
-                eachStepArr.push(newarray(temparray));
-                highlightcheck.push([j, j + 1]);
-                highlightcode.push(3);
-                if (i > 0) {
-                    highlightsorted.push(newsortedarray(i));
-                } else {
-                    highlightsorted.push(null);
-                }
-            }
-            if (i > 0) {
-                highlightsorted.push(newsortedarray(i));
-            } else {
-                highlightsorted.push(null);
-            }
-        }
-    }
-    console.log(highlightsorted);
-    highlightcode.push(7);
-    eachStepArr.push(newarray(temparray));
-    totalstep = eachStepArr.length - 1;
-    highlightsorted.push(newsortedarray(initArray.length));
-    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
-    document.getElementById("progressStep").max = eachStepArr.length - 1;
-    document.getElementById("slideStep").max = eachStepArr.length - 1;
-
-}
 
 //chinh speed khi user giu con tro chuot
 function changeSpeed() {
