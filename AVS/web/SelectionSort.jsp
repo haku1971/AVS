@@ -36,24 +36,24 @@
         <p>Speed</p>
         <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1">    
         <script type="text/javascript" src="SelectionSort.js"></script>
-        
-        <div>            
-        <table>        
-            <tr id="line_1">    for (int i = 0; i < arr.length - 1; i++)  { </tr>
-            <tr>  int index = i;  </tr>
-            <tr id="line_2"> for (int j = i + 1; j < arr.length; j++){  </tr>
-             <tr id="line_3">   if (arr[j] < arr[index]){  </tr>
-            <tr>        index = j;  </tr>
-           <tr>     }  </tr>
-         <tr>   }  </tr>
-         <tr>   int smallerNumber = arr[index];   </tr>
-        <tr>    arr[index] = arr[i];  </tr>
-         <tr>   arr[i] = smallerNumber;  </tr>
-         <tr> }      </tr>
-        </table>
-        </div>
-    
 
-</body>      
+        <div>            
+            <table>        
+                <tr id="line_1"> <td>   for (int i = 0; i < arr.length - 1; i++)  { </td></tr>
+                <tr> <td> int index = i;  </td></tr>
+                <tr id="line_2"> <td>for (int j = i + 1; j < arr.length; j++){ </td> </tr>
+                <tr id="line_3"> <td>  if (arr[j] < arr[index]){ </td> </tr>
+                <tr> <td>       index = j;  </td></tr>
+                <tr> <td>   }  </td></tr>
+                <tr>   <td>}  </td></tr>
+                <tr> <td>  int smallerNumber = arr[index];  </td> </tr>
+                <tr> <td>  arr[index] = arr[i]; </td> </tr>
+                <tr><td>   arr[i] = smallerNumber; </td> </tr>
+                <tr> <td>}   </td>   </tr>
+            </table>
+        </div>
+
+
+    </body>      
 
 </html>

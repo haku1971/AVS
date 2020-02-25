@@ -1,5 +1,6 @@
 var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
 //export var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
+var gapbetweennumber = 10;
 var N = 10; // Array Size
 var XYs = 5; // Element Visual Size
 var Xp = 1; // Start Pos X
@@ -13,7 +14,9 @@ var boolRun = true;
 var arr_by_user = [];
 var speed = 1000;
 var eachStepArr = [];
-var highlight = [];
+var highlightcheck = [];
+var highlightcode = [];
+var highlightsorted = [];
 var color = [];
 //window.init = init;
 //window.shuffle = shuffle;
@@ -64,7 +67,7 @@ function inputByUser() {
 }
 
 function init() {
-     var mydata = JSON.stringify(initArray);
+    var mydata = JSON.stringify(initArray);
     console.log("datanormal: " + initArray);
     $.ajax({
         type: "POST",
@@ -75,7 +78,7 @@ function init() {
         //OK
         success: function (data) {
             console.log(data);
-            drawGraph(data);      
+            drawGraph(data);
         }
         ,
         error: function (error) {
@@ -85,13 +88,14 @@ function init() {
     );
     bubbleSort2(initArray);
     currentstep = -1;
-    canvas = document.getElementById('canvas');
+    canvas = document.getElementById('canvasAnimation');
     draw(0);
     if (boolRun) {
         clearInterval(run);
         loadingAnimation();
     }
-   
+    resume();
+
 }
 
 function next() {
@@ -101,7 +105,7 @@ function next() {
         draw(currentstep);
     }
     boolRun = false;
-    document.getElementById("PauseOrCon").value = 'Resume';
+    document.getElementById("PauseOrCon").value = 'Play';
 }
 
 function isNormalInteger(str) {
@@ -121,14 +125,14 @@ function back() {
         draw(currentstep);
     }
     boolRun = false;
-    document.getElementById("PauseOrCon").value = 'Resume';
+    document.getElementById("PauseOrCon").value = 'Play';
 }
 
 function resume() {
     if (boolRun) {
         //đang trong trạng thái chạy
         clearInterval(run);
-        document.getElementById("PauseOrCon").value = 'Resume';
+        document.getElementById("PauseOrCon").value = 'Play';
         boolRun = false;
     } else {
         //đang trong trạng thái pause
@@ -150,106 +154,191 @@ function loadingAnimation() {
 }
 
 //ve ra lai cai mang
-function draw(currentstep) {
-    
+function draw(step) {
+
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
-        for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-            ctx.fillStyle = "#AAAAAA";
-            ctx.fillRect((Xp * i * 16) * XYs, Yp * XYs * 5 - 20, 30, 30);
-            ctx.fillStyle = "#000000";
-            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
+        var canvasheight = parseInt(document.getElementById("canvasAnimation").height);
+        var canvaswidth = parseInt(document.getElementById("canvasAnimation").width);
+        //xóa draw cũ
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvaswidth, canvasheight);
 
-            //highlight
-            if (currentstep !== 0 && currentstep !== eachStepArr.length - 1 && i === highlight[currentstep] + 1) {
-                if (color[currentstep] === "swap") {
-                    ctx.fillStyle = "#FF6767";
-                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
-                    ctx.fillText(eachStepArr[currentstep][i - 1], (Xp * (i - 1) * 16) * XYs + 10, Yp * XYs * 5, 60);
-                } else {
-                    ctx.fillStyle = "#21A4F3";
-                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * 16) * XYs + 10, Yp * XYs * 5, 60);
-                    ctx.fillText(eachStepArr[currentstep][i - 1], (Xp * (i - 1) * 16) * XYs + 10, Yp * XYs * 5, 60);
-                }
-            }
-            if(highlightcode[i]!==0) {
-            var line_name= "line_" + highlightcode[i];
-             document.getElementById(line_name).style.background="None";
-         }
-        }
-        if(highlightcode[currentstep]!==0) {
-            var line_name= "line_" + highlightcode[currentstep];
-             document.getElementById(line_name).style.background="Red";
-         }
-        
+        //vẽ mảng của step hiện tại
+        drawInitCurrent(step, ctx);
+
+        //highlight
+        drawHighlightAnimation(step, ctx);
+
+        //highlightsorted
+        drawHighlightSorted(step, ctx);
+
+        //highlightcode
+        highlightCode(step);
+
+
+
     }
-    if (currentstep === totalstep) {
+    if (step === totalstep) {
         document.getElementById("btnNext").disabled = true;
     } else {
         document.getElementById("btnNext").disabled = false;
     }
-    if (currentstep === 0) {
+    if (step <= 0) {
         document.getElementById("btnPrev").disabled = true;
     } else {
         document.getElementById("btnPrev").disabled = false;
+
     }
-    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/ " + (totalstep + 1);
-    document.getElementById("progressStep").value = currentstep;
-    document.getElementById("slideStep").value = currentstep;
+    if (step > 0) {
+        document.getElementById("txtStepcount").innerHTML = '' + (step + 1) + "/ " + (totalstep + 1);
+    } else {
+        document.getElementById("txtStepcount").innerHTML = '' + 1 + "/ " + (totalstep + 1);
+    }
+    document.getElementById("progressStep").value = step;
+    document.getElementById("slideStep").value = step;
+}
+
+function drawInitCurrent(currentstep, ctx) {
+    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+        ctx.fillStyle = "#AAAAAA";
+        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
+        ctx.fillStyle = "#000000";
+        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
+        if (highlightcode[i] !== 0) {
+            var line_name = "line_" + highlightcode[i];
+            document.getElementById(line_name).style.background = "None";
+        }
+    }
+}
+
+function drawHighlightAnimation(currentstep, ctx) {
+    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+        if (currentstep !== 0 && currentstep !== eachStepArr.length - 1) {
+            for (var j = 0; j < highlightcheck[currentstep].length; j++) {
+                if (highlightcheck[currentstep][j] === i) {
+                    if (color[currentstep] === "swap") {
+                        ctx.fillStyle = "#c51162";
+                        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
+                        ctx.fillStyle = "#000000";
+                        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
+                    } else {
+                        ctx.fillStyle = "#2962ff";
+                        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
+                        ctx.fillStyle = "#000000";
+                        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+function drawHighlightSorted(currentstep, ctx) {
+    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+        if (currentstep !== 0 && highlightsorted[currentstep] !== null) {
+            for (var j = 0; j < highlightsorted[currentstep].length; j++) {
+                if (highlightsorted[currentstep][j] === i) {
+                    ctx.fillStyle = "Green";
+                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
+                    ctx.fillStyle = "#000000";
+                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
+                }
+            }
+
+        }
+    }
+}
+
+function highlightCode(currentstep) {
+    //khởi tạo lại
+    highlightcode.forEach(function (item) {
+        if (item !== 0) {
+            var line_name = "line_" + item;
+            document.getElementById(line_name).style.background = "None";
+        }
+    });
+    //hightlightcode 
+    if (highlightcode[currentstep] !== 0) {
+        var line_name = "line_" + highlightcode[currentstep];
+        document.getElementById(line_name).style.background = "Red";
+    }
 }
 
 
 function newarray(array) {
-    var newarray = [];
+    var tempwarray = [];
     array.forEach(function (item) {
-        newarray.push(item);
+        tempwarray.push(item);
     });
 
-    return newarray;
+    return tempwarray;
 }
-var highlightcode= [];
+
+function newsortedarray(sorted) {
+    var tempwarray = [];
+    for (var i = sorted; i > 0; i--) {
+        tempwarray.push(initArray.length - i);
+    }
+    return newarray(tempwarray);
+}
+
 function bubbleSort2(array) { // * is magic  
-    
+
     var temparray = newarray(array);
     var count = 0;
     eachStepArr = [];
-    highlight = [];
+    highlightcheck = [];
     color = [];
     eachStepArr.push(newarray(temparray));
-    highlight.push(0);
+    highlightcheck.push(0);
     color.push(0);
     highlightcode.push(1);
+    highlightsorted.push(null);
     for (var i = 0; i < temparray.length - 1; i++) {
         for (var j = 0; j < temparray.length - i - 1; j++) {
             count++;
             eachStepArr.push(newarray(temparray));
-            highlight.push(j);
+            highlightcheck.push([j, j + 1]);
             color.push("normal");
-          highlightcode.push(2);
-            if (temparray[j] > temparray[j + 1]) {             
+            highlightcode.push(2);
+            if (temparray[j] > temparray[j + 1]) {
                 var temp = temparray[j];
                 temparray[j] = temparray[j + 1];
                 temparray[j + 1] = temp;
                 color.push("swap");
                 eachStepArr.push(newarray(temparray));
-                highlight.push(j);
+                highlightcheck.push([j, j + 1]);
                 highlightcode.push(3);
+                if (i > 0) {
+                    highlightsorted.push(newsortedarray(i));
+                } else {
+                    highlightsorted.push(null);
+                }
+            }
+            if (i > 0) {
+                highlightsorted.push(newsortedarray(i));
+            } else {
+                highlightsorted.push(null);
             }
         }
     }
-    highlightcode.push(9);
+    console.log(highlightsorted);
+    highlightcode.push(7);
     eachStepArr.push(newarray(temparray));
     totalstep = eachStepArr.length - 1;
+    highlightsorted.push(newsortedarray(initArray.length));
     document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
     document.getElementById("progressStep").max = eachStepArr.length - 1;
     document.getElementById("slideStep").max = eachStepArr.length - 1;
-    
+
 }
 
 //chinh speed khi user giu con tro chuot
 function changeSpeed() {
-    speed = 1000/(parseInt(document.getElementById("rangebar").value));
-  
+    speed = 1000 / (parseInt(document.getElementById("rangebar").value));
+
 }
 
 //chưa sửa được lỗi

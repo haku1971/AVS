@@ -36,20 +36,20 @@
         <p>Speed</p>
         <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1">    
         <script type="text/javascript" src="InsertionSort.js"></script>
-        
+
         <div>            
-        <table>        
-            <tr id="line_1"> <td> for (var i = 0; i < temparray.length - 1; i++)  { </td> </tr>
-            <tr id="line_2"> <td>for (var j = 0; j < temparray.length - i - 1; j++) {  </td>  </tr>    
-            <tr id="line_3"> <td>  if (temparray[j] > temparray[j + 1]) { </td></tr>
-            <tr id="line_4"><td> &nbsp;  var temp = temparray[j]; </td></tr>
-            <tr id="line_5"> <td>   &nbsp;  temparray[j] = temparray[j + 1];</td></tr>
-            <tr id="line_6"> <td>  &nbsp;      temparray[j + 1] = temp;  </td>  </tr>  
-            <tr id="line_7"> <td>   }</td></tr>
-            <tr id="line_8"><td>   }</td></tr>
-            <tr id="line_9"> <td>  } </td></tr>          
-        </table>
+            <table>        
+                <tr> <td>  for (int j = 1; j < n; j++) {  </td></tr>
+                <tr><td> int key = array[j];  </td></tr>
+                <tr><td>  int i = j-1; </td> </tr>
+                <tr><td> while ( (i > -1) && ( array [i] > key ) ) {</td></tr>  
+                <tr> <td>    array [i+1] = array [i];  </td></tr>
+                <tr> <td>     i--;  </td></tr>
+                <tr><td>  }  </td></tr>
+                <tr><td>  array[i+1] = key;  </td></tr>
+                <tr> <td>      }        </td> </tr>
+            </table>
         </div>
-</body>      
+    </body>      
 
 </html>

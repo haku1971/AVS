@@ -36,14 +36,13 @@ public class SortStepServlet extends HttpServlet {
             for (int j = i + 1; j < n; j++) {
                 if (arr[j] < arr[min_idx]) {
                     min_idx = j;
-                }
                 // Swap the found minimum element with the first 
                 // element 
                 int temp = arr[min_idx];
                 arr[min_idx] = arr[i];
                 arr[i] = temp;
                 count++;
-
+                }
             }
         }
         return count;
@@ -136,12 +135,9 @@ public class SortStepServlet extends HttpServlet {
         // List<Integer> list = toList(json, parser);// prints [1.0, 2.0, 3.0, 4.0], not integer values
         //  System.out.println(list.toString());
         // Again, let's convert this Java int array back to Json numeric array
-        int bbStep = bubbleSort(tempArray(jsFileArray));
-        int ssStep = selectionSort(tempArray(jsFileArray));
-        int insStep = insertionSort(tempArray(jsFileArray));
-        AlgoSort algo = new AlgoSort("Bubble Sort", bbStep);
-        AlgoSort algo2 = new AlgoSort("Selection Sort", ssStep);
-        AlgoSort algo3 = new AlgoSort("Insertion Sort", insStep);
+        AlgoSort algo = new AlgoSort("Bubble Sort", bubbleSort(tempArray(jsFileArray)));
+        AlgoSort algo2 = new AlgoSort("Selection Sort", selectionSort(tempArray(jsFileArray)));
+        AlgoSort algo3 = new AlgoSort("Insertion Sort", insertionSort(tempArray(jsFileArray)));
 
         ArrayList<AlgoSort> listAlgo = new ArrayList<AlgoSort>();
         listAlgo.add(algo);
