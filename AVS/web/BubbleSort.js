@@ -1,6 +1,6 @@
 var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
 //export var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
-var gapbetweennumber = 6.1;
+var gapbetweennumber = 10;
 var N = 10; // Array Size
 var XYs = 5; // Element Visual Size
 var Xp = 1; // Start Pos X
@@ -71,7 +71,7 @@ function init() {
     console.log("datanormal: " + initArray);
     $.ajax({
         type: "POST",
-        url: "../SortStepServlet",
+        url: "SortStepServlet",
         data: {name: mydata}
         ,
         dataType: "json",
@@ -161,8 +161,6 @@ function draw(step) {
         var ctx = canvas.getContext('2d');
         var canvasheight = parseInt(document.getElementById("canvasAnimation").height);
         var canvaswidth = parseInt(document.getElementById("canvasAnimation").width);
-        document.getElementById("canvasAnimation").height = 50;
-        document.getElementById("canvasAnimation").width = initArray.length*31;
         //xóa draw cũ
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(0, 0, canvaswidth, canvasheight);
@@ -352,7 +350,6 @@ function changeSpeed() {
 function drawGraph(data) {
     var my_canvas = document.getElementById("canvasGraph");
     var gctx = my_canvas.getContext("2d");
-    data.push();
 
 //cái data này lúc sau sẽ là Get và json convert
 //var data = [['Bubble Sort', 140], ['Selection sort', 150], ['Quick Sort', 170], ['Heap Sort', 110], ['Insertion sort', 170]];
@@ -360,11 +357,11 @@ function drawGraph(data) {
 ///////// Settings  ////////// 
 
     var bar_width = 50;
-    var y_gap = 50;  // Gap below the graph 
-    var bar_gap = bar_width + 20; // Gap between Bars including width of the bar
+    var y_gap = 30;  // Gap below the graph 
+    var bar_gap = 100; // Gap between Bars including width of the bar
     var x = 20; // Margin of graph from left  
 
-    var y = my_canvas.height - y_gap;       
+    var y = my_canvas.height - y_gap;
 
     my_canvas.width = data.length * (bar_gap) + x;
 ////////////end of settings ////
@@ -373,18 +370,17 @@ function drawGraph(data) {
     gctx.stroke();
 /// add shadow ///
     gctx.shadowColor = '#000000';
-    gctx.shadowOffsetX = 0;
-    gctx.shadowOffsetY = 0;
-    gctx.shadowBlur = 0;
+    gctx.shadowOffsetX = 3;
+    gctx.shadowOffsetY = 3;
+    gctx.shadowBlur = 3;
 /////////// Draw the graph ////////
 
     for (var i = 0; i < data.length; i++) {
         gctx.shadowColor = '#ffffff'; // remove this line if you shadow on text is required
-        gctx.font = '10px serif'; // font for base label showing classes 
+        gctx.font = '18px serif'; // font for base label showing classes 
         gctx.textAlign = 'left';
         gctx.textBaseline = 'top';
         gctx.fillStyle = '#008cf5';
-        
         gctx.fillText(data[i].sortName, x, y + 5); // Write base text for classes 
 
         gctx.beginPath();
@@ -393,7 +389,7 @@ function drawGraph(data) {
         var x1 = x;
         gctx.font = '12px serif'; // font at top of the bar 
         gctx.fillStyle = '#000000';
-        gctx.fillText(data[i].number_of_step, x1+20, y1 - 20); // text at top of the bar 
+        gctx.fillText(data[i].number_of_step, x1, y1 - 20); // text at top of the bar 
 
         gctx.fillStyle = '#f52369'; // fill Colur of bar  
         gctx.shadowColor = '#000000'; // shadow color for bars 
@@ -402,7 +398,6 @@ function drawGraph(data) {
         x = x + bar_gap;
 
     }
-    console.log(data);
 }
 
 
