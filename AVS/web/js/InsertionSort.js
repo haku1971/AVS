@@ -30,7 +30,7 @@ function init() {
     console.log("datanormal: " + initarray);
     $.ajax({
         type: "POST",
-        url: "SortStepServlet",
+        url: "../SortStepServlet",
         data: {name: mydata}
         ,
         dataType: "json",
@@ -349,52 +349,190 @@ function changeSpeed() {
 
 
 function drawGraph(data) {
-    var my_canvas = document.getElementById("canvasGraph");
-    var gctx = my_canvas.getContext("2d");
-//cái data này lúc sau sẽ là Get và json convert
-//var data = [['Bubble Sort', 140], ['Selection sort', 150], ['Quick Sort', 170], ['Heap Sort', 110], ['Insertion sort', 170]];
+   var canvas = document.getElementById("canvasGraph");
+    context = canvas.getContext("2d");
+    //set background_color for graph
+    context.fillStyle = "pink";
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
-///////// Settings  ////////// 
+    var canvas_height = canvas.height;//chieu cao canvas
+    var canvas_width = canvas.width; // chieu rong canvas
 
-    var bar_width = 50;
-    var y_gap = 30; // Gap below the graph 
-    var bar_gap = 100; // Gap between Bars including width of the bar
-    var x = 20; // Margin of graph from left  
+    var vertical_gap_top = 20;
+    var vertical_gap_bot = 20;
 
-    var y = my_canvas.height - y_gap;
-    my_canvas.width = data.length * (bar_gap) + x;
-////////////end of settings ////
-    gctx.moveTo(x - 5, y);
-    gctx.lineTo(my_canvas.width, y); // Base line of graph 
-    gctx.stroke();
-/// add shadow ///
-    gctx.shadowColor = '#000000';
-    gctx.shadowOffsetX = 3;
-    gctx.shadowOffsetY = 3;
-    gctx.shadowBlur = 3;
-/////////// Draw the graph ////////
 
-    for (var i = 0; i < data.length; i++) {
-        gctx.shadowColor = '#ffffff'; // remove this line if you shadow on text is required
-        gctx.font = '18px serif'; // font for base label showing classes 
-        gctx.textAlign = 'left';
-        gctx.textBaseline = 'top';
-        gctx.fillStyle = '#008cf5';
-        gctx.fillText(data[i].sortName, x, y + 5); // Write base text for classes 
 
-        gctx.beginPath();
-        gctx.lineWidth = 2;
-        var y1 = y - data[i].number_of_step; // Coordinate for top of the Bar 
-        var x1 = x;
-        gctx.font = '12px serif'; // font at top of the bar 
-        gctx.fillStyle = '#000000';
-        gctx.fillText(data[i].number_of_step, x1, y1 - 20); // text at top of the bar 
+    var biggest_value_of_array = Math.max.apply(Math, data.map(function (o) {
+        return o.number_of_step;
+    }));
 
-        gctx.fillStyle = '#f52369'; // fill Colur of bar  
-        gctx.shadowColor = '#000000'; // shadow color for bars 
-        gctx.fillRect(x1, y1, bar_width, data[i].number_of_step); // Filled bar 
 
-        x = x + bar_gap;
+    var numberdigits = Math.floor(Math.log10(Math.abs(biggest_value_of_array))) + 1;
+    var constant = Math.pow(10, numberdigits - 1); // cai z cua Mạnh
+    var vertical_axis_top_value = (parseInt(biggest_value_of_array / constant) + 1) * constant;
+
+    var length_of_vertical_axis_top_value = context.measureText(vertical_axis_top_value).width;
+
+    var left = 10;
+    var center = left + length_of_vertical_axis_top_value;// vi tri viet gia tri tren Oy
+    var right = 10;
+    var root_cordinate = center - context.measureText("0").width;
+
+    var horizon_gap_left = left + center + right;
+    var horizon_gap_right = 20;
+
+    var vertical_axis_name = 'number of steps';
+    var margin_left = 20;
+    var margin_right = 20;
+    var margin_top_collumn = 10;
+    var horizon_axis = canvas_width - (horizon_gap_left + horizon_gap_right);// truc ox
+    var vertical_axis = canvas_height - (vertical_gap_bot + vertical_gap_top);// truc oy
+
+    var next_col_cordinate_pos = 0;
+    var length_arrow = 5;
+
+
+    var colum_width = 30;
+    var realLength = horizon_axis - (margin_left + margin_right);// chieu dai tu bat dau cot nay toi ket thuc cot cuoi 
+    var gap_between_col = (realLength - (colum_width * data.length)) / (data.length - 1);
+
+    //draw colum
+    var start_col_pos = horizon_gap_left + margin_left;
+
+    function endPos(stepValue) {
+        return vertical_gap_top + vertical_axis - colHeight(stepValue);
+    }
+    var distance_arrow_to_underline = 20;
+    var color_red_value = 10;
+    var green = 10;
+    var blue = 100;
+
+    //draw Oxy axys 
+    context.beginPath();
+    // context.fillStyle = "black";
+    // context.font = "19 pt Arial;";
+
+    //Viết tên của trục Oy
+    context.fillText(vertical_axis_name, margin_left, vertical_gap_top - margin_top_collumn);
+    //draw Oy and arrow        
+    context.moveTo(horizon_gap_left, vertical_axis + vertical_gap_top);
+    context.lineTo(horizon_gap_left, vertical_gap_top);
+    context.lineTo(horizon_gap_left + length_arrow, vertical_gap_top + length_arrow);
+    context.moveTo(horizon_gap_left, vertical_gap_top);
+    context.lineTo(horizon_gap_left - length_arrow, vertical_gap_top + length_arrow);
+    //draw Ox
+    context.moveTo(horizon_gap_left, vertical_axis + vertical_gap_top);
+    context.lineTo(horizon_axis + horizon_gap_left, vertical_axis + vertical_gap_top);
+    context.stroke();
+
+
+    //write Oy value
+    function writeVerticalAxisValue(headerValue, horCor, verCor) {
+        context.fillStyle = "black";
+        context.font = "19 pt Arial;";
+        context.fillText(headerValue, horCor, verCor);
+    }
+    //return height of each column
+    function colHeight(step) {
+        return parseInt(((vertical_axis - distance_arrow_to_underline) * step) / vertical_axis_top_value);
+    }
+    // write the number step in the top of each column
+    function fillColHeader(headerValue, horCor, verCor) {
+        context.fillStyle = "black";
+        context.font = "19 pt Arial;";
+        var lengthtemp = context.measureText(headerValue).width;
+        context.fillText(headerValue, horCor + (colum_width / 2) - (lengthtemp / 2), verCor);
+    }
+
+    //var underline_length = 5;
+    var number_of_underline = 5;
+    var next_underline_pos = 0;
+
+    var underline_value = vertical_axis_top_value;
+
+    //bat dau lien quan toi horizon left
+
+    var write_value_axis_pos = left;
+
+
+    //ve gia tri tung muc cua Oy        
+    context.beginPath();
+    for (var i = 0; i <= number_of_underline; i++) {
+        //vẽ giá trị cao nhất của trục Oy
+        if (i === 0) {
+
+            context.moveTo(horizon_gap_left - right, vertical_gap_top + distance_arrow_to_underline);
+            context.lineTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline);
+            writeVerticalAxisValue(underline_value, write_value_axis_pos, vertical_gap_top + distance_arrow_to_underline);
+        }
+        else if (i > 0 && i <= number_of_underline - 2) {
+            context.moveTo(horizon_gap_left - right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+            context.lineTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+            writeVerticalAxisValue(underline_value, write_value_axis_pos, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+        } //viết ra số ở ngay trên số 0 gốc toạ độ
+        else if (i === number_of_underline - 1) {
+            context.moveTo(horizon_gap_left - right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+            context.lineTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+            writeVerticalAxisValue(underline_value, write_value_axis_pos, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+        }//vẽ số 0 gốc toạ độ
+        else {
+            writeVerticalAxisValue(0, root_cordinate, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+        }
+        next_underline_pos += (vertical_axis - distance_arrow_to_underline) / number_of_underline;
+        underline_value -= (vertical_axis_top_value / number_of_underline);
+    }
+    context.stroke();
+
+    //set lai gia tri ve nhu cu cho no
+    number_of_underline = 5;
+    next_underline_pos = 0;
+    //vẽ nét đứt
+    context.beginPath();
+    for (var i = 0; i < number_of_underline; i++) {
+        context.setLineDash([5, 15]);
+        if (i === 0) {
+            //ve hang net dut
+            context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline);
+            context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline);
+
+        } else if (i > 0 && i <= number_of_underline - 2) {
+
+            context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+            context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+        } else {
+            context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+            context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+
+        }
+        next_underline_pos += (vertical_axis - distance_arrow_to_underline) / number_of_underline;
+        underline_value -= (vertical_axis_top_value / number_of_underline);
+    }
+    context.stroke();
+
+
+    //draw each collum
+    for (i = 0; i < data.length; i++) {
+        //set color for each collum       
+        var color = "rgb(" + i + color_red_value + "," + green + "," + blue + ")";
+        context.fillStyle = color;
+        if (i === 0) {
+            context.fillRect(start_col_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
+            fillColHeader(data[i].number_of_step, start_col_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
+        }
+
+        if (i > 0 && i < data.length - 1) {
+            context.fillRect(start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
+            fillColHeader(data[i].number_of_step, start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
+        }
+        //vong cuoi
+        if (i === data.length - 1) {
+            context.fillRect(start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
+            fillColHeader(data[i].number_of_step, start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
+            break;
+        }
+        next_col_cordinate_pos += colum_width + gap_between_col;
+
     }
 }
 
