@@ -50,6 +50,7 @@
                 <tr id="line_9"> <td>}   </td>   </tr>
             </table>
         </div>
+        <jsp:include page="./noteGraph.jsp" />
 
 
     </body>      

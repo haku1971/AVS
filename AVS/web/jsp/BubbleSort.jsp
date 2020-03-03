@@ -44,6 +44,7 @@
                         <tr id="line_7"> <td>  } </td></tr>          
                     </table>
                 </div>
+                <jsp:include page="./noteGraph.jsp" />
             </div>
         </div>
 
