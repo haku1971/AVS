@@ -513,7 +513,7 @@ function drawGraph(data) {
     //draw each collum
     for (i = 0; i < data.length; i++) {
         //set color for each collum       
-        var color = "hsl(" + 360 / (i + 1) + ",100%, 50%)";
+        var color = "hsl(" + 360 / data.length * (i + 1) + ",100%, 50%)";
 //      x0	The x-coordinate of the start point of the gradient
 //      y0	The y-coordinate of the start point of the gradient
 //      x1	The x-coordinate of the end point of the gradient

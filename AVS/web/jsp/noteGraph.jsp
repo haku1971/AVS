@@ -20,11 +20,11 @@
         </style>
         <%
             double frequency = 0.3;
-            String[] graphnamearr = {"bubblesort", "selectionsort", "insertionsort", "quicksort", "mergesort"};
+            String[] graphnamearr = {"bubblesort", "selectionsort", "insertionsort"};
             for (int i = 0; i < graphnamearr.length; i++) {
         %>
         <div>
-            <div class="rectangle" style="background-color:hsl(<%=360/(i+1)%>, 100%,50%)"></div>
+            <div class="rectangle" style="background-color:hsl(<%=360/graphnamearr.length*(i+1)%>, 100%,50%)"></div>
             <a href="<%=graphnamearr[i]%>"><%=graphnamearr[i]%></a>
         </div>
         <%
