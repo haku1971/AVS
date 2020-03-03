@@ -16,9 +16,8 @@
         <div id="footer">
             <img id="avs" src="images/avs_logo.png" />
             <img id="fb" src="images/facebook.PNG" />
-            <br/>
-            <hr/>
-            <p>Copyright 2020.</p>
+            <div class="footerSoild"></div>
+            <div><p>Copyright 2020.</p></div>
         </div>
     </body>
 </html>

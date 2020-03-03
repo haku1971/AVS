@@ -14,13 +14,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>Header</title>
     </head>
     <body>
         <div class="header">
             <img src="images\avs_logo.png" />
-            <ul>
+            <ul id="redirectButton">
                 <li onclick="document.location = '/AVS/HomeController'">Home</li>
                 <li>News</li>
             </ul>

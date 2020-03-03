@@ -20,6 +20,7 @@ public class Algorithm {
     private String algoDatetime;
     private String algoResource;
     private int number_of_step;
+    private String categoryName;
    
     public Algorithm() {
         
@@ -44,7 +45,6 @@ public class Algorithm {
         this.algoDatetime = algoDatetime;
         this.algoResource = algoResource;
         this.number_of_step = number_of_step;
-     
     }
   
     
@@ -132,6 +132,14 @@ public class Algorithm {
 
     public void setAlgoResource(String algoResource) {
         this.algoResource = algoResource;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     

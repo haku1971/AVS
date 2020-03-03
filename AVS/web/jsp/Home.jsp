@@ -11,14 +11,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
         <link rel="stylesheet" type="text/css" href="../css/style.css" />
         <title>AVS</title>
-       <%
+        <%
             ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
-        %>
-               <%
-            ArrayList<Algorithm> AllAlgorithm2 = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm2");
         %>
     </head>
     <body>
@@ -29,30 +26,36 @@
         </div>
         <div class="main">
             <div class="left">
-                <button type="button" class="collapsible">Sort Algorithm</button>
-                <div class="content">
-                    <ul class="list_items">
-                        <% for (Algorithm algo : AllAlgorithm) {%>
-                        <li><%=algo.getAlgoName()%></li>
+
+                <% String currentCategory = "";
+                    boolean startUL = false;
+                    boolean changeCategory = false;
+                    for (Algorithm a : AllAlgorithm) {
+                        if (!currentCategory.equals(a.getCategoryName())) {
+                            changeCategory = true;
+                            currentCategory = a.getCategoryName();
+                        }
+                        if (changeCategory) {
+                            changeCategory = false;
+                            if (startUL) {%>
+                                </ul>
+                            </div>
                             <%}%>
-                    </ul>
-                </div>
-                <hr/>
-                <button type="button" class="collapsible">Search Algorithm</button>
-                <div class="content">
-                    <ul class="list_items">
-                        <% for (Algorithm algo2 : AllAlgorithm2) {%>
-                        <li><%=algo2.getAlgoName()%></li>
-                            <%}%>
-                    </ul>
-                </div>
-                <hr/>
-                <button type="button" class="collapsible">Others Algorithm</button>
-                <div class="content">
-                    <ul class="list_items">
-                        <li>Comming Soon</li>
-                    </ul>
-                </div>
+            <button type="button" class="collapsible"><%=a.getCategoryName()%></button>
+            <div class="content">
+                <ul class="list_items"> 
+                    <% startUL = true; %>
+                    <%}%>
+                    <li><a style=" text-decoration: none;" id="AlgoNameList" href="Detail?AlgoID=<%=a.getAlgoID()%>"><%=a.getAlgoName()%></a></li>
+                    <%}%>
+                </ul>
+            </div>
+                    <button type="button" class="collapsible">Others Algorithm</button>
+                    <div class="content">
+                        <ul class="list_items">
+                            <li>Comming Soon</li>
+                        </ul>
+                    </div>
             </div>
             <div class="right">
                 <h1>Algorithm Visualize System</h1>
@@ -62,7 +65,6 @@
         </div>
     </div>
     <%@include file="footer.jsp" %>
-</div>
-<script type="text/javascript" src="js/code.js"></script>
+    <script type="text/javascript" src="js/code.js"></script>
 </body>
 </html>

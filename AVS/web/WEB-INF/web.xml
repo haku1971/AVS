@@ -17,6 +17,16 @@
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/HomeController</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Detail</servlet-name>
+        <servlet-class>Controller.Detail</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Detail</servlet-name>
+        <url-pattern>/Detail</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30
