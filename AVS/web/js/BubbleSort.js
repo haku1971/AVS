@@ -370,11 +370,14 @@ function drawGraph(data) {
     var numberdigits = Math.floor(Math.log10(Math.abs(biggest_value_of_array))) + 1;
     var constant = Math.pow(10, numberdigits - 1); // cai z cua Mạnh
     var vertical_axis_top_value = (parseInt(biggest_value_of_array / constant) + 1) * constant;
-
-    var length_of_vertical_axis_top_value = context.measureText(vertical_axis_top_value).width;
-
+        
+    function pixcelLengthOfValue(value) {
+         return context.measureText(value).width;
+    }
+    
+    //chỗ này t chưa tìm được tên phù hợp cho biến
     var left = 10;
-    var center = left + length_of_vertical_axis_top_value;// vi tri viet gia tri tren Oy
+    var center = left + pixcelLengthOfValue(vertical_axis_top_value);// vi tri viet gia tri tren Oy
     var right = 5;
     var root_cordinate_pos = center - context.measureText("0").width;
 
@@ -390,7 +393,6 @@ function drawGraph(data) {
 
     var next_col_cordinate_pos = 0;
     var length_arrow = 5;
-
 
     var colum_width = 30;
     var realLength = horizon_axis - (margin_left + margin_right);// chieu dai tu bat dau cot nay toi ket thuc cot cuoi 
@@ -409,8 +411,8 @@ function drawGraph(data) {
 
     //draw Oxy axys 
     context.beginPath();
-    // context.fillStyle = "black";
-    // context.font = "19 pt Arial;";
+   // context.fillStyle = "black";
+   //  context.font = "19 pt Arial;";
 
     //Viết tên của trục Oy
     context.fillText(vertical_axis_name, margin_left, vertical_gap_top - margin_top_collumn);
@@ -452,28 +454,24 @@ function drawGraph(data) {
 
     //bat dau lien quan toi horizon left
 
-    var write_value_axis_pos = left;
-
-
     //ve gia tri tung muc cua Oy        
     context.beginPath();
     for (var i = 0; i <= number_of_underline; i++) {
         //vẽ giá trị cao nhất của trục Oy
         if (i === 0) {
-
             context.moveTo(horizon_gap_left - right, vertical_gap_top + distance_arrow_to_underline);
             context.lineTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline);
-            writeVerticalAxisValue(underline_value, write_value_axis_pos, vertical_gap_top + distance_arrow_to_underline);
+            writeVerticalAxisValue(underline_value, center - pixcelLengthOfValue(underline_value), vertical_gap_top + distance_arrow_to_underline);
         }
         else if (i > 0 && i <= number_of_underline - 2) {
             context.moveTo(horizon_gap_left - right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
             context.lineTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-            writeVerticalAxisValue(underline_value, write_value_axis_pos, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+            writeVerticalAxisValue(underline_value, center - pixcelLengthOfValue(underline_value), vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
         } //viết ra số ở ngay trên số 0 gốc toạ độ
         else if (i === number_of_underline - 1) {
             context.moveTo(horizon_gap_left - right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
             context.lineTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-            writeVerticalAxisValue(underline_value, write_value_axis_pos, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+            writeVerticalAxisValue(underline_value, center - pixcelLengthOfValue(underline_value), vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
         }//vẽ số 0 gốc toạ độ
         else {
             writeVerticalAxisValue(0, root_cordinate_pos, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
@@ -484,8 +482,8 @@ function drawGraph(data) {
     context.stroke();
 
     //set lai gia tri ve nhu cu cho no
-    number_of_underline = 5;
-    next_underline_pos = 0;
+    //number_of_underline = 5;
+   // next_underline_pos = 0;
     //vẽ nét đứt
    /* 
     context.beginPath();
