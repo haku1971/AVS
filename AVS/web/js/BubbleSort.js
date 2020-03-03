@@ -76,7 +76,7 @@ function init() {
         ,
         dataType: "json",
         //OK
-        success: function (data) {            
+        success: function (data) {
             console.log(data);
             drawGraph(data);
         }
@@ -162,7 +162,7 @@ function draw(step) {
         var canvasheight = parseInt(document.getElementById("canvasAnimation").height);
         var canvaswidth = parseInt(document.getElementById("canvasAnimation").width);
         document.getElementById("canvasAnimation").height = 50;
-        document.getElementById("canvasAnimation").width = initArray.length*31;
+        document.getElementById("canvasAnimation").width = initArray.length * 31;
         //xóa draw cũ
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(0, 0, canvaswidth, canvasheight);
@@ -347,13 +347,15 @@ function changeSpeed() {
 }
 
 //chưa sửa được lỗi
-
+function getdata(data) {
+    return 
+}
 
 function drawGraph(data) {
     var canvas = document.getElementById("canvasGraph");
     context = canvas.getContext("2d");
     //set background_color for graph
-    context.fillStyle = "pink";
+    context.fillStyle = "lightgrey";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     var canvas_height = canvas.height;//chieu cao canvas
@@ -370,11 +372,11 @@ function drawGraph(data) {
     var numberdigits = Math.floor(Math.log10(Math.abs(biggest_value_of_array))) + 1;
     var constant = Math.pow(10, numberdigits - 1); // cai z cua Mạnh
     var vertical_axis_top_value = (parseInt(biggest_value_of_array / constant) + 1) * constant;
-        
+
     function pixcelLengthOfValue(value) {
-         return context.measureText(value).width;
+        return context.measureText(value).width;
     }
-    
+
     //chỗ này t chưa tìm được tên phù hợp cho biến
     var left = 10;
     var center = left + pixcelLengthOfValue(vertical_axis_top_value);// vi tri viet gia tri tren Oy
@@ -411,8 +413,8 @@ function drawGraph(data) {
 
     //draw Oxy axys 
     context.beginPath();
-   // context.fillStyle = "black";
-   //  context.font = "19 pt Arial;";
+    // context.fillStyle = "black";
+    //  context.font = "19 pt Arial;";
 
     //Viết tên của trục Oy
     context.fillText(vertical_axis_name, margin_left, vertical_gap_top - margin_top_collumn);
@@ -462,8 +464,7 @@ function drawGraph(data) {
             context.moveTo(horizon_gap_left - right, vertical_gap_top + distance_arrow_to_underline);
             context.lineTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline);
             writeVerticalAxisValue(underline_value, center - pixcelLengthOfValue(underline_value), vertical_gap_top + distance_arrow_to_underline);
-        }
-        else if (i > 0 && i <= number_of_underline - 2) {
+        } else if (i > 0 && i <= number_of_underline - 2) {
             context.moveTo(horizon_gap_left - right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
             context.lineTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
             writeVerticalAxisValue(underline_value, center - pixcelLengthOfValue(underline_value), vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
@@ -483,37 +484,44 @@ function drawGraph(data) {
 
     //set lai gia tri ve nhu cu cho no
     //number_of_underline = 5;
-   // next_underline_pos = 0;
+    // next_underline_pos = 0;
     //vẽ nét đứt
-   /* 
-    context.beginPath();
-    for (var i = 0; i < number_of_underline; i++) {
-        context.setLineDash([5, 15]);
-        if (i === 0) {
-            //ve hang net dut
-            context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline);
-            context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline);
-
-        } else if (i > 0 && i <= number_of_underline - 2) {
-
-            context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-            context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-        } else {
-            context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-            context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-
-        }
-        next_underline_pos += (vertical_axis - distance_arrow_to_underline) / number_of_underline;
-        underline_value -= (vertical_axis_top_value / number_of_underline);
-    }
-    context.stroke();
-*/
+    /* 
+     context.beginPath();
+     for (var i = 0; i < number_of_underline; i++) {
+     context.setLineDash([5, 15]);
+     if (i === 0) {
+     //ve hang net dut
+     context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline);
+     context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline);
+     
+     } else if (i > 0 && i <= number_of_underline - 2) {
+     
+     context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+     context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+     } else {
+     context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+     context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
+     
+     }
+     next_underline_pos += (vertical_axis - distance_arrow_to_underline) / number_of_underline;
+     underline_value -= (vertical_axis_top_value / number_of_underline);
+     }
+     context.stroke();
+     */
 
     //draw each collum
     for (i = 0; i < data.length; i++) {
         //set color for each collum       
-        var color = "rgb(" + i + color_red_value + "," + green + "," + blue + ")";
-        context.fillStyle = color;
+        var color = "hsl(" + 360 / (i + 1) + ",100%, 50%)";
+//      x0	The x-coordinate of the start point of the gradient
+//      y0	The y-coordinate of the start point of the gradient
+//      x1	The x-coordinate of the end point of the gradient
+//      y1	The y-coordinate of the end point of the gradient
+        var grd = context.createLinearGradient(0, 0, 0, 199);
+        grd.addColorStop(0, color);
+        grd.addColorStop(1, "white");
+        context.fillStyle = grd;
         if (i === 0) {
             context.fillRect(start_col_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
             fillColHeader(data[i].number_of_step, start_col_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
@@ -560,6 +568,7 @@ function setInputFilter(textbox, inputFilter) {
 setInputFilter(document.getElementById("intLimitTextBox"), function (value) {
     return /^(\d+[, ]+)*$/.test(value);
 });
+
 
 
 

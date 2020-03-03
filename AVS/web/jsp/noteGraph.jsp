@@ -19,14 +19,12 @@
             }
         </style>
         <%
-            int red = 100;
-            int green = 255;
-            int blue = 255;
+            double frequency = 0.3;
             String[] graphnamearr = {"bubblesort", "selectionsort", "insertionsort", "quicksort", "mergesort"};
             for (int i = 0; i < graphnamearr.length; i++) {
         %>
         <div>
-            <div class="rectangle" style="background-color:rgb(<%=red%>,<%=green%>,<%=blue%>)"></div>
+            <div class="rectangle" style="background-color:hsl(<%=360/(i+1)%>, 100%,50%)"></div>
             <a href="<%=graphnamearr[i]%>"><%=graphnamearr[i]%></a>
         </div>
         <%
