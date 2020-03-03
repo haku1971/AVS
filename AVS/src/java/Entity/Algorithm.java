@@ -19,11 +19,35 @@ public class Algorithm {
     private int categoryID;
     private String algoDatetime;
     private String algoResource;
-    
+    private int number_of_step;
+   
     public Algorithm() {
         
     }
 
+    public int getNumber_of_step() {
+        return number_of_step;
+    }
+
+    public void setNumber_of_step(int number_of_step) {
+        this.number_of_step = number_of_step;
+    }
+
+    public Algorithm(int algoID, String algoName, String algoCodeJava, String algoCodeCplus, String algoCodeJS, String algoDescription, int categoryID, String algoDatetime, String algoResource, int number_of_step) {
+        this.algoID = algoID;
+        this.algoName = algoName;
+        this.algoCodeJava = algoCodeJava;
+        this.algoCodeCplus = algoCodeCplus;
+        this.algoCodeJS = algoCodeJS;
+        this.algoDescription = algoDescription;
+        this.categoryID = categoryID;
+        this.algoDatetime = algoDatetime;
+        this.algoResource = algoResource;
+        this.number_of_step = number_of_step;
+     
+    }
+  
+    
     public Algorithm(int algoID, String algoName, String algoCodeJava, String algoCodeCplus, String algoCodeJS, String algoDescription, int categoryID, String algoDatetime, String algoResource) {
         this.algoID = algoID;
         this.algoName = algoName;

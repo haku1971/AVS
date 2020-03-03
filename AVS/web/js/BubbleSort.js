@@ -352,7 +352,7 @@ function getdata(data) {
 }
 
 function drawGraph(data) {
-    var canvas = document.getElementById("canvasGraph");
+   var canvas = document.getElementById("canvasGraph");
     context = canvas.getContext("2d");
     //set background_color for graph
     context.fillStyle = "lightgrey";
