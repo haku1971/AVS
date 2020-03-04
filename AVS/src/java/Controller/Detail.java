@@ -7,6 +7,7 @@ package Controller;
 
 import Entity.Algorithm;
 import Model.AlgorithmModel;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class Detail extends HttpServlet {
 
             AlgorithmModel dao = new AlgorithmModel();
             ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
-            request.setAttribute("AllAlgorithm", data);
+            //request.setAttribute("AllAlgorithm", data);
 
             ArrayList<Algorithm> list = dao.getAlgoIDList();
             String i = request.getParameter("AlgoID");
@@ -65,9 +66,17 @@ public class Detail extends HttpServlet {
                     response.sendRedirect("error");
                     System.out.println("NOT ID");
                 } else {
-                Algorithm[] algorithms = dao.getAlgoByID(Integer.parseInt(i));
-                request.setAttribute("algorithms", algorithms);
-                request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);
+                ArrayList<Entity.Algorithm> algorithmbyid = dao.getAlgoByID(Integer.parseInt(i));
+                   
+                Gson parser= new Gson();
+                String listalgo = parser.toJson(data);
+               
+                String algobyid = parser.toJson(algorithmbyid);
+             //   request.setAttribute("algorithms", algorithms);
+          // request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);
+          response.sendRedirect("jsp/Detail.jsp?algorithms="+algobyid+"&AllAlgorithm="+listalgo+"");
+        
+            //  response.sendRedirect("jsp/Detail.jsp");
                 }
             }
         } catch (Exception ex) {

@@ -40,10 +40,6 @@ public class HomeController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter()) {
 
-            HttpSession session = request.getSession();
-               String username = request.getParameter("username");
-               
-        String password = request.getParameter("password");
             AlgorithmModel dao =  new AlgorithmModel();
             ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
             request.setAttribute("AllAlgorithm", data);

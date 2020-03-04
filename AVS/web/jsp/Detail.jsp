@@ -3,7 +3,9 @@
     Created on : Mar 4, 2020, 1:26:57 AM
     Author     : Asus
 --%>
-
+<%@page import="org.json.JSONArray"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.google.gson.Gson"%>
 <%@page import="Entity.Algorithm"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -13,25 +15,57 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="js/BubbleSort.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/Visual.css" />
+        <script type="text/javascript" src="../js/BubbleSort.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/Visual.css" />
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
         <%
-            ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
+
+            String AllAlgorithm = request.getParameter("AllAlgorithm");
+            Gson converter = new Gson();
+
+            JSONArray jsonArrayAllAlgorithm = new JSONArray(AllAlgorithm);
+            ArrayList<Object> list_object_of_all_algo = new ArrayList<Object>();
+            ArrayList<Algorithm> list_algo_of_all_algo = new ArrayList<Algorithm>();
+            Algorithm algo = null;
+            for (int i = 0; i < jsonArrayAllAlgorithm.length(); i++) {
+                list_object_of_all_algo.add(jsonArrayAllAlgorithm.get(i));
+                algo = converter.fromJson(list_object_of_all_algo.get(i).toString(), Algorithm.class);
+                list_algo_of_all_algo.add(algo);
+
+            }
+            
+            
+            String algorithms = request.getParameter("algorithms");           
+            JSONArray jsonArrayalgorithms_byid= new JSONArray(algorithms);
+            
+             ArrayList<Object> algo_object_list = new ArrayList<Object>();
+             ArrayList<Algorithm> list_algorithms_getbyid = new ArrayList<Algorithm>();
+             Algorithm algorithm = null;
+             for (int i = 0; i < jsonArrayalgorithms_byid.length(); i++) {
+                //bo bao mang object
+                 algo_object_list.add(jsonArrayalgorithms_byid.get(i));
+                 
+                 //lay tung phan tu cua mang object => Algorithm
+                algorithm = converter.fromJson(algo_object_list.get(i).toString(), Algorithm.class);     
+                list_algorithms_getbyid.add(algorithm);       
+            }
         %>
+
     </head>
-    <body onload ="init();">
-        <%@include file="header.jsp" %>
-        <div class="banner">
-            <h1>Welcome to Algorithm Visualize System</h1>
-            <h5>The noblest pleasure is the joy of understanding</h5>
-        </div>
-        <div class="main">
-            <div class="left">
+   
+   <body onload ="init();">
+     <%-- <%@include file="header.jsp" %> --%>
+       <div class="banner">
+           <h1>Welcome to Algorithm Visualize System</h1>
+           <h5>The noblest pleasure is the joy of understanding</h5>
+       </div>
+       <div class="main">
+           <div class="left">
 
                 <% String currentCategory = "";
                     boolean startUL = false;
                     boolean changeCategory = false;
-                    for (Algorithm a : AllAlgorithm) {
+                    for (Algorithm a : list_algo_of_all_algo) {
                         if (!currentCategory.equals(a.getCategoryName())) {
                             changeCategory = true;
                             currentCategory = a.getCategoryName();
@@ -47,7 +81,7 @@
                 <ul class="list_items"> 
                     <% startUL = true; %>
                     <%}%>
-                    <li><a style=" text-decoration: none;" id="AlgoNameList" href="Detail?AlgoID=<%=a.getAlgoID()%>"><%=a.getAlgoName()%></a></li>
+                    <li><a style=" text-decoration: none;" id="AlgoNameList" href="../Detail?AlgoID=<%=a.getAlgoID()%>"><%=a.getAlgoName()%></a></li>
                         <%}%>
                 </ul>
             </div>
@@ -59,9 +93,8 @@
             </div>
         </div>
         <div class="right">
-            <c:forEach items = "${algorithms}" var = "algorithms">
-                ${algorithms.algoName}
-            </c:forEach>
+            
+           <div><%= list_algorithms_getbyid.get(0).getAlgoName()%></div> 
 
             <div class="Visual">
                 <div class="leftAlgo">
@@ -95,13 +128,14 @@
                             <tr id="line_7"> <td>  } </td></tr>          
                         </table>
                     </div>
-                    <div><jsp:include page="noteGraph.jsp" /></div>
+                   <div><jsp:include page="noteGraph.jsp" /></div> 
                 </div>
             </div>
         </div>
     </div>
 </div>
-<%@include file="footer.jsp" %>
-<script type="text/javascript" src="js/code.js"></script>
+<%--<%@include file="footer.jsp" %>--%>
+<script type="text/javascript" src="../js/code.js"></script>
 </body>
+          
 </html>

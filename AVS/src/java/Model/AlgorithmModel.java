@@ -113,8 +113,8 @@ public class AlgorithmModel {
         return algos;
     }
 
-    public Algorithm[] getAlgoByID(int ID) throws SQLException, Exception {
-        List<Algorithm> algos = new ArrayList<>();
+    public ArrayList<Algorithm> getAlgoByID(int ID) throws SQLException, Exception {
+        ArrayList<Algorithm> algos = new ArrayList<Algorithm>();
         DBContext dbManager = new DBContext();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -141,7 +141,7 @@ public class AlgorithmModel {
             new CloseConnection().close(connection, statement, rs);
         }
 
-        return algos.toArray(new Algorithm[algos.size()]);
+        return algos;
     }
 
 }

@@ -131,8 +131,7 @@ public class SortStepServlet extends HttpServlet {
             case 3:
                return  selectionSort(array);
                
-            case 5:
-                
+            case 5:                
              return   insertionSort(array);
                
             default:
