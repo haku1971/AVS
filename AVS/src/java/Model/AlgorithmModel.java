@@ -144,4 +144,35 @@ public class AlgorithmModel {
         return algos;
     }
 
+    public ArrayList<Algorithm> getAlgoByCategory(String category) throws SQLException, Exception {
+        ArrayList<Algorithm> listAllAlgorithms = new ArrayList<>();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            statement = 
+                    connection.prepareStatement("SELECT [algo_ID],[algo_Name],[category_Name] "
+                            + "FROM Algorithm INNER JOIN Category "
+                            + "ON Category.category_ID = Algorithm.category_ID "
+                            + "WHERE Category.category_Name = ? "
+                            + "ORDER BY Algorithm.category_ID;");
+            statement.setString(1, category);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Algorithm algorithm = new Algorithm();
+                algorithm.setAlgoID(rs.getInt("algo_ID"));
+                algorithm.setAlgoName(rs.getString("algo_Name"));
+                algorithm.setCategoryName(rs.getString("category_Name"));
+                listAllAlgorithms.add(algorithm);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return listAllAlgorithms;
+    }
+    
 }

@@ -16,23 +16,47 @@ and open the template in the editor.
 }
 .Visual .rightAlgo{
     float: right;
-    width: 40%;
+    width: 60%;
+    min-width: 300px;
 }
 
 .Visual .leftAlgo{
 
     float:left;
-    width: 59%;
+    width: 40%;
+    min-width: 500px;
 }
 
 #txtElement{
-    width: 80%;
+    width: 100%;
+    max-width: 500px;
+    height: 20px;
+    border: 2px solid gray;
+    /*border-radius: 20px;*/
+    margin-bottom: 20px;
+}
 
+#txtButton{
+    margin-bottom: 20px;
+}
+
+#stepButton{
+    margin-bottom: 20px;
+}
+
+#progress{
+    margin-bottom: 20px;
+}
+
+#progresstext{
+    float: left;
+    display: inline-block;
+    margin-right: 5px;
 }
 
 #progressStep{
     -webkit-appearance: none;
-
+    width: 200px;
 }
 
 #progressStep[value]::-webkit-progress-bar {
@@ -55,10 +79,13 @@ and open the template in the editor.
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
-
+#rangebar{
+    -webkit-appearance: none;
+}
 
 #slideStep {
     -webkit-appearance: none;
+    width: 200px;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
@@ -86,5 +113,66 @@ input[type=range]::-webkit-slider-thumb {
     cursor: -webkit-grab;
     -webkit-transition: border 1000ms ease;
     transition: border 1000ms ease;
+}
+
+#canvasAnimation{
+    margin-bottom: 20px;
+}
+
+#canvasGraph{
+    margin-bottom: 20px;
+}
+.rectangle {
+    height: 15px;
+    width: 15px;
+    margin-bottom: 10px;
+}
+
+#note{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.activetab {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    animation: fadeEffect 1s;
+    display: none;
+    padding: 6px 12px;
+    border: none;
+    border-top: none;
+}
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 

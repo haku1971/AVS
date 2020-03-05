@@ -67,13 +67,14 @@ public class Detail extends HttpServlet {
                     System.out.println("NOT ID");
                 } else {
                 ArrayList<Entity.Algorithm> algorithmbyid = dao.getAlgoByID(Integer.parseInt(i));
-                   
+                ArrayList<Entity.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithmbyid.get(0).getCategoryName());
                 Gson parser= new Gson();
                 String listalgo = parser.toJson(data);
                
                 String algobyid = parser.toJson(algorithmbyid);
-             //   request.setAttribute("algorithms", algorithms);
-          // request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);
+                String algobycategory = parser.toJson(algorithmbycategory); 
+//                request.setAttribute("algorithms", algorithms);
+//           request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);
           response.sendRedirect("jsp/Detail.jsp?algorithms="+algobyid+"&AllAlgorithm="+listalgo+"");
         
             //  response.sendRedirect("jsp/Detail.jsp");

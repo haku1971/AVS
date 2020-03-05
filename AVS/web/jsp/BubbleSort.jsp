@@ -19,8 +19,8 @@
                 <div>
                     <a id="txtStepcount" style="float: contour"></a> <input id="slideStep" type="range" oninput="chooseStep();" max="0" min="0" value="1">
                 </div>
-                <div><canvas id="canvasAnimation"  style="border:none solid #000000;"></canvas></div>
-                <canvas id="canvasGraph"  style="border:none solid #000000;"></canvas>
+                <div><canvas id="canvasAnimation"></canvas></div>
+                <canvas id="canvasGraph"></canvas>
             </div>
 
             <div class="rightAlgo">

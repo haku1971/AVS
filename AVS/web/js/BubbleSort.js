@@ -1,6 +1,6 @@
 var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
 //export var initArray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
-var gapbetweennumber = 6.1;
+var gapbetweennumber = 9.1;
 var N = 10; // Array Size
 var XYs = 5; // Element Visual Size
 var Xp = 1; // Start Pos X
@@ -162,9 +162,9 @@ function draw(step) {
         var canvasheight = parseInt(document.getElementById("canvasAnimation").height);
         var canvaswidth = parseInt(document.getElementById("canvasAnimation").width);
         document.getElementById("canvasAnimation").height = 50;
-        document.getElementById("canvasAnimation").width = initArray.length * 31;
+        document.getElementById("canvasAnimation").width = initArray.length * 47;
         //xóa draw cũ
-        ctx.fillStyle = "#FFFFFF";
+        ctx.fillStyle = "#edf0f4";
         ctx.fillRect(0, 0, canvaswidth, canvasheight);
 
         //vẽ mảng của step hiện tại
@@ -205,9 +205,10 @@ function draw(step) {
 function drawInitCurrent(currentstep, ctx) {
     for (var i = 0; i < eachStepArr[currentstep].length; i++) {
         ctx.fillStyle = "#AAAAAA";
-        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
+        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
         ctx.fillStyle = "#000000";
-        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
+        ctx.font = "15px Arial"
+        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
         if (highlightcode[i] !== 0) {
             var line_name = "line_" + highlightcode[i];
             document.getElementById(line_name).style.background = "None";
@@ -222,14 +223,14 @@ function drawHighlightAnimation(currentstep, ctx) {
                 if (highlightcheck[currentstep][j] === i) {
                     if (color[currentstep] === "swap") {
                         ctx.fillStyle = "#c51162";
-                        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
+                        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
                         ctx.fillStyle = "#000000";
-                        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
+                        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
                     } else {
                         ctx.fillStyle = "#2962ff";
-                        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
+                        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
                         ctx.fillStyle = "#000000";
-                        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
+                        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
                     }
                 }
             }
@@ -244,9 +245,9 @@ function drawHighlightSorted(currentstep, ctx) {
             for (var j = 0; j < highlightsorted[currentstep].length; j++) {
                 if (highlightsorted[currentstep][j] === i) {
                     ctx.fillStyle = "Green";
-                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
+                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
                     ctx.fillStyle = "#000000";
-                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
+                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
                 }
             }
 
@@ -348,18 +349,23 @@ function changeSpeed() {
 
 //chưa sửa được lỗi
 function getdata(data) {
-    return 
+    return
 }
 
 function drawGraph(data) {
-   var canvas = document.getElementById("canvasGraph");
+    var canvas = document.getElementById("canvasGraph");
+    var canvas_height = 300;//chieu cao canvas
+    var canvas_width = 500; // chieu rong canvas
+    document.getElementById("canvasGraph").height = canvas_height;
+    document.getElementById("canvasGraph").width = canvas_width;
     context = canvas.getContext("2d");
+
     //set background_color for graph
     context.fillStyle = "lightgrey";
-    context.fillRect(0, 0, canvas.width, canvas.height);
 
-    var canvas_height = canvas.height;//chieu cao canvas
-    var canvas_width = canvas.width; // chieu rong canvas
+    context.fillRect(0, 0, canvas_width, canvas_height);
+
+
 
     var vertical_gap_top = 20;
     var vertical_gap_bot = 20;
@@ -410,6 +416,37 @@ function drawGraph(data) {
     var color_red_value = 10;
     var green = 10;
     var blue = 100;
+    
+    //draw each collum
+    for (i = 0; i < data.length; i++) {
+        //set color for each collum       
+        var color = "hsl(" + 360 / data.length * (i + 1) + ",100%, 50%)";
+//      x0	The x-coordinate of the start point of the gradient
+//      y0	The y-coordinate of the start point of the gradient
+//      x1	The x-coordinate of the end point of the gradient
+//      y1	The y-coordinate of the end point of the gradient
+        var grd = context.createLinearGradient(0, 700, 0, 0);
+        grd.addColorStop(0, color);
+        grd.addColorStop(1, "white");
+        context.fillStyle = grd;
+        if (i === 0) {
+            context.fillRect(start_col_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
+            fillColHeader(data[i].number_of_step, start_col_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
+        }
+
+        if (i > 0 && i < data.length - 1) {
+            context.fillRect(start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
+            fillColHeader(data[i].number_of_step, start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
+        }
+        //vong cuoi
+        if (i === data.length - 1) {
+            context.fillRect(start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
+            fillColHeader(data[i].number_of_step, start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
+            break;
+        }
+        next_col_cordinate_pos += colum_width + gap_between_col;
+
+    }
 
     //draw Oxy axys 
     context.beginPath();
@@ -510,36 +547,7 @@ function drawGraph(data) {
      context.stroke();
      */
 
-    //draw each collum
-    for (i = 0; i < data.length; i++) {
-        //set color for each collum       
-        var color = "hsl(" + 360 / data.length * (i + 1) + ",100%, 50%)";
-//      x0	The x-coordinate of the start point of the gradient
-//      y0	The y-coordinate of the start point of the gradient
-//      x1	The x-coordinate of the end point of the gradient
-//      y1	The y-coordinate of the end point of the gradient
-        var grd = context.createLinearGradient(0, 0, 0, 199);
-        grd.addColorStop(0, color);
-        grd.addColorStop(1, "white");
-        context.fillStyle = grd;
-        if (i === 0) {
-            context.fillRect(start_col_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
-            fillColHeader(data[i].number_of_step, start_col_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
-        }
-
-        if (i > 0 && i < data.length - 1) {
-            context.fillRect(start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
-            fillColHeader(data[i].number_of_step, start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
-        }
-        //vong cuoi
-        if (i === data.length - 1) {
-            context.fillRect(start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
-            fillColHeader(data[i].number_of_step, start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
-            break;
-        }
-        next_col_cordinate_pos += colum_width + gap_between_col;
-
-    }
+    
 }
 
 

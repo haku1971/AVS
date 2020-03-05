@@ -8,8 +8,6 @@
 <%@page import="Model.UserModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
-<% UserModel useracountmanagement = new UserModel();
-%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,7 +35,7 @@
                         <% String usern = "";
                             if (session.getAttribute("username") != null) {
                                 usern = (String) session.getAttribute("username");
-
+                                UserModel useracountmanagement = new UserModel();
                                 User users = useracountmanagement.getUserByUsername(usern);
                                 usern = users.getUsername();
                         %>
