@@ -14,17 +14,17 @@
         <title>Algorithm compare</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="../js/SelectionSort.js"></script>
+        <script type="text/javascript" src="../js/Sort.js"></script>
 
     </head>
 
-    <body onload ="init();">
+    <body onload ="init('selectionsort');">
         <h1>Hello ! Selection sort</h1>  
         <progress id="progressStep" value="1"  max="100" > 0 </progress>
         <p>Step</p>
         <input id="slideStep" type="range" oninput="chooseStep();" max="0" min="0" value="1">
         <div id="txtStepcount" style="float: contour"></div>
-        <input type="submit" onclick=" init();" value="Restart" />    
+        <input type="submit" onclick=" init('selectionsort');" value="Restart" />    
         <input id="PauseOrCon" type="submit" onclick="resume();" value="Pause" />
         <input id="btnPrev" type="submit" onclick="back();" value="<" />
         <input id="btnNext" type="submit" onclick="next();" value=">" />
@@ -50,7 +50,7 @@
                 <tr id="line_9"> <td>}   </td>   </tr>
             </table>
         </div>
-        <jsp:include page="./noteGraph.jsp" />
+        <%--<jsp:include page="./noteGraph.jsp" />--%>
 
 
     </body>      

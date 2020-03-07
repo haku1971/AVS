@@ -6,12 +6,11 @@
         <title>Algorithm compare</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="../js/BubbleSort.js"></script>
+        <script type="text/javascript" src="../js/Sort.js"></script>
         <link rel="stylesheet" type="text/css" href="../css/Visual.css" />
-        <script type="text/javascript" src="BubbleSort.js"></script>
     </head>
 
-    <body onload ="init();">
+    <body onload ="init('bubblesort');">
         <div class="Visual">
             <div class="leftAlgo">
                 <div><input id="txtElement" onkeydown="isNumberKey(event);" type="text" name="name" value="" /></div>
@@ -29,7 +28,7 @@
                 <div><a>Speed</a> <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1"> </div>
                 <div>
                     <input id="btnPrev" type="submit" onclick="back();" value="<" />
-                    <input type="submit" onclick=" init();" value="Restart" />
+                    <input type="submit" onclick=" init('bubblesort');" value="Restart" />
                     <input id="PauseOrCon" type="submit" onclick="resume();" value="Pause" />
                     <input id="btnNext" type="submit" onclick="next();" value=">" />
                 </div>
@@ -44,7 +43,7 @@
                         <tr id="line_7"> <td>  } </td></tr>          
                     </table>
                 </div>
-                <jsp:include page="./noteGraph.jsp" />
+                <%--<jsp:include page="./noteGraph.jsp" />--%>
             </div>
         </div>
 
