@@ -8,7 +8,6 @@
         <servlet-name>SortStepServlet</servlet-name>
         <url-pattern>/SortStepServlet</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controller.HomeController</servlet-class>
@@ -17,16 +16,14 @@
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/HomeController</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Detail</servlet-name>
-        <servlet-class>Controller.Detail</servlet-class>
+        <servlet-class>Controller.DetailController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Detail</servlet-name>
         <url-pattern>/Detail</url-pattern>
     </servlet-mapping>
-    
     <session-config>
         <session-timeout>
             30

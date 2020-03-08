@@ -17,87 +17,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="../js/BubbleSort.js"></script>
-        <link rel="stylesheet" type="text/css" href="../css/Visual.css" />
-        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <script type="text/javascript" src="js/BubbleSort.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/Visual.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+ 
         <%
-
-            String AllAlgorithm = request.getParameter("AllAlgorithm");
-            Gson converter = new Gson();
-
-            JSONArray jsonArrayAllAlgorithm = new JSONArray(AllAlgorithm);
-            ArrayList<Object> list_object_of_all_algo = new ArrayList<Object>();
-            ArrayList<Algorithm> list_algo_of_all_algo = new ArrayList<Algorithm>();
-            Algorithm algo = null;
-            for (int i = 0; i < jsonArrayAllAlgorithm.length(); i++) {
-                list_object_of_all_algo.add(jsonArrayAllAlgorithm.get(i));
-                algo = converter.fromJson(list_object_of_all_algo.get(i).toString(), Algorithm.class);
-                list_algo_of_all_algo.add(algo);
-
-            }
-
-            String algorithms = request.getParameter("algorithms");
-            JSONArray jsonArrayalgorithms_byid = new JSONArray(algorithms);
-
-            ArrayList<Object> algo_object_list = new ArrayList<Object>();
-            ArrayList<Algorithm> list_algorithms_getbyid = new ArrayList<Algorithm>();
-            Algorithm algorithm = null;
-            for (int i = 0; i < jsonArrayalgorithms_byid.length(); i++) {
-                //bo bao mang object
-                algo_object_list.add(jsonArrayalgorithms_byid.get(i));
-
-                //lay tung phan tu cua mang object => Algorithm
-                algorithm = converter.fromJson(algo_object_list.get(i).toString(), Algorithm.class);
-                list_algorithms_getbyid.add(algorithm);
-            }
+            ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
+            ArrayList<Algorithm> algorithms = (ArrayList<Algorithm>) request.getAttribute("algorithms");
         %>
-
     </head>
 
     <body onload ="init();">
-        <%-- <%@include file="header.jsp" %> --%>
-        <div class="header">
-            <img src="../images\avs_logo.png" />
-            <ul id="redirectButton">
-                <li onclick="document.location = '/AVS/HomeController'">Home</li>
-                <li>News</li>
-            </ul>
-            <ul id="loginButton">
-                <li>
-                    <form id="search">
-                        <input type="text" placeholder="  Search.." name="search">
-                        <button type="submit">Submit</button>
-                    </form>
-                </li>
-                <li>
-                    <form id="account">
-
-                        <% String usern = "";
-                            if (session.getAttribute("username") != null) {
-                                usern = (String) session.getAttribute("username");
-                                UserModel useracountmanagement = new UserModel();
-                                User users = useracountmanagement.getUserByUsername(usern);
-                                usern = users.getUsername();
-                        %>
-                        <a>Hello,<span><%=usern%></span> <img  src="../images\user.png" /></a>
-
-                        <button id="logout" onclick="document.location = '/AVS/LogoutController';return false">Log out</button>
-                        <!--                        <div class="dropdown">
-                                                    <p>Hello,<span><%=usern%></span></p>
-                                                    <a href="JavaScript:myFunction()"> <img class="dropbtn"  src="images\user.png" /></a>
-                                                    <div id="myDropdown" class="dropdown-content">
-                                                        <a href="#">Link 1</a>
-                                                        <a href="#">Link 2</a>
-                                                        <a href="#">Link 3</a>
-                                                    </div>
-                                                </div>-->
-                        <%} else {%>
-                        <button onclick="document.location = '/AVS/LoginController';return false">Sign in</button>
-                        <button>Sign Up</button><%}%>
-                    </form>
-                </li>
-            </ul>
-        </div>
+         <%@include file="header.jsp" %> 
+       
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
@@ -108,7 +40,7 @@
                 <% String currentCategory = "";
                     boolean startUL = false;
                     boolean changeCategory = false;
-                    for (Algorithm a : list_algo_of_all_algo) {
+                    for (Algorithm a : AllAlgorithm) {
                         if (!currentCategory.equals(a.getCategoryName())) {
                             changeCategory = true;
                             currentCategory = a.getCategoryName();
@@ -124,7 +56,7 @@
                 <ul class="list_items"> 
                     <% startUL = true; %>
                     <%}%>
-                    <li><a style=" text-decoration: none;" id="AlgoNameList" href="../Detail?AlgoID=<%=a.getAlgoID()%>"><%=a.getAlgoName()%></a></li>
+                    <li><a style=" text-decoration: none;" id="AlgoNameList" href="Detail?AlgoID=<%=a.getAlgoID()%>"><%=a.getAlgoName()%></a></li>
                         <%}%>
                 </ul>
             </div>
@@ -143,7 +75,7 @@
             </div>
 
             <div id="Tutorial" class="tabcontent">
-                <div><%= list_algorithms_getbyid.get(0).getAlgoName()%></div> 
+                <div><%= algorithms.get(0).getAlgoName()%></div> 
             </div>
 
             <div id="Visualizer" class="tabcontent">
@@ -227,14 +159,9 @@
         </div>
     </div>
 </div>
-<%--<%@include file="footer.jsp" %>--%>
-<div id="footer">
-    <img id="avs" src="../images/avs_logo.png" />
-    <img id="fb" src="../images/facebook.PNG" />
-    <div class="footerSoild"></div>
-    <div><p>Copyright 2020.</p></div>
-</div>
-<script type="text/javascript" src="../js/code.js"></script>
+<%@include file="footer.jsp" %>
+
+<script type="text/javascript" src="js/code.js"></script>
 </body>
 
 </html>

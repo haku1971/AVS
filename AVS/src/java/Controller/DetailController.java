@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author Asus
  */
 @WebServlet(name = "Detail", urlPatterns = {"/Detail"})
-public class Detail extends HttpServlet {
+public class DetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,8 +44,8 @@ public class Detail extends HttpServlet {
             String password = request.getParameter("password");
 
             AlgorithmModel dao = new AlgorithmModel();
-            ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
-            //request.setAttribute("AllAlgorithm", data);
+             ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
+            request.setAttribute("AllAlgorithm", data);
 
             ArrayList<Algorithm> list = dao.getAlgoIDList();
             String i = request.getParameter("AlgoID");
@@ -66,18 +66,18 @@ public class Detail extends HttpServlet {
                     response.sendRedirect("error");
                     System.out.println("NOT ID");
                 } else {
-                ArrayList<Entity.Algorithm> algorithmbyid = dao.getAlgoByID(Integer.parseInt(i));
-                ArrayList<Entity.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithmbyid.get(0).getCategoryName());
-                Gson parser= new Gson();
-                String listalgo = parser.toJson(data);
-               
-                String algobyid = parser.toJson(algorithmbyid);
-                String algobycategory = parser.toJson(algorithmbycategory); 
-//                request.setAttribute("algorithms", algorithms);
-//           request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);
-          response.sendRedirect("jsp/Detail.jsp?algorithms="+algobyid+"&AllAlgorithm="+listalgo+"");
-        
-            //  response.sendRedirect("jsp/Detail.jsp");
+                    ArrayList<Entity.Algorithm> algorithms = dao.getAlgoByID(Integer.parseInt(i));
+                    ArrayList<Entity.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithms.get(0).getCategoryName());
+                  //  Gson parser = new Gson();
+                   //  String listalgo = parser.toJson(data);
+
+                  //  String algobyid = parser.toJson(algorithmbyid);
+                    //  String algobycategory = parser.toJson(algorithmbycategory);
+                    request.setAttribute("algorithms", algorithms);
+                    request.setAttribute("algorithmbycategory", algorithmbycategory);
+                    request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);
+                    //   response.sendRedirect("jsp/Detail.jsp?algorithms="+algobyid+"&AllAlgorithm="+listalgo+"");
+
                 }
             }
         } catch (Exception ex) {

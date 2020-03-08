@@ -71,7 +71,7 @@ function init() {
     console.log("datanormal: " + initArray);
     $.ajax({
         type: "POST",
-        url: "../SortStepServlet",
+        url: "SortStepServlet",
         data: {name: mydata}
         ,
         dataType: "json",
