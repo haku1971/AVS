@@ -32,7 +32,7 @@ function init(sorttype) {
     console.log("datanormal: " + initarray);
     $.ajax({
         type: "POST",
-        url: "../SortStepServlet",
+        url: "SortStepServlet",
         data: {name: mydata}
         ,
         dataType: "json",
@@ -279,7 +279,7 @@ function drawGraph(data) {
 //      y0	The y-coordinate of the start point of the gradient
 //      x1	The x-coordinate of the end point of the gradient
 //      y1	The y-coordinate of the end point of the gradient
-        var grd = context.createLinearGradient(0, 700, 0, 0);
+        var grd = context.createLinearGradient(0, 0, 0, 700);
         grd.addColorStop(0, color);
         grd.addColorStop(1, "white");
         context.fillStyle = grd;
@@ -469,8 +469,6 @@ function draw(step) {
 }
 
 function drawInitCurrent(currentstep, ctx) {
-    switch (sorttype) {
-        case 'bubblesort' :
             for (var i = 0; i < eachStepArr[currentstep].length; i++) {
                 ctx.fillStyle = "#AAAAAA";
                 ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
@@ -482,40 +480,9 @@ function drawInitCurrent(currentstep, ctx) {
                     document.getElementById(line_name).style.background = "None";
                 }
             }
-            break;
-
-        case 'insertionsort' :
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                ctx.fillStyle = "#AAAAAA";
-                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
-                ctx.fillStyle = "#000000";
-                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-                if (i < highlightcode.length && highlightcode[i] !== 0) {
-                    var line_name = "line_" + highlightcode[i];
-                    document.getElementById(line_name).style.background = "None";
-                }
-            }
-            break;
-
-        case 'selectionsort' :
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                ctx.fillStyle = "#AAAAAA";
-                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
-                ctx.fillStyle = "#000000";
-                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-                if (highlightcode[i] !== 0) {
-                    var line_name = "line_" + highlightcode[i];
-                    document.getElementById(line_name).style.background = "None";
-                }
-            }
-            break;
-    }
-
 }
 
 function drawHighlightAnimation(currentstep, ctx) {
-    switch (sorttype) {
-        case 'bubblesort' :
             for (var i = 0; i < eachStepArr[currentstep].length; i++) {
                 if (currentstep !== 0 && currentstep !== eachStepArr.length - 1) {
                     for (var j = 0; j < highlightcheck[currentstep].length; j++) {
@@ -536,60 +503,9 @@ function drawHighlightAnimation(currentstep, ctx) {
 
                 }
             }
-            break;
-
-        case 'insertionsort' :
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                if (currentstep !== 0 && currentstep !== eachStepArr.length - 1) {
-                    for (var j = 0; j < highlightcheck[currentstep].length; j++) {
-                        if (highlightcheck[currentstep][j] === i) {
-                            if (color[currentstep] === "swap") {
-                                ctx.fillStyle = "#c51162";
-                                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
-                                ctx.fillStyle = "#000000";
-                                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-                            } else {
-                                ctx.fillStyle = "#2962ff";
-                                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
-                                ctx.fillStyle = "#000000";
-                                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-                            }
-                        }
-                    }
-
-                }
-            }
-            break;
-
-        case 'selectionsort' :
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                if (currentstep !== 0 && currentstep !== eachStepArr.length - 1) {
-                    for (var j = 0; j < highlightcheck[currentstep].length; j++) {
-                        if (highlightcheck[currentstep][j] === i) {
-                            if (color[currentstep] === "swap") {
-                                ctx.fillStyle = "#c51162";
-                                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
-                                ctx.fillStyle = "#000000";
-                                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-                            } else {
-                                ctx.fillStyle = "#2962ff";
-                                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
-                                ctx.fillStyle = "#000000";
-                                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-                            }
-                        }
-                    }
-
-                }
-            }
-            break;
-    }
-
 }
 
 function drawHighlightSorted(currentstep, ctx) {
-    switch (sorttype) {
-        case 'bubblesort' :
             for (var i = 0; i < eachStepArr[currentstep].length; i++) {
                 if (currentstep !== 0 && highlightsorted[currentstep] !== null) {
                     for (var j = 0; j < highlightsorted[currentstep].length; j++) {
@@ -603,41 +519,6 @@ function drawHighlightSorted(currentstep, ctx) {
 
                 }
             }
-            break;
-
-        case 'insertionsort' :
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                if (currentstep !== 0 && highlightsorted[currentstep] !== null) {
-                    for (var j = 0; j < highlightsorted[currentstep].length; j++) {
-                        if (highlightsorted[currentstep][j] === i) {
-                            ctx.fillStyle = "Green";
-                            ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
-                            ctx.fillStyle = "#000000";
-                            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-                        }
-                    }
-
-                }
-            }
-            break;
-
-        case 'selectionsort' :
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                if (currentstep !== 0 && highlightsorted[currentstep] !== null) {
-                    for (var j = 0; j < highlightsorted[currentstep].length; j++) {
-                        if (highlightsorted[currentstep][j] === i) {
-                            ctx.fillStyle = "Green";
-                            ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 30, 30);
-                            ctx.fillStyle = "#000000";
-                            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 10, Yp * XYs * 5, 60);
-                        }
-                    }
-
-                }
-            }
-            break;
-    }
-
 }
 
 function highlightCode(currentstep) {
@@ -648,29 +529,11 @@ function highlightCode(currentstep) {
             document.getElementById(line_name).style.background = "None";
         }
     });
-
-    switch (sorttype) {
-        case 'bubblesort' :
             if (highlightcode[currentstep] !== 0) {
                 var line_name = "line_" + highlightcode[currentstep];
                 document.getElementById(line_name).style.background = "Red";
             }
-            break;
 
-        case 'insertionsort' :
-            if (currentstep < highlightcode.length && highlightcode[currentstep] !== 0) {
-                var line_name = "line_" + highlightcode[currentstep];
-                document.getElementById(line_name).style.background = "Red";
-            }
-            break;
-
-        case 'selectionsort' :
-            if (highlightcode[currentstep] !== 0) {
-                var line_name = "line_" + highlightcode[currentstep];
-                document.getElementById(line_name).style.background = "Red";
-            }
-            break;
-    }
 
 }
 

@@ -35,7 +35,7 @@ public class AlgorithmModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT * FROM Algorithm ORDER BY algo_ID asc";
+            String sql = "SELECT * FROM Algorithm WHERE algo_CompareStatus = 1 ORDER BY algo_ID";
             statement = connection.prepareStatement(sql);
             rs = statement.executeQuery();
             while (rs.next()) {
@@ -133,6 +133,8 @@ public class AlgorithmModel {
                 algo.setAlgoCodeCplus(rs.getString("algo_CodeCplus"));
                 algo.setAlgoCodeJava(rs.getString("algo_CodeJava"));
                 algo.setAlgoDescription(rs.getString("algo_Description"));
+                algo.setCategoryID(rs.getInt("category_ID"));
+                algo.setAlgoFile(rs.getString("algo_Files"));
                 algos.add(algo);
             }
         } catch (Exception e) {
@@ -144,35 +146,33 @@ public class AlgorithmModel {
         return algos;
     }
 
-    public ArrayList<Algorithm> getAlgoByCategory(String category) throws SQLException, Exception {
-        ArrayList<Algorithm> listAllAlgorithms = new ArrayList<>();
+    public ArrayList<Algorithm> getAlgoByCategory(int categoryID) throws SQLException, Exception {
+        ArrayList<Algorithm> algos = new ArrayList<Algorithm>();
         DBContext dbManager = new DBContext();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            statement = 
-                    connection.prepareStatement("SELECT [algo_ID],[algo_Name],[category_Name] "
-                            + "FROM Algorithm INNER JOIN Category "
-                            + "ON Category.category_ID = Algorithm.category_ID "
-                            + "WHERE Category.category_Name = ? "
-                            + "ORDER BY Algorithm.category_ID;");
-            statement.setString(1, category);
+            statement
+                    = connection.prepareStatement("SELECT * from Algorithm "
+                            + "WHERE category_ID = ? AND algo_CompareStatus = 1 "
+                            + "ORDER BY algo_ID;");
+            statement.setInt(1, categoryID);
             rs = statement.executeQuery();
             while (rs.next()) {
-                Algorithm algorithm = new Algorithm();
-                algorithm.setAlgoID(rs.getInt("algo_ID"));
-                algorithm.setAlgoName(rs.getString("algo_Name"));
-                algorithm.setCategoryName(rs.getString("category_Name"));
-                listAllAlgorithms.add(algorithm);
+                Algorithm algo = new Algorithm();
+                algo.setAlgoID(rs.getInt("algo_ID"));
+                algo.setAlgoName(rs.getString("algo_Name"));
+                algo.setCategoryID(rs.getInt("category_ID"));
+                algos.add(algo);
             }
         } catch (Exception e) {
             throw e;
         } finally {
             new CloseConnection().close(connection, statement, rs);
         }
-        return listAllAlgorithms;
+        return algos;
     }
     
 }

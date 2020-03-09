@@ -16,8 +16,9 @@ and open the template in the editor.
 }
 .Visual .rightAlgo{
     float: right;
-    width: 60%;
+    width: 40%;
     min-width: 300px;
+    overflow: auto;
 }
 
 .Visual .leftAlgo{
@@ -123,14 +124,18 @@ input[type=range]::-webkit-slider-thumb {
     margin-bottom: 20px;
 }
 .rectangle {
+    float: left;
+    display: inline-block;
     height: 15px;
     width: 15px;
-    margin-bottom: 10px;
 }
 
 #note{
+    display: inline-block;
     margin-left: 20px;
     margin-bottom: 10px;
+    color: black;
+    font-weight: bold;
 }
 
 

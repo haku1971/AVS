@@ -67,7 +67,7 @@ public class DetailController extends HttpServlet {
                     System.out.println("NOT ID");
                 } else {
                     ArrayList<Entity.Algorithm> algorithms = dao.getAlgoByID(Integer.parseInt(i));
-                    ArrayList<Entity.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithms.get(0).getCategoryName());
+                    ArrayList<Entity.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithms.get(0).getCategoryID());
                   //  Gson parser = new Gson();
                    //  String listalgo = parser.toJson(data);
 

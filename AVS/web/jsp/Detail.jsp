@@ -17,17 +17,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="js/BubbleSort.js"></script>
+        <script type="text/javascript" src="js/Sort.js"></script>
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
  
         <%
             ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
             ArrayList<Algorithm> algorithms = (ArrayList<Algorithm>) request.getAttribute("algorithms");
+            ArrayList<Algorithm> algorithmbycategory = (ArrayList<Algorithm>) request.getAttribute("algorithmbycategory");
         %>
     </head>
 
-    <body onload ="init();">
+    <body onload ="init('<%=algorithms.get(0).getAlgoFile()%>');">
          <%@include file="header.jsp" %> 
        
         <div class="banner">
@@ -75,7 +76,8 @@
             </div>
 
             <div id="Tutorial" class="tabcontent">
-                <div><%= algorithms.get(0).getAlgoName()%></div> 
+                <div id="algoTitle"><h1><%= algorithms.get(0).getAlgoName()%></h1>
+                    <h5><%= algorithms.get(0).getAlgoDescription()%></h5></div>
             </div>
 
             <div id="Visualizer" class="tabcontent">
@@ -95,14 +97,11 @@
                         <canvas id="canvasGraph"  style="border:1px solid #000000;"></canvas>
 
                         <%
-                            double frequency = 0.3;
-                            String[] graphnamearr = {"bubblesort", "selectionsort", "insertionsort"};
-                            for (int i = 0; i < graphnamearr.length; i++) {
+                            for (int i = 0; i < algorithmbycategory.size(); i++) {
                         %>
                         <div>
-                            <div class="rectangle" style="background-color:hsl(<%=360 / graphnamearr.length * (i + 1)%>, 100%,50%)">
-                                <a id="note" href="<%=graphnamearr[i]%>"><%=graphnamearr[i]%></a>
-                            </div>
+                            <div class="rectangle" style="background-image: linear-gradient(to bottom,hsl(<%=360 / algorithmbycategory.size() * (i + 1)%>, 100%,50%),white);"></div>
+                            <a id="note" href="Detail?AlgoID=<%=algorithmbycategory.get(i).getAlgoID() %>"><%=algorithmbycategory.get(i).getAlgoName()%></a>
                         </div>
                         <%
                             }
@@ -117,20 +116,12 @@
                         <div id="progress"><a>Speed</a> <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1"> </div>
                         <div id="stepButton">
                             <input id="btnPrev" type="submit" onclick="back();" value="<" />
-                            <input type="submit" onclick=" init();" value="Restart" />
+                            <input type="submit" onclick=" init('<%=algorithms.get(0).getAlgoFile()%>');" value="Restart" />
                             <input id="PauseOrCon" type="submit" onclick="resume();" value="Pause" />
                             <input id="btnNext" type="submit" onclick="next();" value=">" />
                         </div>
                         <div>            
-                            <table>        
-                                <tr id="line_1"> <td> for (var i = 0; i < array.length - 1; i++)  { </td> </tr>
-                                <tr id="line_2"> <td>for (var j = 0; j < array.length - i - 1; j++) {  </td>  </tr>    
-                                <tr id="line_3"> <td>  if (array[j] > array[j + 1]) { </td></tr>
-                                <tr id="line_4"><td> &nbsp;  swap(array[i],array[j]); </td></tr>
-                                <tr id="line_5"> <td>   }</td></tr>
-                                <tr id="line_6"><td>   }</td></tr>
-                                <tr id="line_7"> <td>  } </td></tr>          
-                            </table>
+                            <%=algorithms.get(0).getAlgoCodeJS()%>
                         </div>
                     </div>
                 </div>
@@ -153,12 +144,8 @@
 
                 document.getElementById("defaultOpen").click();
             </script>
-
-
-
         </div>
-    </div>
-</div>
+
 <%@include file="footer.jsp" %>
 
 <script type="text/javascript" src="js/code.js"></script>

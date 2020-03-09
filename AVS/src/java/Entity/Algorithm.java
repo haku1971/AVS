@@ -21,6 +21,7 @@ public class Algorithm {
     private String algoResource;
     private int number_of_step;
     private String categoryName;
+    private String algoFile;
    
     public Algorithm() {
         
@@ -58,6 +59,14 @@ public class Algorithm {
         this.categoryID = categoryID;
         this.algoDatetime = algoDatetime;
         this.algoResource = algoResource;
+    }
+
+    public String getAlgoFile() {
+        return algoFile;
+    }
+
+    public void setAlgoFile(String algoFile) {
+        this.algoFile = algoFile;
     }
     
     
