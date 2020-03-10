@@ -1,6 +1,6 @@
 var initarray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
-//export var initarray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
-var gapbetweennumber = 9.1;
+var searchnumber = 8;
+var gapbetweennumber = 8;
 var N = 10; // Array Size
 var XYs = 5; // Element Visual Size
 var Xp = 1; // Start Pos X
@@ -8,7 +8,6 @@ var Yp = 1; // Start Pos Y
 var canvas;
 var currentstep = 0;
 var totalstep;
-
 var run;
 var boolRun = true;
 var arr_by_user = [];
@@ -18,7 +17,8 @@ var highlightcheck = [];
 var highlightcode = [];
 var highlightsorted = [];
 var color = [];
-var sorttype;
+var logarray = [];
+var algorithmtype;
 //window.init = init;
 //window.shuffle = shuffle;
 //window.initarray = initarray;
@@ -26,10 +26,10 @@ var sorttype;
 //window.back = back;
 //window.resume = resume;
 
-function init(sorttype) {
-    this.sorttype = sorttype;
+function init(algorithmtype) {
+    this.algorithmtype = algorithmtype;
     var mydata = JSON.stringify(initarray);
-    console.log("datanormal: " + initarray);
+//    console.log("datanormal: " + initarray);
     $.ajax({
         type: "POST",
         url: "SortStepServlet",
@@ -38,30 +38,25 @@ function init(sorttype) {
         dataType: "json",
         //OK
         success: function (data) {
-            console.log(data);
+//            console.log(data);
             drawGraph(data);
         }
         ,
         error: function (error) {
-            console.log("error", error);
+//            console.log("error", error);
         }
     }
     );
     startSorting();
-    currentstep = -1;
+    currentstep = 0;
     canvas = document.getElementById('canvasAnimation');
-    draw(0);
-    if (boolRun) {
-        clearInterval(run);
-        loadingAnimation();
-    }
+    draw(currentstep);
     boolRun = true;
     resume();
-
 }
 
 function startSorting() {
-    switch (sorttype) {
+    switch (algorithmtype) {
         case 'bubblesort' :
             bubbleSort(initarray);
             break;
@@ -71,10 +66,16 @@ function startSorting() {
         case 'selectionsort' :
             selectionSort(initarray);
             break;
-            
+        case 'linearsearch' :
+            linearSearch(initarray);
+            break;
+        case 'binarysearch' :
+            binarySearch(initarray);
+            break;
     }
 }
 
+//deleted
 function shuffle() {
     var oldPos = initarray.length,
             newPos, temp;
@@ -84,19 +85,37 @@ function shuffle() {
         initarray[oldPos] = initarray[newPos];
         initarray[newPos] = temp;
     }
-    init(sorttype);
+    init(algorithmtype);
+}
+
+function random() {
+    searchnumber = randomFrom1to9(); // returns a random integer from 0 to 9
+    var arraylenght = initarray.length;
+    initarray = [];
+    for (var i = 0; i < arraylenght; i++) {
+        initarray.push(randomFrom1to9());
+    }
+    highlightCode(0);
+    init(algorithmtype);
+}
+
+function randomFrom1to9() {
+    var random = 0;
+    while (random === 0) {
+        random = Math.floor(Math.random() * 10);
+    }
+    return random;
 }
 
 function integerArray(stringArr) {
     var intArr = [];
     for (var i = 0; i < stringArr.length; i++) {
-        //if check ma la co ki tu khong phai so
+//if check ma la co ki tu khong phai so
         if (!isNormalInteger(stringArr[i])) {
-            //hien ra alert() len trang index
-
+//hien ra alert() len trang index
             return null;
         }
-        //neu khong thi xay dung ra mot cai mang     
+//neu khong thi xay dung ra mot cai mang     
         else {
             number = parseInt(stringArr[i]);
             intArr.push(number);
@@ -107,12 +126,18 @@ function integerArray(stringArr) {
 }
 
 function inputByUser() {
+//Check mảng
     arr_by_user = document.getElementById("txtElement").value;
     arr_by_user = arr_by_user.split(',');
     if (integerArray(arr_by_user) !== null) {
         initarray = integerArray(arr_by_user);
     }
-    init();
+//Check searchnumber
+    var searchnumber_by_user = document.getElementById("txtSearchnumber").value;
+    if (integerArray(searchnumber_by_user) !== null) {
+        searchnumber = integerArray(searchnumber_by_user)[0];
+    }
+    init(algorithmtype);
 }
 
 function next() {
@@ -135,7 +160,7 @@ function chooseStep() {
 }
 
 function back() {
-    //mang da chay dc it nhat 2 phan tu
+//mang da chay dc it nhat 2 phan tu
     if (currentstep >= 1) {
         clearInterval(run);
         currentstep--;
@@ -147,12 +172,12 @@ function back() {
 
 function resume() {
     if (boolRun) {
-        //đang trong trạng thái chạy
+//đang trong trạng thái chạy
         clearInterval(run);
         document.getElementById("PauseOrCon").value = 'Play';
         boolRun = false;
     } else {
-        //đang trong trạng thái pause
+//đang trong trạng thái pause
         clearInterval(run);
         document.getElementById("PauseOrCon").value = 'Pause';
         boolRun = true;
@@ -162,9 +187,9 @@ function resume() {
 
 function newarray(array) {
     var tempwarray = [];
-    array.forEach(function (item) {
-        tempwarray.push(item);
-    });
+    for (var i = 0; i < array.length; i++) {
+        tempwarray.push(array[i]);
+    }
 
     return tempwarray;
 }
@@ -187,19 +212,16 @@ function newSortedInsertionArray(sorted) {
 
 function changeSpeed() {
     speed = 1000 / (parseInt(document.getElementById("rangebar").value));
-
 }
 
-//hien thi ve
 function loadingAnimation() {
-    //check de cho phep load tiep hay ko
+//check de cho phep load tiep hay ko
     if (currentstep < eachStepArr.length - 1) {
         currentstep++;
         draw(currentstep);
     }
     run = setTimeout(loadingAnimation, speed);
 }
-
 
 //chưa sửa được lỗi
 function getdata(data) {
@@ -208,61 +230,47 @@ function getdata(data) {
 
 function drawGraph(data) {
     var canvas = document.getElementById("canvasGraph");
-    var canvas_height = 300;//chieu cao canvas
+    var canvas_height = 300; //chieu cao canvas
     var canvas_width = 500; // chieu rong canvas
     document.getElementById("canvasGraph").height = canvas_height;
     document.getElementById("canvasGraph").width = canvas_width;
     context = canvas.getContext("2d");
-
     //set background_color for graph
     context.fillStyle = "lightgrey";
-
     context.fillRect(0, 0, canvas_width, canvas_height);
-
-
-
     var vertical_gap_top = 20;
     var vertical_gap_bot = 20;
-
     var biggest_value_of_array = Math.max.apply(Math, data.map(function (o) {
         return o.number_of_step;
     }));
-
-
     var numberdigits = Math.floor(Math.log10(Math.abs(biggest_value_of_array))) + 1;
     var constant = Math.pow(10, numberdigits - 1); // cai z cua Mạnh
     var vertical_axis_top_value = (parseInt(biggest_value_of_array / constant) + 1) * constant;
-
     function pixcelLengthOfValue(value) {
         return context.measureText(value).width;
     }
 
-    //chỗ này t chưa tìm được tên phù hợp cho biến
+//chỗ này t chưa tìm được tên phù hợp cho biến
     var left = 10;
-    var center = left + pixcelLengthOfValue(vertical_axis_top_value);// vi tri viet gia tri tren Oy
+    var center = left + pixcelLengthOfValue(vertical_axis_top_value); // vi tri viet gia tri tren Oy
     var right = 5;
     var root_cordinate_pos = center - context.measureText("0").width;
-
     var horizon_gap_left = left + center + right;
     var horizon_gap_right = 20;
-
     var vertical_axis_name = 'number of steps';
     var margin_left = 20;
     var margin_right = 20;
     var margin_top_collumn = 10;
-    var horizon_axis = canvas_width - (horizon_gap_left + horizon_gap_right);// truc ox
-    var vertical_axis = canvas_height - (vertical_gap_bot + vertical_gap_top);// truc oy
+    var horizon_axis = canvas_width - (horizon_gap_left + horizon_gap_right); // truc ox
+    var vertical_axis = canvas_height - (vertical_gap_bot + vertical_gap_top); // truc oy
 
     var next_col_cordinate_pos = 0;
     var length_arrow = 5;
-
     var colum_width = 30;
-    var realLength = horizon_axis - (margin_left + margin_right);// chieu dai tu bat dau cot nay toi ket thuc cot cuoi 
+    var realLength = horizon_axis - (margin_left + margin_right); // chieu dai tu bat dau cot nay toi ket thuc cot cuoi 
     var gap_between_col = (realLength - (colum_width * data.length)) / (data.length - 1);
-
     //draw colum
     var start_col_pos = horizon_gap_left + margin_left;
-
     function endPos(stepValue) {
         return vertical_gap_top + vertical_axis - colHeight(stepValue);
     }
@@ -270,16 +278,15 @@ function drawGraph(data) {
     var color_red_value = 10;
     var green = 10;
     var blue = 100;
-
     //draw each collum
     for (i = 0; i < data.length; i++) {
-        //set color for each collum       
+//set color for each collum       
         var color = "hsl(" + 360 / data.length * (i + 1) + ",100%, 50%)";
 //      x0	The x-coordinate of the start point of the gradient
 //      y0	The y-coordinate of the start point of the gradient
 //      x1	The x-coordinate of the end point of the gradient
 //      y1	The y-coordinate of the end point of the gradient
-        var grd = context.createLinearGradient(0, 0, 0, 700);
+        var grd = context.createLinearGradient(0, 700, 0, 0);
         grd.addColorStop(0, color);
         grd.addColorStop(1, "white");
         context.fillStyle = grd;
@@ -292,17 +299,16 @@ function drawGraph(data) {
             context.fillRect(start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
             fillColHeader(data[i].number_of_step, start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
         }
-        //vong cuoi
+//vong cuoi
         if (i === data.length - 1) {
             context.fillRect(start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)), colum_width, colHeight(data[i].number_of_step));
             fillColHeader(data[i].number_of_step, start_col_pos + next_col_cordinate_pos, endPos((data[i].number_of_step)) - margin_top_collumn);
             break;
         }
         next_col_cordinate_pos += colum_width + gap_between_col;
-
     }
 
-    //draw Oxy axys 
+//draw Oxy axys 
     context.beginPath();
     // context.fillStyle = "black";
     //  context.font = "19 pt Arial;";
@@ -319,8 +325,6 @@ function drawGraph(data) {
     context.moveTo(horizon_gap_left, vertical_axis + vertical_gap_top);
     context.lineTo(horizon_axis + horizon_gap_left, vertical_axis + vertical_gap_top);
     context.stroke();
-
-
     //write Oy value
     function writeVerticalAxisValue(headerValue, horCor, verCor) {
         context.fillStyle = "black";
@@ -342,9 +346,7 @@ function drawGraph(data) {
     //var underline_length = 5;
     var number_of_underline = 5;
     var next_underline_pos = 0;
-
     var underline_value = vertical_axis_top_value;
-
     //bat dau lien quan toi horizon left
 
     //ve gia tri tung muc cua Oy        
@@ -372,7 +374,6 @@ function drawGraph(data) {
         underline_value -= (vertical_axis_top_value / number_of_underline);
     }
     context.stroke();
-
     //set lai gia tri ve nhu cu cho no
     //number_of_underline = 5;
     // next_underline_pos = 0;
@@ -404,7 +405,6 @@ function drawGraph(data) {
 
 }
 
-
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
         textbox.addEventListener(event, function () {
@@ -422,7 +422,6 @@ function setInputFilter(textbox, inputFilter) {
     });
 }
 
-//ve ra lai cai mang
 function draw(step) {
 
     if (canvas.getContext) {
@@ -434,19 +433,16 @@ function draw(step) {
         //xóa draw cũ
         ctx.fillStyle = "#edf0f4";
         ctx.fillRect(0, 0, canvaswidth, canvasheight);
-
         //vẽ mảng của step hiện tại
         drawInitCurrent(step, ctx);
-
         //highlight
         drawHighlightAnimation(step, ctx);
-
         //highlightsorted
         drawHighlightSorted(step, ctx);
-
         //highlightcode
         highlightCode(step);
-
+        //printlog
+        printLog(step);
     }
     if (step === totalstep) {
         document.getElementById("btnNext").disabled = true;
@@ -457,7 +453,6 @@ function draw(step) {
         document.getElementById("btnPrev").disabled = true;
     } else {
         document.getElementById("btnPrev").disabled = false;
-
     }
     if (step > 0) {
         document.getElementById("txtStepcount").innerHTML = '' + (step + 1) + "/ " + (totalstep + 1);
@@ -469,75 +464,83 @@ function draw(step) {
 }
 
 function drawInitCurrent(currentstep, ctx) {
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                ctx.fillStyle = "#AAAAAA";
-                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
-                ctx.fillStyle = "#000000";
-                ctx.font = "15px Arial";
-                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
-                if (highlightcode[i] !== 0) {
-                    var line_name = "line_" + highlightcode[i];
-                    document.getElementById(line_name).style.background = "None";
-                }
+    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+        ctx.fillStyle = "#AAAAAA";
+        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+        ctx.fillStyle = "#000000";
+        ctx.font = "15px Arial";
+        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+        if (highlightcode[i] !== 0) {
+            var line_name = "line_" + highlightcode[i];
+            if (document.getElementById(line_name) !== null) {
+                document.getElementById(line_name).style.background = "None";
+            } else {
+//                console.log(line_name);
             }
+        }
+    }
+
 }
 
 function drawHighlightAnimation(currentstep, ctx) {
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                if (currentstep !== 0 && currentstep !== eachStepArr.length - 1) {
-                    for (var j = 0; j < highlightcheck[currentstep].length; j++) {
-                        if (highlightcheck[currentstep][j] === i) {
-                            if (color[currentstep] === "swap") {
-                                ctx.fillStyle = "#c51162";
-                                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
-                                ctx.fillStyle = "#000000";
-                                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
-                            } else {
-                                ctx.fillStyle = "#2962ff";
-                                ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
-                                ctx.fillStyle = "#000000";
-                                ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
-                            }
-                        }
-                    }
-
+    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+        for (var j = 0; j < highlightcheck[currentstep].length; j++) {
+            if (highlightcheck[currentstep][j] === i) {
+                if (color[currentstep] === "swap") {
+                    ctx.fillStyle = "#c51162";
+                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+                    ctx.fillStyle = "#000000";
+                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+                } else {
+                    ctx.fillStyle = "#2962ff";
+                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+                    ctx.fillStyle = "#000000";
+                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
                 }
             }
+        }
+    }
+
 }
 
 function drawHighlightSorted(currentstep, ctx) {
-            for (var i = 0; i < eachStepArr[currentstep].length; i++) {
-                if (currentstep !== 0 && highlightsorted[currentstep] !== null) {
-                    for (var j = 0; j < highlightsorted[currentstep].length; j++) {
-                        if (highlightsorted[currentstep][j] === i) {
-                            ctx.fillStyle = "Green";
-                            ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
-                            ctx.fillStyle = "#000000";
-                            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
-                        }
-                    }
-
+    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+        if (currentstep !== 0 && highlightsorted[currentstep] !== null) {
+            for (var j = 0; j < highlightsorted[currentstep].length; j++) {
+                if (highlightsorted[currentstep][j] === i) {
+                    ctx.fillStyle = "Green";
+                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+                    ctx.fillStyle = "#000000";
+                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
                 }
             }
+        }
+    }
 }
 
 function highlightCode(currentstep) {
-    //khởi tạo lại
+//khởi tạo lại
     highlightcode.forEach(function (item) {
         if (item !== 0) {
             var line_name = "line_" + item;
             document.getElementById(line_name).style.background = "None";
         }
     });
-            if (highlightcode[currentstep] !== 0) {
-                var line_name = "line_" + highlightcode[currentstep];
-                document.getElementById(line_name).style.background = "Red";
-            }
-
+    if (highlightcode[currentstep] !== 0) {
+        var line_name = "line_" + highlightcode[currentstep];
+        if (document.getElementById(line_name) !== null) {
+            document.getElementById(line_name).style.background = "Red";
+        }
+    }
 
 }
 
-function bubbleSort(array) { // * is magic  
+function printLog(currentstep) {
+    var text = logarray[currentstep];
+    document.getElementById("txtlog").innerHTML = text;
+}
+
+function bubbleSort(array) {
 
     var temparray = newarray(array);
     var count = 0;
@@ -546,11 +549,14 @@ function bubbleSort(array) { // * is magic
     color = [];
     highlightcode = [];
     highlightsorted = [];
+    logarray = [];
+
     eachStepArr.push(newarray(temparray));
     highlightcheck.push(0);
     color.push(0);
     highlightcode.push(1);
     highlightsorted.push(null);
+    logarray.push('Start sorting...<br>');
     for (var i = 0; i < temparray.length - 1; i++) {
         for (var j = 0; j < temparray.length - i - 1; j++) {
             count++;
@@ -558,14 +564,16 @@ function bubbleSort(array) { // * is magic
             highlightcheck.push([j, j + 1]);
             color.push("normal");
             highlightcode.push(2);
+            logarray.push(logarray[logarray.length - 1] + 'Checking with i = ' + i + ', j = ' + j + '<br>');
             if (temparray[j] > temparray[j + 1]) {
+                logarray.push(logarray[logarray.length - 1] + 'Swap ' + temparray[j] + ' and ' + temparray[j + 1] + '<br>');
                 var temp = temparray[j];
                 temparray[j] = temparray[j + 1];
                 temparray[j + 1] = temp;
                 color.push("swap");
                 eachStepArr.push(newarray(temparray));
                 highlightcheck.push([j, j + 1]);
-                highlightcode.push(4);
+                highlightcode.push(5);
                 if (i > 0) {
                     highlightsorted.push(newsortedarray(i));
                 } else {
@@ -579,15 +587,16 @@ function bubbleSort(array) { // * is magic
             }
         }
     }
-    console.log(highlightsorted);
-    highlightcode.push(7);
+    highlightcheck.push(0);
+    highlightcode.push(8);
     eachStepArr.push(newarray(temparray));
     totalstep = eachStepArr.length - 1;
     highlightsorted.push(newsortedarray(initarray.length));
+    logarray.push(logarray[logarray.length - 1] + 'Array sorted!');
+    console.log(logarray);
     document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
     document.getElementById("progressStep").max = eachStepArr.length - 1;
     document.getElementById("slideStep").max = eachStepArr.length - 1;
-
 }
 
 function insertionSort(array) {
@@ -598,40 +607,49 @@ function insertionSort(array) {
     highlightsorted = [];
     highlightcode = [];
     color = [];
+    logarray = [];
+
     eachStepArr.push(newarray(temparray));
     highlightcheck.push(0);
     highlightsorted.push(0);
     color.push("key");
     highlightcode.push(1);
+    logarray.push('Start sorting...<br>');
     var i, key, j, k;
     for (i = 1; i < temparray.length; i++) {
         key = temparray[i];
         j = i - 1;
         k = 0;
-        /* Move elements of arr[0..i-1], that are  
-         greater than key, to one position ahead  
-         of their current position */
         eachStepArr.push(newarray(temparray));
         highlightcheck.push([i]);
         color.push("key");
         highlightsorted.push([i]);
         highlightcode.push(2);
+        logarray.push(logarray[logarray.length - 1] + 'key index = ' + i + ', key value = ' + temparray[i] + '<br>');
         while (j >= 0 && temparray[j] > key) {
+            logarray.push(logarray[logarray.length - 1] + 'Set array[' + (j + 1) + '] = array[' + j + '], value ' + temparray[j+1] + ' -> ' + temparray[j] + '<br>');
             temparray[j + 1] = temparray[j];
             eachStepArr.push(newarray(temparray));
             color.push("swap");
             highlightcheck.push([i - k]);
-            highlightsorted.push([i]);
+            if (j + 1 === i) {
+                highlightsorted.push(null);
+            } else {
+                highlightsorted.push([i]);
+            }
             highlightcode.push(5);
+            
             k++;
             j--;
         }
+        logarray.push(logarray[logarray.length - 1] + 'Set array[' + (j + 1) + '] = key, value ' + temparray[j+1] + ' -> ' + key + '<br>');
         temparray[j + 1] = key;
         eachStepArr.push(newarray(temparray));
         color.push("swap");
         highlightcheck.push([i - k]);
         highlightsorted.push([i]);
         highlightcode.push(8);
+        
     }
     console.log(highlightsorted);
     console.log(eachStepArr);
@@ -641,6 +659,7 @@ function insertionSort(array) {
     highlightcheck.push(0);
     totalstep = eachStepArr.length - 1;
     highlightsorted.push(newSortedInsertionArray(initarray.length));
+    logarray.push(logarray[logarray.length - 1] + 'Array sorted!');
     document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
     document.getElementById("progressStep").max = eachStepArr.length - 1;
     document.getElementById("slideStep").max = eachStepArr.length - 1;
@@ -656,14 +675,14 @@ function selectionSort(array) {
     highlightsorted = [];
     color = [];
     highlightcode = [];
-
+    logarray = [];
     //first elements
     eachStepArr.push(newarray(temparray));
     highlightcheck.push(0);
     color.push(0);
     highlightcode.push(1);
     highlightsorted.push(null);
-
+    logarray.push('Start sorting...<br>');
     for (var i = 0; i < temparray.length - 1; i++) {
         var index = i;
         eachStepArr.push(newarray(temparray));
@@ -671,12 +690,14 @@ function selectionSort(array) {
         color.push(0);
         highlightcode.push(2);
         highlightsorted.push([i]);
+        logarray.push(logarray[logarray.length-1] + 'i = ' + i + ', index = ' + index + '<br>');
         for (var j = i + 1; j < temparray.length; j++) {
             eachStepArr.push(newarray(temparray));
             highlightcheck.push([j]);
             color.push("check");
             highlightcode.push(3);
             highlightsorted.push([i]);
+            logarray.push(logarray[logarray.length-1]);
             if (temparray[j] < temparray[index]) {
                 index = j;
                 eachStepArr.push(newarray(temparray));
@@ -684,6 +705,7 @@ function selectionSort(array) {
                 color.push("swap");
                 highlightcode.push(5);
                 highlightsorted.push([i]);
+                logarray.push(logarray[logarray.length-1] + 'Set index = ' + index + '<br>');
             }
         }
         var smallerNumber = temparray[index];
@@ -692,27 +714,189 @@ function selectionSort(array) {
         eachStepArr.push(newarray(temparray));
         highlightcheck.push([i, index]);
         color.push("swap");
-        highlightcode.push(8);
+        highlightcode.push(10);
         highlightsorted.push([i]);
+        logarray.push(logarray[logarray.length-1]);
     }
-    //last elements
-    highlightcode.push(9);
+//last elements
+    highlightcheck.push(0);
+    highlightcode.push(11);
     eachStepArr.push(newarray(temparray));
     totalstep = eachStepArr.length - 1;
     highlightsorted.push(newsortedarray(initarray.length));
-
+    logarray.push(logarray[logarray.length-1] + 'Array sorted!');
     //set step in userview
     document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
     document.getElementById("progressStep").max = eachStepArr.length - 1;
     document.getElementById("slideStep").max = eachStepArr.length - 1;
+}
 
+function sort(array) {
+    for (var i = 0; i < array.length - 1; i++) {
+        for (var j = 0; j < array.length - i - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                var temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+            }
+        }
+    }
+}
+
+function linearSearch(array) {
+    sort(array);
+    eachStepArr = [];
+    highlightcheck = [];
+    highlightsorted = [];
+    color = [];
+    highlightcode = [];
+    logarray = [];
+    eachStepArr.push(array);
+    highlightcheck.push(0);
+    highlightsorted.push(null);
+    color.push(0);
+    highlightcode.push(1);
+    logarray.push('Start searching number ' + searchnumber + ' in the array...<br>');
+    for (var i = 0; i < array.length; i++) {
+        eachStepArr.push(array);
+        highlightcheck.push([i]);
+        highlightsorted.push(null);
+        color.push("check");
+        highlightcode.push(2);
+        logarray.push(logarray[logarray.length - 1] + 'Checking with i = ' + i + ', array[' + i + '] = ' + array[i] + '<br>');
+        if (array[i] === searchnumber) {
+            eachStepArr.push(array);
+            highlightcheck.push([i]);
+            highlightsorted.push(null);
+            color.push("swap");
+            highlightcode.push(3);
+            logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + " at position i = " + i + '<br>');
+            break;
+        } else if (i === array.length - 1) {
+            eachStepArr.push(array);
+            highlightcheck.push(0);
+            highlightsorted.push(null);
+            color.push(0);
+            highlightcode.push(6);
+            logarray.push(logarray[logarray.length - 1] + 'Can not find ' + searchnumber + ' in the array <br>');
+        }
+    }
+//    console.log(logarray);
+
+//set step in userview
+    totalstep = eachStepArr.length - 1;
+    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
+    document.getElementById("progressStep").max = eachStepArr.length - 1;
+    document.getElementById("slideStep").max = eachStepArr.length - 1;
+}
+
+function binarySearchexe(arr, l, r, searchnumber) {
+    var highlightcheckarr = [];
+    for (var i = l; i <= r; i++) {
+        highlightcheckarr.push(i);
+    }
+    if (r >= l) {
+        var mid = parseInt(l + (r - l) / 2);
+        eachStepArr.push(initarray);
+        highlightcheck.push(highlightcheckarr);
+        highlightsorted.push([mid]);
+        color.push('check');
+        highlightcode.push(4);
+        logarray.push(logarray[logarray.length - 1] + 'mid = ' + mid + ', checking at index ' + mid + '<br>');
+        if (arr[mid] === searchnumber) {
+            eachStepArr.push(initarray);
+            highlightcheck.push([mid]);
+            highlightsorted.push(null);
+            color.push('check');
+            highlightcode.push(5);
+            logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + mid + '<br>');
+            return mid;
+
+        }
+        if (arr[mid] > searchnumber) {
+            eachStepArr.push(arr);
+            highlightcheckarr = [];
+            for (var i = l; i <= mid - 1; i++) {
+                highlightcheckarr.push(i);
+            }
+            highlightcheck.push(highlightcheckarr);
+            highlightsorted.push(null);
+            color.push('check');
+            highlightcode.push(8);
+            logarray.push(logarray[logarray.length - 1] + 'Select left<br>left = ' + l + ', right = ' + (mid - 1) + '<br>');
+            return binarySearchexe(arr, l, mid - 1, searchnumber);
+        }
+        eachStepArr.push(arr);
+        highlightcheckarr = [];
+        for (var i = mid + 1; i <= r; i++) {
+            highlightcheckarr.push(i);
+        }
+        highlightcheck.push(highlightcheckarr);
+        highlightsorted.push(null);
+        color.push('check');
+        highlightcode.push(10);
+        logarray.push(logarray[logarray.length - 1] + 'Select right<br>left = ' + (mid + 1) + ', right = ' + r + '<br>');
+        return binarySearchexe(arr, mid + 1, r, searchnumber);
+    }
+    eachStepArr.push(initarray);
+    highlightcheck.push(0);
+    highlightsorted.push(null);
+    color.push(0);
+    highlightcode.push(12);
+    logarray.push(logarray[logarray.length - 1] + 'Can not find ' + searchnumber + ' in the array <br>');
+    return -1;
+}
+
+function binarySearch(array) {
+    sort(array);
+    eachStepArr = [];
+    highlightcheck = [];
+    highlightsorted = [];
+    color = [];
+    highlightcode = [];
+    logarray = [];
+
+    eachStepArr.push(array);
+    highlightcheck.push(0);
+    highlightsorted.push(null);
+    color.push(0);
+    highlightcode.push(0);
+    logarray.push('Start searching number ' + searchnumber + ' in the array...<br>');
+
+    var n = array.length;
+    var left = 0;
+    var right = n - 1;
+
+    eachStepArr.push(array);
+    var highlightcheckarr = [];
+    for (var i = left; i <= right; i++) {
+        highlightcheckarr.push(i);
+    }
+    highlightcheck.push(highlightcheckarr);
+    highlightsorted.push(null);
+    color.push('check');
+    highlightcode.push(1);
+    logarray.push(logarray[logarray.length - 1] + 'left = ' + left + ', right = ' + right + '<br>');
+
+
+    binarySearchexe(array, left, right, searchnumber);
+
+    console.log(highlightcheck);
+    console.log(eachStepArr);
+
+//set step in userview
+    totalstep = eachStepArr.length - 1;
+    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
+    document.getElementById("progressStep").max = eachStepArr.length - 1;
+    document.getElementById("slideStep").max = eachStepArr.length - 1;
 }
 
 /*setInputFilter(document.getElementById("intLimitTextBox"), function(value) {
  return /^\d*$/.test(value) && (value === "" ||( parseInt(value) >=1 && parseInt(value) <= mang.length)); });*/
 setInputFilter(document.getElementById("intLimitTextBox"), function (value) {
     return /^(\d+[, ]+)*$/.test(value);
-});
+}
+);
 
 
 
