@@ -5,12 +5,17 @@
  */
 package Controller;
 
+import Entity.User;
 import Model.AuthenticateManagement;
+import Model.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +39,6 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         
 
     }
@@ -68,41 +72,65 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-//            session.removeAttribute("username");
-        String username = request.getParameter("username");
+         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        if (username == null || username.trim().equals("")) {
-            request.setAttribute("errorMessage", "Please input username");
+        UserModel userDao;
+        int id=0;
+            
+//        String result1 = request.getParameter("myField");
+//        HashMap<String,String> hm=new HashMap<>();
+//        hm=(HashMap)request.getParameter("myField");
+//        if (result1!=null) {
+//            session.setAttribute("username", result1);
+//                response.sendRedirect("/AVS/HomeController");
+//        }
+        AuthenticateManagement authenticateManagement = new AuthenticateManagement();
+        AuthenticateManagement.CheckResult result = authenticateManagement.checkUserAccount(username, password);
+        if (result == AuthenticateManagement.CheckResult.USERNAME_LENGTH) {
+//                session.setAttribute("username", username);
+            request.setAttribute("errorMessage", "Username length if from 6 to 15 chacraters");
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
             dispatcher.forward(request, response);
-            return;
-        } else {
-            AuthenticateManagement authenticateManagement = new AuthenticateManagement();
-            AuthenticateManagement.CheckUsernameResult result = authenticateManagement.checkUserAccount(username, password);
-            if (username != null && password == null) {
-                request.setAttribute("errorMessage", "Please input password");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-                dispatcher.forward(request, response);
-            } else if (result == AuthenticateManagement.CheckUsernameResult.WRONG_PASSWORD) {
-                session.setAttribute("username", username);
-                request.setAttribute("errorMessage", "Password is incorrect");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-                dispatcher.forward(request, response);
 
-            } else if (result == AuthenticateManagement.CheckUsernameResult.NO_USERNAME) {
-                request.setAttribute("errorMessage", "Username is incorrect");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-                dispatcher.forward(request, response);
-            } else if (result == AuthenticateManagement.CheckUsernameResult.SHORT) {
-                request.setAttribute("errorMessage", "Password need at least 6 character");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-                dispatcher.forward(request, response);
-            } else {
-                session.setAttribute("username", username);
-                response.sendRedirect("/AVS/HomeController");
-            }
+        }else if (result == AuthenticateManagement.CheckResult.INVALID_CHARACTER) {
+//                session.setAttribute("username", username);
+            request.setAttribute("errorMessage", "Contain invalid character(Valid character:a-z,0-9, underscore, hyphen)");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+            dispatcher.forward(request, response);
+
+        } else if (result == AuthenticateManagement.CheckResult.PASSWORD_SHORT) {
+//                session.setAttribute("username", username);
+            request.setAttribute("errorMessage", "Password need at least 6 character");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+            dispatcher.forward(request, response);
+
+        } else if (result == AuthenticateManagement.CheckResult.NO_USERNAME) {
+            request.setAttribute("errorMessage", "Username is incorrect");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+            dispatcher.forward(request, response);
+
+        } else if (result == AuthenticateManagement.CheckResult.WRONG_PASSWORD) {
+            request.setAttribute("errorMessage", "Password is incorrect");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+            dispatcher.forward(request, response);
+        } else {
+//                session.setAttribute("username", username);
+//                Cookie cookie = new Cookie("JSESSIONID", session.getId());
+//                response.addCookie(cookie);
+            try {
+            userDao = new UserModel();
+            User user = userDao.getUserByUsername(username);
+            id=user.getRolenum();
+        } catch (Exception ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            String userid=Integer.toString(id);
+            Cookie ck = new Cookie("username", username);
+            Cookie ck1 = new Cookie("roleid",userid);
+            ck.setMaxAge(Integer.MAX_VALUE);
+            response.addCookie(ck);
+            response.addCookie(ck1);
+            response.sendRedirect("/AVS/HomeController");
         }
 
 //        }

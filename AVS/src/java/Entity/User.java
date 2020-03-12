@@ -10,7 +10,7 @@ package Entity;
  * @author BinhNT
  */
 public class User {
-    private int id;
+   private int id;
     private String username;
     private String password;
     private int rolenum;
@@ -20,11 +20,12 @@ public class User {
     private int gender;
     private String mail;
     private String phone;
+    private String fullname;
 
     public User() {
     }
 
-    public User(int id, String username, String password, int rolenum, int age, int job, String workplace, int gender, String mail, String phone) {
+    public User(int id, String username, String password, int rolenum, int age, int job, String workplace, int gender, String mail, String phone, String fullname) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -35,8 +36,18 @@ public class User {
         this.gender = gender;
         this.mail = mail;
         this.phone = phone;
+        this.fullname = fullname;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+  
     public int getId() {
         return id;
     }
@@ -114,6 +125,7 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    
     
     
 }

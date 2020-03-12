@@ -16,6 +16,7 @@
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/HomeController</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>Detail</servlet-name>
         <servlet-class>Controller.DetailController</servlet-class>

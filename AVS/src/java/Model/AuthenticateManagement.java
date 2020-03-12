@@ -6,42 +6,124 @@
 package Model;
 
 import Entity.User;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author BinhNT
  */
 public class AuthenticateManagement {
-    public enum CheckUsernameResult
-    {
+
+    public enum CheckResult {
         SUCCESS,
         NO_USERNAME,
-        SHORT,
-        WRONG_PASSWORD
+        PASSWORD_SHORT,
+        USERNAME_LENGTH,
+        WRONG_PASSWORD,
+        EMPTY,
+        EXIST_USERNAME,
+        NOT_MATCH,
+        INVALID_CHARACTER,
+        NOT_NUMBER,
+        WRONG_FORMAT
     }
-    
-    public CheckUsernameResult checkUserAccount(String username, String password)
-    {
-        try
-        {
+
+    public boolean checkInput(String regex, String input) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
+    public CheckResult checkUserAccount(String username, String password) {
+        String regex = "^[a-z0-9_-]{6,15}$";
+        boolean check = checkInput(regex, username);
+        try {
             UserModel userDao = new UserModel();
             User user = userDao.getUserByUsername(username);
-            if(user == null)
-            {
-                return CheckUsernameResult.NO_USERNAME;
+            if (check != true) {
+                if (username.length() < 6||username.length() > 15) {
+                    return CheckResult.USERNAME_LENGTH;
+                } else {
+                    return CheckResult.INVALID_CHARACTER;
+                }
+            } else if (user == null) {
+                return CheckResult.NO_USERNAME;
+            } else if (password.length() < 6) {
+                return CheckResult.PASSWORD_SHORT;
+            } else if (!user.getPassword().equals(password)) {
+                return CheckResult.WRONG_PASSWORD;
             }
-            else if (password.length()<6) {
-                return CheckUsernameResult.SHORT;
-            }
-            else if (!user.getPassword().equals(password))
-            {
-                return CheckUsernameResult.WRONG_PASSWORD;
-            }
-            return CheckUsernameResult.SUCCESS;
-        }catch(Exception ex)
-        {
-            return CheckUsernameResult.NO_USERNAME;
+            return CheckResult.SUCCESS;
+        } catch (Exception ex) {
+            return CheckResult.NO_USERNAME;
         }
-        
+
+    }
+
+    public CheckResult checkUserSignUp(String username) {
+        String nameregex = "^[a-z0-9_-]{6,15}$";
+        boolean check = checkInput(nameregex, username);
+        try {
+            UserModel userDao = new UserModel();
+            User user = userDao.getUserByUsername(username);
+            if (check != true) {
+                if (username.length() < 6 || username.length() > 15) {
+                    return CheckResult.USERNAME_LENGTH;
+                } else {
+                    return CheckResult.INVALID_CHARACTER;
+                }
+            } else if (user != null) {
+                return CheckResult.EXIST_USERNAME;
+            }
+
+            return CheckResult.SUCCESS;
+        } catch (Exception ex) {
+            return CheckResult.NO_USERNAME;
+        }
+
+    }
+
+    public CheckResult checkPassSignUp(String password, String repassword) {
+        try {
+            if (password.length() < 6) {
+                return CheckResult.PASSWORD_SHORT;
+            } else if (!password.equals(repassword)) {
+                return CheckResult.NOT_MATCH;
+            }
+            return CheckResult.SUCCESS;
+        } catch (Exception ex) {
+            return CheckResult.NO_USERNAME;
+        }
+
+    }
+
+    public CheckResult checkNumber(String number) {
+        String numberregex = "^[0-9]+";
+        boolean check = checkInput(numberregex, number);
+        try {
+            if (check != true) {
+                return CheckResult.NOT_NUMBER;
+            }
+            return CheckResult.SUCCESS;
+        } catch (Exception ex) {
+            return CheckResult.NO_USERNAME;
+        }
+
+    }
+
+    public CheckResult checkMail(String mail) {
+        String mailregex = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
+        boolean check = checkInput(mailregex, mail);
+        try {
+            if (check != true) {
+
+                return CheckResult.WRONG_FORMAT;
+            }
+            return CheckResult.SUCCESS;
+        } catch (Exception ex) {
+            return CheckResult.NO_USERNAME;
+        }
+
     }
 }

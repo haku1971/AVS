@@ -5,8 +5,15 @@ body {
 
 
 /*HEADER*/
+.header #loginButton{
+    float: right;
+    display: inline-block;
+}
 .header ul {
-    position: relative;
+    display: inline-block;
+    margin-left: 50px;
+    padding-bottom: 10px;
+    margin-right: 0;
 }
 
 .header li {
@@ -14,38 +21,30 @@ body {
     margin-right: 50px;
     font-size: 30px;
     font-weight: bold;
-    float: left;
 }
 
-.header li:last-child{
-    float: right;
-}
-
-.header li:nth-last-child(2){
-    float: right;
-
-}
-
-#hover:hover {
+.header li:hover {
     color: pink;
     font-weight: bold;
     /*font-size: 40px; vì thay đổi kích thước nên box element's size bị thay đổi làm thay đổi khoảng cách so với ban đầu*/
     text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px white;
-    cursor: pointer;
 }
 
-#userName{
-    cursor: default;
-}
+
 .header {
-    overflow: auto;
+    position: relative;
+    height: 80px;
+    display: block;
+    width: auto;
     background-color: white;
 }
 
 .header img {
     cursor: pointer;
     float: left;
+    margin-left: 10px;
     width: 125px;
+    margin-top: 15px;
 }
 
 .header #search input {
@@ -74,9 +73,14 @@ body {
 }
 
 
-.header #account {
+/*#header #account {
+    position: absolute;
+    left: 1100px;
+    bottom: 15px;
+    margin-top: 10px;
+    margin-right: 15px;
     float: right;
-}
+}*/
 
 .header #account button {
     width: 90px;
@@ -108,41 +112,45 @@ body {
 }
 
 .header #account img {
+    float: right;
     width: 25px;
     height: 25px;
-    margin-top: 3px;
-    margin-right: 3px;
+    margin-right: -30px;
+    margin-top: -43px;
 }
 .header #account #signout {
     float: right;
     width: 10px;
     height: 10px;
-    padding-top: 0px;
 
 }
 
 /*BANNER*/
 
 .banner {
-    margin-top: 10px;
-    overflow: auto;
+    width: auto;
+    height: 150px;
+    position: relative;
     background-color: #edf0f4;
 }
 
 .banner h1 {
-    padding-top: 30px;
-    text-align: center;
+    position: absolute;
+    left: 420px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: #3b4754;
 }
 
 .banner h5 {
-    text-align: center;
+    position: absolute;
+    top: 50px;
+    left: 558px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: #3b4754;
 }
+
 
 
 /*MAIN*/
@@ -270,12 +278,6 @@ body {
     cursor: pointer;
 }
 
-p {
-    color: #888888;
-    height: 15px;
-    float: left;
-    margin-left: 30px;
-}
 
 .list_items {
     margin-right: 0px;
@@ -339,7 +341,8 @@ p {
     border-radius: 5px;
     transition: 0.25s;
     color: #ffffff;
-    background: #333333
+    background: #333333;
+    margin-right: 85px;
 }
 .box #gg{
     background: none;
@@ -355,29 +358,123 @@ p {
     line-height: 0px;
     font-weight: 10;
 }
-/* .dropdown{
- position:relative;
- display:inline-block;
+.box2{
+    margin-top: 20px;
+    width: 400px;
+    padding: 40px;
+    background: #EDF0F4;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 5px;
+    overflow: auto;
+    height: 500px;
 }
-.button{
- padding:10px 40px;
- font-size:20px;
+.box2 .su_infor{
+    border:0;
+    background: none;
+    display: block;
+    margin: auto;
+    border:#999999 2px solid ;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.25s;
+    height: 5px;
+    width: 250px;
+    
 }
-.drop-content{
- display:none ;
- position:absolute;
- z-index:1;
- width:120px;
+.box2 .su_infor:invalid{
+    border:0;
+    background: none;
+    display: block;
+    margin: auto;
+    border:#999999 2px solid ;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.25s;
+    height: 5px;
+    width: 250px;
 }
-.drop-content a{
- display:block;
- background:#dfdfdf;
- padding:10px;
- color:black;
- text-decoration:none;
- font-size:20px;
- margin-top:2px;
+.box2 .su_infor2{
+    border:0;
+    background: none;
+    display: block;
+    margin: auto;
+    border:#C9D3DD 3px solid ;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.25s;
+    height: 5px;
+    width: 250px;
+    font-size: 10px;   
 }
-.dropdown:hover .drop-content{
- display:block;
-}*/
+#gender {
+    display: inline-block;
+    width: 270px;
+    height: 30px;
+    background: #EDF0F4;
+    padding: 1px;
+    border-radius: 5px;
+    transition: 0.25s;
+    font-size: 15px;
+    color: gray;
+}
+
+#gender span {
+    float: left;
+}
+
+.box2 #log{
+  border:0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: #999999 2px solid ;
+    padding: 14px 40px;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.25s;
+    color: #ffffff;
+    background: #333333
+}
+
+.box2 select {
+    border:#C9D3DD 3px solid ; 
+    width: 275px;
+    height: 37px;
+    border-radius: 5px;
+    transition: 0.25s;
+    background: none;
+}
+
+.errormesslogin p {
+    color: red;
+}
+.errormesssignup p {
+    font-size: 15px;
+    color: red;
+    position: relative;
+    top: -25px;
+}
+
+#input:invalid {
+  border: 1px solid red;
+}
+
+.caution {
+    color: red;
+    float: left;
+    margin-right: -25px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-top: 8px;
+}

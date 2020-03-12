@@ -22,8 +22,9 @@ public class UserModel {
     public UserModel() throws Exception {
         db = new DBContext();
     }
-     public User getUserByUsername(String username) throws Exception {
-       String query = "select * from Users where user_Name=?";
+
+    public User getUserByUsername(String username) throws Exception {
+        String query = "select * from Users where user_Name=?";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
         ResultSet rs = null;
@@ -45,6 +46,7 @@ public class UserModel {
                 user.setGender(rs.getInt("user_Gender"));
                 user.setMail(rs.getString("user_Mail"));
                 user.setPhone(rs.getString("user_Phone"));
+                user.setFullname(rs.getString("user_Fullname"));
                 return user;
             }
         } catch (SQLException e) {
@@ -52,5 +54,36 @@ public class UserModel {
         }
 
         return null;
+    }
+
+    public void insertUser(String username,
+            String password,String fullname,int age, int job,
+            String workplace, int gender, String mail, String phone) throws Exception {
+        String query1 = "insert into Users(user_Name,user_Password,user_RoleNum,"
+                + "user_Fullname,user_Age,user_Workplaces,user_Gender,user_Mail,"
+                + "user_Phone,job_ID)\n"
+                + "values (?,?,2,?,?,?,?,?,?,?)";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query1);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, fullname);
+            ps.setInt(4, age);
+            ps.setString(5, workplace);
+            ps.setInt(6, gender);
+            ps.setString(7, mail);
+            ps.setString(8, phone);
+            ps.setInt(9, job);
+            ps.executeQuery();
+
+           
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -8,29 +8,69 @@
 <%@page import="Model.UserModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
+<% UserModel useracountmanagement = new UserModel();
+    Cookie cookie[] = request.getCookies();
+    int age = cookie[0].getMaxAge();
+    String user = "";
+    String userid = "";
+//    if (ck != null) {
+//        while (co < ck.length) {
+//            if (ck[co].getName().equals("username")) {
+//                user = ck[co].getValue();
+//            }
+//
+//            co++;
+//        }
+//        if (age == 0) {
+//            user = "";
+//        }
+//    }
+
+    for (Cookie ck : cookie) {
+        if (ck.getName().equals("username")) {
+            user = ck.getValue();
+        }
+        if (ck.getName().equals("roleid")) {
+            userid = ck.getValue();
+        }
+        if (age == 0) {
+            user = "";
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>Header</title>
+        <!-- BEGIN Pre-requisites -->
+
+        <!-- END Pre-requisites -->
     </head>
     <body>
         <div class="header">
-            <ul>
-                <li><img src="images\avs_logo.png" /></li>
-                <li id="hover" onclick="document.location = '/AVS/HomeController'">Home</li>
-                <li id="hover">News</li>
+            <img src="images\avs_logo.png" />
+            <ul id="redirectButton">
+                <li onclick="document.location = '/AVS/HomeController'">Home</li>
+                <li>News</li>
+            </ul>
+            <ul id="loginButton">
+                <li>
+                    <form id="search">
+                        <input type="text" placeholder="  Search.." name="search">
+                        <button type="submit">Submit</button>
+                    </form>
+                </li>
                 <li>
                     <form id="account">
+
                         <% String usern = "";
-                            if (session.getAttribute("username") != null) {
-                                usern = (String) session.getAttribute("username");
-                                UserModel useracountmanagement = new UserModel();
-                                User users = useracountmanagement.getUserByUsername(usern);
-                                usern = users.getUsername();
-                        %>
-                        <a id="userName">Hello,<%=usern%></a><img  src="images\user.png" />
+                            if (!user.equals("")) {
+//                                User users = useracountmanagement.getUserByUsername(user);
+//                                usern = users.getUsername();
+%>
+                        <a>Hello,<span><%=user%></span> <img  src="images\user.png" /></a>
 
                         <button id="logout" onclick="document.location = '/AVS/LogoutController';return false">Log out</button>
                         <!--                        <div class="dropdown">
@@ -44,13 +84,7 @@
                                                 </div>-->
                         <%} else {%>
                         <button onclick="document.location = '/AVS/LoginController';return false">Sign in</button>
-                        <button>Sign Up</button><%}%>
-                    </form>
-                </li>
-                <li id="loginButton">
-                    <form id="search">
-                        <input type="text" placeholder="  Search.." name="search">
-                        <button type="submit">Submit</button>
+                        <button onclick="document.location = '/AVS/SignupController';return false">Sign Up</button><%}%>
                     </form>
                 </li>
             </ul>

@@ -27,27 +27,33 @@
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
         <div class="main">
-                <form class="box" action="LoginController" method="post">
-                    <h1><b>Login</b></h1>
-                    <input id="infor" type="text" name="username" placeholder="Username"/></br>
-                    <input id="infor" type="password" name="password" placeholder="Password"/></br> 
-                    <%if (request.getAttribute("errorMessage") != null) {
-                    %>
-                    <p> <%=request.getAttribute("errorMessage")%></p>
-                    <%
-                        }
-                    %>
-                    <input id="log" type="submit"  value="LOGIN" />
-                    <hr>
-                    <h4>Or</h4>
-                    <div id="gg" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-                    <hr>
-                    <h4>Don't have an account</h4>
+            <form class="box" action="LoginController" method="post">
+                <h1><b>Login</b></h1>
+                <input id="infor" type="text" name="username" placeholder="Username" required /></br>
 
-                    <input id="sign" type="submit"  value="Register" />
-                    <!--  <input type="submit" name="" value="Login">-->
-                </form>
-            </div>
+                <input id="infor" type="password" name="password" placeholder="Password" required /></br> 
+
+                <%if (request.getAttribute("errorMessage") != null) {
+                %>
+                <div class="errormesslogin">
+                    
+                    <p> <%=request.getAttribute("errorMessage")%></p>
+                </div>
+                <%
+                    }
+                %>
+
+                <input id="log" type="submit"  value="LOGIN" />
+                <hr>
+                <h4>Or</h4>
+                <div id="gg" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                <hr>
+                <h4>Don't have an account</h4>
+
+                <input id="sign" type="submit"  value="Register" />
+                <!--  <input type="submit" name="" value="Login">-->
+            </form>
+        </div>
 
         <%@include file="footer.jsp" %>
         <script type="text/javascript" src="js/code.js"></script>
