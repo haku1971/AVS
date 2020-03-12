@@ -27,7 +27,7 @@ public class AlgorithmModel {
     }
     //new function cua quang
 
-    public ArrayList<Algorithm> getAlgosortbyID() throws SQLException, Exception {
+    public ArrayList<Algorithm> getAlgosortbyID(int categoryID) throws SQLException, Exception {
         ArrayList<Algorithm> listAllAlgorithms = new ArrayList<>();
         DBContext dbManager = new DBContext();
         Connection connection = null;
@@ -35,8 +35,9 @@ public class AlgorithmModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT * FROM Algorithm WHERE algo_CompareStatus = 1 ORDER BY algo_ID";
+            String sql = "SELECT * FROM Algorithm WHERE algo_CompareStatus = 1 AND category_ID = ? ORDER BY algo_ID";
             statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryID);
             rs = statement.executeQuery();
             while (rs.next()) {
                 int algoid = rs.getInt(1);

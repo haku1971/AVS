@@ -162,18 +162,10 @@ public class SortStepServlet extends HttpServlet {
             //  AlgoSort algo3 = new AlgoSort("Insertion Sort", insertionSort(tempArray(jsFileArray)));
             AlgorithmModel dao = new AlgorithmModel();
    
-            ArrayList<Algorithm> listAlgo = dao.getAlgosortbyID();
+            ArrayList<Algorithm> listAlgo = dao.getAlgosortbyID(1);
             for (int i = 0; i < listAlgo.size(); i++) {
-                int choosefunctionkey = listAlgo.get(i).getAlgoID();
-                if (i == 0) {                  
+                int choosefunctionkey = listAlgo.get(i).getAlgoID();        
                     listAlgo.get(i).setNumber_of_step(chooseSortFunctionByAlgoID(choosefunctionkey, tempArray(jsFileArray)));
-                } else if (i == 2) {                
-                    listAlgo.get(i).setNumber_of_step(chooseSortFunctionByAlgoID(choosefunctionkey, tempArray(jsFileArray)));
-                } else if (i == 4) {                 
-                    listAlgo.get(i).setNumber_of_step(chooseSortFunctionByAlgoID(choosefunctionkey, tempArray(jsFileArray)));
-                } else {
-                    listAlgo.get(i).setNumber_of_step(5);
-                }
             }
       
         String jsonData = parser.toJson(listAlgo);
