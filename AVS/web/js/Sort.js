@@ -28,25 +28,7 @@ var algorithmtype;
 
 function init(algorithmtype) {
     this.algorithmtype = algorithmtype;
-    var mydata = JSON.stringify(initarray);
-//    console.log("datanormal: " + initarray);
-    $.ajax({
-        type: "POST",
-        url: "SortStepServlet",
-        data: {name: mydata}
-        ,
-        dataType: "json",
-        //OK
-        success: function (data) {
-//            console.log(data);
-            drawGraph(data);
-        }
-        ,
-        error: function (error) {
-//            console.log("error", error);
-        }
-    }
-    );
+    removeHighlightedCode();
     startSorting();
     currentstep = 0;
     canvas = document.getElementById('canvasAnimation');
@@ -59,20 +41,70 @@ function startSorting() {
     switch (algorithmtype) {
         case 'bubblesort' :
             bubbleSort(initarray);
+            getAjaxSortData();
             break;
         case 'insertionsort' :
             insertionSort(initarray);
+            getAjaxSortData();
             break;
         case 'selectionsort' :
             selectionSort(initarray);
+            getAjaxSortData();
             break;
         case 'linearsearch' :
             linearSearch(initarray);
+            getAjaxSearchData();
             break;
         case 'binarysearch' :
             binarySearch(initarray);
+            getAjaxSearchData();
+            break;
+        case 'interpolationsearch' :
+            interpolationSearch(initarray);
+            getAjaxSearchData();
             break;
     }
+}
+
+function getAjaxSortData() {
+    var mydata = JSON.stringify(initarray);
+    $.ajax({
+        type: "POST",
+        url: "SortStepServlet",
+        data: {name: mydata}
+        ,
+        dataType: "json",
+        //OK
+        success: function (data) {
+            drawGraph(data);
+        }
+        ,
+        error: function (error) {
+//            console.log("error", error);
+        }
+    }
+    );
+    document.getElementById("txtSearchnumber").hidden = true;
+}
+
+function getAjaxSearchData() {
+    var mydata = JSON.stringify(initarray);
+    $.ajax({
+        type: "POST",
+        url: "SortStepServlet",
+        data: {name: mydata}
+        ,
+        dataType: "json",
+        //OK
+        success: function (data) {
+            drawGraph(data);
+        }
+        ,
+        error: function (error) {
+//            console.log("error", error);
+        }
+    }
+    );
 }
 
 //deleted
@@ -95,7 +127,7 @@ function random() {
     for (var i = 0; i < arraylenght; i++) {
         initarray.push(randomFrom1to9());
     }
-    highlightCode(0);
+    removeHighlightedCode();
     init(algorithmtype);
 }
 
@@ -407,18 +439,24 @@ function drawGraph(data) {
 
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
-        textbox.addEventListener(event, function () {
-            if (inputFilter(this.value)) {
-                this.oldValue = this.value;
-                this.oldSelectionStart = this.selectionStart;
-                this.oldSelectionEnd = this.selectionEnd;
-            } else if (this.hasOwnProperty("oldValue")) {
-                this.value = this.oldValue;
-                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-            } else {
-                this.value = "";
-            }
-        });
+        if (textbox === null) {
+            console.log('Null pointer exception!');
+        } else {
+
+
+            textbox.addEventListener(event, function () {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                } else {
+                    this.value = "";
+                }
+            });
+        }
     });
 }
 
@@ -475,7 +513,7 @@ function drawInitCurrent(currentstep, ctx) {
             if (document.getElementById(line_name) !== null) {
                 document.getElementById(line_name).style.background = "None";
             } else {
-//                console.log(line_name);
+//                console.log(line_name + 'not found');
             }
         }
     }
@@ -519,20 +557,29 @@ function drawHighlightSorted(currentstep, ctx) {
 }
 
 function highlightCode(currentstep) {
-//khởi tạo lại
-    highlightcode.forEach(function (item) {
-        if (item !== 0) {
-            var line_name = "line_" + item;
-            document.getElementById(line_name).style.background = "None";
-        }
-    });
-    if (highlightcode[currentstep] !== 0) {
-        var line_name = "line_" + highlightcode[currentstep];
-        if (document.getElementById(line_name) !== null) {
-            document.getElementById(line_name).style.background = "Red";
+    removeHighlightedCode();
+    for (var i = 0; i < highlightcode[currentstep].length; i++) {
+        if (highlightcode[currentstep][i] !== 0) {
+            var line_name = "line_" + highlightcode[currentstep][i];
+            if (document.getElementById(line_name) !== null) {
+                document.getElementById(line_name).style.background = "Red";
+            }
         }
     }
 
+}
+
+function removeHighlightedCode() {
+    for (var i = 0; i < highlightcode.length; i++) {
+        for (var j = 0; j < highlightcode[i].length; j++) {
+            if (highlightcode[i][j] !== 0) {
+                var line_name = "line_" + highlightcode[i][j];
+                if (document.getElementById(line_name) !== null) {
+                    document.getElementById(line_name).style.background = "None";
+                }
+            }
+        }
+    }
 }
 
 function printLog(currentstep) {
@@ -550,11 +597,10 @@ function bubbleSort(array) {
     highlightcode = [];
     highlightsorted = [];
     logarray = [];
-
     eachStepArr.push(newarray(temparray));
     highlightcheck.push(0);
     color.push(0);
-    highlightcode.push(1);
+    highlightcode.push([1]);
     highlightsorted.push(null);
     logarray.push('Start sorting...<br>');
     for (var i = 0; i < temparray.length - 1; i++) {
@@ -563,7 +609,7 @@ function bubbleSort(array) {
             eachStepArr.push(newarray(temparray));
             highlightcheck.push([j, j + 1]);
             color.push("normal");
-            highlightcode.push(2);
+            highlightcode.push([2]);
             logarray.push(logarray[logarray.length - 1] + 'Checking with i = ' + i + ', j = ' + j + '<br>');
             if (temparray[j] > temparray[j + 1]) {
                 logarray.push(logarray[logarray.length - 1] + 'Swap ' + temparray[j] + ' and ' + temparray[j + 1] + '<br>');
@@ -573,7 +619,7 @@ function bubbleSort(array) {
                 color.push("swap");
                 eachStepArr.push(newarray(temparray));
                 highlightcheck.push([j, j + 1]);
-                highlightcode.push(5);
+                highlightcode.push([5]);
                 if (i > 0) {
                     highlightsorted.push(newsortedarray(i));
                 } else {
@@ -588,12 +634,11 @@ function bubbleSort(array) {
         }
     }
     highlightcheck.push(0);
-    highlightcode.push(8);
+    highlightcode.push([8]);
     eachStepArr.push(newarray(temparray));
     totalstep = eachStepArr.length - 1;
     highlightsorted.push(newsortedarray(initarray.length));
     logarray.push(logarray[logarray.length - 1] + 'Array sorted!');
-    console.log(logarray);
     document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
     document.getElementById("progressStep").max = eachStepArr.length - 1;
     document.getElementById("slideStep").max = eachStepArr.length - 1;
@@ -608,12 +653,11 @@ function insertionSort(array) {
     highlightcode = [];
     color = [];
     logarray = [];
-
     eachStepArr.push(newarray(temparray));
     highlightcheck.push(0);
     highlightsorted.push(0);
     color.push("key");
-    highlightcode.push(1);
+    highlightcode.push([1]);
     logarray.push('Start sorting...<br>');
     var i, key, j, k;
     for (i = 1; i < temparray.length; i++) {
@@ -624,10 +668,10 @@ function insertionSort(array) {
         highlightcheck.push([i]);
         color.push("key");
         highlightsorted.push([i]);
-        highlightcode.push(2);
+        highlightcode.push([2]);
         logarray.push(logarray[logarray.length - 1] + 'key index = ' + i + ', key value = ' + temparray[i] + '<br>');
         while (j >= 0 && temparray[j] > key) {
-            logarray.push(logarray[logarray.length - 1] + 'Set array[' + (j + 1) + '] = array[' + j + '], value ' + temparray[j+1] + ' -> ' + temparray[j] + '<br>');
+            logarray.push(logarray[logarray.length - 1] + 'Set array[' + (j + 1) + '] = array[' + j + '], value ' + temparray[j + 1] + ' -> ' + temparray[j] + '<br>');
             temparray[j + 1] = temparray[j];
             eachStepArr.push(newarray(temparray));
             color.push("swap");
@@ -637,23 +681,19 @@ function insertionSort(array) {
             } else {
                 highlightsorted.push([i]);
             }
-            highlightcode.push(5);
-            
+            highlightcode.push([5]);
             k++;
             j--;
         }
-        logarray.push(logarray[logarray.length - 1] + 'Set array[' + (j + 1) + '] = key, value ' + temparray[j+1] + ' -> ' + key + '<br>');
+        logarray.push(logarray[logarray.length - 1] + 'Set array[' + (j + 1) + '] = key, value ' + temparray[j + 1] + ' -> ' + key + '<br>');
         temparray[j + 1] = key;
         eachStepArr.push(newarray(temparray));
         color.push("swap");
         highlightcheck.push([i - k]);
         highlightsorted.push([i]);
-        highlightcode.push(8);
-        
+        highlightcode.push([8]);
     }
-    console.log(highlightsorted);
-    console.log(eachStepArr);
-    highlightcode.push(9);
+    highlightcode.push([9]);
     eachStepArr.push(newarray(temparray));
     color.push(0);
     highlightcheck.push(0);
@@ -680,7 +720,7 @@ function selectionSort(array) {
     eachStepArr.push(newarray(temparray));
     highlightcheck.push(0);
     color.push(0);
-    highlightcode.push(1);
+    highlightcode.push([1]);
     highlightsorted.push(null);
     logarray.push('Start sorting...<br>');
     for (var i = 0; i < temparray.length - 1; i++) {
@@ -688,24 +728,24 @@ function selectionSort(array) {
         eachStepArr.push(newarray(temparray));
         highlightcheck.push(i);
         color.push(0);
-        highlightcode.push(2);
+        highlightcode.push([2]);
         highlightsorted.push([i]);
-        logarray.push(logarray[logarray.length-1] + 'i = ' + i + ', index = ' + index + '<br>');
+        logarray.push(logarray[logarray.length - 1] + 'i = ' + i + ', index = ' + index + '<br>');
         for (var j = i + 1; j < temparray.length; j++) {
             eachStepArr.push(newarray(temparray));
             highlightcheck.push([j]);
             color.push("check");
-            highlightcode.push(3);
+            highlightcode.push([3]);
             highlightsorted.push([i]);
-            logarray.push(logarray[logarray.length-1]);
+            logarray.push(logarray[logarray.length - 1]);
             if (temparray[j] < temparray[index]) {
                 index = j;
                 eachStepArr.push(newarray(temparray));
                 highlightcheck.push([j]);
                 color.push("swap");
-                highlightcode.push(5);
+                highlightcode.push([5]);
                 highlightsorted.push([i]);
-                logarray.push(logarray[logarray.length-1] + 'Set index = ' + index + '<br>');
+                logarray.push(logarray[logarray.length - 1] + 'Set index = ' + index + '<br>');
             }
         }
         var smallerNumber = temparray[index];
@@ -714,17 +754,17 @@ function selectionSort(array) {
         eachStepArr.push(newarray(temparray));
         highlightcheck.push([i, index]);
         color.push("swap");
-        highlightcode.push(10);
+        highlightcode.push([10]);
         highlightsorted.push([i]);
-        logarray.push(logarray[logarray.length-1]);
+        logarray.push(logarray[logarray.length - 1]);
     }
 //last elements
     highlightcheck.push(0);
-    highlightcode.push(11);
+    highlightcode.push([11]);
     eachStepArr.push(newarray(temparray));
     totalstep = eachStepArr.length - 1;
     highlightsorted.push(newsortedarray(initarray.length));
-    logarray.push(logarray[logarray.length-1] + 'Array sorted!');
+    logarray.push(logarray[logarray.length - 1] + 'Array sorted!');
     //set step in userview
     document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
     document.getElementById("progressStep").max = eachStepArr.length - 1;
@@ -755,21 +795,21 @@ function linearSearch(array) {
     highlightcheck.push(0);
     highlightsorted.push(null);
     color.push(0);
-    highlightcode.push(1);
+    highlightcode.push([1]);
     logarray.push('Start searching number ' + searchnumber + ' in the array...<br>');
     for (var i = 0; i < array.length; i++) {
         eachStepArr.push(array);
         highlightcheck.push([i]);
         highlightsorted.push(null);
         color.push("check");
-        highlightcode.push(2);
+        highlightcode.push([2]);
         logarray.push(logarray[logarray.length - 1] + 'Checking with i = ' + i + ', array[' + i + '] = ' + array[i] + '<br>');
         if (array[i] === searchnumber) {
             eachStepArr.push(array);
             highlightcheck.push([i]);
             highlightsorted.push(null);
             color.push("swap");
-            highlightcode.push(3);
+            highlightcode.push([3]);
             logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + " at position i = " + i + '<br>');
             break;
         } else if (i === array.length - 1) {
@@ -777,11 +817,10 @@ function linearSearch(array) {
             highlightcheck.push(0);
             highlightsorted.push(null);
             color.push(0);
-            highlightcode.push(6);
+            highlightcode.push([6]);
             logarray.push(logarray[logarray.length - 1] + 'Can not find ' + searchnumber + ' in the array <br>');
         }
     }
-//    console.log(logarray);
 
 //set step in userview
     totalstep = eachStepArr.length - 1;
@@ -801,17 +840,16 @@ function binarySearchexe(arr, l, r, searchnumber) {
         highlightcheck.push(highlightcheckarr);
         highlightsorted.push([mid]);
         color.push('check');
-        highlightcode.push(4);
+        highlightcode.push([4]);
         logarray.push(logarray[logarray.length - 1] + 'mid = ' + mid + ', checking at index ' + mid + '<br>');
         if (arr[mid] === searchnumber) {
             eachStepArr.push(initarray);
             highlightcheck.push([mid]);
             highlightsorted.push(null);
             color.push('check');
-            highlightcode.push(5);
+            highlightcode.push([5]);
             logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + mid + '<br>');
             return mid;
-
         }
         if (arr[mid] > searchnumber) {
             eachStepArr.push(arr);
@@ -822,7 +860,7 @@ function binarySearchexe(arr, l, r, searchnumber) {
             highlightcheck.push(highlightcheckarr);
             highlightsorted.push(null);
             color.push('check');
-            highlightcode.push(8);
+            highlightcode.push([8]);
             logarray.push(logarray[logarray.length - 1] + 'Select left<br>left = ' + l + ', right = ' + (mid - 1) + '<br>');
             return binarySearchexe(arr, l, mid - 1, searchnumber);
         }
@@ -834,7 +872,7 @@ function binarySearchexe(arr, l, r, searchnumber) {
         highlightcheck.push(highlightcheckarr);
         highlightsorted.push(null);
         color.push('check');
-        highlightcode.push(10);
+        highlightcode.push([[10]]);
         logarray.push(logarray[logarray.length - 1] + 'Select right<br>left = ' + (mid + 1) + ', right = ' + r + '<br>');
         return binarySearchexe(arr, mid + 1, r, searchnumber);
     }
@@ -842,7 +880,7 @@ function binarySearchexe(arr, l, r, searchnumber) {
     highlightcheck.push(0);
     highlightsorted.push(null);
     color.push(0);
-    highlightcode.push(12);
+    highlightcode.push([12]);
     logarray.push(logarray[logarray.length - 1] + 'Can not find ' + searchnumber + ' in the array <br>');
     return -1;
 }
@@ -855,18 +893,15 @@ function binarySearch(array) {
     color = [];
     highlightcode = [];
     logarray = [];
-
     eachStepArr.push(array);
     highlightcheck.push(0);
     highlightsorted.push(null);
     color.push(0);
     highlightcode.push(0);
     logarray.push('Start searching number ' + searchnumber + ' in the array...<br>');
-
     var n = array.length;
     var left = 0;
     var right = n - 1;
-
     eachStepArr.push(array);
     var highlightcheckarr = [];
     for (var i = left; i <= right; i++) {
@@ -877,13 +912,7 @@ function binarySearch(array) {
     color.push('check');
     highlightcode.push(1);
     logarray.push(logarray[logarray.length - 1] + 'left = ' + left + ', right = ' + right + '<br>');
-
-
     binarySearchexe(array, left, right, searchnumber);
-
-    console.log(highlightcheck);
-    console.log(eachStepArr);
-
 //set step in userview
     totalstep = eachStepArr.length - 1;
     document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
@@ -891,12 +920,123 @@ function binarySearch(array) {
     document.getElementById("slideStep").max = eachStepArr.length - 1;
 }
 
-/*setInputFilter(document.getElementById("intLimitTextBox"), function(value) {
- return /^\d*$/.test(value) && (value === "" ||( parseInt(value) >=1 && parseInt(value) <= mang.length)); });*/
-setInputFilter(document.getElementById("intLimitTextBox"), function (value) {
-    return /^(\d+[, ]+)*$/.test(value);
+function interpolationSearch(array) {
+    sort(array);
+    eachStepArr = [];
+    highlightcheck = [];
+    highlightsorted = [];
+    color = [];
+    highlightcode = [];
+    logarray = [];
+
+    eachStepArr.push(array);
+    highlightcheck.push(0);
+    highlightsorted.push(null);
+    color.push(0);
+    highlightcode.push([1]);
+    logarray.push('Start searching number ' + searchnumber + ' in the array...<br>');
+
+    var n = array.length;
+    var x = searchnumber;
+
+    var lo = 0, hi = (n - 1);
+    var highlightcheckarr = [];
+    var found = false;
+
+    for (var i = lo; i <= hi; i++) {
+        highlightcheckarr.push(i);
+    }
+    eachStepArr.push(array);
+    highlightcheck.push(highlightcheckarr);
+    highlightsorted.push(null);
+    color.push(0);
+    highlightcode.push([2]);
+    logarray.push(logarray[logarray.length - 1] + 'low = ' + lo + ', high = ' + hi + '<br>');
+
+    while (lo <= hi && x >= array[lo] && x <= array[hi]) {
+        if (lo === hi) {
+            if (array[lo] === x) {
+                eachStepArr.push(array);
+                highlightcheck.push(highlightcheckarr);
+                highlightsorted.push(null);
+                color.push(0);
+                highlightcode.push([6]);
+                logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + pos);
+                found = true;
+                break;
+//                return lo;
+            } else {
+                eachStepArr.push(array);
+                highlightcheck.push(highlightcheckarr);
+                highlightsorted.push(null);
+                color.push(0);
+                highlightcode.push([8]);
+                logarray.push(logarray[logarray.length - 1] + 'Can not find ' + searchnumber + ' in the array <br>');
+//            return -1;
+            }
+        }
+        var pos = parseInt(lo + (((hi - lo) /
+                (array[hi] - array[lo])) * (x - array[lo])));
+        eachStepArr.push(array);
+        highlightcheck.push(highlightcheckarr);
+        highlightsorted.push([pos]);
+        color.push(0);
+        highlightcode.push([10, 11]);
+        logarray.push(logarray[logarray.length - 1] + 'Checking position ' + pos + '<br>');
+        if (array[pos] === x) {
+            eachStepArr.push(array);
+            highlightcheck.push([pos]);
+            highlightsorted.push(null);
+            color.push(0);
+            highlightcode.push([13]);
+            logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + pos);
+            found = true;
+            break;
+//            return pos;
+        }
+        if (array[pos] < x) {
+            lo = pos + 1;
+            highlightcheckarr = [];
+            for (var i = lo; i <= hi; i++) {
+                highlightcheckarr.push(i);
+            }
+            eachStepArr.push(array);
+            highlightcheck.push(highlightcheckarr);
+            highlightsorted.push(null);
+            color.push(0);
+            highlightcode.push([16]);
+            logarray.push(logarray[logarray.length - 1] + 'Select right!<br>' + 'low = ' + lo + ', high = ' + hi + '<br>');
+        } else {
+            hi = pos - 1;
+            highlightcheckarr = [];
+            for (var i = lo; i <= hi; i++) {
+                highlightcheckarr.push(i);
+            }
+            eachStepArr.push(array);
+            highlightcheck.push(highlightcheckarr);
+            highlightsorted.push(null);
+            color.push(0);
+            highlightcode.push([18]);
+            logarray.push(logarray[logarray.length - 1] + 'Select left!<br>' + 'low = ' + lo + ', high = ' + hi + '<br>');
+        }
+    }
+    if (!found) {
+        eachStepArr.push(array);
+        highlightcheck.push(0);
+        highlightsorted.push(null);
+        color.push(0);
+        highlightcode.push([21]);
+        logarray.push(logarray[logarray.length - 1] + 'Can not find ' + searchnumber + ' in the array <br>');
+//    return -1;
+    }
+
+
+//set step in userview
+    totalstep = eachStepArr.length - 1;
+    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
+    document.getElementById("progressStep").max = eachStepArr.length - 1;
+    document.getElementById("slideStep").max = eachStepArr.length - 1;
 }
-);
 
 
 

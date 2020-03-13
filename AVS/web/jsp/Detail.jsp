@@ -20,7 +20,7 @@
         <script type="text/javascript" src="js/Sort.js"></script>
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
- 
+
         <%
             ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
             ArrayList<Algorithm> algorithms = (ArrayList<Algorithm>) request.getAttribute("algorithms");
@@ -29,8 +29,8 @@
     </head>
 
     <body onload ="init('<%=algorithms.get(0).getAlgoFile()%>');">
-         <%@include file="header.jsp" %> 
-       
+        <%@include file="header.jsp" %> 
+
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
@@ -83,13 +83,14 @@
             <div id="Visualizer" class="tabcontent">
                 <div class="Visual">
                     <div class="leftAlgo">
-                        <div><input id="txtElement" onkeydown="isNumberKey(event);" type="text" name="name" value="" /></div>
+                        <div><input id="txtElement" type="text" name="name" value="" /></div>
+                        <div><input id="txtSearchnumber" type="text" value="" /></div>
                         <div id="progress"> 
                             <div id="progresstext">
                                 Progress:<br> <br>
                                 <a id="txtStepcount" style="float: contour"></a></div>
                             <div id="progressbar">
-                                <progress id="progressStep" value="1"  max="100" > 0 </progress> <br><br>
+                                <progress id="progressStep" value="1"  max="100" ></progress> <br><br>
                                 <input id="slideStep" type="range" oninput="chooseStep();" max="0" min="0" value="1">
                             </div>
                         </div>
@@ -101,7 +102,7 @@
                         %>
                         <div>
                             <div class="rectangle" style="background-image: linear-gradient(to bottom,hsl(<%=360 / algorithmbycategory.size() * (i + 1)%>, 100%,50%),white);"></div>
-                            <a id="note" href="Detail?AlgoID=<%=algorithmbycategory.get(i).getAlgoID() %>"><%=algorithmbycategory.get(i).getAlgoName()%></a>
+                            <a id="note" href="Detail?AlgoID=<%=algorithmbycategory.get(i).getAlgoID()%>"><%=algorithmbycategory.get(i).getAlgoName()%></a>
                         </div>
                         <%
                             }
@@ -123,6 +124,7 @@
                         <div>            
                             <%=algorithms.get(0).getAlgoCodeJS()%>
                         </div>
+                        <div id="txtlog">Log:</div>
                     </div>
                 </div>
             </div>
@@ -146,9 +148,19 @@
             </script>
         </div>
 
-<%@include file="footer.jsp" %>
+        <%@include file="footer.jsp" %>
 
-<script type="text/javascript" src="js/code.js"></script>
-</body>
+        <script type="text/javascript" src="js/code.js"></script>
+        <script>
+                setInputFilter(document.getElementById("txtElement"), function (value) {
+                    return /^[0-9,-,]*$/i.test(value);
+                }
+                );
+                setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
+                    return /^\d*$/.test(value);
+                }
+                );
+        </script>
+    </body>
 
 </html>
