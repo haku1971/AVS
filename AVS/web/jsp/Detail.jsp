@@ -112,7 +112,8 @@
                     <div class="rightAlgo">
                         <div id="txtButton">
                             <input type="submit" onclick="inputByUser();" value="Nhập data" />
-                            <input id="btnShuffle" type="submit" onclick="shuffle();" value="Shuffle" />
+                            <!--cần sửa id thành btnRandom-->
+                            <input id="btnShuffle" type="submit" onclick="random();" value="Random" />
                         </div>
                         <div id="progress"><a>Speed</a> <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1"> </div>
                         <div id="stepButton">

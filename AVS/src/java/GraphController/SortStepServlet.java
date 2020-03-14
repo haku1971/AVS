@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ebhor.servlet;
+package GraphController;
 
 import Entity.Algorithm;
 import Model.AlgorithmModel;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -141,7 +138,7 @@ public class SortStepServlet extends HttpServlet {
      
     }
 
-    //gọi là jsp 1
+   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -153,13 +150,6 @@ public class SortStepServlet extends HttpServlet {
             Gson parser = new Gson();
             int[] jsFileArray = toArray(json, parser);
 
-            //  System.out.println(Arrays.toString(arr)); // prints [1, 2, 3, 4]
-            // List<Integer> list = toList(json, parser);// prints [1.0, 2.0, 3.0, 4.0], not integer values
-            //  System.out.println(list.toString());
-            // Again, let's convert this Java int array back to Json numeric array
-            //  AlgoSort algo = new AlgoSort("Bubble Sort", bubbleSort(tempArray(jsFileArray)));
-            // AlgoSort algo2 = new AlgoSort("Selection Sort", selectionSort(tempArray(jsFileArray)));
-            //  AlgoSort algo3 = new AlgoSort("Insertion Sort", insertionSort(tempArray(jsFileArray)));
             AlgorithmModel dao = new AlgorithmModel();
    
             ArrayList<Algorithm> listAlgo = dao.getAlgosortbyID(1);
