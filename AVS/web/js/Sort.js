@@ -89,11 +89,11 @@ function getAjaxSortData() {
 
 function getAjaxSearchData() {
     var mydata = JSON.stringify(initarray);
-    var searchvalue= JSON.stringify(searchnumber);
+    var searchvalue = JSON.stringify(searchnumber);
     $.ajax({
         type: "POST",
         url: "SearchStepServlet",
-        data: {initarray: mydata,searchvalue:searchvalue}
+        data: {initarray: mydata, searchvalue: searchvalue}
         ,
         dataType: "json",
         //OK
@@ -118,6 +118,7 @@ function shuffle() {
         initarray[oldPos] = initarray[newPos];
         initarray[newPos] = temp;
     }
+
     init(algorithmtype);
 }
 
@@ -128,6 +129,7 @@ function random() {
     for (var i = 0; i < arraylenght; i++) {
         initarray.push(randomFrom1to9());
     }
+    console.log(1);
     removeHighlightedCode();
     init(algorithmtype);
 }
@@ -264,6 +266,7 @@ function getdata(data) {
 function drawGraph(data) {
     var canvas = document.getElementById("canvasGraph");
     var canvas_height = 300; //chieu cao canvas
+
     var canvas_width = 500; // chieu rong canvas
     document.getElementById("canvasGraph").height = canvas_height;
     document.getElementById("canvasGraph").width = canvas_width;
@@ -276,9 +279,18 @@ function drawGraph(data) {
     var biggest_value_of_array = Math.max.apply(Math, data.map(function (o) {
         return o.number_of_step;
     }));
-    var numberdigits = Math.floor(Math.log10(Math.abs(biggest_value_of_array))) + 1;
+    var numberdigits;
+
+    numberdigits = Math.floor(Math.log10(Math.abs(biggest_value_of_array))) + 1;
+    if (numberdigits < 0 || numberdigits === 0) {
+        numberdigits = 1;
+    }
+ 
     var constant = Math.pow(10, numberdigits - 1); // cai z cua Mạnh
     var vertical_axis_top_value = (parseInt(biggest_value_of_array / constant) + 1) * constant;
+    if (vertical_axis_top_value < 10) {
+        vertical_axis_top_value = 10;
+    }
     function pixcelLengthOfValue(value) {
         return context.measureText(value).width;
     }
@@ -362,7 +374,7 @@ function drawGraph(data) {
     function writeVerticalAxisValue(headerValue, horCor, verCor) {
         context.fillStyle = "black";
         context.font = "19 pt Arial;";
-        context.fillText(headerValue, horCor, verCor);
+        context.fillText(parseInt(headerValue), horCor, verCor);
     }
     //return height of each column
     function colHeight(step) {
@@ -382,7 +394,7 @@ function drawGraph(data) {
     var underline_value = vertical_axis_top_value;
     //bat dau lien quan toi horizon left
 
-    //ve gia tri tung muc cua Oy        
+    //ve gia tri tung cua Oy        
     context.beginPath();
     for (var i = 0; i <= number_of_underline; i++) {
         //vẽ giá trị cao nhất của trục Oy
