@@ -142,36 +142,20 @@ function randomFrom1to9() {
     return random;
 }
 
-function integerArray(stringArr) {
-    var intArr = [];
-    for (var i = 0; i < stringArr.length; i++) {
-//if check ma la co ki tu khong phai so
-        if (!isNormalInteger(stringArr[i])) {
-//hien ra alert() len trang index
-            return null;
-        }
-//neu khong thi xay dung ra mot cai mang     
-        else {
-            number = parseInt(stringArr[i]);
-            intArr.push(number);
-        }
-    }
-
-    return intArr;
-}
 
 function inputByUser() {
-//Check mảng
+    //Array
     arr_by_user = document.getElementById("txtElement").value;
     arr_by_user = arr_by_user.split(',');
-    if (integerArray(arr_by_user) !== null) {
-        initarray = integerArray(arr_by_user);
+    if (arr_by_user.length > 0) {
+        initarray = arr_by_user;
     }
-//Check searchnumber
-    var searchnumber_by_user = document.getElementById("txtSearchnumber").value;
-    if (integerArray(searchnumber_by_user) !== null) {
-        searchnumber = integerArray(searchnumber_by_user)[0];
+    //Searchnumber
+    if (document.getElementById("txtSearchnumber").value !== '') {
+        searchnumber = document.getElementById("txtSearchnumber").value;
+  
     }
+    
     init(algorithmtype);
 }
 
@@ -185,9 +169,7 @@ function next() {
     document.getElementById("PauseOrCon").value = 'Play';
 }
 
-function isNormalInteger(str) {
-    return /^\+?(0|[1-9]\d*)$/.test(str);
-}
+
 
 function chooseStep() {
     currentstep = parseInt(document.getElementById("slideStep").value);

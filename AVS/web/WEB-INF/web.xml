@@ -8,6 +8,18 @@
         <servlet-name>SearchStepServlet</servlet-name>
         <servlet-class>GraphController.SearchStepServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CommentController</servlet-name>
+        <servlet-class>Controller.CommentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CommentController2</servlet-name>
+        <servlet-class>Controller.CommentController2</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsController</servlet-name>
+        <servlet-class>Controller.NewsController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SortStepServlet</servlet-name>
         <url-pattern>/SortStepServlet</url-pattern>
@@ -32,6 +44,21 @@
         <servlet-name>SearchStepServlet</servlet-name>
         <url-pattern>/SearchStepServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommentController</servlet-name>
+        <url-pattern>/CommentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommentController2</servlet-name>
+        <url-pattern>/CommentController2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsController</servlet-name>
+        <url-pattern>/NewsController</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>HomeController</welcome-file>
+    </welcome-file-list>
     <session-config>
         <session-timeout>
             30

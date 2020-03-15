@@ -6,11 +6,9 @@
 package Controller;
 
 import Model.AlgorithmModel;
-import com.sun.javafx.scene.traversal.Algorithm;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,7 +21,6 @@ import javax.servlet.http.HttpSession;
  *
  * @author Jisoo
  */
-
 public class HomeController extends HttpServlet {
 
     /**
@@ -36,15 +33,15 @@ public class HomeController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException,Exception {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try(PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
 
-            AlgorithmModel dao =  new AlgorithmModel();
+            AlgorithmModel dao = new AlgorithmModel();
             ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
             request.setAttribute("AllAlgorithm", data);
             request.getRequestDispatcher("jsp/Home.jsp").forward(request, response);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
     }
@@ -61,8 +58,8 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         
-         try {
+
+        try {
             processRequest(request, response);
         } catch (Exception ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);

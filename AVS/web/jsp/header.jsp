@@ -53,7 +53,7 @@
             <img src="images\avs_logo.png" />
             <ul id="redirectButton">
                 <li onclick="document.location = '/AVS/HomeController'">Home</li>
-                <li>News</li>
+                <li><a href="NewsController">News</a></li>
             </ul>
             <ul id="loginButton">
                 <li>
