@@ -30,13 +30,12 @@ public class SearchStepServlet extends HttpServlet {
         int count = 0;
 
         while (low <= high && searchvalue >= arr[low] && searchvalue <= arr[high]) {
-
             if (low == high) {
+                count++;
                 if (arr[low] == searchvalue) {
-                    count++;
                     return count;
                 }
-                return 0;
+                return count;
             }
 
             // Probing the position with keeping 
@@ -44,9 +43,9 @@ public class SearchStepServlet extends HttpServlet {
             int pos = low + (((high - low)
                     / (arr[high] - arr[low])) * (searchvalue - arr[low]));
 
+            count++;
             // Condition of target found 
             if (arr[pos] == searchvalue) {
-                count++;
                 return count;
             }
 
@@ -57,7 +56,6 @@ public class SearchStepServlet extends HttpServlet {
             else {
                 high = pos - 1;
             }
-            count++;
         }
         return count;
 
@@ -73,29 +71,29 @@ public class SearchStepServlet extends HttpServlet {
             }
             count++;
         }
-        return 0;
+        return count;
     }
 
-    static int binarySearch(int arr[], int left, int right, int searchvalue,int count) {
-        
+    static int binarySearch(int arr[], int left, int right, int searchvalue, int count) {
+        count++;
         if (right >= left) {
             int mid = left + (right - left) / 2;
 
             // If the element is present at the 
             // middle itself 
             if (arr[mid] == searchvalue) {
-                count++;
+
                 return count;
             }
 
             // If element is smaller than mid, then 
             // it can only be present in left subarray 
-            if (arr[mid] > searchvalue) {              
-                return binarySearch(arr, left, mid - 1, searchvalue,count++);
+            if (arr[mid] > searchvalue) {
+                return binarySearch(arr, left, mid - 1, searchvalue, count);
             } // Else the element can only be present 
             // in right subarray 
-            else {             
-                return binarySearch(arr, mid + 1, right, searchvalue,count++);
+            else {
+                return binarySearch(arr, mid + 1, right, searchvalue, count);
             }
         }
 
@@ -103,6 +101,7 @@ public class SearchStepServlet extends HttpServlet {
         // in array 
         return count;
     }
+
     private static int[] toArray(String json, Gson parser) {
         return parser.fromJson(json, int[].class);
     }
@@ -117,57 +116,57 @@ public class SearchStepServlet extends HttpServlet {
         return newarr;
     }
 
-    private static int chooseSortFunctionByAlgoID(int searchvalue,int choose_algoid, int[] array) {
+    private static int chooseSortFunctionByAlgoID(int searchvalue, int choose_algoid, int[] array) {
         switch (choose_algoid) {
             case 8:
-               return linearsearch(array,searchvalue);
-                            
+                return linearsearch(array, searchvalue);
+
             case 9:
                 //array, left,right, searchvalue,count
-               return  binarySearch(array,0,array.length-1,searchvalue,0);
-               
-            case 10:                
-             return   interpolationSearch(array,searchvalue);
-               
+                return binarySearch(array, 0, array.length - 1, searchvalue, 0);
+
+            case 10:
+                return interpolationSearch(array, searchvalue);
+
             default:
                 return 0;
 
         }
-     
+
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         try {
+        try {
             //goi ve cai mang ma duoc js truyen di
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             String json = request.getParameter("initarray");
-            int searchvalue= Integer.parseInt(request.getParameter("searchvalue"));
+            int searchvalue = Integer.parseInt(request.getParameter("searchvalue"));
             Gson parser = new Gson();
             int[] jsFileArray = toArray(json, parser);
 
             AlgorithmModel dao = new AlgorithmModel();
-            int categoryid= 2;
+            int categoryid = 2;
             ArrayList<Algorithm> listAlgo = dao.getAlgosortbyID(categoryid);
             for (int i = 0; i < listAlgo.size(); i++) {
-                int choose_algoid = listAlgo.get(i).getAlgoID();        
-                    listAlgo.get(i).setNumber_of_step(chooseSortFunctionByAlgoID(searchvalue,choose_algoid, tempArray(jsFileArray)));
+                int choose_algoid = listAlgo.get(i).getAlgoID();
+                listAlgo.get(i).setNumber_of_step(chooseSortFunctionByAlgoID(searchvalue, choose_algoid, tempArray(jsFileArray)));
             }
-      
-        String jsonData = parser.toJson(listAlgo);
-        PrintWriter out = response.getWriter();
 
-        try {
-            out.println(jsonData);
-        } finally {
-            out.close();
+            String jsonData = parser.toJson(listAlgo);
+            PrintWriter out = response.getWriter();
+
+            try {
+                out.println(jsonData);
+            } finally {
+                out.close();
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(SortStepServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }
-    catch (Exception ex) 
-    {Logger.getLogger(SortStepServlet.class.getName()).log(Level.SEVERE, null, ex);
-    }
     }
 
     /**
