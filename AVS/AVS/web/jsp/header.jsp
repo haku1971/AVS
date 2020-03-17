@@ -6,18 +6,18 @@
     String user = "";
     String pass = "";
     if (request.getCookies() != null) {
-        Cookie ck[] = request.getCookies();
-        int age = ck[0].getMaxAge();
+        Cookie cookie[] = request.getCookies();
+        int agecookie = cookie[0].getMaxAge();
 
-        int co = 0;
-        while (co < ck.length) {
-            if (ck[co].getName().equals("username")) {
-                user = ck[co].getValue();
+        int cookienum = 0;
+        while (cookienum < cookie.length) {
+            if (cookie[cookienum].getName().equals("username")) {
+                user = cookie[cookienum].getValue();
             }
 
-            co++;
+            cookienum++;
         }
-        if (age == 0) {
+        if (agecookie == 0) {
             user = "";
         }
     }
@@ -31,7 +31,6 @@
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <meta name="google-signin-scope" content="profile email">
         <meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">
-        <script type="text/javascript" src="js/signout"></script>
         <title>Header</title>
         <!-- BEGIN Pre-requisites -->
 
