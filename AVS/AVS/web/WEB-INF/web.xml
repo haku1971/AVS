@@ -21,7 +21,7 @@
         <servlet-class>Controller.NewsController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TestServlet</servlet-name>
+        <servlet-name>DeleteCommentServlet</servlet-name>
         <servlet-class>Controller.DeleteCommentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -64,8 +64,8 @@
         <welcome-file>HomeController</welcome-file>
     </welcome-file-list>
     <servlet-mapping>
-        <servlet-name>TestServlet</servlet-name>
-        <url-pattern>/TestServlet</url-pattern>
+        <servlet-name>DeleteCommentServlet</servlet-name>
+        <url-pattern>/DeleteCommentServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

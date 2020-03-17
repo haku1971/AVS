@@ -5,11 +5,13 @@
  */
 package Controller;
 
+import Model.AlgorithmModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +19,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author BinhNT
+ * @author Jisoo
  */
-@WebServlet(name = "LogoutController", urlPatterns = {"/LogoutController"})
-public class LogoutController extends HttpServlet {
+public class HomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,16 +33,17 @@ public class LogoutController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        Cookie ck = new Cookie("username", "");
-        Cookie ck1 = new Cookie("roleid", "");
-        Cookie ck2 = new Cookie("userid", "");
-        ck.setMaxAge(0);
-        response.addCookie(ck);
-        response.addCookie(ck1);
-        response.addCookie(ck2);
-        response.sendRedirect("/AVS/HomeController");
+        try (PrintWriter out = response.getWriter()) {
+
+            AlgorithmModel dao = new AlgorithmModel();
+            ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
+            request.setAttribute("AllAlgorithm", data);
+            request.getRequestDispatcher("jsp/Home.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +58,12 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -70,7 +77,11 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import static Controller.CommentController.convertStringToInt;
+
 import Model.CommentModel;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -85,7 +85,7 @@ public class DeleteCommentServlet extends HttpServlet {
                 response.sendRedirect("HomeController");
                 return;
             }
-            int userid = convertStringToInt(id_of_user);
+           // int userid = convertStringToInt(id_of_user);
             if(request.getParameter("newsid")!= null &&request.getParameter("commentid")!= null ) {
                 commentmodel.deleteCommentById(Integer.parseInt(commentid));
             }
