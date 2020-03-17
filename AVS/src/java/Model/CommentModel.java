@@ -45,7 +45,6 @@ public class CommentModel {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
         } catch (Exception ex) {
             Logger.getLogger(CommentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,8 +89,8 @@ public class CommentModel {
     }
 
     public ArrayList<Comment> getAllCommentByNewsID(int newid) throws Exception {
-        String query = "select u.user_FullName username, cm.comment_Content, cm.comment_ID,cm.comment_Datetime,cm.user_ID, n.new_ID  from Comments cm\n" +
-"inner join News n on cm.new_ID= n.new_ID inner join Users u on u.user_ID= cm.user_ID where cm.new_ID= ?";
+        String query = "select u.user_Name,u.user_FullName, cm.comment_Content,cm.comment_ID,cm.comment_Datetime,cm.user_ID, n.new_ID from Comments cm\n" +
+"inner join News n on cm.new_ID= n.new_ID inner join Users u on u.user_ID= cm.user_ID where cm.new_ID = ?";
         ArrayList<Comment> listallcommentbynewid = new ArrayList<>();
         DBContext dbManager = new DBContext();
         Connection conn = null;
@@ -106,9 +105,10 @@ public class CommentModel {
             while (rs.next()) {
                 News news = new News();
                 news.setNewID(rs.getInt("new_ID"));
-                User user = new User();
-                user.setUsername(rs.getString("username"));
+                User user = new User();           
                 user.setId(rs.getInt("user_ID"));
+                user.setUsername(rs.getString("user_Name"));
+                user.setFullname(rs.getString("user_FullName"));
                 Comment comment = new Comment();
                 comment.setCommentid(rs.getInt("comment_ID"));
                 comment.setContent(rs.getString("comment_Content"));

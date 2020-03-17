@@ -28,7 +28,13 @@ public class NewsController extends HttpServlet {
             throws ServletException, IOException {
         try {
             NewModel newmodeldao= new NewModel();
-            ArrayList<News> listallnews= newmodeldao.getAllNews();         
+            ArrayList<News> listallnews=  null;
+            String s= request.getParameter("search");
+            if(request.getParameter("search")!= null) {
+                listallnews= newmodeldao.searchNews(request.getParameter("search"));
+            }else {
+               listallnews= newmodeldao.getAllNews();
+            }
             request.setAttribute("listallnews", listallnews);
             request.getRequestDispatcher("jsp/newslist.jsp").forward(request, response);
         } catch (Exception ex) {

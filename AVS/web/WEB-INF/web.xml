@@ -20,6 +20,10 @@
         <servlet-name>NewsController</servlet-name>
         <servlet-class>Controller.NewsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>Controller.DeleteCommentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SortStepServlet</servlet-name>
         <url-pattern>/SortStepServlet</url-pattern>
@@ -59,6 +63,10 @@
     <welcome-file-list>
         <welcome-file>HomeController</welcome-file>
     </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>TestServlet</servlet-name>
+        <url-pattern>/TestServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

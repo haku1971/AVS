@@ -18,7 +18,7 @@ public class News {
     private String newresource;
     private String new_Imgs;
     private User user;
-
+    
     public News() {
     }
 
@@ -28,9 +28,19 @@ public class News {
         this.newcontent = newcontent;
         this.newdaterealease = newdaterealease;
         this.newresource = newresource;
-        this.new_Imgs = new_Imgs;
+        this.new_Imgs = new_Imgs;     
         this.user = user;
     }
+
+    public String getNews_shortdescription() {
+        if(getNewcontent().length()<0)
+        {
+            return "Title is updating";
+        }
+        return getNewcontent().substring(0, 8)+"...........";
+        
+    }
+   
 
     public int getNewID() {
         return newID;

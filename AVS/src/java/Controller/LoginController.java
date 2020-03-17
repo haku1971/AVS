@@ -76,6 +76,7 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("password");
         UserModel userDao;
         int id=0;
+        int user_id=0;
             
 //        String result1 = request.getParameter("myField");
 //        HashMap<String,String> hm=new HashMap<>();
@@ -121,15 +122,19 @@ public class LoginController extends HttpServlet {
             userDao = new UserModel();
             User user = userDao.getUserByUsername(username);
             id=user.getRolenum();
+            user_id= user.getId();
         } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
             String userid=Integer.toString(id);
+            String userid1=Integer.toString(user_id);
             Cookie ck = new Cookie("username", username);
             Cookie ck1 = new Cookie("roleid",userid);
+            Cookie ck2 = new Cookie("userid",userid1);
             ck.setMaxAge(Integer.MAX_VALUE);
             response.addCookie(ck);
             response.addCookie(ck1);
+            response.addCookie(ck2);
             response.sendRedirect("/AVS/HomeController");
         }
 

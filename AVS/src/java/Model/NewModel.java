@@ -23,8 +23,11 @@ import java.util.logging.Logger;
  */
 public class NewModel {
 
-    public ArrayList<News> getAllNews() throws Exception {
-        String query = "SELECT [new_ID],[new_Tittles],[new_Content],[new_DateRealease],[new_Resource],[new_Imgs],[user_ID] FROM [News]";
+    public ArrayList<News> searchNews(String searchtxt) throws Exception {
+        System.out.println(searchtxt);
+        String query = "SELECT [new_ID],[new_Tittles],[new_Content],[new_DateRealease],[new_Resource],[new_Imgs],[user_ID] \n"
+                + "  FROM [News]\n"
+                + "  Where (new_Tittles like ?) OR (new_Content like ?)";
         ArrayList<News> listallnews = new ArrayList<>();
         DBContext dbManager = new DBContext();
         Connection conn = null;
@@ -32,7 +35,9 @@ public class NewModel {
         ResultSet rs = null;
         try {
             conn = dbManager.getConnection();
-            ps = conn.prepareStatement(query);         
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%"+searchtxt +"%");
+            ps.setString(2, "%"+searchtxt +"%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -54,9 +59,45 @@ public class NewModel {
 
         return listallnews;
     }
-public News getNewByNewsID(int newsid) throws Exception {
+
+    public ArrayList<News> getAllNews() throws Exception {
+        String query = "select u.user_ID userid,u.user_Name username,u.user_FullName fullname, n.new_ID newsid,n.new_Content content,n.new_DateRealease daterelease,n.new_Imgs,n.new_Resource newsresource,n.new_Tittles newstitle from News n\n" +
+"inner join Users u on u.user_ID= n.user_ID";
+        ArrayList<News> listallnews = new ArrayList<>();
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("userid"));
+                user.setFullname(rs.getString("fullname"));
+                user.setUsername(rs.getString("username"));
+                News news = new News();
+                news.setNewID(rs.getInt("newsid"));
+                news.setNewtittles(rs.getString("newstitle"));
+                news.setNewcontent(rs.getString("content"));
+                news.setNewdaterealease(rs.getString("daterelease"));
+                news.setNewresource(rs.getString("newsresource"));
+                news.setNew_Imgs(rs.getString("new_Imgs"));              
+                news.setUser(user);
+                listallnews.add(news);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listallnews;
+    }
+
+    public News getNewByNewsID(int newsid) throws Exception {
         String query = "SELECT [new_ID],[new_Tittles],[new_Content],[new_DateRealease],[new_Resource],[new_Imgs],[user_ID] FROM [News] where new_ID=?";
-       News news = new News();
+        News news = new News();
         DBContext dbManager = new DBContext();
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
@@ -83,6 +124,7 @@ public News getNewByNewsID(int newsid) throws Exception {
 
         return news;
     }
+
     public void UpdateNewbyNewId(String title, String newcontent, String newdate, String newresource, String newimage, int newsid) {
         try {
             String query = "UPDATE [AVS_Database_Final].[dbo].[News]  SET [new_Tittles] = ?,[new_Content] =?,"

@@ -50,49 +50,56 @@ public class CommentController extends HttpServlet {
         processRequest(request, response);
     }
 
+    static int convertStringToInt(String number) {
+        double doublenumber = Double.parseDouble(number);
+        return (int) doublenumber;
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            
             response.setContentType("text/html;charset=UTF-8");
             CommentModel commentmodel = new CommentModel();
             String id = request.getParameter("newsid");
-
-            double newid = Double.parseDouble(id);
-            int newsid = (int) newid;
-            String commentcontentedit = request.getParameter("commentcontentedit");
-
+            int newsid = convertStringToInt(id);
             String comment = "";
             String strdate = "";
 
+            Cookie cookie[] = request.getCookies();
+            int age = cookie[0].getMaxAge();
+            String username = "";
+            String id_of_user = "";
+
+            for (Cookie ck : cookie) {
+                if (ck.getName().equals("username")) {
+                    username = ck.getValue();
+                }
+                if (ck.getName().equals("userid")) {
+                    id_of_user = ck.getValue();
+                }
+                if (age == 0) {
+                    username = "";
+                }
+            }
+            //check chua dang nhap thi ve home
+            
+            if(username.equals("")) {
+                response.sendRedirect("HomeController");
+                return;
+            }
+            int userid = convertStringToInt(id_of_user);
             //tao ra comment
             String posttodb = request.getParameter("postodb");
             if (posttodb != null) {
                 comment = request.getParameter("commentcontent");
                 strdate = request.getParameter("strdate");
-                commentmodel.saveCommenttoDB(comment, strdate, 1, newsid);
-               response.sendRedirect("CommentController?newsid=" + newsid);
-
+                commentmodel.saveCommenttoDB(comment, strdate, userid, newsid);             
+                response.sendRedirect("CommentController?newsid=" + newsid);
+                return;
             }
-            String btndelete = request.getParameter("Delete");
-            String btnedit = request.getParameter("save");
-            String btncancel = request.getParameter("cancel");
-
-            int commentid = 0;
-            if (btndelete != null) {
-                commentid = Integer.parseInt(request.getParameter("commentid"));
-                commentmodel.deleteCommentById(commentid);
-                response.sendRedirect("CommentController?newsid=" + newsid);
-            } else if (btnedit != null) {
-                //code update db
-                commentid = Integer.parseInt(request.getParameter("commentid"));
-                commentmodel.editCommentById(commentcontentedit, commentid);
-                response.sendRedirect("CommentController?newsid=" + newsid);
-            } else if (btncancel != null) {
-                response.sendRedirect("CommentController?newsid=" + newsid);
-            }
-
+          
         } catch (Exception ex) {
             Logger.getLogger(CommentController.class.getName()).log(Level.SEVERE, null, ex);
         }

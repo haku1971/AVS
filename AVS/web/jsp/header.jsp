@@ -57,8 +57,8 @@
             </ul>
             <ul id="loginButton">
                 <li>
-                    <form id="search">
-                        <input type="text" placeholder="  Search.." name="search">
+                    <form id="search" action="NewsController">
+                        <input type="text" placeholder="  Search.." name="search"/>
                         <button type="submit">Submit</button>
                     </form>
                 </li>
