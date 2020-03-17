@@ -1,37 +1,21 @@
-<%-- 
-    Document   : header
-    Created on : Feb 25, 2020, 12:33:11 PM
-    Author     : Jisoo
---%>
-
 <%@page import="Entity.User"%>
 <%@page import="Model.UserModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
-<% UserModel useracountmanagement = new UserModel();
-    Cookie cookie[] = request.getCookies();
-    int age = cookie[0].getMaxAge();
+<% 
     String user = "";
-    String userid = "";
-//    if (ck != null) {
-//        while (co < ck.length) {
-//            if (ck[co].getName().equals("username")) {
-//                user = ck[co].getValue();
-//            }
-//
-//            co++;
-//        }
-//        if (age == 0) {
-//            user = "";
-//        }
-//    }
+    String pass = "";
+    if (request.getCookies() != null) {
+        Cookie ck[] = request.getCookies();
+        int age = ck[0].getMaxAge();
 
-    for (Cookie ck : cookie) {
-        if (ck.getName().equals("username")) {
-            user = ck.getValue();
-        }
-        if (ck.getName().equals("roleid")) {
-            userid = ck.getValue();
+        int co = 0;
+        while (co < ck.length) {
+            if (ck[co].getName().equals("username")) {
+                user = ck[co].getValue();
+            }
+
+            co++;
         }
         if (age == 0) {
             user = "";
@@ -43,6 +27,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-scope" content="profile email">
+        <meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">
+        <script type="text/javascript" src="js/signout"></script>
         <title>Header</title>
         <!-- BEGIN Pre-requisites -->
 
@@ -72,7 +61,8 @@
 %>
                         <a>Hello,<span><%=user%></span> <img  src="images\user.png" /></a>
 
-                        <button id="logout" onclick="document.location = '/AVS/LogoutController';return false">Log out</button>
+                        <div style = "display:none" align="middle" class="g-signin2" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
+                        <button id="logout" onclick="signOut()">Log out</button>
                         <!--                        <div class="dropdown">
                                                     <p>Hello,<span><%=usern%></span></p>
                                                     <a href="JavaScript:myFunction()"> <img class="dropbtn"  src="images\user.png" /></a>
@@ -89,5 +79,6 @@
                 </li>
             </ul>
         </div>
+                    <script type="text/javascript" src="js/signout.js"></script>
     </body>
 </html>

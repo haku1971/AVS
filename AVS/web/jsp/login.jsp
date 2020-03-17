@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : Feb 24, 2020, 8:15:14 PM
-    Author     : BinhNT
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%
@@ -15,7 +9,9 @@
 <html> <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-scope" content="profile email">
         <meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">
         <title>AVS</title>
 
@@ -42,8 +38,7 @@
                 <%
                     }
                 %>
-
-                <input id="log" type="submit"  value="LOGIN" />
+                <input id="log" type="submit" name="login" value="login" />
                 <hr>
                 <h4>Or</h4>
                 <div id="gg" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
@@ -56,6 +51,6 @@
         </div>
 
         <%@include file="footer.jsp" %>
-        <script type="text/javascript" src="js/code.js"></script>
+        <script type="text/javascript" src="js/signin.js"></script>
     </body>
 </html>
