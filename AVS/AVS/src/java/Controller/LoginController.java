@@ -120,13 +120,13 @@ public class LoginController extends HttpServlet {
                 }
                 String roleid = Integer.toString(rolenumber);
                 String userid=Integer.toString(id);
-                Cookie ck = new Cookie("username", username);
-                Cookie ck1 = new Cookie("roleid", roleid);
-                Cookie ck2 = new Cookie("userid", userid);
-                ck.setMaxAge(Integer.MAX_VALUE);
-                response.addCookie(ck);
-                response.addCookie(ck1);
-                response.addCookie(ck2);
+                Cookie cookieusername = new Cookie("username", username);
+                Cookie cookieroleid = new Cookie("roleid", roleid);
+                Cookie cookieuserid = new Cookie("userid", userid);
+                cookieusername.setMaxAge(Integer.MAX_VALUE);
+                response.addCookie(cookieusername);
+                response.addCookie(cookieroleid);
+                response.addCookie(cookieuserid);
                 response.sendRedirect("/AVS/HomeController");
             }
         }else{
