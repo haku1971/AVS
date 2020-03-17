@@ -34,9 +34,13 @@ public class LogoutController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Cookie ck=new Cookie("username","");  
-        ck.setMaxAge(0);  
-        response.addCookie(ck); 
+        Cookie ck = new Cookie("username", "");
+        Cookie ck1 = new Cookie("roleid", "");
+        Cookie ck2 = new Cookie("userid", "");
+        ck.setMaxAge(0);
+        response.addCookie(ck);
+        response.addCookie(ck1);
+        response.addCookie(ck2);
         response.sendRedirect("/AVS/HomeController");
     }
 
