@@ -18,15 +18,19 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
+        <%@include file="header.jsp" %> 
         <%
             Cookie cookie[] = request.getCookies();
             int age = cookie[0].getMaxAge();
             String username = "";
             String userid = "";
-
+            String roleid = "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("username")) {
                     username = ck.getValue();
+                }
+                if (ck.getName().equals("roleid")) {
+                    roleid = ck.getValue();
                 }
                 if (ck.getName().equals("userid")) {
                     userid = ck.getValue();
@@ -36,7 +40,7 @@
                 }
             }
         %>
-        <%="id cua duong la:" + userid%>
+        <%="role duong cua duong la:" + roleid%>
 
         <%
             ArrayList<Comment> listallcommentbynewid = (ArrayList<Comment>) request.getAttribute("listallcommentbynewid");
@@ -78,12 +82,51 @@
                 <input  type="hidden" name="newsid" value="<%=news.getNewID()%>" />       
             </form>
             <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewID()%>);"/>
-        <%--    <% } else if (username.equals("duongph")) {
-            %>
+            <% } else if (roleid.equals("2")) { // la admin thi co the xoa
+%>
             <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewID()%>);"/>
             <% }%>
-        --%>
+
             <script>
+
+
+                setSaveButtonStatus(<%=commentid%>, 'hidden');
+                setCancelButtonStatus(<%=commentid%>, 'hidden');
+                setTxteditStatus(<%=commentid%>, 'hidden');
+
+                $('#txtedit_<%=commentid%>').keyup(function () {
+                    // Get the Login Name value and trim it
+                    var name = $('#txtedit_<%=commentid%>').val();
+                    console.log(name);
+                    // Check if empty of not
+                    if (name.length < 1) {
+                        $("#save_<%=commentid%>").attr("disabled", true);
+                    } else {
+                        $("#save_<%=commentid%>").attr("disabled", false);
+                    }
+                });
+
+
+
+
+                function edit(commentid) {
+                    setDeleteButtonStatus(commentid, "hidden");
+                    setTxteditStatus(commentid, "visible");
+                    setSaveButtonStatus(commentid, 'visible');
+                    setCancelButtonStatus(commentid, "visible");
+                    setEditButtonStatus(commentid, "hidden");
+
+                    document.getElementById(commentid).style.visibility = 'hidden';
+                }
+                function btndelete(divpositiontodelete, commentid, newsid) {
+                    $.ajax({
+                        type: "post",
+                        url: "DeleteCommentServlet", //this is my servlet
+                        data: {newsid: newsid, commentid: commentid},
+                    });
+                    var div = document.getElementById(divpositiontodelete);
+                    div.remove();
+                }
                 function setSaveButtonStatus(btn_position, status) {
                     document.getElementById('save_' + btn_position).style.visibility = status;
                 }
@@ -99,112 +142,77 @@
                 function setEditButtonStatus(btn_position, status) {
                     document.getElementById('edit_' + btn_position).style.visibility = status;
                 }
-
-                $('#txtedit_<%=commentid%>').keyup(function () {
-                    // Get the Login Name value and trim it
-                    var name = $('#txtedit_<%=commentid%>').val();
-                    console.log(name);
-                    // Check if empty of not
-                    if (name.length < 1) {
-                        $("#save_<%=commentid%>").attr("disabled", true);
-                    } else {
-                        $("#save_<%=commentid%>").attr("disabled", false);
-                    }
-                });
-
-
-                setSaveButtonStatus(<%=commentid%>, 'hidden');
-                setCancelButtonStatus(<%=commentid%>, 'hidden');
-                setTxteditStatus(<%=commentid%>, 'hidden');
-
-                function edit(commentid) {
-                    setDeleteButtonStatus(commentid, "hidden");
-                    setTxteditStatus(commentid, "visible");
-                    setSaveButtonStatus(commentid, "visible");
-                    setCancelButtonStatus(commentid, "visible");
-                    setEditButtonStatus(commentid, "hidden");
-
-                    document.getElementById(commentid).style.visibility = 'hidden';
-                }
-                function btndelete(divpositiontodelete, commentid, newsid) {
-                    $.ajax({
-                        type: "post",
-                        url: "DeleteCommentServlet", //this is my servlet
-                        data: {newsid: newsid, commentid: commentid},
-                    });
-                    var div = document.getElementById(divpositiontodelete);
-                    div.remove();
-                }
-
                 function cancel(commentid) {
-                    setDeleteButtonStatus(commentid, "visible");
-                    setTxteditStatus(commentid, "hidden");
-                    setSaveButtonStatus(commentid, "hidden");
+                    setDeleteButtonStatus(commentid, 'visible');
+                    setTxteditStatus(commentid, 'hidden');
+                    setSaveButtonStatus(commentid, 'hidden');
                     setCancelButtonStatus(commentid, "hidden");
-                    setEditButtonStatus(commentid, "visible");
+                    setEditButtonStatus(commentid, 'visible');
                     //   document.getElementById("txtedit_" + commentid).value= content;
                     document.getElementById(commentid).style.visibility = 'visible';
 
                 }
+                function savecomment(commentid) {
+                setSaveButtonStatus(commentid, "hidden");
+                setDeleteButtonStatus(commentid, "visible");
+                setTxteditStatus(commentid, "hidden");
+                setCancelButtonStatus(commentid, "hidden");
+                setEditButtonStatus(commentid, "visible");
+                var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
+                document.getElementById(commentid).innerHTML = txt_edit_content;
+                document.getElementById(commentid).style.visibility = 'visible';
+                console.log(txt_edit_content);
+                $.ajax({
+                    type: "post",
+                    url: "DeleteCommentServlet", //this is my servlet
+                    data: {commentcontentedit: txt_edit_content, commentid: commentid},
+                    success: function (msg) {
+                        $('#output').append(msg);
+                    }
+                });
+            }
+
             </script>
-            <% }%> <!--check nguoi dang dang nhap co comment nao -->
+            <% }%> <!--check nguoi dang dang nhap co nhung comment nao -->
         </div>
-        <% }
-        } else { //chua co comment nao
-            
+        <% } else { //chua co comment nao
+
         %>
 
         <%= "Don't have any comment. let be the first comment!!! "%>
         <%}
         %>
 
-
-    <div>
-        <form  method="POST" action="CommentController">
-            <%Date date = new Date();
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                String strdate = formatter.format(date);
-            %>
-            <input type="hidden" name="strdate" value="<%=strdate%>" />
-            <input type="hidden" name="newsid" value="<%=news.getNewID()%> " />
-            <tr><textarea id="txtsavedb" width="500" name="commentcontent"></textarea></tr>
-            <input type="submit" id="postcomment" name="postodb" value="Post comment" />       
-        </form>
-    </div>
-    <script>
-        $('#txtsavedb').keyup(function () {
-            // Get the Login Name value and trim it
-            var name = $('#txtsavedb').val();
-            console.log(name);
-            // Check if empty of not
-            if (name.length < 1) {
-                console.log(' <1');
-                $('#postcomment').attr("disabled", true);
-            } else {
-                $('#postcomment').attr("disabled", false);
-            }
-        });
-        function savecomment(commentid) {
-            setSaveButtonStatus(commentid, "hidden");
-            setDeleteButtonStatus(commentid, "visible");
-            setTxteditStatus(commentid, "hidden");
-            setCancelButtonStatus(commentid, "hidden");
-            setEditButtonStatus(commentid, "visible");
-            var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
-            document.getElementById(commentid).innerHTML = txt_edit_content;
-            document.getElementById(commentid).style.visibility = 'visible';
-            console.log(txt_edit_content);
-            $.ajax({
-                type: "post",
-                url: "DeleteCommentServlet", //this is my servlet
-                data: {commentcontentedit: txt_edit_content, commentid: commentid},
-                success: function (msg) {
-                    $('#output').append(msg);
+        <%if (!username.isEmpty()) {%>
+        <div>
+            <form  method="POST" action="CommentController">
+                <%Date date = new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    String strdate = formatter.format(date);
+                %>
+                <input type="hidden" name="strdate" value="<%=strdate%>" />
+                <input type="hidden" name="newsid" value="<%=news.getNewID()%> " />
+                <tr><textarea id="txtsavedb" width="500" name="commentcontent"></textarea></tr>
+                <input type="submit" id="postcomment" name="postodb" value="Post comment" />       
+            </form>
+        </div>
+        <% }%>
+        <script>
+            $('#txtsavedb').keyup(function () {
+                // Get the Login Name value and trim it
+                var name = $('#txtsavedb').val();
+                console.log(name);
+                // Check if empty of not
+                if (name.length < 1) {
+                    console.log(' <1');
+                    $('#postcomment').attr("disabled", true);
+                } else {
+                    $('#postcomment').attr("disabled", false);
                 }
             });
-        }
-    </script>
+            
+        </script>
 
 
-</body>
+    </body>
 </html>

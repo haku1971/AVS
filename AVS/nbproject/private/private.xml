@@ -11,6 +11,12 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/AVS/src/java/Entity/News.java</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/AVS/web/jsp/newslist.jsp</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/AVS/src/java/Controller/NewsController.java</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/AVS/src/java/Model/NewModel.java</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/AVS/src/java/Model/CommentModel.java</file>
+        </group>
     </open-files>
 </project-private>

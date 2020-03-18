@@ -18,11 +18,12 @@ public class News {
     private String newresource;
     private String new_Imgs;
     private User user;
+    private int status;
     
     public News() {
     }
 
-    public News(int newID, String newtittles, String newcontent, String newdaterealease, String newresource, String new_Imgs, User user) {
+    public News(int newID, String newtittles, String newcontent, String newdaterealease, String newresource, String new_Imgs, User user,int status) {
         this.newID = newID;
         this.newtittles = newtittles;
         this.newcontent = newcontent;
@@ -30,14 +31,23 @@ public class News {
         this.newresource = newresource;
         this.new_Imgs = new_Imgs;     
         this.user = user;
+        this.status= status;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
     public String getNews_shortdescription() {
-        if(getNewcontent().length()<0)
+        if(getNewcontent().length()!=0)
         {
-            return "Title is updating";
+            return getNewcontent().substring(0,1);
         }
-        return getNewcontent().substring(0, 8)+"...........";
+        return "is updating";
         
     }
    

@@ -62,40 +62,45 @@ public class CommentController extends HttpServlet {
             
             response.setContentType("text/html;charset=UTF-8");
             CommentModel commentmodel = new CommentModel();
-            String id = request.getParameter("newsid");
-            int newsid = convertStringToInt(id);
+            String newid = request.getParameter("newsid");
+            int newsid = convertStringToInt(newid);
             String comment = "";
             String strdate = "";
 
+          //lay cookies nguoi dang nhap
             Cookie cookie[] = request.getCookies();
             int age = cookie[0].getMaxAge();
             String username = "";
-            String id_of_user = "";
-
+            String userid = "";
+            String roleid= "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("username")) {
                     username = ck.getValue();
                 }
+                if (ck.getName().equals("roleid")) {
+                    roleid = ck.getValue();
+                }
                 if (ck.getName().equals("userid")) {
-                    id_of_user = ck.getValue();
+                    userid = ck.getValue();
                 }
                 if (age == 0) {
                     username = "";
                 }
             }
+       
             //check chua dang nhap thi ve home
             
             if(username.equals("")) {
                 response.sendRedirect("HomeController");
                 return;
             }
-            int userid = convertStringToInt(id_of_user);
+            int usersid = Integer.parseInt(userid);
             //tao ra comment
             String posttodb = request.getParameter("postodb");
             if (posttodb != null) {
                 comment = request.getParameter("commentcontent");
                 strdate = request.getParameter("strdate");
-                commentmodel.saveCommenttoDB(comment, strdate, userid, newsid);             
+                commentmodel.saveCommenttoDB(comment, strdate, usersid, newsid);             
                 response.sendRedirect("CommentController?newsid=" + newsid);
                 return;
             }

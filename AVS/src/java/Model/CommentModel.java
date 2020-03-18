@@ -89,8 +89,8 @@ public class CommentModel {
     }
 
     public ArrayList<Comment> getAllCommentByNewsID(int newid) throws Exception {
-        String query = "select u.user_Name,u.user_FullName, cm.comment_Content,cm.comment_ID,cm.comment_Datetime,cm.user_ID, n.new_ID from Comments cm\n" +
-"inner join News n on cm.new_ID= n.new_ID inner join Users u on u.user_ID= cm.user_ID where cm.new_ID = ?";
+        String query = "select u.user_Name,u.user_FullName, cm.comment_Content,cm.comment_ID,cm.comment_Datetime,cm.user_ID, n.news_ID from Comments cm\n" +
+"inner join News n on cm.news_ID= n.news_ID inner join Users u on u.user_ID= cm.user_ID where cm.news_ID =?";
         ArrayList<Comment> listallcommentbynewid = new ArrayList<>();
         DBContext dbManager = new DBContext();
         Connection conn = null;
@@ -104,7 +104,7 @@ public class CommentModel {
 
             while (rs.next()) {
                 News news = new News();
-                news.setNewID(rs.getInt("new_ID"));
+                news.setNewID(rs.getInt("news_ID"));
                 User user = new User();           
                 user.setId(rs.getInt("user_ID"));
                 user.setUsername(rs.getString("user_Name"));

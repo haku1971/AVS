@@ -23,22 +23,34 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class NewsController extends HttpServlet {
 
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            NewModel newmodeldao= new NewModel();
-            ArrayList<News> listallnews=  null;
-            String s= request.getParameter("search");
-            if(request.getParameter("search")!= null) {
-                listallnews= newmodeldao.searchNews(request.getParameter("search"));
-            }else {
-               listallnews= newmodeldao.getAllNews();
+            NewModel newmodeldao = new NewModel();
+            ArrayList<News> listallnews = null;
+            String s = request.getParameter("search");
+            int recordPerPage = 2;
+            int page = 1;
+            int numberOfPage = 0;
+            int numberoffnews = newmodeldao.countDB();
+            double dataSize = (double) numberoffnews;
+            numberOfPage = (int) Math.ceil(dataSize / recordPerPage);
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
             }
+            if (request.getParameter("search") != null) {
+                listallnews = newmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, request.getParameter("search"));
+                String numberofsearchresult = "Result of searching";
+                request.setAttribute("numberofsearchresult", numberofsearchresult);
+            } else {
+                listallnews = newmodeldao.getNewsFromTo((page * recordPerPage) - recordPerPage + 1, page * recordPerPage);
+            }
+            request.setAttribute("numberOfPage", numberOfPage);
+            request.setAttribute("currentPage", page);
             request.setAttribute("listallnews", listallnews);
             request.getRequestDispatcher("jsp/newslist.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(NewsController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 
