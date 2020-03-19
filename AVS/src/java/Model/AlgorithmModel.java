@@ -114,8 +114,7 @@ public class AlgorithmModel {
         return algos;
     }
 
-    public ArrayList<Algorithm> getAlgoByID(int ID) throws SQLException, Exception {
-        ArrayList<Algorithm> algos = new ArrayList<Algorithm>();
+    public Algorithm getAlgoByID(int ID) throws SQLException, Exception {
         DBContext dbManager = new DBContext();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -126,7 +125,7 @@ public class AlgorithmModel {
                     = connection.prepareStatement("SELECT * from Algorithm where algo_ID = ?;");
             statement.setInt(1, ID);
             rs = statement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 Algorithm algo = new Algorithm();
                 algo.setAlgoID(rs.getInt("algo_ID"));
                 algo.setAlgoName(rs.getString("algo_Name"));
@@ -136,7 +135,7 @@ public class AlgorithmModel {
                 algo.setAlgoDescription(rs.getString("algo_Description"));
                 algo.setCategoryID(rs.getInt("category_ID"));
                 algo.setAlgoFile(rs.getString("algo_Files"));
-                algos.add(algo);
+                return algo;
             }
         } catch (Exception e) {
             throw e;
@@ -144,7 +143,7 @@ public class AlgorithmModel {
             new CloseConnection().close(connection, statement, rs);
         }
 
-        return algos;
+        return null;
     }
 
     public ArrayList<Algorithm> getAlgoByCategory(int categoryID) throws SQLException, Exception {
@@ -166,6 +165,34 @@ public class AlgorithmModel {
                 algo.setAlgoID(rs.getInt("algo_ID"));
                 algo.setAlgoName(rs.getString("algo_Name"));
                 algo.setCategoryID(rs.getInt("category_ID"));
+                algos.add(algo);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return algos;
+    }
+    
+    public ArrayList<Algorithm> getAllAlgo() throws SQLException, Exception {
+        ArrayList<Algorithm> algos = new ArrayList();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            statement
+                    = connection.prepareStatement("SELECT * from Algorithm "
+                            + "ORDER BY algo_ID;");
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Algorithm algo = new Algorithm();
+                algo.setAlgoID(rs.getInt("algo_ID"));
+                algo.setAlgoName(rs.getString("algo_Name"));
+                algo.setCategoryID(rs.getInt("category_ID"));
+                algo.setVisualized(rs.getInt("algo_CompareStatus"));
                 algos.add(algo);
             }
         } catch (Exception e) {

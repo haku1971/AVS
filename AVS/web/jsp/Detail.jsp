@@ -23,12 +23,13 @@
 
         <%
             ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
-            ArrayList<Algorithm> algorithms = (ArrayList<Algorithm>) request.getAttribute("algorithms");
+            Algorithm algo = (Algorithm) request.getAttribute("algorithm");
             ArrayList<Algorithm> algorithmbycategory = (ArrayList<Algorithm>) request.getAttribute("algorithmbycategory");
+            
         %>
     </head>
 
-    <body onload ="init('<%=algorithms.get(0).getAlgoFile()%>');">
+    <body onload ="init('<%=algo.getAlgoFile()%>');">
         <%@include file="header.jsp" %> 
 
         <div class="banner">
@@ -76,8 +77,8 @@
             </div>
 
             <div id="Tutorial" class="tabcontent">
-                <div id="algoTitle"><h1><%= algorithms.get(0).getAlgoName()%></h1>
-                    <h5><%= algorithms.get(0).getAlgoDescription()%></h5></div>
+                <div id="algoTitle"><h1><%= algo.getAlgoName()%></h1>
+                    <h5><%= algo.getAlgoDescription()%></h5></div>
             </div>
 
             <div id="Visualizer" class="tabcontent">
@@ -118,12 +119,12 @@
                         <div id="progress"><a>Speed</a> <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1"> </div>
                         <div id="stepButton">
                             <input id="btnPrev" type="submit" onclick="back();" value="<" />
-                            <input type="submit" onclick=" init('<%=algorithms.get(0).getAlgoFile()%>');" value="Restart" />
+                            <input type="submit" onclick=" init('<%=algo.getAlgoFile()%>');" value="Restart" />
                             <input id="PauseOrCon" type="submit" onclick="resume();" value="Pause" />
                             <input id="btnNext" type="submit" onclick="next();" value=">" />
                         </div>
                         <div>            
-                            <%=algorithms.get(0).getAlgoCodeJS()%>
+                            <%=algo.getAlgoCodeJS()%>
                         </div>
                         <div id="txtlog">Log:</div>
                     </div>

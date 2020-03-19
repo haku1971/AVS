@@ -22,6 +22,7 @@ public class Algorithm {
     private int number_of_step;
     private String categoryName;
     private String algoFile;
+    private int visualized;
    
     public Algorithm() {
         
@@ -143,6 +144,18 @@ public class Algorithm {
         this.algoResource = algoResource;
     }
 
+    public String getCategoryNametoString() {
+        int sortid = 1;
+        int searchid = 2;
+        if(this.categoryID == sortid) {
+            return "Sort";
+        }
+        if(this.categoryID == searchid) {
+            return "Search";
+        }
+        return "Other";
+    }
+
     public String getCategoryName() {
         return categoryName;
     }
@@ -151,6 +164,21 @@ public class Algorithm {
         this.categoryName = categoryName;
     }
 
-    
+    public String getVisualizedToString() {
+        if(visualized==1) {
+            return "Yes";
+        }
+        else { 
+            return "No";
+        }
+    }
+
+    public void setVisualized(int visualized) {
+        this.visualized = visualized;
+    }
+
+    public int getVisualized() {
+        return visualized;
+    }
     
 }

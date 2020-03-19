@@ -43,11 +43,12 @@ public class News {
     }
     
     public String getNews_shortdescription() {
-        if(getNewcontent().length()!=0)
+        int shortest = 10;
+        if(getNewcontent().length()> shortest)
         {
-            return getNewcontent().substring(0,1);
+            return getNewcontent().substring(0,shortest) + "...";
         }
-        return "is updating";
+        return getNewcontent();
         
     }
    

@@ -29,11 +29,11 @@
         <url-pattern>/SortStepServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>HomeController</servlet-name>
+        <servlet-name>home</servlet-name>
         <servlet-class>Controller.HomeController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>HomeController</servlet-name>
+        <servlet-name>home</servlet-name>
         <url-pattern>/HomeController</url-pattern>
     </servlet-mapping>
     <servlet>

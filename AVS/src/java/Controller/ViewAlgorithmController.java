@@ -6,13 +6,15 @@
 package Controller;
 
 import Entity.Algorithm;
+import Entity.User;
 import Model.AlgorithmModel;
-import com.google.gson.Gson;
+import Model.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +22,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Asus
+ * @author Ukah
  */
-@WebServlet(name = "Detail", urlPatterns = {"/Detail"})
-public class DetailController extends HttpServlet {
+@WebServlet(name = "ViewAlgorithm", urlPatterns = {"/viewalgo"})
+public class ViewAlgorithmController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,54 +39,38 @@ public class DetailController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         try {
-                
+
             HttpSession session = request.getSession();
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
 
-            AlgorithmModel dao = new AlgorithmModel();
-             ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
-            request.setAttribute("AllAlgorithm", data);
-
-            ArrayList<Algorithm> list = dao.getAlgoIDList();
-            String i = request.getParameter("AlgoID");
-            int n = Integer.parseInt(i);
-            if (i.equalsIgnoreCase("")) {
-                response.sendRedirect("error");
-                System.out.println("Empty");
-            } else {
-                boolean IDExist = false;
-                for (Algorithm ID : list) {
-                    if (ID.getAlgoID() == n) {
-                        IDExist = true;
-                    }
-
-                }
-
-                if (!IDExist) {
-                    response.sendRedirect("error");
-                    System.out.println("NOT ID");
-                } else {
-                    Algorithm algorithm = dao.getAlgoByID(Integer.parseInt(i));
-                    ArrayList<Entity.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithm.getCategoryID());
-                  //  Gson parser = new Gson();
-                   //  String listalgo = parser.toJson(data);
-
-                  //  String algobyid = parser.toJson(algorithmbyid);
-                    //  String algobycategory = parser.toJson(algorithmbycategory);
-                    request.setAttribute("algorithm", algorithm);
-                    request.setAttribute("algorithmbycategory", algorithmbycategory);
-                    request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);
-                    //   response.sendRedirect("jsp/Detail.jsp?algorithms="+algobyid+"&AllAlgorithm="+listalgo+"");
-
+            //hien thi trang home neu nguoi dung khong phai admin
+            Cookie cookie[] = request.getCookies();
+            String roleid = "";
+            for (Cookie ck : cookie) {
+                if (ck.getName().equals("roleid")) {
+                    roleid = ck.getValue();
                 }
             }
+            int adminrolenumber = 1;
+            if (Integer.parseInt(roleid) != adminrolenumber) {
+                response.sendRedirect("home");
+                return;
+            }
+            //ket thuc kiem tra
+            
+            int algoid = Integer.parseInt(request.getParameter("id"));
+            AlgorithmModel algodao = new AlgorithmModel();
+            Algorithm thisalgo = algodao.getAlgoByID(algoid);
+            
+            String category = "algorithm";
+            request.setAttribute("category", category);
+            request.setAttribute("algo", thisalgo);
+            request.setAttribute("addnew", false);
+            request.getRequestDispatcher("jsp/viewalgo.jsp").forward(request, response);
+
         } catch (Exception ex) {
             response.sendRedirect("error");
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

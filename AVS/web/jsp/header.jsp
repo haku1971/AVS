@@ -40,8 +40,9 @@
         <div class="header">
             <img src="images\avs_logo.png" />
             <ul id="redirectButton">
-                <li onclick="document.location = '/AVS/HomeController'">Home</li>
+                <li onclick="document.location = '/AVS/home'">Home</li>
                 <li><a href="NewsController">News</a></li>
+                <li><a href="admin">Admin</a></li>
             </ul>
             <ul id="loginButton">
                 <li>
