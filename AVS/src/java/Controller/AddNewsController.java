@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Ukah
  */
-@WebServlet(name = "AddAlgorithm", urlPatterns = {"/addalgo"})
-public class AddAlgorithmController extends HttpServlet {
+@WebServlet(name = "AddEditNews", urlPatterns = {"/addnews"})
+public class AddNewsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,10 +49,10 @@ public class AddAlgorithmController extends HttpServlet {
             }
             //ket thuc kiem tra
             
-            String category = "algorithm";
+            String category = "news";
             request.setAttribute("category", category);
             request.setAttribute("addnew", true);
-            request.getRequestDispatcher("jsp/viewalgo.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/viewnews.jsp").forward(request, response);
         }
     }
 

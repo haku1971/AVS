@@ -6,11 +6,12 @@
 package Controller;
 
 import Entity.Algorithm;
+import Entity.News;
 import Entity.User;
 import Model.AlgorithmModel;
+import Model.NewsModel;
 import Model.UserModel;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +53,7 @@ public class AdminController extends HttpServlet {
                 }
             }
             int adminrolenumber = 1;
-            if (Integer.parseInt(roleid) != adminrolenumber) {
+            if (roleid == null || Integer.parseInt(roleid) != adminrolenumber) {
                 response.sendRedirect("home");
                 return;
             }
@@ -81,6 +82,28 @@ public class AdminController extends HttpServlet {
                     request.getRequestDispatcher("jsp/manage_algorithm.jsp").forward(request, response);
 
                     break;
+                }
+                case "news": {
+                    NewsModel newsdao = new NewsModel();
+                    ArrayList<News> newslist = newsdao.getAllNews();
+
+                    request.setAttribute("newslist", newslist);
+                    request.setAttribute("category", category);
+                    request.getRequestDispatcher("jsp/manage_news.jsp").forward(request, response);
+
+                    break;
+                }
+                
+                case "user_history": {
+                    
+                }
+                
+                case "algo_history": {
+                    
+                }
+                
+                case "news_history": {
+                    
                 }
 
                 default: {

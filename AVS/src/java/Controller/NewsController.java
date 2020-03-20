@@ -6,7 +6,7 @@
 package Controller;
 
 import Entity.News;
-import Model.NewModel;
+import Model.NewsModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -26,24 +26,24 @@ public class NewsController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            NewModel newmodeldao = new NewModel();
+            NewsModel newsmodeldao = new NewsModel();
             ArrayList<News> listallnews = null;
             String s = request.getParameter("search");
             int recordPerPage = 2;
             int page = 1;
             int numberOfPage = 0;
-            int numberoffnews = newmodeldao.countDB();
+            int numberoffnews = newsmodeldao.countDB();
             double dataSize = (double) numberoffnews;
             numberOfPage = (int) Math.ceil(dataSize / recordPerPage);
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
             if (request.getParameter("search") != null) {
-                listallnews = newmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, request.getParameter("search"));
+                listallnews = newsmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, request.getParameter("search"));
                 String numberofsearchresult = "Result of searching";
                 request.setAttribute("numberofsearchresult", numberofsearchresult);
             } else {
-                listallnews = newmodeldao.getNewsFromTo((page * recordPerPage) - recordPerPage + 1, page * recordPerPage);
+                listallnews = newsmodeldao.getNewsFromTo((page * recordPerPage) - recordPerPage + 1, page * recordPerPage);
             }
             request.setAttribute("numberOfPage", numberOfPage);
             request.setAttribute("currentPage", page);

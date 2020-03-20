@@ -5,6 +5,10 @@
  */
 package Controller;
 
+import Entity.Algorithm;
+import Entity.News;
+import Model.AlgorithmModel;
+import Model.NewsModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Ukah
  */
-@WebServlet(name = "AddAlgorithm", urlPatterns = {"/addalgo"})
-public class AddAlgorithmController extends HttpServlet {
+@WebServlet(name = "ViewNews", urlPatterns = {"/viewnews"})
+public class ViewNewsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,10 +53,17 @@ public class AddAlgorithmController extends HttpServlet {
             }
             //ket thuc kiem tra
             
+            int newsid = Integer.parseInt(request.getParameter("id"));
+            NewsModel newsdao = new NewsModel();
+            News thisnews = newsdao.getNewByNewsID(newsid);
+            
             String category = "algorithm";
             request.setAttribute("category", category);
-            request.setAttribute("addnew", true);
-            request.getRequestDispatcher("jsp/viewalgo.jsp").forward(request, response);
+            request.setAttribute("news", thisnews);
+            request.setAttribute("addnew", false);
+            request.getRequestDispatcher("jsp/viewnews.jsp").forward(request, response);
+        } catch (Exception ex) {
+            response.sendRedirect("error");
         }
     }
 

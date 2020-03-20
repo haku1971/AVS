@@ -104,7 +104,7 @@ public class CommentModel {
 
             while (rs.next()) {
                 News news = new News();
-                news.setNewID(rs.getInt("news_ID"));
+                news.setNewsID(rs.getInt("news_ID"));
                 User user = new User();           
                 user.setId(rs.getInt("user_ID"));
                 user.setUsername(rs.getString("user_Name"));

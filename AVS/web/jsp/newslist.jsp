@@ -103,11 +103,11 @@
         <div class="top3wrapper">
             <% if (listallnews != null) {
              for (int i = 0; i < listallnews.size(); i++) {%>
-            <a class="newstitletop3" href="CommentController?newsid=<%=listallnews.get(i).getNewID()%>"><%=listallnews.get(i).getNewtittles()%> </a>
+            <a class="newstitletop3" href="CommentController?newsid=<%=listallnews.get(i).getNewsID()%>"><%=listallnews.get(i).getNewstittles()%> </a>
             <br>     
             <p>By: <%=listallnews.get(i).getUser().getFullname()%> <p>
             <p>Content: <%=listallnews.get(i).getNews_shortdescription()%> <p>  
-            <p>At:<%=listallnews.get(i).getNewdaterealease()%> </p>
+            <p>At:<%=listallnews.get(i).getNewsdaterealease()%> </p>
             <hr>
             <%}
              

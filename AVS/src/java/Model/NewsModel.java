@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author quang
  */
-public class NewModel {
+public class NewsModel {
 
     //
     public ArrayList<News> searchNews(int from, int to, String searchtxt) throws Exception {
@@ -50,12 +50,12 @@ public class NewModel {
                 user.setFullname(rs.getString("fullname"));
                 user.setUsername(rs.getString("username"));
                 News news = new News();
-                news.setNewID(rs.getInt("newsid"));
-                news.setNewtittles(rs.getString("newstitle"));
-                news.setNewcontent(rs.getString("content"));
-                news.setNewdaterealease(rs.getString("daterelease"));
-                news.setNewresource(rs.getString("newsresource"));
-                news.setNew_Imgs(rs.getString("news_Imgs"));
+                news.setNewsID(rs.getInt("newsid"));
+                news.setNewstittles(rs.getString("newstitle"));
+                news.setNewscontent(rs.getString("content"));
+                news.setNewsdaterealease(rs.getString("daterelease"));
+                news.setNewsresource(rs.getString("newsresource"));
+                news.setNews_Imgs(rs.getString("news_Imgs"));
                 news.setStatus(rs.getInt("deletestatus"));
                 news.setUser(user);
                 listallnews.add(news);
@@ -112,12 +112,12 @@ public class NewModel {
                 user.setId(rs.getInt("userid"));
                 user.setFullname(rs.getString("userfullname"));
                 News news = new News();
-                news.setNewID(rs.getInt("newsid"));
-                news.setNew_Imgs(rs.getString("newsimg"));
-                news.setNewcontent(rs.getString("content"));
-                news.setNewdaterealease(rs.getString("newsdaterelease"));
-                news.setNewresource(rs.getString("newsresource"));
-                news.setNewtittles(rs.getString("newstitle"));
+                news.setNewsID(rs.getInt("newsid"));
+                news.setNews_Imgs(rs.getString("newsimg"));
+                news.setNewscontent(rs.getString("content"));
+                news.setNewsdaterealease(rs.getString("newsdaterelease"));
+                news.setNewsresource(rs.getString("newsresource"));
+                news.setNewstittles(rs.getString("newstitle"));
                 news.setStatus(rs.getInt("deletestatus"));
                 news.setUser(user);
                 arrayofnews.add(news);
@@ -149,12 +149,12 @@ public class NewModel {
                 user.setFullname(rs.getString("fullname"));
                 user.setUsername(rs.getString("username"));
                 News news = new News();
-                news.setNewID(rs.getInt("newsid"));
-                news.setNewtittles(rs.getString("newstitle"));
-                news.setNewcontent(rs.getString("content"));
-                news.setNewdaterealease(rs.getString("daterelease"));
-                news.setNewresource(rs.getString("newsresource"));
-                news.setNew_Imgs(rs.getString("news_Imgs"));
+                news.setNewsID(rs.getInt("newsid"));
+                news.setNewstittles(rs.getString("newstitle"));
+                news.setNewscontent(rs.getString("content"));
+                news.setNewsdaterealease(rs.getString("daterelease"));
+                news.setNewsresource(rs.getString("newsresource"));
+                news.setNews_Imgs(rs.getString("news_Imgs"));
                 news.setStatus(rs.getInt("deletestatus"));
                 news.setUser(user);
                 listallnews.add(news);
@@ -184,12 +184,12 @@ public class NewModel {
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("user_ID"));
-                news.setNewID(rs.getInt("news_ID"));
-                news.setNewtittles(rs.getString("news_Tittles"));
-                news.setNewcontent(rs.getString("news_Content"));
-                news.setNewdaterealease(rs.getString("news_DateRealease"));
-                news.setNewresource(rs.getString("news_Resource"));
-                news.setNew_Imgs(rs.getString("news_Imgs"));
+                news.setNewsID(rs.getInt("news_ID"));
+                news.setNewstittles(rs.getString("news_Tittles"));
+                news.setNewscontent(rs.getString("news_Content"));
+                news.setNewsdaterealease(rs.getString("news_DateRealease"));
+                news.setNewsresource(rs.getString("news_Resource"));
+                news.setNews_Imgs(rs.getString("news_Imgs"));
                 news.setStatus(rs.getInt("delete_Status"));
                 news.setUser(user);
             }

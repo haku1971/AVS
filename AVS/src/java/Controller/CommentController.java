@@ -8,7 +8,7 @@ package Controller;
 import Entity.Comment;
 import Entity.News;
 import Model.CommentModel;
-import Model.NewModel;
+import Model.NewsModel;
 import Model.UserModel;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class CommentController extends HttpServlet {
         try {
             int newsid = Integer.parseInt(request.getParameter("newsid"));
 
-            NewModel newmodeldao = new NewModel();
+            NewsModel newmodeldao = new NewsModel();
             CommentModel commentmodel = new CommentModel();
             News news = newmodeldao.getNewByNewsID(newsid);
             ArrayList<Comment> listallcommentbynewid = commentmodel.getAllCommentByNewsID(newsid);

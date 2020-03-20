@@ -11,25 +11,25 @@ package Entity;
  */
 public class News {
 
-    private int newID;
-    private String newtittles;
-    private String newcontent;
-    private String newdaterealease;
-    private String newresource;
-    private String new_Imgs;
+    private int newsID;
+    private String newstittles;
+    private String newscontent;
+    private String newsdaterealease;
+    private String newsresource;
+    private String news_Imgs;
     private User user;
     private int status;
     
     public News() {
     }
 
-    public News(int newID, String newtittles, String newcontent, String newdaterealease, String newresource, String new_Imgs, User user,int status) {
-        this.newID = newID;
-        this.newtittles = newtittles;
-        this.newcontent = newcontent;
-        this.newdaterealease = newdaterealease;
-        this.newresource = newresource;
-        this.new_Imgs = new_Imgs;     
+    public News(int newsID, String newstittles, String newscontent, String newsdaterealease, String newsresource, String news_Imgs, User user,int status) {
+        this.newsID = newsID;
+        this.newstittles = newstittles;
+        this.newscontent = newscontent;
+        this.newsdaterealease = newsdaterealease;
+        this.newsresource = newsresource;
+        this.news_Imgs = news_Imgs;     
         this.user = user;
         this.status= status;
     }
@@ -44,61 +44,60 @@ public class News {
     
     public String getNews_shortdescription() {
         int shortest = 10;
-        if(getNewcontent().length()> shortest)
+        if(getNewscontent().length()> shortest)
         {
-            return getNewcontent().substring(0,shortest) + "...";
+            return getNewscontent().substring(0,shortest) + "...";
         }
-        return getNewcontent();
+        return getNewscontent();
         
     }
-   
 
-    public int getNewID() {
-        return newID;
+    public int getNewsID() {
+        return newsID;
     }
 
-    public void setNewID(int newID) {
-        this.newID = newID;
+    public void setNewsID(int newsID) {
+        this.newsID = newsID;
     }
 
-    public String getNewtittles() {
-        return newtittles;
+    public String getNewstittles() {
+        return newstittles;
     }
 
-    public void setNewtittles(String newtittles) {
-        this.newtittles = newtittles;
+    public void setNewstittles(String newstittles) {
+        this.newstittles = newstittles;
     }
 
-    public String getNewcontent() {
-        return newcontent;
+    public String getNewscontent() {
+        return newscontent;
     }
 
-    public void setNewcontent(String newcontent) {
-        this.newcontent = newcontent;
+    public void setNewscontent(String newscontent) {
+        this.newscontent = newscontent;
     }
 
-    public String getNewdaterealease() {
-        return newdaterealease;
+    public String getNewsdaterealease() {
+        return newsdaterealease;
     }
 
-    public void setNewdaterealease(String newdaterealease) {
-        this.newdaterealease = newdaterealease;
+    public void setNewsdaterealease(String newsdaterealease) {
+        this.newsdaterealease = newsdaterealease;
     }
 
-    public String getNewresource() {
-        return newresource;
+    public String getNewsresource() {
+        return newsresource;
     }
 
-    public void setNewresource(String newresource) {
-        this.newresource = newresource;
+    public void setNewsresource(String newsresource) {
+        this.newsresource = newsresource;
     }
 
-    public String getNew_Imgs() {
-        return new_Imgs;
+    public String getNews_Imgs() {
+        return news_Imgs;
     }
 
-    public void setNew_Imgs(String new_Imgs) {
-        this.new_Imgs = new_Imgs;
+    public void setNews_Imgs(String news_Imgs) {
+        this.news_Imgs = news_Imgs;
     }
 
     public User getUser() {
@@ -108,5 +107,7 @@ public class News {
     public void setUser(User user) {
         this.user = user;
     }
+   
+    
 
 }

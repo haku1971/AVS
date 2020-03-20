@@ -1,9 +1,10 @@
 <%-- 
-    Document   : viewalgorithm
-    Created on : Mar 19, 2020, 8:08:46 PM
+    Document   : manage_news
+    Created on : Mar 20, 2020, 8:41:53 PM
     Author     : Ukah
 --%>
 
+<%@page import="Entity.News"%>
 <%@page import="Model.UserModel"%>
 <%@page import="Entity.User"%>
 <%@page import="org.json.JSONArray"%>
@@ -21,9 +22,9 @@
         <!--<script type="text/javascript" src="js/Sort.js"></script>-->
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-
+        
         <%
-            ArrayList<Algorithm> allalgolist = (ArrayList<Algorithm>) request.getAttribute("algolist");
+            ArrayList<News> allnews = (ArrayList<News>) request.getAttribute("newslist");
         %>
     </head>
 
@@ -42,7 +43,7 @@
                     Sort by: 
                     <select id="select_column">
                         <option value="ID">ID</option>
-                        <option value="Name">Name</option>
+                        <option value="Title">Name</option>
                     </select>
                     <select id="select_sorttype">
                         <option value="Ascending">Ascending</option>
@@ -59,27 +60,26 @@
                     <table>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Visualized</th>
+                            <th>Title</th>
+                            <th>Create Date</th>
+                            <th>Editor</th>
                             <th>Detail</th>
                         </tr>
-                        <% for (int i = 0; i < allalgolist.size(); i++) {%> 
+                        <% for (int i = 0; i < allnews.size(); i++) {%> 
                         <tr>
-                            <td><%=allalgolist.get(i).getAlgoID()%></td>
-                            <td><%=allalgolist.get(i).getAlgoName()%></td>
-                            <td><%=allalgolist.get(i).getCategoryNametoString()%></td>
-                            <td><%=allalgolist.get(i).getVisualizedToString()%></td>
-                            <td><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>">View</a></td>
+                            <td><%=allnews.get(i).getNewsID()%></td>
+                            <td><%=allnews.get(i).getNewstittles()%></td>
+                            <td><%=allnews.get(i).getNewsdaterealease()%></td>
+                            <td><%=allnews.get(i).getUser().getUsername()%></td>
+                            <td><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
                         </tr>
                         <%}%>
                     </table>
-
-                    <a href="addalgo"><button>Add</button></a>
+                    
+                    <a href="addnews"><button>Add</button></a>
                 </div>
             </div>
         </div>
         <%@include file="footer.jsp" %>    
     </body>
 </html>
-
