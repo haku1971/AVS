@@ -4,6 +4,7 @@
     Author     : quang
 --%>
 
+<%@page import="Entity.Likecomment"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="Entity.News"%>
@@ -16,9 +17,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    </head>
-    <body>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <%@include file="header.jsp" %> 
+    </head>
+    <body>   
         <%
             Cookie cookie[] = request.getCookies();
             int age = cookie[0].getMaxAge();
@@ -40,56 +47,116 @@
                 }
             }
         %>
-        <%="role duong cua duong la:" + roleid%>
+
 
         <%
             ArrayList<Comment> listallcommentbynewid = (ArrayList<Comment>) request.getAttribute("listallcommentbynewid");
             News news = (News) request.getAttribute("news");
+            HashMap<Integer, Integer> commentid_and_numberof_like = (HashMap<Integer, Integer>) request.getAttribute("commentid_and_numberof_like");
+            ArrayList<Likecomment> listallvote = (ArrayList<Likecomment>) request.getAttribute("listallvote");
         %>
 
-        <p>Title: <%=news.getNewtittles()%> </p>
-        <p>Content: <%=news.getNewcontent()%> <br>
-        <hr>
-        <% if (!listallcommentbynewid.isEmpty()) { %>
-        <% for (int i = 0; i < listallcommentbynewid.size(); i++) {
-                int commentid = listallcommentbynewid.get(i).getCommentid();
+        <div class="container">
+
+            <h1 class="my-4">
+                <small><%=news.getNewstittles()%></small>
+            </h1>
+            <div class="row">
+
+                <div class="col-md-8">
+                    <img class="card-img-top" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt="">
+                </div>
+
+                <div class="col-md-4">
+                    <h3 class="my-3">News content</h3>
+                    <p>  <%=news.getNewscontent()%> </p>
+                    <h3 class="my-3">News Details</h3>
+                    <ul>
+                        <li>Time: <%=news.getNewsdaterealease()%></li>
+                        <li>Create By:<%=news.getUser().getFullname()%> </li>
+                        <li>Has <%=listallcommentbynewid.size()%> comment in this news </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>     
+
+
+
+        <% if (!listallcommentbynewid.isEmpty()) {
+                for (int i = 0; i < listallcommentbynewid.size(); i++) {
+                    int commentid = listallcommentbynewid.get(i).getCommentid();
+                    int numberlike = commentid_and_numberof_like.get(commentid).intValue();
+                    boolean thumbup = false;
+                    for (int j = 0; j < listallvote.size(); j++) {
+                        int votecommentid = listallvote.get(j).getCommentid();
+                        int voteuserid = listallvote.get(j).getUserid();
+                        //ng dang dang nhap tung like roi
+                        if (commentid == votecommentid && voteuserid == Integer.parseInt(userid)) {
+                            thumbup = true;
+                            break;
+                        }
+                    }
         %>
-        <br><hr>
+        <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>
+        <%      //ko phai nguoi đang đăng nhập
+            if (!username.equals(listallcommentbynewid.get(i).getUser().getUsername())) {
+        %>
+
+
         <div id="<%=i%>">
-            <%= "User " + listallcommentbynewid.get(i).getUser().getUsername()%>
-            <p id="<%=commentid%>">   
-                <%=listallcommentbynewid.get(i).getContent()%> 
-            </p> 
+            <hr>
+            <%=thumbup%>
 
-            <br>
-            <div> <%= "Vào lúc: " + listallcommentbynewid.get(i).getDatetime()%></div>
+            <c:out value = "${thumpup}"/>
 
-            <% if (username.equals(listallcommentbynewid.get(i).getUser().getUsername())) {%> 
+            <%="nguoi khac" + commentid%>
+            <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
+            <div id="content_<%=commentid%>"><%=listallcommentbynewid.get(i).getContent()%> </div> 
+            <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
+            <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>,<%=numberlike%>)" class= "${thumpup ?("fa fa-thumbs-up"):("fa fa-thumbs-down")}"></i>
+            <div id="like_<%=commentid%>">${thumpup ?("Liked"):("Unliked")}</div>       
+        </div>
+        <% }
+            //là người đang đăng nhập sẽ hiển thị xoá,sửa            
+            if (username.equals(listallcommentbynewid.get(i).getUser().getUsername())) {%> 
+        <div id="<%=i%>">          
+            <hr>
+            <div>
+                <div>  <%= listallcommentbynewid.get(i).getUser().getUsername()%></div>
+                <%=thumbup%>
+                <%="tao da" + commentid%>
+                <div id="content_<%=commentid%>">   
+                    <%=listallcommentbynewid.get(i).getContent()%> 
+                </div> 
+                <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>
 
-            <form>            
-                <input id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" value="<%=listallcommentbynewid.get(i).getContent()%>" />
-                <input type="hidden" name="commentid" value="<%=commentid%>" />
-                <input  type="hidden" name="newsid" value="<%=news.getNewID()%>" />                      
-            </form>
-            <input id="save_<%=commentid%>" type="submit" name ="save" onclick="savecomment(<%=commentid%>);" value="Save"  />
-            <input id="cancel_<%=commentid%>" type="submit" name ="cancel" onclick="cancel(<%=commentid%>)" value="Cancel" />
-            <input id="edit_<%=commentid%>"  type="submit" name ="Edit" value="Edit" onclick="edit(<%=commentid%>);" />   
-
-
-
-            <form  method="POST">            
-                <input type="hidden" name="commentid" value="<%=commentid%>" />
-                <input  type="hidden" name="newsid" value="<%=news.getNewID()%>" />       
-            </form>
-            <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewID()%>);"/>
+                <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>,<%=numberlike%>)" class= "${thumpup ?("fa fa-thumbs-up"):("fa fa-thumbs-down")}"></i>
+                <div id="like_<%=commentid%>">${thumpup ?("Liked"):("Unliked")}</div> 
+                <div class="numberlike_<%=commentid%>"><%=numberlike %></div>
+                <form>            
+                    <input id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" value="<%=listallcommentbynewid.get(i).getContent()%>" />
+                    <input type="hidden" name="commentid" value="<%=commentid%>" />
+                    <input  type="hidden" name="newsid" value="<%=news.getNewsID()%>" />                      
+                </form>         
+                <table>
+                    <tr> 
+                        <td><input id="save_<%=commentid%>" type="submit" name ="save" onclick="savecomment(<%=commentid%>);" value="Save"  /></td>
+                        <td>  <input id="cancel_<%=commentid%>" type="submit" name ="cancel" onclick="cancel(<%=commentid%>)" value="Cancel" /></td>
+                    </tr>
+                    <tr>
+                        <td>  <input id="edit_<%=commentid%>"  type="submit" name ="Edit" value="Edit" onclick="edit(<%=commentid%>);" />    </td>     
+                        <td>  <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Deleteofuser" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/></td>
+                    </tr>
+                </table>
+            </div>
             <% } else if (roleid.equals("2")) { // la admin thi co the xoa
 %>
-            <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewID()%>);"/>
+            <input id="delete_<%=commentid%>" type="submit" name="Delete" value="deletead_<%=commentid%>" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/>
+
             <% }%>
 
             <script>
-
-
                 setSaveButtonStatus(<%=commentid%>, 'hidden');
                 setCancelButtonStatus(<%=commentid%>, 'hidden');
                 setTxteditStatus(<%=commentid%>, 'hidden');
@@ -105,8 +172,32 @@
                         $("#save_<%=commentid%>").attr("disabled", false);
                     }
                 });
+                function LikeCommentFunction(thumb, commentid, userid, numberoflike) {
 
-
+                    var numberlike = parseInt(numberoflike);
+                    if (thumb.classList.toggle("fa-thumbs-down")) {
+                        console.log('Ban vua an bo like' + commentid + 'va ' + userid + "numberlike" + numberlike);
+                        $.ajax({
+                            type: "post",
+                            url: "DeleteLikeCommentController", //this is my servlet
+                            data: {commentid: commentid}
+                        });
+                        console.log(numberlike);
+                        
+                        document.getElementById('like_' + commentid).innerHTML = 'unlike';
+                    }
+                    if (thumb.classList.toggle("fa-thumbs-up")) {
+                        console.log('Ban vua an like' + commentid + 'va ' + userid + "numberlike" + numberlike);
+                        $.ajax({
+                            type: "post",
+                            url: "SaveLikeCommentController", //this is my servlet
+                            data: {userid: userid, commentid: commentid}
+                        });
+                        console.log(numberlike);
+                         
+                        document.getElementById('like_' + commentid).innerHTML = 'Liked';
+                    }
+                }
 
 
                 function edit(commentid) {
@@ -115,18 +206,20 @@
                     setSaveButtonStatus(commentid, 'visible');
                     setCancelButtonStatus(commentid, "visible");
                     setEditButtonStatus(commentid, "hidden");
-
                     document.getElementById(commentid).style.visibility = 'hidden';
                 }
                 function btndelete(divpositiontodelete, commentid, newsid) {
+                    setDeleteButtonStatus(commentid, "hidden");
+                    console.log("xoa div nao: " + divpositiontodelete + " comentid: " + commentid + " newsid " + newsid);
                     $.ajax({
                         type: "post",
                         url: "DeleteCommentServlet", //this is my servlet
-                        data: {newsid: newsid, commentid: commentid},
+                        data: {newsid: newsid, commentid: commentid}
                     });
-                    var div = document.getElementById(divpositiontodelete);
-                    div.remove();
+                    var divdelete = document.getElementById(divpositiontodelete);
+                    divdelete.remove();
                 }
+
                 function setSaveButtonStatus(btn_position, status) {
                     document.getElementById('save_' + btn_position).style.visibility = status;
                 }
@@ -153,32 +246,32 @@
 
                 }
                 function savecomment(commentid) {
-                setSaveButtonStatus(commentid, "hidden");
-                setDeleteButtonStatus(commentid, "visible");
-                setTxteditStatus(commentid, "hidden");
-                setCancelButtonStatus(commentid, "hidden");
-                setEditButtonStatus(commentid, "visible");
-                var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
-                document.getElementById(commentid).innerHTML = txt_edit_content;
-                document.getElementById(commentid).style.visibility = 'visible';
-                console.log(txt_edit_content);
-                $.ajax({
-                    type: "post",
-                    url: "DeleteCommentServlet", //this is my servlet
-                    data: {commentcontentedit: txt_edit_content, commentid: commentid},
-                    success: function (msg) {
-                        $('#output').append(msg);
-                    }
-                });
-            }
+                    setSaveButtonStatus(commentid, "hidden");
+                    setDeleteButtonStatus(commentid, "visible");
+                    setTxteditStatus(commentid, "hidden");
+                    setCancelButtonStatus(commentid, "hidden");
+                    setEditButtonStatus(commentid, "visible");
+                    var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
+                    document.getElementById('content_'+commentid).innerHTML = txt_edit_content;
+                    document.getElementById('content_'+commentid).style.visibility = 'visible';
+                    console.log(txt_edit_content);
+                    $.ajax({
+                        type: "post",
+                        url: "DeleteCommentServlet", //this is my servlet
+                        data: {commentcontentedit: txt_edit_content, commentid: commentid},
+                        success: function (msg) {
+                            $('#output').append(msg);
+                        }
+                    });
+                }
 
             </script>
-            <% }%> <!--check nguoi dang dang nhap co nhung comment nao -->
         </div>
+        <% }%> <!--check nguoi dang dang nhap co nhung comment nao -->
+
         <% } else { //chua co comment nao
 
         %>
-
         <%= "Don't have any comment. let be the first comment!!! "%>
         <%}
         %>
@@ -191,7 +284,7 @@
                     String strdate = formatter.format(date);
                 %>
                 <input type="hidden" name="strdate" value="<%=strdate%>" />
-                <input type="hidden" name="newsid" value="<%=news.getNewID()%> " />
+                <input type="hidden" name="newsid" value="<%=news.getNewsID()%> " />
                 <tr><textarea id="txtsavedb" width="500" name="commentcontent"></textarea></tr>
                 <input type="submit" id="postcomment" name="postodb" value="Post comment" />       
             </form>
@@ -210,8 +303,9 @@
                     $('#postcomment').attr("disabled", false);
                 }
             });
-            
+
         </script>
+
 
 
     </body>

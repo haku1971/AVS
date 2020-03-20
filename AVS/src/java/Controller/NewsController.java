@@ -32,18 +32,28 @@ public class NewsController extends HttpServlet {
             int recordPerPage = 2;
             int page = 1;
             int numberOfPage = 0;
-            int numberoffnews = newsmodeldao.countDB();
-            double dataSize = (double) numberoffnews;
-            numberOfPage = (int) Math.ceil(dataSize / recordPerPage);
-            if (request.getParameter("page") != null) {
+
+            if (request.getParameter("page") != null) {             
                 page = Integer.parseInt(request.getParameter("page"));
             }
             if (request.getParameter("search") != null) {
-                listallnews = newsmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, request.getParameter("search"));
-                String numberofsearchresult = "Result of searching";
+                String search= request.getParameter("search");
+                listallnews = newsmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, search);
+                int numberoffnews = newsmodeldao.countDBresultsearch(search);
+                String numberofsearchresult = "Found "+ numberoffnews + "result";
+                request.setAttribute("search", search);
                 request.setAttribute("numberofsearchresult", numberofsearchresult);
+                double dataSize = (double) numberoffnews;
+                numberOfPage = (int) Math.ceil(dataSize / recordPerPage);
             } else {
                 listallnews = newsmodeldao.getNewsFromTo((page * recordPerPage) - recordPerPage + 1, page * recordPerPage);
+                int numberoffnews = newsmodeldao.countDB();
+                double dataSize = (double) numberoffnews;
+                numberOfPage = (int) Math.ceil(dataSize / recordPerPage);
+            }
+            //neu ma nguoi dung muon truy cap trang khong co
+            if( page < 0 || page > numberOfPage * recordPerPage ) {
+                //chuyen qua trang error luon
             }
             request.setAttribute("numberOfPage", numberOfPage);
             request.setAttribute("currentPage", page);

@@ -7,11 +7,13 @@ package Controller;
 
 import Entity.Comment;
 import Entity.News;
+import Entity.Likecomment;
 import Model.CommentModel;
 import Model.NewsModel;
 import Model.UserModel;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -36,6 +38,17 @@ public class CommentController extends HttpServlet {
             CommentModel commentmodel = new CommentModel();
             News news = newmodeldao.getNewByNewsID(newsid);
             ArrayList<Comment> listallcommentbynewid = commentmodel.getAllCommentByNewsID(newsid);
+
+            HashMap<Integer, Integer> commentid_and_numberof_like = new HashMap<>();
+           
+            for (int i = 0; i < listallcommentbynewid.size(); i++) {
+                int commentid= listallcommentbynewid.get(i).getCommentid();
+                int number_of_like = commentmodel.getTotalLikecommentByCommentId(commentid).size();
+                commentid_and_numberof_like.put(commentid,number_of_like);
+            }
+            ArrayList<Likecomment> listallvote= commentmodel.getAllLikeComment();
+            request.setAttribute("listallvote", listallvote);
+            request.setAttribute("commentid_and_numberof_like", commentid_and_numberof_like);
             request.setAttribute("news", news);
             request.setAttribute("listallcommentbynewid", listallcommentbynewid);
             request.getRequestDispatcher("jsp/newsdetail.jsp").forward(request, response);
@@ -59,7 +72,7 @@ public class CommentController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            
+
             response.setContentType("text/html;charset=UTF-8");
             CommentModel commentmodel = new CommentModel();
             String newid = request.getParameter("newsid");
@@ -67,12 +80,12 @@ public class CommentController extends HttpServlet {
             String comment = "";
             String strdate = "";
 
-          //lay cookies nguoi dang nhap
+            //lay cookies nguoi dang nhap
             Cookie cookie[] = request.getCookies();
             int age = cookie[0].getMaxAge();
             String username = "";
             String userid = "";
-            String roleid= "";
+            String roleid = "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("username")) {
                     username = ck.getValue();
@@ -87,10 +100,9 @@ public class CommentController extends HttpServlet {
                     username = "";
                 }
             }
-       
+
             //check chua dang nhap thi ve home
-            
-            if(username.equals("")) {
+            if (username.equals("")) {
                 response.sendRedirect("HomeController");
                 return;
             }
@@ -100,11 +112,11 @@ public class CommentController extends HttpServlet {
             if (posttodb != null) {
                 comment = request.getParameter("commentcontent");
                 strdate = request.getParameter("strdate");
-                commentmodel.saveCommenttoDB(comment, strdate, usersid, newsid);             
+                commentmodel.saveCommenttoDB(comment, strdate, usersid, newsid);
                 response.sendRedirect("CommentController?newsid=" + newsid);
                 return;
             }
-          
+
         } catch (Exception ex) {
             Logger.getLogger(CommentController.class.getName()).log(Level.SEVERE, null, ex);
         }

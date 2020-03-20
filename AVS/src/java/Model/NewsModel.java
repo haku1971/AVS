@@ -68,6 +68,30 @@ public class NewsModel {
         }
         return listallnews;
     }
+     public int countDBresultsearch(String searchtxt) throws Exception {
+        String query = "select COUNT(*) as numberrecord from News n where n.news_Tittles like ? OR n.news_Content like ?";
+        int numberofrecord = 0;
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + searchtxt + "%");
+            ps.setString(2, "%" + searchtxt + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                numberofrecord = rs.getInt("numberrecord");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            new CloseConnection().close(conn, ps, rs);
+        }
+
+        return numberofrecord;
+    }
 //count number of record in News table
 
     public int countDB() throws Exception {
@@ -169,8 +193,10 @@ public class NewsModel {
         return listallnews;
     }
 
+ 
     public News getNewByNewsID(int newsid) throws Exception {
-        String query = "SELECT [delete_Status],[news_ID],[news_Tittles],[news_Content],[news_DateRealease],[news_Resource],[news_Imgs],[user_ID] FROM [News] where news_ID=?";
+        String query = "SELECT u.user_FullName fullname,u.user_Name username, [delete_Status],[news_ID],[news_Tittles],[news_Content],[news_DateRealease],[news_Resource],[news_Imgs],n.user_ID userid FROM [News] n \n" +
+"inner join Users u on n.user_ID= u.user_ID where news_ID=?";
         News news = new News();
         DBContext dbManager = new DBContext();
         Connection conn = null;
@@ -183,7 +209,9 @@ public class NewsModel {
             rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("user_ID"));
+                user.setId(rs.getInt("userid"));
+                user.setUsername(rs.getString("username"));
+                user.setFullname(rs.getString("fullname"));
                 news.setNewsID(rs.getInt("news_ID"));
                 news.setNewstittles(rs.getString("news_Tittles"));
                 news.setNewscontent(rs.getString("news_Content"));

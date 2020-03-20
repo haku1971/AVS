@@ -46,14 +46,7 @@ public class DeleteCommentServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -87,6 +80,8 @@ public class DeleteCommentServlet extends HttpServlet {
             }
            // int userid = convertStringToInt(id_of_user);
             if(request.getParameter("newsid")!= null &&request.getParameter("commentid")!= null ) {
+                //xoa comment la xoa ca vote
+                commentmodel.deleteLikeCommentById(Integer.parseInt(commentid));
                 commentmodel.deleteCommentById(Integer.parseInt(commentid));
             }
             
