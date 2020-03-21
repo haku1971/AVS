@@ -15,6 +15,8 @@ public class Algorithm {
     private String algoCodeJava;
     private String algoCodeCplus;
     private String algoCodeJS;
+   
+    private String algoCodeVisual;
     private String algoDescription;
     private int categoryID;
     private String algoDatetime;
@@ -48,19 +50,25 @@ public class Algorithm {
         this.algoResource = algoResource;
         this.number_of_step = number_of_step;
     }
-  
-    
-    public Algorithm(int algoID, String algoName, String algoCodeJava, String algoCodeCplus, String algoCodeJS, String algoDescription, int categoryID, String algoDatetime, String algoResource) {
+
+    public Algorithm(int algoID, String algoName, String algoCodeJava, String algoCodeCplus, String algoCodeJS, String algoCodeVisual, String algoDescription, int categoryID, String algoDatetime, String algoResource, String categoryName, String algoFile, int visualized) {
         this.algoID = algoID;
         this.algoName = algoName;
         this.algoCodeJava = algoCodeJava;
         this.algoCodeCplus = algoCodeCplus;
         this.algoCodeJS = algoCodeJS;
+        this.algoCodeVisual = algoCodeVisual;
         this.algoDescription = algoDescription;
         this.categoryID = categoryID;
         this.algoDatetime = algoDatetime;
-        this.algoResource = algoResource;
+        this.algoResource = algoResource;      
+        this.categoryName = categoryName;
+        this.algoFile = algoFile;
+        this.visualized = visualized;
     }
+  
+    
+  
 
     public String getAlgoFile() {
         return algoFile;
@@ -106,6 +114,14 @@ public class Algorithm {
 
     public String getAlgoCodeJS() {
         return algoCodeJS;
+    }
+
+    public String getAlgoCodeVisual() {
+        return algoCodeVisual;
+    }
+
+    public void setAlgoCodeVisual(String algoCodeVisual) {
+        this.algoCodeVisual = algoCodeVisual;
     }
 
     public void setAlgoCodeJS(String algoCodeJS) {

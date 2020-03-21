@@ -6,7 +6,7 @@
 package Model;
 
 import DBContext.DBContext;
-import Entity.Comment;
+import Entity.Likenews;
 import Entity.News;
 import Entity.User;
 import java.sql.Connection;
@@ -22,6 +22,107 @@ import java.util.logging.Logger;
  * @author quang
  */
 public class NewsModel {
+
+    //Like comment
+    public ArrayList<Likenews> getTotalLikeNewsByNewsId(int newsid) throws Exception {
+        String query = "SELECT  u.user_FullName fullname,u.user_Name username, ln.[user_ID] userid,ln.news_ID newsid,ln.[Status] cmtstatus FROM LikeNews ln\n"
+                + " inner join Users u on u.user_ID= ln.user_ID where ln.news_ID= ? order by ln.news_ID asc";
+        ArrayList<Likenews> listalllikenewbynewstid = new ArrayList<>();
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, newsid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Likenews likenew = new Likenews();
+                likenew.setUserid(rs.getInt("userid"));
+                likenew.setFullname(rs.getString("fullname"));
+                likenew.setUsername(rs.getString("username"));
+                likenew.setStatus(rs.getInt("cmtstatus"));
+                likenew.setNewsid(rs.getInt("newsid"));
+                listalllikenewbynewstid.add(likenew);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listalllikenewbynewstid;
+    }
+
+    //Like comment
+    public ArrayList<Likenews> getAllLikeNews() throws Exception {
+        String query = "SELECT  u.user_FullName fullname,u.user_Name username, ln.[user_ID] userid,ln.news_ID newsid,ln.[Status] cmtstatus \n"
+                + " FROM LikeNews ln inner join Users u on u.user_ID= ln.user_ID\n"
+                + " inner join News n on n.news_ID= ln.news_ID\n"
+                + "order by ln.news_ID asc";
+        ArrayList<Likenews> listalllikenews = new ArrayList<>();
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Likenews likenew = new Likenews();
+                likenew.setUserid(rs.getInt("userid"));
+                likenew.setFullname(rs.getString("fullname"));
+                likenew.setUsername(rs.getString("username"));
+                likenew.setStatus(rs.getInt("cmtstatus"));
+                likenew.setNewsid(rs.getInt("newsid"));
+                listalllikenews.add(likenew);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listalllikenews;
+    }
+
+    //like comment
+    public void saveLikeNews(int userid, int newsid) throws Exception {
+        //excute update
+        String query = "INSERT INTO [LikeNews]([user_ID],[news_ID]) VALUES (?,?)";
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userid);
+            ps.setInt(2, newsid);
+            int executeUpdate;
+            executeUpdate = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //delete cua like comment by comment id
+    public void deleteLikeNewsByNewsId(int newsid) throws Exception {
+        //excute update
+        String query = "DELETE FROM LikeNews WHERE news_ID = ?";
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, newsid);
+            int executeUpdate;
+            executeUpdate = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     //
     public ArrayList<News> searchNews(int from, int to, String searchtxt) throws Exception {
@@ -67,6 +168,31 @@ public class NewsModel {
             new CloseConnection().close(conn, ps, rs);
         }
         return listallnews;
+    }
+
+    public int countDBresultsearch(String searchtxt) throws Exception {
+        String query = "select COUNT(*) as numberrecord from News n where n.news_Tittles like ? OR n.news_Content like ?";
+        int numberofrecord = 0;
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + searchtxt + "%");
+            ps.setString(2, "%" + searchtxt + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                numberofrecord = rs.getInt("numberrecord");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            new CloseConnection().close(conn, ps, rs);
+        }
+
+        return numberofrecord;
     }
 //count number of record in News table
 
@@ -170,7 +296,8 @@ public class NewsModel {
     }
 
     public News getNewByNewsID(int newsid) throws Exception {
-        String query = "SELECT [delete_Status],[news_ID],[news_Tittles],[news_Content],[news_DateRealease],[news_Resource],[news_Imgs],[user_ID] FROM [News] where news_ID=?";
+        String query = "SELECT u.user_FullName fullname,u.user_Name username, [delete_Status],[news_ID],[news_Tittles],[news_Content],[news_DateRealease],[news_Resource],[news_Imgs],n.user_ID userid FROM [News] n \n"
+                + "inner join Users u on n.user_ID= u.user_ID where news_ID=?";
         News news = new News();
         DBContext dbManager = new DBContext();
         Connection conn = null;
@@ -183,7 +310,9 @@ public class NewsModel {
             rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("user_ID"));
+                user.setId(rs.getInt("userid"));
+                user.setUsername(rs.getString("username"));
+                user.setFullname(rs.getString("fullname"));
                 news.setNewsID(rs.getInt("news_ID"));
                 news.setNewstittles(rs.getString("news_Tittles"));
                 news.setNewscontent(rs.getString("news_Content"));
