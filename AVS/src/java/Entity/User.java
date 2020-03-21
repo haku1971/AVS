@@ -10,7 +10,8 @@ package Entity;
  * @author BinhNT
  */
 public class User {
-   private int id;
+
+    private int id;
     private String username;
     private String password;
     private int rolenum;
@@ -21,6 +22,7 @@ public class User {
     private String mail;
     private String phone;
     private String fullname;
+    private int banstatus;
 
     public User() {
     }
@@ -47,7 +49,6 @@ public class User {
         this.fullname = fullname;
     }
 
-  
     public int getId() {
         return id;
     }
@@ -75,6 +76,13 @@ public class User {
     public int getRolenum() {
         return rolenum;
     }
+    
+    public String getRolenumString() {
+        if(rolenum==1) {
+            return "Admin";
+        }
+        return "None";
+    }
 
     public void setRolenum(int rolenum) {
         this.rolenum = rolenum;
@@ -91,8 +99,6 @@ public class User {
     public void setJob(int job) {
         this.job = job;
     }
-
-    
 
     public String getWorkplace() {
         return workplace;
@@ -125,7 +131,21 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public int getBanstatus() {
+        return banstatus;
+    }
     
+    public String getBanstatusString() {
+        if(banstatus==1) {
+            return "Banned";
+        }
+        return "None";
+    }
+
+    public void setBanstatus(int banstatus) {
+        this.banstatus = banstatus;
+    }
     
     
 }

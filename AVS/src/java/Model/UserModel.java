@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * @author BinhNT
  */
 public class UserModel {
+
     private final DBContext db;
 
     public UserModel() throws Exception {
@@ -48,6 +49,7 @@ public class UserModel {
                 user.setMail(rs.getString("user_Mail"));
                 user.setPhone(rs.getString("user_Phone"));
                 user.setFullname(rs.getString("user_Fullname"));
+                user.setBanstatus(rs.getInt("ban_status"));
                 return user;
             }
         } catch (SQLException e) {
@@ -56,7 +58,7 @@ public class UserModel {
 
         return null;
     }
-    
+
     public User getUserByUserID(String userid) throws Exception {
         String query = "select * from Users where user_ID=?";
         Connection conn = null;
@@ -81,6 +83,7 @@ public class UserModel {
                 user.setMail(rs.getString("user_Mail"));
                 user.setPhone(rs.getString("user_Phone"));
                 user.setFullname(rs.getString("user_Fullname"));
+                user.setBanstatus(rs.getInt("ban_status"));
                 return user;
             }
         } catch (SQLException e) {
@@ -91,7 +94,7 @@ public class UserModel {
     }
 
     public void insertUser(String username,
-            String password,String fullname,int age, int job,
+            String password, String fullname, int age, int job,
             String workplace, int gender, String mail, String phone) throws Exception {
         String query1 = "insert into Users(user_Name,user_Password,user_RoleNum,"
                 + "user_Fullname,user_Age,user_Workplaces,user_Gender,user_Mail,"
@@ -117,7 +120,7 @@ public class UserModel {
             e.printStackTrace();
         }
     }
-    
+
     public ArrayList<User> getAllUser() throws Exception {
         ArrayList<User> userlist = new ArrayList();
         String query = "select * from Users ";
@@ -128,7 +131,7 @@ public class UserModel {
             conn = db.getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("user_ID"));
@@ -142,6 +145,7 @@ public class UserModel {
                 user.setMail(rs.getString("user_Mail"));
                 user.setPhone(rs.getString("user_Phone"));
                 user.setFullname(rs.getString("user_Fullname"));
+                user.setBanstatus(rs.getInt("ban_status"));
                 userlist.add(user);
             }
         } catch (SQLException e) {
@@ -149,5 +153,41 @@ public class UserModel {
         }
 
         return userlist;
+    }
+
+    public void banUserID(int id) throws Exception {
+        String query = "Update Users\n"
+                + "Set ban_Status = 1\n"
+                + "where user_ID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "" + id);
+            int executeUpdate;
+            executeUpdate = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void unbanUserID(int id) throws Exception {
+        String query = "Update Users\n"
+                + "Set ban_Status = 0\n"
+                + "where user_ID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "" + id);
+            int executeUpdate;
+            executeUpdate = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

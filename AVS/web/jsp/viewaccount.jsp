@@ -48,8 +48,10 @@
                     <div class="role">Role: <%=thisuser.getRolenum()%></div>
                     <div class="phone">Phone: <%=thisuser.getPhone()%></div>
                 </div>
-                <form>
-                    <input type="submit" value="Ban">
+                <form method="POST" action="manage">
+                    <input type="hidden" name="userid" value="<%=thisuser.getId()%>">
+                    <input type="hidden" name="ban" <%if(thisuser.getBanstatus()==1){%>value="unban"<%}else{%>value="ban"<%}%>>
+                    <input type="submit" <%if(thisuser.getBanstatus()==1){%>value="Unban"<%}else{%>value="Ban"<%}%>>
                 </form>
                 <a href="admin?category=account"><button>Back</button></a>
 

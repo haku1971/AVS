@@ -47,8 +47,8 @@
             News news = (News) request.getAttribute("news");
         %>
 
-        <p>Title: <%=news.getNewtittles()%> </p>
-        <p>Content: <%=news.getNewcontent()%> <br>
+        <p>Title: <%=news.getNewstittles()%> </p>
+        <p>Content: <%=news.getNewscontent()%> <br>
         <hr>
         <% if (!listallcommentbynewid.isEmpty()) { %>
         <% for (int i = 0; i < listallcommentbynewid.size(); i++) {
@@ -69,7 +69,7 @@
             <form>            
                 <input id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" value="<%=listallcommentbynewid.get(i).getContent()%>" />
                 <input type="hidden" name="commentid" value="<%=commentid%>" />
-                <input  type="hidden" name="newsid" value="<%=news.getNewID()%>" />                      
+                <input  type="hidden" name="newsid" value="<%=news.getNewsID()%>" />                      
             </form>
             <input id="save_<%=commentid%>" type="submit" name ="save" onclick="savecomment(<%=commentid%>);" value="Save"  />
             <input id="cancel_<%=commentid%>" type="submit" name ="cancel" onclick="cancel(<%=commentid%>)" value="Cancel" />
@@ -79,12 +79,12 @@
 
             <form  method="POST">            
                 <input type="hidden" name="commentid" value="<%=commentid%>" />
-                <input  type="hidden" name="newsid" value="<%=news.getNewID()%>" />       
+                <input  type="hidden" name="newsid" value="<%=news.getNewsID()%>" />       
             </form>
-            <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewID()%>);"/>
+            <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/>
             <% } else if (roleid.equals("2")) { // la admin thi co the xoa
 %>
-            <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewID()%>);"/>
+            <input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/>
             <% }%>
 
             <script>
@@ -191,7 +191,7 @@
                     String strdate = formatter.format(date);
                 %>
                 <input type="hidden" name="strdate" value="<%=strdate%>" />
-                <input type="hidden" name="newsid" value="<%=news.getNewID()%> " />
+                <input type="hidden" name="newsid" value="<%=news.getNewsID()%> " />
                 <tr><textarea id="txtsavedb" width="500" name="commentcontent"></textarea></tr>
                 <input type="submit" id="postcomment" name="postodb" value="Post comment" />       
             </form>

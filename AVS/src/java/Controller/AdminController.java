@@ -6,9 +6,11 @@
 package Controller;
 
 import Entity.Algorithm;
+import Entity.History;
 import Entity.News;
 import Entity.User;
 import Model.AlgorithmModel;
+import Model.HistoryModel;
 import Model.NewsModel;
 import Model.UserModel;
 import java.io.IOException;
@@ -67,6 +69,16 @@ public class AdminController extends HttpServlet {
                     UserModel userdao = new UserModel();
                     ArrayList<User> userlist = userdao.getAllUser();
 
+                    String sortoption = request.getParameter("sortoption");
+                    if(sortoption==null) {
+                        sortoption = "id";
+                    }
+                    String sortdirection = request.getParameter("sortdirection");
+                    if(sortdirection==null) {
+                        sortdirection = "ascending";
+                    }
+                    request.setAttribute("sortdirection", sortdirection);
+                    request.setAttribute("sortoption", sortoption);
                     request.setAttribute("userlist", userlist);
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("jsp/manage_account.jsp").forward(request, response);
@@ -95,15 +107,39 @@ public class AdminController extends HttpServlet {
                 }
                 
                 case "user_history": {
+                    HistoryModel historydao = new HistoryModel();
+                    ArrayList<History> historylist = historydao.getUserHistory();
                     
+                    request.setAttribute("historylist", historylist);
+                    request.setAttribute("category", category);
+                    request.setAttribute("historytype", "user_history");
+                    request.getRequestDispatcher("jsp/manage_history.jsp").forward(request, response);
+
+                    break;
                 }
                 
                 case "algo_history": {
+                    HistoryModel historydao = new HistoryModel();
+                    ArrayList<History> historylist = historydao.getAlgoHistory();
                     
+                    request.setAttribute("historylist", historylist);
+                    request.setAttribute("category", category);
+                    request.setAttribute("historytype", "algo_history");
+                    request.getRequestDispatcher("jsp/manage_history.jsp").forward(request, response);
+
+                    break;
                 }
                 
                 case "news_history": {
+                    HistoryModel historydao = new HistoryModel();
+                    ArrayList<History> historylist = historydao.getNewsHistory();
                     
+                    request.setAttribute("historylist", historylist);
+                    request.setAttribute("category", category);
+                    request.setAttribute("historytype", "news_history");
+                    request.getRequestDispatcher("jsp/manage_history.jsp").forward(request, response);
+
+                    break;
                 }
 
                 default: {
