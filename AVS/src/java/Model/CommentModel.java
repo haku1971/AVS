@@ -32,10 +32,10 @@ public class CommentModel {
 
     //Like comment
     public ArrayList<Likecomment> getTotalLikecommentByCommentId(int commentid) throws Exception {
-        String query = "SELECT  u.user_FullName fullname,u.user_Name username, lc.[user_ID] userid,lc.[comment_ID] commentid,lc.[Status] cmtstatus FROM LikeComment lc \n" +
-"               inner join Comments c on lc.comment_ID=c.comment_ID inner join Users u on u.user_ID= lc.user_ID\n" +
-"                 where lc.comment_ID= ? order by lc.comment_ID asc";
-        ArrayList<Likecomment> listallcommentbyid = new ArrayList<>();
+        String query = "SELECT  u.user_FullName fullname,u.user_Name username, lc.[user_ID] userid,lc.[comment_ID] commentid,lc.[Status] cmtstatus FROM LikeComment lc \n"
+                + "               inner join Comments c on lc.comment_ID=c.comment_ID inner join Users u on u.user_ID= lc.user_ID\n"
+                + "                 where lc.comment_ID= ? order by lc.comment_ID asc";
+        ArrayList<Likecomment> listalllikebycommentid = new ArrayList<>();
         DBContext dbManager = new DBContext();
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
@@ -53,21 +53,22 @@ public class CommentModel {
                 votecomment.setUsername(rs.getString("username"));
                 votecomment.setStatus(rs.getInt("cmtstatus"));
                 votecomment.setCommentid(rs.getInt("commentid"));
-                listallcommentbyid.add(votecomment);
+                listalllikebycommentid.add(votecomment);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return listallcommentbyid;
+        return listalllikebycommentid;
     }
 
     //Like comment
-
     public ArrayList<Likecomment> getAllLikeComment() throws Exception {
-        String query = "SELECT  u.user_FullName fullname,u.user_Name username, lc.[user_ID] userid,lc.[comment_ID] commentid,lc.[Status] cmtstatus FROM LikeComment lc \n" +
-"inner join Comments c on lc.comment_ID=c.comment_ID inner join Users u on u.user_ID= lc.user_ID order by lc.comment_ID asc";
-        ArrayList<Likecomment> listallcommentbyid = new ArrayList<>();
+        String query = "SELECT  u.user_FullName fullname,u.user_Name username, lc.[user_ID] userid,lc.[comment_ID] commentid,lc.[Status] cmtstatus "
+                + "FROM LikeComment lc \n"
+                + "inner join Comments c on lc.comment_ID=c.comment_ID inner join Users u on u.user_ID= lc.user_ID"
+                + " order by lc.comment_ID asc";
+        ArrayList<Likecomment> listalllike = new ArrayList<>();
         DBContext dbManager = new DBContext();
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
@@ -85,17 +86,16 @@ public class CommentModel {
                 votecomment.setUsername(rs.getString("username"));
                 votecomment.setStatus(rs.getInt("cmtstatus"));
                 votecomment.setCommentid(rs.getInt("commentid"));
-                listallcommentbyid.add(votecomment);
+                listalllike.add(votecomment);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return listallcommentbyid;
+        return listalllike;
     }
 
     //like comment
-
     public void saveLikeComment(int userid, int commentid) throws Exception {
         //excute update
         String query = "INSERT INTO [LikeComment] ([user_ID],[comment_ID])VALUES( ? ,?)";

@@ -8,6 +8,7 @@ package Controller;
 import Entity.Comment;
 import Entity.News;
 import Entity.Likecomment;
+import Entity.Likenews;
 import Model.CommentModel;
 import Model.NewsModel;
 import Model.UserModel;
@@ -37,6 +38,12 @@ public class CommentController extends HttpServlet {
             NewsModel newmodeldao = new NewsModel();
             CommentModel commentmodel = new CommentModel();
             News news = newmodeldao.getNewByNewsID(newsid);
+            //get ra số lượng like của news
+           ArrayList<Likenews> listalllikenewsbynewsid= newmodeldao.getTotalLikeNewsByNewsId(newsid);
+           int total_likenews= listalllikenewsbynewsid.size();
+            request.setAttribute("listalllikenewsbynewsid", listalllikenewsbynewsid);
+            request.setAttribute("total_likenews", total_likenews);
+            
             ArrayList<Comment> listallcommentbynewid = commentmodel.getAllCommentByNewsID(newsid);
 
             HashMap<Integer, Integer> commentid_and_numberof_like = new HashMap<>();
@@ -45,6 +52,7 @@ public class CommentController extends HttpServlet {
                 int commentid= listallcommentbynewid.get(i).getCommentid();
                 int number_of_like = commentmodel.getTotalLikecommentByCommentId(commentid).size();
                 commentid_and_numberof_like.put(commentid,number_of_like);
+                
             }
             ArrayList<Likecomment> listallvote= commentmodel.getAllLikeComment();
             request.setAttribute("listallvote", listallvote);

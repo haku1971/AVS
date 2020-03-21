@@ -14,9 +14,8 @@
         <title>new list Page</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
         <style>
             .pagination a {
                 color: black;
@@ -36,11 +35,38 @@
             }
 
             .pagination a:hover:not(.active) {background-color: #ddd;}
+
+            .container {
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+            }
+            @media (min-width: 768px) {
+                .container {
+                    width: 750px;
+                }
+            }
+            @media (min-width: 992px) {
+                .container {
+                    width: 970px;
+                }
+            }
+            @media (min-width: 1200px) {
+                .container {
+                    width: 1170px;
+                }
+            }
+            .text-center {
+                background-color: #eee;
+                text-align: center !important;
+            }
+
         </style>
         <%@include file="header.jsp" %> 
     </head>
     <body>
-        
+
 
         <%
             Cookie cookie[] = request.getCookies();
@@ -83,7 +109,7 @@
 
             <div  class="col-lm-4">  
                 <% if (listallnews != null) {
-                            for (int i = 0; i < listallnews.size(); i++) {%>
+                        for (int i = 0; i < listallnews.size(); i++) {%>
 
                 <a href="CommentController?newsid=<%=listallnews.get(i).getNewsID()%>"><%=listallnews.get(i).getNewstittles()%> </a>
                 <br>     
@@ -102,7 +128,7 @@
             <div class="col-lm-4" >
                 <div class="pagination">
                     <% for (int i = 1; i <= numberOfPage; i++) {
-                        if (currentPage == i) {%>
+                            if (currentPage == i) {%>
 
                     <a class="active"> <%=i%></a>
                     <%} else if (search != null) {%>
@@ -110,7 +136,7 @@
                     <%} else {%>
                     <a href="NewsController?page=<%=i%>"><%=i%></a>
                     <%}
-                    }%>
+                        }%>
                 </div>
             </div>
         </div>

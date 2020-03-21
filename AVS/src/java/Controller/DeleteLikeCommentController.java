@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.CommentModel;
+import Model.NewsModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -22,15 +23,27 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "DeleteLikeCommentController", urlPatterns = {"/DeleteLikeCommentController"})
 public class DeleteLikeCommentController extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String cmtid= request.getParameter("commentid");       
-            int commentid = Integer.parseInt(cmtid);
-            System.out.println( "commentid" + commentid);
-            CommentModel commentmodel= new CommentModel();
-            commentmodel.deleteLikeCommentById(commentid);           
+
+            CommentModel commentmodel = new CommentModel();
+            //check ajax cho xoa like cua 1 comment
+            if (request.getParameter("commentid") != null) {
+                int commentid = Integer.parseInt(request.getParameter("commentid"));
+                System.out.println("commentid" + commentid);
+                commentmodel.deleteLikeCommentById(commentid);
+            }
+
+            NewsModel newsmodel = new NewsModel();
+            //check ajax cho xoa like cua 1 news
+            if (request.getParameter("newsid") != null) {
+                int newsid = Integer.parseInt(request.getParameter("newsid"));
+                System.out.println("newsid " + newsid);
+                newsmodel.deleteLikeNewsByNewsId(newsid);
+            }
         } catch (Exception ex) {
             Logger.getLogger(SaveLikeCommentController.class.getName()).log(Level.SEVERE, null, ex);
         }

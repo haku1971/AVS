@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.CommentModel;
+import Model.NewsModel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,26 +26,38 @@ public class SaveLikeCommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       try {
-            String usid= request.getParameter("userid");
-            String cmtid= request.getParameter("commentid");
-            double userid = Double.parseDouble(usid);
-            int id= (int)userid;
-            int commentid = Integer.parseInt(cmtid);
-            System.out.println("userid"+ id + "commentid" + commentid);
-            CommentModel commentmodel= new CommentModel();
-            commentmodel.saveLikeComment(id, commentid);
-            
+        try {
+            //Comment like
+            String usid = request.getParameter("userid");
+            double user_id = Double.parseDouble(usid);
+            int userid = (int) user_id;
+
+            CommentModel commentmodel = new CommentModel();
+            //check ajax cho save like comment
+            if (usid != null && request.getParameter("commentid") != null) {
+                int commentid = Integer.parseInt(request.getParameter("commentid"));
+                System.out.println("userid" + userid + "commentid" + commentid);
+                commentmodel.saveLikeComment(userid, commentid);
+            }
+            //News like
+
+            NewsModel newsmodel = new NewsModel();
+            //check ajax cho xoa like cua 1 news
+            if (usid != null && request.getParameter("newsid") != null) {
+                int newsid = Integer.parseInt(request.getParameter("newsid"));
+                System.out.println("newsid: " + newsid);
+                newsmodel.saveLikeNews(userid, newsid);
+            }
         } catch (Exception ex) {
             Logger.getLogger(SaveLikeCommentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**

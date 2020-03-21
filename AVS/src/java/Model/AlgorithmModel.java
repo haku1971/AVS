@@ -35,20 +35,22 @@ public class AlgorithmModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT * FROM Algorithm WHERE algo_CompareStatus = 1 AND category_ID = ? ORDER BY algo_ID";
+            String sql = "SELECT algo_ID algoid,algo_Name algoname ,algo_CodeJava algocodejava,algo_CodeCplus algocodecplus\n" +
+",algo_Description algodescription,category_ID categoryid,algo_DateTime algodate,algo_CodeJS algocodejs ,\n" +
+"algo_Resource algoresource   FROM Algorithm WHERE algo_CompareStatus = 1 AND category_ID = ? ORDER BY algo_ID";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryID);
             rs = statement.executeQuery();
             while (rs.next()) {
-                int algoid = rs.getInt(1);
-                String algoname = rs.getString(2);
-                String algocodejava = rs.getString(3);
-                String algocodecplus = rs.getString(4);
-                String algocodejs = rs.getString(5);
-                String algodescription = rs.getString(6);
-                int categoryid = rs.getInt(7);
-                String algodatetime = rs.getString(9);
-                String algoresource = rs.getString(9);
+                int algoid = rs.getInt("algoid");
+                String algoname = rs.getString("algoname");
+                String algocodejava = rs.getString("algocodejava");
+                String algocodecplus = rs.getString("algocodecplus");
+                String algocodejs = rs.getString("algocodejs");
+                String algodescription = rs.getString("algodescription");
+                int categoryid = rs.getInt("categoryid");
+                String algodatetime = rs.getString("algodate");
+                String algoresource = rs.getString("algoresource");
                 int number_of_step = 0;
                 listAllAlgorithms.add(new Algorithm(algoid, algoname, algocodejava, algocodecplus, algocodejs, algodescription, categoryid, algodatetime, algoresource, number_of_step));
             }
