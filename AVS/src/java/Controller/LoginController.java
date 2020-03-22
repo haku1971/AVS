@@ -41,7 +41,6 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
 
     }
 
@@ -59,8 +58,8 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
 //        HttpSession session = request.getSession();
 //            session.removeAttribute("username");
-      RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-                dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**
@@ -74,14 +73,14 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserModel userDao;
         int rolenumber = 0;
-        int id=0;
+        int id = 0;
         if (request.getParameter("login") != null) {
-            
+
             AuthenticateManagement authenticateManagement = new AuthenticateManagement();
             AuthenticateManagement.CheckResult result = authenticateManagement.checkUserAccount(username, password);
             if (result == AuthenticateManagement.CheckResult.USERNAME_LENGTH) {
@@ -113,27 +112,34 @@ public class LoginController extends HttpServlet {
                 try {
                     userDao = new UserModel();
                     User user = userDao.getUserByUsername(username);
+                    if (user.getBanstatus() == 1) {
+                        request.setAttribute("errorMessage", "This account was banned");
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+                        dispatcher.forward(request, response);
+                    }
                     rolenumber = user.getRolenum();
-                    id=user.getId();
+                    id = user.getId();
                 } catch (Exception ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 String roleid = Integer.toString(rolenumber);
-                String userid=Integer.toString(id);
+                String userid = Integer.toString(id);
                 Cookie cookieusername = new Cookie("username", username);
                 Cookie cookieroleid = new Cookie("roleid", roleid);
                 Cookie cookieuserid = new Cookie("userid", userid);
                 cookieusername.setMaxAge(Integer.MAX_VALUE);
+                cookieroleid.setMaxAge(Integer.MAX_VALUE);
+                cookieuserid.setMaxAge(Integer.MAX_VALUE);
                 response.addCookie(cookieusername);
                 response.addCookie(cookieroleid);
                 response.addCookie(cookieuserid);
                 response.sendRedirect("/AVS/HomeController");
             }
-        }else{
+        } else {
             try {
 
                 String idToken = request.getParameter("id_token");
-                GoogleIdToken.Payload payLoad=IdTokenVerifierAndParser.getPayload(idToken);
+                GoogleIdToken.Payload payLoad = IdTokenVerifierAndParser.getPayload(idToken);
                 String name = (String) payLoad.get("name");
                 String email = payLoad.getEmail();
 //            boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
@@ -148,11 +154,45 @@ public class LoginController extends HttpServlet {
 //                    userDao.insertUser(email, "null", name, 0, 2,
 //                        "", 3, "", "");
 //                }
-                Cookie ck = new Cookie("username", email);
-                ck.setMaxAge(Integer.MAX_VALUE);
-                response.addCookie(ck);
-                response.sendRedirect("/AVS/HomeController");
-            
+                AuthenticateManagement authenticateManagement = new AuthenticateManagement();
+                AuthenticateManagement.CheckResult mailresult = authenticateManagement.checkMail(email);
+                userDao = new UserModel();
+                if (mailresult == AuthenticateManagement.CheckResult.EXIST_MAIL) {
+                    User user = userDao.getUserByMail(email);
+                    Cookie cookieusername = new Cookie("username", user.getUsername());
+                    rolenumber = user.getRolenum();
+                    id = user.getId();
+                    String roleid = Integer.toString(rolenumber);
+                    String userid = Integer.toString(id);
+                    Cookie cookieroleid = new Cookie("roleid", roleid);
+                    Cookie cookieuserid = new Cookie("userid", userid);
+                    cookieusername.setMaxAge(Integer.MAX_VALUE);
+                    cookieroleid.setMaxAge(Integer.MAX_VALUE);
+                    cookieuserid.setMaxAge(Integer.MAX_VALUE);
+                    response.addCookie(cookieusername);
+                    response.addCookie(cookieroleid);
+                response.addCookie(cookieuserid);
+                    response.sendRedirect("/AVS/HomeController");
+                } else {
+                    userDao.insertUser(email, "null", name, 0, 5,
+                            "", 1, email, "");
+                    User user = userDao.getUserByMail(email);
+                    Cookie cookieusername = new Cookie("username", user.getUsername());
+                    rolenumber = user.getRolenum();
+                    id = user.getId();
+                    String roleid = Integer.toString(rolenumber);
+                    String userid = Integer.toString(id);
+                    Cookie cookieroleid = new Cookie("roleid", roleid);
+                    Cookie cookieuserid = new Cookie("userid", userid);
+                    cookieusername.setMaxAge(Integer.MAX_VALUE);
+                    cookieroleid.setMaxAge(Integer.MAX_VALUE);
+                    cookieuserid.setMaxAge(Integer.MAX_VALUE);
+                    response.addCookie(cookieusername);
+                    response.addCookie(cookieroleid);
+                response.addCookie(cookieuserid);
+                    response.sendRedirect("/AVS/HomeController");
+                }
+
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -82,9 +82,10 @@ public class SignupController extends HttpServlet {
         String repassword = request.getParameter("repassword");
         UserModel userDao;
         int id = 0;
+        int rolenumber = 0;
         AuthenticateManagement authenticateManagement = new AuthenticateManagement();
         AuthenticateManagement.CheckResult result = authenticateManagement.checkUserSignUp(username);
-        AuthenticateManagement.CheckResult passresult = authenticateManagement.checkPassSignUp(password, repassword);
+        AuthenticateManagement.CheckResult passresult = authenticateManagement.checkPassword(password, repassword);
         AuthenticateManagement.CheckResult ageresult = authenticateManagement.checkNumber(age);
         AuthenticateManagement.CheckResult phoneresult = authenticateManagement.checkNumber(phone);
         AuthenticateManagement.CheckResult mailresult = authenticateManagement.checkMail(mail);
@@ -114,6 +115,9 @@ public class SignupController extends HttpServlet {
         if (mailresult == AuthenticateManagement.CheckResult.WRONG_FORMAT) {
             request.setAttribute("errorMail", "email format is xyz@qwe.abc.com");
             success = 0;
+        }else if(mailresult == AuthenticateManagement.CheckResult.EXIST_MAIL){
+            request.setAttribute("errorMail", "email is used ");
+            success = 0;
         }
         if (ageresult == AuthenticateManagement.CheckResult.NOT_NUMBER && !age.equals("")) {
             request.setAttribute("errorAge", "Age must be a number ");
@@ -138,19 +142,27 @@ public class SignupController extends HttpServlet {
                 try {
                     userDao = new UserModel();
                     User user = userDao.getUserByUsername(username);
-                    id = user.getRolenum();
+                    rolenumber = user.getRolenum();
+                    id = user.getId();
                 } catch (Exception ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                String roleid = Integer.toString(rolenumber);
                 String userid = Integer.toString(id);
-                Cookie ck = new Cookie("username", username);
-                Cookie ck1 = new Cookie("roleid", userid);
-                ck.setMaxAge(Integer.MAX_VALUE);
-                response.addCookie(ck);
+                Cookie cookieusername = new Cookie("username", username);
+                Cookie cookieroleid = new Cookie("roleid", roleid);
+                Cookie cookieuserid = new Cookie("userid", userid);
+                cookieusername.setMaxAge(Integer.MAX_VALUE);
+                cookieroleid.setMaxAge(Integer.MAX_VALUE);
+                cookieuserid.setMaxAge(Integer.MAX_VALUE);
+                response.addCookie(cookieusername);
+                response.addCookie(cookieroleid);
+                response.addCookie(cookieuserid);
                 response.sendRedirect("/AVS/HomeController");
             } catch (Exception ex) {
                 Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
             }
+
 
         }
     }

@@ -32,7 +32,7 @@
                 <%if (request.getAttribute("errorMessage") != null) {
                 %>
                 <div class="errormesslogin">
-                    
+
                     <p> <%=request.getAttribute("errorMessage")%></p>
                 </div>
                 <%
@@ -45,8 +45,7 @@
                 <hr>
                 <h4>Don't have an account</h4>
 
-                <input id="sign" type="submit"  value="Register" />
-                <!--  <input type="submit" name="" value="Login">-->
+                <button id="sign" onclick="document.location = '/AVS/SignupController';return false">Register</button>
             </form>
         </div>
 

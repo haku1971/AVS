@@ -2,7 +2,7 @@
 <%@page import="Model.UserModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
-<% 
+<%
     String user = "";
     String pass = "";
     if (request.getCookies() != null) {
@@ -58,10 +58,11 @@
                             if (!user.equals("")) {
 //                                User users = useracountmanagement.getUserByUsername(user);
 //                                usern = users.getUsername();
-%>
+                        %>
                         <a>Hello,<span><%=user%></span> <img  src="images\user.png" /></a>
 
                         <div style = "display:none" align="middle" class="g-signin2" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
+                        <button onclick="document.location = '/AVS/UserinforController';return false">Information</button>
                         <button id="logout" onclick="signOut()">Log out</button>
                         <!--                        <div class="dropdown">
                                                     <p>Hello,<span><%=usern%></span></p>
@@ -79,6 +80,6 @@
                 </li>
             </ul>
         </div>
-                    <script type="text/javascript" src="js/signout.js"></script>
+        <script type="text/javascript" src="js/signout.js"></script>
     </body>
 </html>

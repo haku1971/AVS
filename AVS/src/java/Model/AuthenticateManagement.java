@@ -26,7 +26,8 @@ public class AuthenticateManagement {
         NOT_MATCH,
         INVALID_CHARACTER,
         NOT_NUMBER,
-        WRONG_FORMAT
+        WRONG_FORMAT,
+        EXIST_MAIL
     }
 
     public boolean checkInput(String regex, String input) {
@@ -84,7 +85,7 @@ public class AuthenticateManagement {
 
     }
 
-    public CheckResult checkPassSignUp(String password, String repassword) {
+    public CheckResult checkPassword(String password, String repassword) {
         try {
             if (password.length() < 6) {
                 return CheckResult.PASSWORD_SHORT;
@@ -116,9 +117,13 @@ public class AuthenticateManagement {
         String mailregex = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
         boolean check = checkInput(mailregex, mail);
         try {
+            UserModel userDao = new UserModel();
+            User user = userDao.getUserByMail(mail);
             if (check != true) {
 
                 return CheckResult.WRONG_FORMAT;
+            }else if (user!=null) {
+                return CheckResult.EXIST_MAIL;
             }
             return CheckResult.SUCCESS;
         } catch (Exception ex) {

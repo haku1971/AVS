@@ -58,7 +58,39 @@ public class UserModel {
 
         return null;
     }
+    public User getUserByMail(String mail) throws Exception {
+        String query = "select * from Users where user_Mail=?";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, mail);
+            rs = ps.executeQuery();
 
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("user_ID"));
+                user.setUsername(rs.getString("user_Name"));
+                user.setPassword(rs.getString("user_Password"));
+                user.setRolenum(rs.getInt("user_RoleNum"));
+                user.setAge(rs.getInt("user_Age"));
+                user.setJob(rs.getInt("job_ID"));
+                user.setWorkplace(rs.getString("user_Workplaces"));
+                user.setGender(rs.getInt("user_Gender"));
+                user.setMail(rs.getString("user_Mail"));
+                user.setPhone(rs.getString("user_Phone"));
+                user.setFullname(rs.getString("user_Fullname"));
+                user.setBanstatus(rs.getInt("ban_status"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     public User getUserByUserID(String userid) throws Exception {
         String query = "select * from Users where user_ID=?";
         Connection conn = null;
@@ -98,8 +130,8 @@ public class UserModel {
             String workplace, int gender, String mail, String phone) throws Exception {
         String query1 = "insert into Users(user_Name,user_Password,user_RoleNum,"
                 + "user_Fullname,user_Age,user_Workplaces,user_Gender,user_Mail,"
-                + "user_Phone,job_ID)\n"
-                + "values (?,?,2,?,?,?,?,?,?,?)";
+                + "user_Phone,job_ID,ban_Status)\n"
+                + "values (?,?,2,?,?,?,?,?,?,?,0)";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
         ResultSet rs = null;
@@ -116,6 +148,51 @@ public class UserModel {
             ps.setString(8, phone);
             ps.setInt(9, job);
             ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void UpdateUser(int id, String fullname, int age, int job,
+            String workplace, int gender, String phone) throws Exception {
+        String query1 = "UPDATE Users\n"
+                + "SET user_FullName=?,user_Age=?,user_Workplaces=?,user_gender=?,user_Phone=?,job_ID=? \n"
+                + "WHERE user_ID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query1);
+            ps.setString(1, fullname);
+            ps.setInt(2, age);
+            ps.setString(3, workplace);
+            ps.setInt(4, gender);
+            ps.setString(5, phone);
+            ps.setInt(6, job);
+            ps.setInt(7, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void UpdatePassword(int id, String password) throws Exception {
+        String query1 = "UPDATE Users\n"
+                + "SET user_Password=? WHERE user_ID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query1);
+            ps.setString(1, password);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -172,7 +249,7 @@ public class UserModel {
             e.printStackTrace();
         }
     }
-    
+
     public void unbanUserID(int id) throws Exception {
         String query = "Update Users\n"
                 + "Set ban_Status = 0\n"

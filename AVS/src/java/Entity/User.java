@@ -96,9 +96,14 @@ public class User {
         this.age = age;
     }
 
+    public int getJob() {
+        return job;
+    }
+
     public void setJob(int job) {
         this.job = job;
     }
+
 
     public String getWorkplace() {
         return workplace;
