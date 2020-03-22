@@ -25,7 +25,6 @@
             ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
             Algorithm algo = (Algorithm) request.getAttribute("algorithm");
             ArrayList<Algorithm> algorithmbycategory = (ArrayList<Algorithm>) request.getAttribute("algorithmbycategory");
-            
         %>
     </head>
 
@@ -73,12 +72,45 @@
 
             <div class="tab">
                 <button class="tablinks" onclick="openTab(event, 'Tutorial')" id="defaultOpen">Tutorial</button>
+                <button class="tablinks" onclick="openTab(event, 'CodeCPlus')">C++</button>
+                <button class="tablinks" onclick="openTab(event, 'CodeJava')">Java</button>
+                <button class="tablinks" onclick="openTab(event, 'CodeJavaScript')">JavaScript</button>
                 <button class="tablinks" onclick="openTab(event, 'Visualizer')">Visualizer</button>
             </div>
 
             <div id="Tutorial" class="tabcontent">
                 <div id="algoTitle"><h1><%= algo.getAlgoName()%></h1>
                     <h5><%= algo.getAlgoDescription()%></h5></div>
+            </div>
+
+            <div id="CodeCPlus" class="tabcontent">
+                <% if (algo.getAlgoCodeCplus().equalsIgnoreCase("null")) {%>
+                <div class="emptySampleCode">This code has not been added yet!</div>
+                <%} else {%>       
+                <pre>
+                <div class="sampleCode"><%=algo.getAlgoCodeCplus()%></div>
+                </pre>
+                <%}%>
+            </div>
+
+            <div id="CodeJava" class="tabcontent">
+                <% if (algo.getAlgoCodeJava().equalsIgnoreCase("null")) {%>
+                <div class="emptySampleCode">This code has not been added yet!</div>
+                <%} else {%>
+                <pre>
+                <div class="sampleCode"><%= algo.getAlgoCodeJava()%></div>
+                </pre>
+                <%}%>
+            </div>
+
+            <div id="CodeJavaScript" class="tabcontent">
+                <% if (algo.getAlgoCodeJS().equalsIgnoreCase("null")) {%>
+                <div class="emptySampleCode">This code has not been added yet!</div>
+                <%} else {%>
+                <pre>
+                <div class="sampleCode"><%= algo.getAlgoCodeJS()%></div>
+                </pre>
+                <%}%>
             </div>
 
             <div id="Visualizer" class="tabcontent">
@@ -123,46 +155,31 @@
                             <input id="PauseOrCon" type="submit" onclick="resume();" value="Pause" />
                             <input id="btnNext" type="submit" onclick="next();" value=">" />
                         </div>
-                        <div>            
-                            <%=algo.getAlgoCodeJS()%>
+                        <div> 
+                            <pre>
+                                <%=algo.getAlgoCodeVisual()%>
+                            </pre>
                         </div>
-                        <div id="txtlog">Log:</div>
+                        <div class="scrollLog" id="txtlog">Log:</div>
                     </div>
                 </div>
             </div>
-
-            <script>
-                function openTab(evt, cityName) {
-                    var i, tabcontent, tablinks;
-                    tabcontent = document.getElementsByClassName("tabcontent");
-                    for (i = 0; i < tabcontent.length; i++) {
-                        tabcontent[i].style.display = "none";
-                    }
-                    tablinks = document.getElementsByClassName("tablinks");
-                    for (i = 0; i < tablinks.length; i++) {
-                        tablinks[i].className = tablinks[i].className.replace(" activetab", "");
-                    }
-                    document.getElementById(cityName).style.display = "block";
-                    evt.currentTarget.className += " activetab";
-                }
-
-                document.getElementById("defaultOpen").click();
-            </script>
         </div>
 
         <%@include file="footer.jsp" %>
 
         <script type="text/javascript" src="js/code.js"></script>
         <script>
-                setInputFilter(document.getElementById("txtElement"), function (value) {
-                    return /^[0-9,-,]*$/i.test(value);
-                }
-                );
-                setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
-                    return /^\d*$/.test(value);
-                }
-                );
+                                setInputFilter(document.getElementById("txtElement"), function (value) {
+                                    return /^[0-9,-,]*$/i.test(value);
+                                }
+                                );
+                                setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
+                                    return /^\d*$/.test(value);
+                                }
+                                );
         </script>
+        <script type="text/javascript" src="js/tabFunction.js"></script>
     </body>
 
 </html>

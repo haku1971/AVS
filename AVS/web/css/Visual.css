@@ -177,7 +177,73 @@ input[type=range]::-webkit-slider-thumb {
     border-top: none;
 }
 @keyframes fadeEffect {
-  from {opacity: 0;}
-  to {opacity: 1;}
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
+
+.emptySampleCode{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+
+}
+
+.sampleCode{
+    margin-left: 25px;
+    font-size: 25px;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+pre{
+    counter-reset: line;
+}
+
+tr{
+    counter-increment: line;
+}
+tr:before{
+    content: counter(line);
+    border-right: solid 1px;
+    padding-right: 5px;
+}
+
+.sampleCodeCmt{
+    color: greenyellow;
+    font-size: 25px;
+}
+.scrollLog{
+    overflow: auto;
+    overflow-x: hidden;
+    width: 300px;
+    height: 200px;
+    border: solid 1px;
+    background:url(https://static.tumblr.com/maopbtg/a5emgtoju/inflicted.png);
+    border-radius: 10px;
+    padding: 10px; 
+    color: white;
+}
+
+.scrollLog::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.scrollLog::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+.scrollLog::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear,
+        left bottom,
+        left top,
+        color-stop(0.44, rgb(122,153,217)),
+        color-stop(0.72, rgb(73,125,189)),
+        color-stop(0.86, rgb(28,58,148)));
+}

@@ -557,7 +557,7 @@ function highlightCode(currentstep) {
         if (highlightcode[currentstep][i] !== 0) {
             var line_name = "line_" + highlightcode[currentstep][i];
             if (document.getElementById(line_name) !== null) {
-                document.getElementById(line_name).style.background = "Red";
+                document.getElementById(line_name).style.background = "#90EE90";
             }
         }
     }
@@ -580,6 +580,9 @@ function removeHighlightedCode() {
 function printLog(currentstep) {
     var text = logarray[currentstep];
     document.getElementById("txtlog").innerHTML = text;
+    var scrollBox = document.getElementById("txtlog");
+    scrollBox.scrollTop = scrollBox.scrollHeight;
+    
 }
 
 function bubbleSort(array) {

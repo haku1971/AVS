@@ -134,6 +134,7 @@ public class AlgorithmModel {
                 algo.setAlgoCodeJS(rs.getString("algo_CodeJS"));
                 algo.setAlgoCodeCplus(rs.getString("algo_CodeCplus"));
                 algo.setAlgoCodeJava(rs.getString("algo_CodeJava"));
+                algo.setAlgoCodeVisual(rs.getString("algo_CodeVisual"));
                 algo.setAlgoDescription(rs.getString("algo_Description"));
                 algo.setCategoryID(rs.getInt("category_ID"));
                 algo.setAlgoFile(rs.getString("algo_Files"));
