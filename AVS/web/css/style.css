@@ -424,8 +424,11 @@ body {
     padding: 1px;
     border-radius: 5px;
     transition: 0.25s;
-    font-size: 15px;
-    color: gray;
+    font-size: 17px;
+    color: black;
+    position: absolute;
+    top: 247px;
+    left: 615px;
 }
 
 #gender span {
@@ -477,4 +480,577 @@ body {
     cursor: pointer;
     margin-top: 20px;
     margin-top: 8px;
+}
+
+.info_box{
+    margin-top: 20px;
+    width: 1300px;
+    padding: 40px;
+    background: #EDF0F4;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 5px;
+    overflow: auto;
+    height: 550px;
+}
+
+.info_box .su_infor3{
+    border:0;
+    background: none;
+    display: block;
+    margin: auto;
+    border:#999999 2px solid ;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.25s;
+    height: 5px;
+    width: 250px;
+    overflow: hidden;
+}
+.info_box h1 {
+    margin-right: 950px;
+    font-weight: normal;
+}
+
+.info_box img {
+    margin-right: 950px;   
+}
+
+.info_item1 {
+    position: absolute;
+    top: 30px;
+    left: 450px;
+    width: 500px;
+}
+
+.info_item1 .span_info {
+    font-family: fantasy;
+    font-size: 20px;
+    position: absolute;
+    left:0px;
+}
+.info_item2 {
+    position: absolute;
+    top: 30px;
+    left: 900px;
+    width: 500px;
+}
+
+.info_item2 .span_info {
+    font-family: fantasy;
+    font-size: 20px;
+    position: absolute;
+    left:0px;
+}
+
+.info_item3 {
+    position: absolute;
+    top: 200px;
+    left: 450px;
+    width: 500px;
+}
+
+.info_item3 .span_info {
+    font-family: fantasy;
+    font-size: 20px;
+    position: absolute;
+    left:0px;
+}
+
+.info_item4 {
+    position: absolute;
+    top: 200px;
+    left: 900px;
+    width: 500px;
+}
+
+.info_item4 .span_info {
+    font-family: fantasy;
+    font-size: 20px;
+    position: absolute;
+    left:0px;
+}
+.info_box h3 {
+    position: absolute;
+    left: 144px;
+    bottom: 170px;
+}
+
+.info_box h3 span{
+    color: lawngreen;
+}
+
+.info_box #but1 {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    position: absolute;
+    bottom: 150px;
+    left: 703px;
+}
+
+.info_box #but2 {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    position: absolute;
+    bottom: 150px;
+    right: 241px;
+
+}
+
+#but1 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+#but2 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+#but1 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#but2 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#but1:hover span {
+    padding-right: 25px;
+}
+
+#but1:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+#but2:hover span {
+    padding-right: 25px;
+}
+
+#but2:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+
+.changeinfo_box{
+    margin-top: 20px;
+    width: 1300px;
+    padding: 40px;
+    background: #EDF0F4;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 5px;
+    overflow: auto;
+    height: 550px;
+}
+
+.changeinfo_box .su_changeinfor{
+    border:0;
+    background: none;
+    display: block;
+    margin: auto;
+    border:#999999 2px solid ;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.25s;
+    height: 5px;
+    width: 250px;
+    overflow: hidden;
+
+}
+
+.changeinfo_box h1 {
+    margin-right: 950px;
+    font-weight: normal;
+}
+
+.changeinfo_box img {
+    margin-right: 950px;   
+}
+
+.changeinfo_box .changeinfo_item1 {
+    position: absolute;
+    top: 100px;
+    left: 500px;
+    width: 500px;
+}
+
+.changeinfo_box .changeinfo_item2 {
+    position: absolute;
+    top: 101px;
+    left: 940px;
+    width: 500px;
+}
+
+.changeinfo_box select {
+    background-color: #EDF0F4;
+    position: absolute;
+    bottom: 335px;
+    left: 1055px;
+    width: 273px;
+    height: 40px;
+    border-radius: 5px;
+    border:#999999 2px solid ;
+    text-align: center;
+}
+
+.changeinfo_box select:hover {
+    background: orange;
+}
+
+.changeinfo_box select option {
+    text-align: center;
+    border-radius: 5px;
+    border:#999999 2px solid ;
+    font-size: 20px;
+}
+
+.changeinfo_box .changeinfo_item1 #span1 {
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    font-family: fantasy;
+}
+
+.changeinfo_box .changeinfo_item1 #span2 {
+    position: absolute;
+    top: 65px;
+    left: 0px;
+    font-family: fantasy;
+}
+
+.changeinfo_box #span3 {
+    position: absolute;
+    top: 248px;
+    left: 500px;
+    color: red;
+    font-family: fantasy;
+}
+
+.changeinfo_box .changeinfo_item2 #span4 {
+    position: absolute;
+    top: 7px;
+    left: 0px;
+    font-family: fantasy;
+}
+
+.changeinfo_box .changeinfo_item2 #span5 {
+    position: absolute;
+    top: 65px;
+    left: 0px;
+    font-family: fantasy;
+}
+
+.changeinfo_box #span6 {
+    position: absolute;
+    top: 250px;
+    left: 940px;
+    font-family: fantasy;
+}
+
+.changeinfo_box #but3 {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    position: absolute;
+    bottom: 220px;
+    left: 500px;
+}
+
+.changeinfo_box #but4 {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    position: absolute;
+    bottom: 220px;
+    right: 445px;
+
+}
+
+#but3 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+#but4 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+#but3 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#but4 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#but3:hover span {
+    padding-right: 25px;
+}
+
+#but3:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+#but4:hover span {
+    padding-right: 25px;
+}
+
+#but4:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.main2 {
+    height: 700px;
+    position: relative;
+    width: auto;
+    background-color: white;
+    border-bottom: 1px solid lightgray;
+}
+
+.changepass_box{
+    margin-top: -30px;
+    width: 600px;
+    padding: 40px;
+    background: #EDF0F4;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 5px;
+    overflow: auto;
+    height: 550px;
+    border-radius: 5px;
+    border:#999999 2px solid ;
+    height: 400px;
+
+}
+
+.changepass_box .su_changepass{
+    border:0;
+    background: none;
+    display: block;
+    margin: auto;
+    border:#999999 2px solid ;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.25s;
+    height: 5px;
+    width: 250px;
+    overflow: hidden;
+
+}
+
+.changepass_box .changepass_items{
+    position: absolute;
+    top: 150px;
+    left: 202px;
+}
+
+.changepass_box #but5 {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+.changepass_box #but6 {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+
+
+}
+
+
+#but5 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+#but6 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+#but5 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#but6 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#but5:hover span {
+    padding-right: 25px;
+}
+
+#but5:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+#but6:hover span {
+    padding-right: 25px;
+}
+
+#but6:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.changepass_box .changepass_items .sp1 {
+    color: red;
+    position: absolute;
+    top: 9px;
+    left: -35px;
+}
+
+.changepass_box .changepass_items .sp2 {
+    color: red;
+    position: absolute;
+    top: 64px;
+    left: -35px;
+}
+
+.changepass_box .changepass_items .sp3 {
+    color: red;
+    position: absolute;
+    top: 120px;
+    left: -35px;
+}
+
+.error_changepass1 {
+    color: red;
+    position: absolute;
+    top: 166px;
+    left: 35px;
+}
+
+.error_changepass2 {
+    color: red;
+    position: absolute;
+    top: 166px;
+    left: -3px;
+}
+
+.changepass_box .changepass_items .success_changepass {
+    color: green;
+    position: absolute;
+    top: 166px;
+    left: 7px;
+}
+
+.changeinfo_box .changeinfo_item1 .errormesschangeinfo1 p {
+    font-size: 20px;
+    color: red;
+    position: absolute;
+    top: 175px;
+    left: 100px;
+}
+
+.changeinfo_box .changeinfo_item2 .errormesschangeinfo2 p {
+    font-size: 20px;
+    color: red;
+    position: absolute;
+    top: 200px;
+    left: -341px;
 }
