@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,37 @@ public class SortStepServlet extends HttpServlet {
             }
         }
         return count;
+    }
+static int countquicksort=0;
+    static int partition(int array[], int low, int high ) {
+     
+        int pivot = array[high];
+        int i = (low - 1);
+
+        for (int j = low; j < high; j++) {
+            if (array[j] <= pivot) {
+                i++;               
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                countquicksort++;
+            }
+        }
+        
+        int temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+        countquicksort++;
+        return (i + 1);
+    }
+
+    static void quickSort(int array[], int low, int high) {
+        if (low < high) {          
+            int pi = partition(array, low, high);
+            quickSort(array, low, pi - 1);
+            quickSort(array, pi + 1, high);
+        }
+       
     }
 
     public static int insertionSort(int arr[]) {
@@ -102,6 +134,171 @@ public class SortStepServlet extends HttpServlet {
      }
      }
      */
+    static void merge(int arr[], int l, int m, int r) {
+        // Find sizes of two subarrays to be merged 
+        int n1 = m - l + 1;
+        int n2 = r - m;
+        /* Create temp arrays */
+        int L[] = new int[n1];
+        int R[] = new int[n2];
+        /*Copy data to temp arrays*/
+        for (int i = 0; i < n1; ++i) {
+            L[i] = arr[l + i];
+        }
+        for (int j = 0; j < n2; ++j) {
+            R[j] = arr[m + 1 + j];
+        }
+        /* Merge the temp arrays */
+        // Initial indexes of first and second subarrays 
+        int i = 0, j = 0;
+        // Initial index of merged subarry array 
+        int k = l;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[k] = L[i];
+                i++;
+            } else {
+                arr[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+        /* Copy remaining elements of L[] if any */
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+            countmerge++;
+        }
+        /* Copy remaining elements of R[] if any */
+        while (j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
+            countmerge++;
+        }
+
+    }
+
+    // To heapify a subtree rooted with node i which is 
+    // an index in arr[]. n is size of heap 
+    static void heapify(int arr[], int n, int i) {
+        int largest = i; // Initialize largest as root 
+        int l = 2 * i + 1; // left = 2*i + 1 
+        int r = 2 * i + 2; // right = 2*i + 2 
+
+        // If left child is larger than root 
+        if (l < n && arr[l] > arr[largest]) {
+            largest = l;
+        }
+
+        // If right child is larger than largest so far 
+        if (r < n && arr[r] > arr[largest]) {
+            largest = r;
+        }
+
+        // If largest is not root 
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+            countheap++;
+            // Recursively heapify the affected sub-tree 
+            heapify(arr, n, largest);
+        }
+    }
+    // A utility function to get maximum value in arr[] 
+
+    static int getMax(int arr[], int n) {
+        int max = arr[0];
+        for (int i = 1; i < n; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+
+    // A function to do counting sort of arr[] according to 
+    // the digit represented by exp. 
+    static void countRadixSort(int arr[], int n, int exp) {    
+        int output[] = new int[n]; // output array 
+        int i;
+        int counter[] = new int[10];
+        Arrays.fill(counter, 0);
+        // Store count of occurrences in count[] 
+        for (i = 0; i < n; i++) {
+            counter[(arr[i] / exp) % 10]++;
+        }
+        // Change count[i] so that count[i] now contains 
+        // actual position of this digit in output[] 
+        for (i = 1; i < 10; i++) {
+            counter[i] += counter[i - 1];
+        }
+        // Build the output array 
+        for (i = n - 1; i >= 0; i--) {
+            countradixsort++;
+            output[counter[(arr[i] / exp) % 10] - 1] = arr[i];
+            counter[(arr[i] / exp) % 10]--;
+        }
+        // Copy the output array to arr[], so that arr[] now 
+        // contains sorted numbers according to curent digit 
+        for (i = 0; i < n; i++) {
+            countradixsort++;
+            arr[i] = output[i];
+        }
+    }
+
+    // The main function to that sorts arr[] of size n using 
+    // Radix Sort 
+    static void radixsort(int arr[], int n) {
+        // Find the maximum number to know number of digits 
+        int max = getMax(arr, n);
+        // Do counting sort for every digit. Note that instead 
+        // of passing digit number, exp is passed. exp is 10^i 
+        // where i is current digit number 
+        for (int exp = 1; max / exp > 0; exp *= 10) {        
+            countRadixSort(arr, n, exp);
+        }
+    }
+
+    // Main function that sorts arr[l..r] using 
+    // merge() 
+
+    static void mergesort(int arr[], int l, int r) {
+        if (l < r) {
+            // Find the middle point           
+            int m = (l + r) / 2;
+            // Sort first and second halves 
+            mergesort(arr, l, m);
+            mergesort(arr, m + 1, r);
+            // Merge the sorted halves 
+            merge(arr, l, m, r);
+        }
+    }
+
+    static void heapsort(int arr[]) {
+        int n = arr.length;
+
+        // Build heap (rearrange array) 
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(arr, n, i);
+        }
+        // One by one extract an element from heap 
+        for (int i = n - 1; i >= 0; i--) {
+            // Move current root to end 
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            countheap++;
+            // call max heapify on the reduced heap 
+            heapify(arr, i, 0);
+        }
+    }
+    static int countmerge = 0;
+    static int countheap = 0;
+    static int countradixsort = 0;
+
     private static List<Integer> toList(String json, Gson parser) {
         return parser.fromJson(json, List.class);
     }
@@ -123,26 +320,40 @@ public class SortStepServlet extends HttpServlet {
     private static int chooseSortFunctionByAlgoID(int number, int[] array) {
         switch (number) {
             case 1:
-               return bubbleSort(array);
-                            
+                return bubbleSort(array);
+            case 2: quickSort(array, 0, array.length - 1);
+                return countquicksort;
             case 3:
-               return  selectionSort(array);
-               
-            case 5:                
-             return   insertionSort(array);
-               
+                return selectionSort(array);
+            case 4:{
+                heapsort(array);
+                return countheap;
+            }
+            case 5:
+                return insertionSort(array);
+            case 6: {
+                mergesort(array, 0, array.length-1 );
+                return countmerge;
+            }
+            case 7:{
+                radixsort(array, array.length);
+                return countradixsort;
+            }
             default:
                 return 0;
 
         }
-     
+
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            countquicksort=0;
+            countheap=0;
+            countmerge=0;
+            countradixsort=0;
             //goi ve cai mang ma duoc js truyen di
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
@@ -151,36 +362,35 @@ public class SortStepServlet extends HttpServlet {
             int[] jsFileArray = toArray(json, parser);
 
             AlgorithmModel dao = new AlgorithmModel();
-   
+
             ArrayList<Algorithm> listAlgo = dao.getAlgosortbyID(1);
             for (int i = 0; i < listAlgo.size(); i++) {
-                int choosefunctionkey = listAlgo.get(i).getAlgoID();        
-                    listAlgo.get(i).setNumber_of_step(chooseSortFunctionByAlgoID(choosefunctionkey, tempArray(jsFileArray)));
+                int choosefunctionkey = listAlgo.get(i).getAlgoID();
+                listAlgo.get(i).setNumber_of_step(chooseSortFunctionByAlgoID(choosefunctionkey, tempArray(jsFileArray)));
             }
-      
-        String jsonData = parser.toJson(listAlgo);
-        PrintWriter out = response.getWriter();
 
-        try {
-            out.println(jsonData);
-        } finally {
-            out.close();
+            String jsonData = parser.toJson(listAlgo);
+            PrintWriter out = response.getWriter();
+
+            try {
+                out.println(jsonData);
+            } finally {
+                out.close();
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(SortStepServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    catch (Exception ex) 
-    {Logger.getLogger(SortStepServlet.class.getName()).log(Level.SEVERE, null, ex);
-    }
 
-}
-
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-        public String getServletInfo() {
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

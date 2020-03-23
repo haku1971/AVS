@@ -81,7 +81,7 @@ public class DeleteCommentServlet extends HttpServlet {
            // int userid = convertStringToInt(id_of_user);
             if(request.getParameter("newsid")!= null &&request.getParameter("commentid")!= null ) {
                 //xoa comment la xoa ca vote
-                commentmodel.deleteLikeCommentById(Integer.parseInt(commentid));
+                commentmodel.adDeleteLikeCommentBycommentId(Integer.parseInt(commentid));
                 commentmodel.deleteCommentById(Integer.parseInt(commentid));
             }
             

@@ -107,9 +107,9 @@ public class NewsModel {
     }
 
     //delete cua like comment by comment id
-    public void deleteLikeNewsByNewsId(int newsid) throws Exception {
+    public void deleteLikeNewsByNewsId(int newsid,int userid) throws Exception {
         //excute update
-        String query = "DELETE FROM LikeNews WHERE news_ID = ?";
+        String query = "DELETE FROM LikeNews WHERE news_ID = ? and user_ID= ?";
         DBContext dbManager = new DBContext();
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
@@ -117,6 +117,7 @@ public class NewsModel {
             conn = dbManager.getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, newsid);
+            ps.setInt(2, userid);
             int executeUpdate;
             executeUpdate = ps.executeUpdate();
         } catch (SQLException e) {

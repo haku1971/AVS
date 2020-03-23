@@ -115,7 +115,26 @@ public class CommentModel {
     }
 
     //delete cua like comment by comment id
-    public void deleteLikeCommentById(int commentid) throws Exception {
+    public void deleteLikeComment(int commentid,int userid) throws Exception {
+        //excute update
+        String query = "DELETE FROM LikeComment WHERE comment_ID = ? and user_ID= ?";
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, commentid);
+            ps.setInt(2, userid);
+            int executeUpdate;
+            executeUpdate = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    //use when ad delete a comment
+    //delete all likecomment in that comment id
+    public void adDeleteLikeCommentBycommentId(int commentid) throws Exception {
         //excute update
         String query = "DELETE FROM LikeComment WHERE comment_ID = ?";
         DBContext dbManager = new DBContext();

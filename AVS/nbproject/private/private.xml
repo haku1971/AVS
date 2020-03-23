@@ -12,48 +12,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/Detail.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/newslist.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_history.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ViewAlgorithmController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/header.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ViewAccountController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/CommentController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_account.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/CommentModel.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AddNewsController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/HistoryModel.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/AlgorithmModel.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/HomeController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/DetailController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/viewalgo.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/css/Visual.css</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ViewNewsController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_news.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/css/style.css</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/signup.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Entity/News.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AdminController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Entity/Comment.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/js/Sort.js</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/NewsModel.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/Algo.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Entity/Algorithm.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/js/code.js</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/newsdetail.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/NewsController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/DeleteCommentServlet.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/Home.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/viewaccount.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_algorithm.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/UserModel.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Entity/User.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/adminleft.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AddAlgorithmController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/viewnews.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Entity/History.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ManageDatabaseController.java</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/web/jsp/newsdetail.jsp</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/src/java/Model/CommentModel.java</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/quang/Desktop/AVSroot/AVS/AVS/src/java/Controller/DeleteLikeCommentController.java</file>
         </group>
     </open-files>
 </project-private>

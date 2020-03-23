@@ -1,8 +1,3 @@
-<%-- 
-    Document   : newsdetail
-    Created on : Mar 15, 2020, 11:59:52 AM
-    Author     : quang
---%>
 
 <%@page import="Entity.Likenews"%>
 <%@page import="Entity.Likecomment"%>
@@ -19,10 +14,9 @@
         <title>JSP Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-         <script src="https://kit.fontawesome.com/5a03b2ca60.js" crossorigin="anonymous"></script>
-        
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">        
-       
+        <script src="https://kit.fontawesome.com/5a03b2ca60.js" crossorigin="anonymous"></script>      
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">        
+
         <style>
             .hidden{
                 overflow:hidden;
@@ -36,6 +30,10 @@
                 border:solid 1px;
                 width:200px;
                 height: 80px;
+            }
+            .hiddeninputnumberlike{           
+                pointer-events:none;
+                border: none;
             }
 
         </style>
@@ -61,6 +59,7 @@
                 }
                 if (age == 0) {
                     username = "";
+                    userid = "";
                 }
             }
         %>
@@ -71,10 +70,12 @@
             News news = (News) request.getAttribute("news");
             HashMap<Integer, Integer> commentid_and_numberof_like = (HashMap<Integer, Integer>) request.getAttribute("commentid_and_numberof_like");
             ArrayList<Likecomment> listallvote = (ArrayList<Likecomment>) request.getAttribute("listallvote");
-             ArrayList<Likenews> listalllikenewsbynewsid = (ArrayList<Likenews>) request.getAttribute("listalllikenewsbynewsid");
-             int total_likenews= (Integer)request.getAttribute("total_likenews");
-             %>
+            ArrayList<Likenews> listalllikenewsbynewsid = (ArrayList<Likenews>) request.getAttribute("listalllikenewsbynewsid");
+            int total_likenews = (Integer) request.getAttribute("total_likenews");
+        %>
 
+
+        <%if (!username.equals("")) {%>
         <div class="container">
 
             <h1 class="my-4">
@@ -87,7 +88,7 @@
                 </div>
 
                 <div class="col-md-4">
-                     <h3 class="my-3">News Details</h3>
+                    <h3 class="my-3">News Details</h3>
                     <ul>
                         <li>Time: <%=news.getNewsdaterealease()%></li>
                         <li>Create By:<%=news.getUser().getFullname()%> </li>
@@ -95,49 +96,54 @@
                     </ul>
                     <h3 class="my-3">News content</h3>
                     <p>  <%=news.getNewscontent()%> </p>
-                    
+
                     <%
-                     
-                    boolean thumplikenewsup= false;
-                    for(int i= 0; i< listalllikenewsbynewsid.size(); i++ ) {
-                        int likeuserid= listalllikenewsbynewsid.get(i).getUserid();
-                        int likenewsid= listalllikenewsbynewsid.get(i).getNewsid();
-                        if(likeuserid== Integer.parseInt(userid)&&likenewsid== news.getNewsID()) {
-                            thumplikenewsup= true;
-                            break;
+
+                        boolean thumplikenewsup = false;
+                        for (int i = 0; i < listalllikenewsbynewsid.size(); i++) {
+                            int likeuserid = listalllikenewsbynewsid.get(i).getUserid();
+                            int likenewsid = listalllikenewsbynewsid.get(i).getNewsid();
+                            if (likeuserid == Integer.parseInt(userid) && likenewsid == news.getNewsID()) {
+                                thumplikenewsup = true;
+                                break;
+                            }
                         }
-                    }
                     %>
                     <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
-                      <i onclick="LikeNewsFunction(this,<%=news.getNewsID()%>,<%=Integer.parseInt(userid)%>)" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>
-                    <%=listalllikenewsbynewsid.size() %>
+                    <i onclick="LikeNewsFunction(this,<%=news.getNewsID()%>,<%=Integer.parseInt(userid)%>)" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>
+
                     <div id="likenew">${thumplikenewsup ?("Liked"):("Unliked")}</div> 
+                    <input class="hiddeninputnumberlike" id="txtlikenewsnumber" type="text" name="" value="<%=total_likenews%>" />
                 </div>
 
             </div>
         </div>     
-                <script>
-                    function LikeNewsFunction(thumblikenews,newsid,userid) {
-                        if (thumblikenews.classList.toggle("far")) {
-                        console.log('Ban vua an bo like' + newsid + 'va ' + userid );
-                        $.ajax({
-                            type: "post",
-                            url: "DeleteLikeCommentController", //this is my servlet
-                            data: {newsid: newsid}
-                        });                    
-                        document.getElementById('likenew').innerHTML = 'unlike';
-                    }
-                   if (thumblikenews.classList.toggle("fas")) {
-                        console.log('Ban vua an like' + newsid + 'va ' + userid );
-                        $.ajax({
-                            type: "post",
-                            url: "SaveLikeCommentController", //this is my servlet
-                            data: {userid: userid, newsid: newsid}
-                        });                  
-                        document.getElementById('likenew').innerHTML = 'Liked';
-                    }
-                    }
-                </script>
+        <script>
+            function LikeNewsFunction(thumblikenews, newsid, userid) {
+                var numberlikenew = parseInt(document.getElementById('txtlikenewsnumber').value);
+                console.log(numberlikenew);
+                if (thumblikenews.classList.toggle("far")) {
+                    console.log('Ban vua an bo like' + newsid + 'va ' + userid);
+                    $.ajax({
+                        type: "post",
+                        url: "DeleteLikeCommentController", //this is my servlet
+                        data: {userid: userid, newsid: newsid}
+                    });
+                    document.getElementById('likenew').innerHTML = 'Unliked';
+                    document.getElementById('txtlikenewsnumber').value = numberlikenew - 1;
+                }
+                if (thumblikenews.classList.toggle("fas")) {
+                    console.log('Ban vua an like' + newsid + 'va ' + userid);
+                    $.ajax({
+                        type: "post",
+                        url: "SaveLikeCommentController", //this is my servlet
+                        data: {userid: userid, newsid: newsid}
+                    });
+                    document.getElementById('likenew').innerHTML = 'Liked';
+                    document.getElementById('txtlikenewsnumber').value = numberlikenew + 1;
+                }
+            }
+        </script>
 
 
         <% if (!listallcommentbynewid.isEmpty()) {
@@ -171,8 +177,9 @@
             <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <div id="content_<%=commentid%>"><%=listallcommentbynewid.get(i).getContent()%> </div> 
             <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
-            <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>,<%=numberlike%>)" class= "${thumpup ?("fas fa-heart fa-3x"):("far fa-heart fa-3x")}"></i>
+            <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-3x"):("far fa-heart fa-3x")}"></i>
             <div id="like_<%=commentid%>">${thumpup ?("Liked"):("Unliked")}</div>       
+            <input class="hiddeninputnumberlike" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
         </div>
         <% }
             //là người đang đăng nhập sẽ hiển thị xoá,sửa            
@@ -189,9 +196,9 @@
                 <input class="hidden" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" value="<%=listallcommentbynewid.get(i).getContent()%>" />
                 <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>
 
-                <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>,<%=numberlike%>)" class= "${thumpup ?("fas fa-heart fa-3x"):("far fa-heart fa-3x")}"></i>
+                <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-3x"):("far fa-heart fa-3x")}"></i>
                 <div id="like_<%=commentid%>">${thumpup ?("Liked"):("Unliked")}</div> 
-                <div class="numberlike_<%=commentid%>"><%=numberlike%></div>
+                <input class="hiddeninputnumberlike" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
                 <form>            
 
                     <input type="hidden" name="commentid" value="<%=commentid%>" />
@@ -209,13 +216,14 @@
                 </table>
             </div>
             <% } else if (roleid.equals("1")) { // la admin thi co the xoa
-%>
+
+            %>
             <input id="delete_<%=commentid%>" type="submit" name="Delete" value="deletead_<%=commentid%>" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/>
 
             <% }%>
 
             <script>
-                var checkedit= 0;
+                var checkedit = 0;
                 setSaveButtonStatus(<%=commentid%>, 'hidden');
                 setCancelButtonStatus(<%=commentid%>, 'hidden');
                 //   setTxteditStatus(<%=commentid%>, 'hidden');
@@ -231,17 +239,18 @@
                         $("#save_<%=commentid%>").attr("disabled", false);
                     }
                 });
-                function LikeCommentFunction(thumb, commentid, userid, numberoflike) {
+                function LikeCommentFunction(thumb, commentid, userid) {
 
-                    var numberlike = parseInt(numberoflike);
+                    var numberlike = parseInt(document.getElementById('numberlike_' + commentid).value);
                     if (thumb.classList.toggle("far")) {
                         console.log('Ban vua an bo like' + commentid + 'va ' + userid + "numberlike" + numberlike);
                         $.ajax({
                             type: "post",
                             url: "DeleteLikeCommentController", //this is my servlet
-                            data: {commentid: commentid}
+                            data: {userid: userid, commentid: commentid}
                         });
                         console.log(numberlike);
+                        document.getElementById('numberlike_' + commentid).value = numberlike - 1;
                         document.getElementById('like_' + commentid).innerHTML = 'unlike';
                     }
                     if (thumb.classList.toggle("fas")) {
@@ -252,25 +261,25 @@
                             data: {userid: userid, commentid: commentid}
                         });
                         console.log(numberlike);
-
+                        document.getElementById('numberlike_' + commentid).value = numberlike + 1;
                         document.getElementById('like_' + commentid).innerHTML = 'Liked';
                     }
                 }
 
 
                 function edit(commentid) {
-                    if(checkedit ===0) {
-                        checkedit =1;
-                    console.log(commentid + " can edit");
-                    document.getElementById("txtedit_" + commentid).className = "show";
+                    if (checkedit === 0) {
+                        checkedit = 1;
+                        console.log(commentid + " can edit");
+                        document.getElementById("txtedit_" + commentid).className = "show";
 
-                    setDeleteButtonStatus(commentid, "hidden");
-                    // setTxteditStatus(commentid, "visible");
-                    setSaveButtonStatus(commentid, 'visible');
-                    setCancelButtonStatus(commentid, "visible");
-                    setEditButtonStatus(commentid, "hidden");
-                    document.getElementById('content_' + commentid).style.visibility = 'hidden';
-                }
+                        setDeleteButtonStatus(commentid, "hidden");
+                        // setTxteditStatus(commentid, "visible");
+                        setSaveButtonStatus(commentid, 'visible');
+                        setCancelButtonStatus(commentid, "visible");
+                        setEditButtonStatus(commentid, "hidden");
+                        document.getElementById('content_' + commentid).style.visibility = 'hidden';
+                    }
                 }
                 function btndelete(divpositiontodelete, commentid, newsid) {
                     setDeleteButtonStatus(commentid, "hidden");
@@ -282,7 +291,7 @@
                     });
                     var divdelete = document.getElementById(divpositiontodelete);
                     divdelete.remove();
-                    
+
                 }
 
                 function setSaveButtonStatus(btn_position, status) {
@@ -307,15 +316,15 @@
                     setSaveButtonStatus(commentid, 'hidden');
                     setCancelButtonStatus(commentid, "hidden");
                     setEditButtonStatus(commentid, 'visible');
-                  //  document.getElementById("txtedit_" + commentid).value= content;
+                    //  document.getElementById("txtedit_" + commentid).value= content;
                     document.getElementById('content_' + commentid).style.visibility = 'visible';
-                    checkedit=0;
+                    checkedit = 0;
                 }
                 function savecomment(commentid) {
                     document.getElementById("txtedit_" + commentid).className = "hidden";
                     setSaveButtonStatus(commentid, "hidden");
                     setDeleteButtonStatus(commentid, "visible");
-                  //  setTxteditStatus(commentid, "hidden");
+                    //  setTxteditStatus(commentid, "hidden");
                     setCancelButtonStatus(commentid, "hidden");
                     setEditButtonStatus(commentid, "visible");
                     var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
@@ -330,21 +339,20 @@
                             $('#output').append(msg);
                         }
                     });
-                    checkedit=0;
+                    checkedit = 0;
                 }
 
             </script>
         </div>
-        <% }%> <!--check nguoi dang dang nhap co nhung comment nao -->
+     <!--check nguoi dang dang nhap co nhung comment nao -->
 
-        <% } else { //chua co comment nao
+        <%  } } else { //chua co comment nao
 
         %>
         <%= "Don't have any comment. let be the first comment!!! "%>
         <%}
         %>
 
-        <%if (!username.isEmpty()) {%>
         <div>
             <form  method="POST" action="CommentController">
                 <%Date date = new Date();
@@ -357,7 +365,7 @@
                 <input type="submit" id="postcomment" name="postodb" value="Post comment" />       
             </form>
         </div>
-        <% }%>
+                  
         <script>
             $('#txtsavedb').keyup(function () {
                 // Get the Login Name value and trim it
@@ -373,8 +381,65 @@
             });
 
         </script>
+                
+        <%} else {  // trang hien thi cua guest %>
+        <div class="container">
+            <h1 class="my-4">
+                <small><%=news.getNewstittles()%></small>
+            </h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <img class="card-img-top" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt="">
+                </div>
+                <div class="col-md-4">
+                    <h3 class="my-3">News Details</h3>
+                    <ul>
+                        <li>Time: <%=news.getNewsdaterealease()%></li>
+                        <li>Create By:<%=news.getUser().getFullname()%> </li>
+                        <li>Has <%=listallcommentbynewid.size()%> comment in this news </li>
+                    </ul>
+                    <h3 class="my-3">News content</h3>
+                    <p>  <%=news.getNewscontent()%> </p>
 
-
-
+                    <%
+                        boolean thumplikenewsup = false;
+                        if (listalllikenewsbynewsid.size() > 0) {
+                            thumplikenewsup = true;
+                        }
+                    %>
+                    <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
+                    <i  class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>            
+                    <input class="hiddeninputnumberlike"  type="text" name="" value="<%=total_likenews%>" />
+                </div>
+            </div>
+        </div>             
+                <% if (!listallcommentbynewid.isEmpty()) {
+                for (int i = 0; i < listallcommentbynewid.size(); i++) {
+                    int commentid = listallcommentbynewid.get(i).getCommentid();
+                    int numberlike = commentid_and_numberof_like.get(commentid).intValue();
+                    boolean thumbup = false;
+               
+                        //ng dang dang nhap tung like roi
+                        if (numberlike > 0) {
+                            thumbup = true;                     
+                        }
+                    
+        %>
+        <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>   
+        <div>
+            <hr>          
+            <c:out value = "${thumpup}"/>
+            <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
+            <div><%=listallcommentbynewid.get(i).getContent()%> </div> 
+            <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
+            <i  class= "${thumpup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>             
+            <input class="hiddeninputnumberlike"  type="text"  value="<%=numberlike%>" />
+        </div>
+        <%} //hien thi tung comment
+                } //neu mang comment > 0
+            } // la guest hay user 
+        %>
+    
+    
     </body>
 </html>

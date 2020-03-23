@@ -27,22 +27,24 @@ public class DeleteLikeCommentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
+       try {
 
             CommentModel commentmodel = new CommentModel();
             //check ajax cho xoa like cua 1 comment
-            if (request.getParameter("commentid") != null) {
+            if (request.getParameter("commentid") != null&& request.getParameter("userid") != null) {
+                int userid= Integer.parseInt(request.getParameter("userid"));
                 int commentid = Integer.parseInt(request.getParameter("commentid"));
                 System.out.println("commentid" + commentid);
-                commentmodel.deleteLikeCommentById(commentid);
+                commentmodel.deleteLikeComment(commentid,userid);
             }
 
             NewsModel newsmodel = new NewsModel();
             //check ajax cho xoa like cua 1 news
-            if (request.getParameter("newsid") != null) {
+            if (request.getParameter("newsid") != null && request.getParameter("userid") != null) {
+                int userid= Integer.parseInt(request.getParameter("userid"));
                 int newsid = Integer.parseInt(request.getParameter("newsid"));
-                System.out.println("newsid " + newsid);
-                newsmodel.deleteLikeNewsByNewsId(newsid);
+                System.out.println("newsid " + newsid +"and userid: "+ userid);
+                newsmodel.deleteLikeNewsByNewsId(newsid,userid);
             }
         } catch (Exception ex) {
             Logger.getLogger(SaveLikeCommentController.class.getName()).log(Level.SEVERE, null, ex);
