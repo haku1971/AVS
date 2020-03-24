@@ -4,7 +4,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : Feb 26, 2020, 11:07:36 PM
+    Created on : Mar 24, 2020, 11:51:55 PM
     Author     : Asus
 */
 
@@ -199,10 +199,10 @@ pre{
     counter-reset: line;
 }
 
-.tabcontent tr{
+tr{
     counter-increment: line;
 }
-.tabcontent tr:before{
+tr:before{
     content: counter(line);
     border-right: solid 1px;
     padding-right: 5px;
