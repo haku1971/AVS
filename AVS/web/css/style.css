@@ -301,154 +301,9 @@ body {
 .list_items li:hover{
     color: aqua;
 }
-.box{
-    position: absolute;
-    width: 300px;
-    padding: 40px;
-    background: #EDF0F4;
-    text-align: center;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    border-radius: 5px;
-}
 
-.box h1{
-    font-weight: 350;
-}
-.box #infor{
-    border:0;
-    background: none;
-    display: block;
-    margin: auto;
-    text-align: center;
-    border:#999999 2px solid ;
-    padding: 14px 10px;
-    width: 200px;
-    outline: none;
-    border-radius: 5px;
-    transition: 0.25s;
-}
-.box #log,#sign{
-    border:0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: #999999 2px solid ;
-    padding: 14px 40px;
-    outline: none;
-    border-radius: 5px;
-    transition: 0.25s;
-    color: #ffffff;
-    background: #333333;
-    margin-right: 85px;
-}
-.box #gg{
-    background: none;
-    margin: 20px auto;
-    text-align: center;
-    padding: 14px 40px;
-    outline: none;
-    transition: 0.25s;
-    width: 120px;
-}
-.box h4{
-    color:#999999;
-    line-height: 0px;
-    font-weight: 10;
-}
-.box2{
-    margin-top: 20px;
-    width: 400px;
-    padding: 40px;
-    background: #EDF0F4;
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    border-radius: 5px;
-    overflow: auto;
-    height: 500px;
-}
-.box2 .su_infor{
-    border:0;
-    background: none;
-    display: block;
-    margin: auto;
-    border:#999999 2px solid ;
-    padding: 14px 10px;
-    width: 200px;
-    outline: none;
-    border-radius: 5px;
-    transition: 0.25s;
-    height: 5px;
-    width: 250px;
-    
-}
-.box2 .su_infor:invalid{
-    border:0;
-    background: none;
-    display: block;
-    margin: auto;
-    border:#999999 2px solid ;
-    padding: 14px 10px;
-    width: 200px;
-    outline: none;
-    border-radius: 5px;
-    transition: 0.25s;
-    height: 5px;
-    width: 250px;
-}
-.box2 .su_infor2{
-    border:0;
-    background: none;
-    display: block;
-    margin: auto;
-    border:#C9D3DD 3px solid ;
-    padding: 14px 10px;
-    width: 200px;
-    outline: none;
-    border-radius: 5px;
-    transition: 0.25s;
-    height: 5px;
-    width: 250px;
-    font-size: 10px;   
-}
-#gender {
-    display: inline-block;
-    width: 270px;
-    height: 30px;
-    background: #EDF0F4;
-    padding: 1px;
-    border-radius: 5px;
-    transition: 0.25s;
-    font-size: 17px;
-    color: black;
-    position: absolute;
-    top: 247px;
-    left: 615px;
-}
 
-#gender span {
-    float: left;
-}
 
-.box2 #log{
-  border:0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: #999999 2px solid ;
-    padding: 14px 40px;
-    outline: none;
-    border-radius: 5px;
-    transition: 0.25s;
-    color: #ffffff;
-    background: #333333
-}
 
 .box2 select {
     border:#C9D3DD 3px solid ; 
@@ -459,18 +314,110 @@ body {
     background: none;
 }
 
+.box2 #bottun {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    width: 200px;
+    height: 80px;
+    transition: all 0.5s;
+    cursor: pointer;
+    position: absolute;
+    bottom: 100px;
+    left: 820px;
+}
+
+#bottun span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+
+
+#bottun span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+
+#bottun:hover span {
+    padding-right: 25px;
+}
+
+#bottun:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+
+
+
 .errormesslogin p {
     color: red;
 }
-.errormesssignup p {
+.errormess_username p {
     font-size: 15px;
     color: red;
-    position: relative;
-    top: -25px;
+    position: absolute;
+    top: 346px;
+    left: -184px;
 }
 
+
+.errormess_mail p {
+    font-size: 15px;
+    color: red;
+    position: absolute;
+    top: 410px;
+    left: -183px;
+}
+
+
+.errormess_pass p {
+    font-size: 15px;
+    color: red;
+    position: absolute;
+    top: 380px;
+    left: -633px;
+}
+
+.errormess_repass p {
+    font-size: 15px;
+    color: red;
+    position: absolute;
+    top: 460px;
+    left: -642px;
+
+}
+
+.errormess_age p {
+    font-size: 15px;
+    color: red;
+    position: absolute;
+    top: 293px;
+    left: 15px;
+}
+
+.errormess_phone p {
+    font-size: 15px;
+    color: red;
+    position: absolute;
+    top: 293px;
+    left: -635px;
+}
+
+
 #input:invalid {
-  border: 1px solid red;
+    border: 1px solid red;
 }
 
 .caution {
@@ -1053,4 +1000,128 @@ body {
     position: absolute;
     top: 200px;
     left: -341px;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+.main3 {
+    min-height: 1000px;
+    position: relative;
+    width: 1500px;
+    background-color:white ;
+    border-bottom: 1px solid lightgray;
+    min-height: 500px;
+
+}
+
+.main3 .news_box{
+    margin-top: -30px;
+    width: 1500px;
+    padding: 40px;
+    background: #EDF0F4;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 5px;
+    overflow: auto;
+    height: 550px;
+    border-radius: 5px;
+    border:#999999 2px solid ;
+    height: 400px;
+
+}
+
+.main3 .news_box .news_title small{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #3b4754;
+    margin-left: 40px;
+    font-size: 30px;
+    position: absolute;
+    top:20px;
+    left:20px;
+}
+
+.main3 .news_img {
+    position: absolute;
+    top: 20px;
+    left: 800px;
+    float: right;
+    width: 450px;
+}
+
+.main3 .news_content {
+    width: 500px;
+    display: block;
+    float: left;
+    margin-left: 20px;
+}
+
+.main3 .news_box .news_content p {
+    text-indent: 30px;
+    font-size: 20px;
+    text-align: justify;
+}
+
+.main3 .news_detail{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #3b4754;
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+.main3 .detail {
+    position: absolute;
+    top: 370px;
+    right: 506px;
+    text-align: justify;
+}
+
+.hiddeninputnumberlike {
+    border: 0px solid #EDF0F4;
+    background: #EDF0F4;
+    text-align: center;
+    font-family: cursive;
+    font-weight: bold;
 }

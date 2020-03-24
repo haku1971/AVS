@@ -12,10 +12,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>new list Page</title>
-
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
         <style>
             .pagination a {
                 color: black;
@@ -60,6 +60,7 @@
             .text-center {
                 background-color: #eee;
                 text-align: center !important;
+                
             }
 
         </style>
@@ -93,8 +94,12 @@
 
 
         <div class="jumbotron text-center">
-            <h1>News Page</h1>
-            <p>Welcome to news page</p> 
+            <h1 style="font-family: Arial, Helvetica, sans-serif;
+                font-weight: bold;
+                color: #3b4754;">News Page</h1>
+            <p style="font-family: Arial, Helvetica, sans-serif;
+               font-weight: bold;font-size: 10px;
+               color: #3b4754;">Welcome to news page</p> 
         </div>
         ${numberofsearchresult}
 
@@ -140,5 +145,6 @@
                 </div>
             </div>
         </div>
+ 
     </body>
 </html>

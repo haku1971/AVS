@@ -59,20 +59,15 @@
 //                                User users = useracountmanagement.getUserByUsername(user);
 //                                usern = users.getUsername();
                         %>
-                        <a>Hello,<span><%=user%></span> <img  src="images\user.png" /></a>
-
-                        <div style = "display:none" align="middle" class="g-signin2" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
-                        <button onclick="document.location = '/AVS/UserinforController';return false">Information</button>
-                        <button id="logout" onclick="signOut()">Log out</button>
-                        <!--                        <div class="dropdown">
-                                                    <p>Hello,<span><%=usern%></span></p>
-                                                    <a href="JavaScript:myFunction()"> <img class="dropbtn"  src="images\user.png" /></a>
-                                                    <div id="myDropdown" class="dropdown-content">
-                                                        <a href="#">Link 1</a>
-                                                        <a href="#">Link 2</a>
-                                                        <a href="#">Link 3</a>
-                                                    </div>
-                                                </div>-->
+                       <a>Hello,<span><%=user%></span> <img  src="images\user.png" /></a>
+                        <div class="dropdown">
+                            <button><span>+</span></button>
+                            <div class="dropdown-content">
+                                <div style = "display:none" align="middle" class="g-signin2" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
+                                <button onclick="document.location = '/AVS/UserinforController';return false">Information</button>
+                                <button id="logout" onclick="signOut()">Log out</button>
+                            </div>
+                        </div>
                         <%} else {%>
                         <button onclick="document.location = '/AVS/LoginController';return false">Sign in</button>
                         <button onclick="document.location = '/AVS/SignupController';return false">Sign Up</button><%}%>

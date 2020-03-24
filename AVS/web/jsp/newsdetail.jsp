@@ -1,4 +1,6 @@
 
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="Entity.Likenews"%>
 <%@page import="Entity.Likecomment"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -15,32 +17,14 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <script src="https://kit.fontawesome.com/5a03b2ca60.js" crossorigin="anonymous"></script>      
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">        
+        <link rel="stylesheet" type="text/css" href="css/style.css" />        
 
-        <style>
-            .hidden{
-                overflow:hidden;
-                pointer-events:none;
-                border: none;
-                width: 0px;
-                height: 0px;
-            }
-            .show {
-                overflow: auto;
-                border:solid 1px;
-                width:200px;
-                height: 80px;
-            }
-            .hiddeninputnumberlike{           
-                pointer-events:none;
-                border: none;
-            }
 
-        </style>
         <%@include file="header.jsp" %> 
 
     </head>
     <body>   
+
         <%
             Cookie cookie[] = request.getCookies();
             int age = cookie[0].getMaxAge();
@@ -76,25 +60,15 @@
 
 
         <%if (!username.equals("")) {%>
-        <div class="container">
+        <div class="main3">
+            <div class="news_box">
+                <h1 class="news_title">
+                    <small><%=news.getNewstittles()%></small>
+                </h1>
 
-            <h1 class="my-4">
-                <small><%=news.getNewstittles()%></small>
-            </h1>
-            <div class="row">
+                <div class="news_content">
 
-                <div class="col-md-8">
-                    <img class="card-img-top" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt="">
-                </div>
 
-                <div class="col-md-4">
-                    <h3 class="my-3">News Details</h3>
-                    <ul>
-                        <li>Time: <%=news.getNewsdaterealease()%></li>
-                        <li>Create By:<%=news.getUser().getFullname()%> </li>
-                        <li>Has <%=listallcommentbynewid.size()%> comment in this news </li>
-                    </ul>
-                    <h3 class="my-3">News content</h3>
                     <p>  <%=news.getNewscontent()%> </p>
 
                     <%
@@ -115,7 +89,15 @@
                     <div id="likenew">${thumplikenewsup ?("Liked"):("Unliked")}</div> 
                     <input class="hiddeninputnumberlike" id="txtlikenewsnumber" type="text" name="" value="<%=total_likenews%>" />
                 </div>
-
+                <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt="">
+                <div class="detail">
+                    <h3 class="news_detail">News Details</h3>
+                    <ul>
+                        <li>Time: <%=news.getNewsdaterealease()%></li>
+                        <li>Create By:<%=news.getUser().getFullname()%> </li>
+                        <li>Has <%=listallcommentbynewid.size()%> comment in this news </li>
+                    </ul>
+                </div>
             </div>
         </div>     
         <script>
@@ -344,9 +326,10 @@
 
             </script>
         </div>
-     <!--check nguoi dang dang nhap co nhung comment nao -->
+        <!--check nguoi dang dang nhap co nhung comment nao -->
 
-        <%  } } else { //chua co comment nao
+        <%  }
+        } else { //chua co comment nao
 
         %>
         <%= "Don't have any comment. let be the first comment!!! "%>
@@ -355,9 +338,9 @@
 
         <div>
             <form  method="POST" action="CommentController">
-                <%Date date = new Date();
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    String strdate = formatter.format(date);
+                <%DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd  HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    String strdate = dtf.format(now);
                 %>
                 <input type="hidden" name="strdate" value="<%=strdate%>" />
                 <input type="hidden" name="newsid" value="<%=news.getNewsID()%> " />
@@ -365,7 +348,7 @@
                 <input type="submit" id="postcomment" name="postodb" value="Post comment" />       
             </form>
         </div>
-                  
+
         <script>
             $('#txtsavedb').keyup(function () {
                 // Get the Login Name value and trim it
@@ -381,24 +364,17 @@
             });
 
         </script>
-                
+
         <%} else {  // trang hien thi cua guest %>
-        <div class="container">
-            <h1 class="my-4">
-                <small><%=news.getNewstittles()%></small>
-            </h1>
-            <div class="row">
-                <div class="col-md-8">
-                    <img class="card-img-top" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt="">
-                </div>
-                <div class="col-md-4">
-                    <h3 class="my-3">News Details</h3>
-                    <ul>
-                        <li>Time: <%=news.getNewsdaterealease()%></li>
-                        <li>Create By:<%=news.getUser().getFullname()%> </li>
-                        <li>Has <%=listallcommentbynewid.size()%> comment in this news </li>
-                    </ul>
-                    <h3 class="my-3">News content</h3>
+        <div class="main3">
+            <div class="news_box">
+                <h1 class="news_title">
+                    <small><%=news.getNewstittles()%></small>
+                </h1>
+
+                <div class="news_content">
+
+
                     <p>  <%=news.getNewscontent()%> </p>
 
                     <%
@@ -410,20 +386,30 @@
                     <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
                     <i  class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>            
                     <input class="hiddeninputnumberlike"  type="text" name="" value="<%=total_likenews%>" />
+                    
+                    <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt="">
+                    <div class="detail">
+                        <h3 class="news_detail">News Details</h3>
+                        <ul>
+                            <li>Time: <%=news.getNewsdaterealease()%></li>
+                            <li>Create By:<%=news.getUser().getFullname()%> </li>
+                            <li>Has <%=listallcommentbynewid.size()%> comment in this news </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>             
-                <% if (!listallcommentbynewid.isEmpty()) {
+        <% if (!listallcommentbynewid.isEmpty()) {
                 for (int i = 0; i < listallcommentbynewid.size(); i++) {
                     int commentid = listallcommentbynewid.get(i).getCommentid();
                     int numberlike = commentid_and_numberof_like.get(commentid).intValue();
                     boolean thumbup = false;
-               
-                        //ng dang dang nhap tung like roi
-                        if (numberlike > 0) {
-                            thumbup = true;                     
-                        }
-                    
+
+                    //ng dang dang nhap tung like roi
+                    if (numberlike > 0) {
+                        thumbup = true;
+                    }
+
         %>
         <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>   
         <div>
@@ -439,7 +425,7 @@
                 } //neu mang comment > 0
             } // la guest hay user 
         %>
-    
-    
+        <%@include file="footer.jsp" %>  
+
     </body>
 </html>

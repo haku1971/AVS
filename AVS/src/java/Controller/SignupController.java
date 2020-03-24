@@ -113,10 +113,10 @@ public class SignupController extends HttpServlet {
         }
 
         if (mailresult == AuthenticateManagement.CheckResult.WRONG_FORMAT) {
-            request.setAttribute("errorMail", "email format is xyz@qwe.abc.com");
+            request.setAttribute("errorMail", "E-mail format is xyz@qwe.abc.com");
             success = 0;
         }else if(mailresult == AuthenticateManagement.CheckResult.EXIST_MAIL){
-            request.setAttribute("errorMail", "email is used ");
+            request.setAttribute("errorMail", "E-mail is used ");
             success = 0;
         }
         if (ageresult == AuthenticateManagement.CheckResult.NOT_NUMBER && !age.equals("")) {
