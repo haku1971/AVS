@@ -128,7 +128,7 @@ public class NewsModel {
     //
     public ArrayList<News> searchNews(int from, int to, String searchtxt) throws Exception {
         System.out.println(searchtxt);
-        String query = "Select n.delete_Status deletestatus, u.user_ID userid,u.user_Name username,u.user_FullName fullname, n.news_ID newsid,n.news_Content content,n.news_DateRealease daterelease,n.news_Imgs,n.news_Resource newsresource,n.news_Tittles newstitle \n"
+        String query = "Select n.delete_Status delete_Status, u.user_ID userid,u.user_Name username,u.user_FullName fullname, n.news_ID newsid,n.news_Content content,n.news_DateRealease daterelease,n.news_Imgs,n.news_Resource newsresource,n.news_Tittles newstitle \n"
                 + "from (select *, ROW_NUMBER() over(order by news_DateRealease DESC) as rownumber from News  where ((news_Tittles like ? OR news_Content like ?)) )\n"
                 + "as n inner join Users u on u.user_ID= n.user_ID\n"
                 + " and n.rownumber >= ? and n.rownumber <= ?";
@@ -158,7 +158,7 @@ public class NewsModel {
                 news.setNewsdaterealease(rs.getString("daterelease"));
                 news.setNewsresource(rs.getString("newsresource"));
                 news.setNews_Imgs(rs.getString("news_Imgs"));
-                news.setStatus(rs.getInt("deletestatus"));
+                news.setDeleted(rs.getInt("delete_Status"));
                 news.setUser(user);
                 listallnews.add(news);
 
@@ -228,7 +228,7 @@ public class NewsModel {
         ResultSet rs = null;
         try {
             conn = dbManager.getConnection();
-            ps = conn.prepareStatement("Select u.user_Name username,u.user_FullName userfullname,n.news_ID newsid,n.delete_Status deletestatus,n.news_Content content,n.news_DateRealease newsdaterelease,n.news_Imgs newsimg,n.news_Resource newsresource,n.news_Tittles newstitle,n.user_ID userid from (select *, ROW_NUMBER() over(order by news_DateRealease DESC) as rownumber from News) \n"
+            ps = conn.prepareStatement("Select u.user_Name username,u.user_FullName userfullname,n.news_ID newsid,n.delete_Status delete_Status,n.news_Content content,n.news_DateRealease newsdaterelease,n.news_Imgs newsimg,n.news_Resource newsresource,n.news_Tittles newstitle,n.user_ID userid from (select *, ROW_NUMBER() over(order by news_DateRealease DESC) as rownumber from News) \n"
                     + "as n inner join Users u on u.user_ID= n.user_ID where n.rownumber >= ? and n.rownumber <= ?");
             ps.setInt(1, from);
             ps.setInt(2, to);
@@ -245,7 +245,7 @@ public class NewsModel {
                 news.setNewsdaterealease(rs.getString("newsdaterelease"));
                 news.setNewsresource(rs.getString("newsresource"));
                 news.setNewstittles(rs.getString("newstitle"));
-                news.setStatus(rs.getInt("deletestatus"));
+                news.setDeleted(rs.getInt("delete_Status"));
                 news.setUser(user);
                 arrayofnews.add(news);
             }
@@ -259,7 +259,7 @@ public class NewsModel {
     }
 
     public ArrayList<News> getAllNews() throws Exception {
-        String query = "select n.delete_Status deletestatus, u.user_ID userid,u.user_Name username,u.user_FullName fullname, n.news_ID newsid,n.news_Content content,n.news_DateRealease daterelease,n.news_Imgs,n.news_Resource newsresource,n.news_Tittles newstitle from News n\n"
+        String query = "select n.delete_Status delete_Status, u.user_ID userid,u.user_Name username,u.user_FullName fullname, n.news_ID newsid,n.news_Content content,n.news_DateRealease daterelease,n.news_Imgs,n.news_Resource newsresource,n.news_Tittles newstitle from News n\n"
                 + "inner join Users u on u.user_ID= n.user_ID";
         ArrayList<News> listallnews = new ArrayList<>();
         DBContext dbManager = new DBContext();
@@ -282,7 +282,7 @@ public class NewsModel {
                 news.setNewsdaterealease(rs.getString("daterelease"));
                 news.setNewsresource(rs.getString("newsresource"));
                 news.setNews_Imgs(rs.getString("news_Imgs"));
-                news.setStatus(rs.getInt("deletestatus"));
+                news.setDeleted(rs.getInt("delete_Status"));
                 news.setUser(user);
                 listallnews.add(news);
 
@@ -296,7 +296,49 @@ public class NewsModel {
         return listallnews;
     }
 
-    public News getNewByNewsID(int newsid) throws Exception {
+    public ArrayList<News> getAllNewsButDeleted() throws Exception {
+        String query = "select n.delete_Status delete_Status, u.user_ID userid,u.user_Name username,\n"
+                + "u.user_FullName fullname, n.news_ID newsid,n.news_Content content,n.news_DateRealease daterelease,\n"
+                + "n.news_Imgs,n.news_Resource newsresource,n.news_Tittles newstitle \n"
+                + "from News n \n"
+                + "inner join Users u on u.user_ID= n.user_ID\n"
+                + "where delete_status != 1";
+        ArrayList<News> listallnews = new ArrayList<>();
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("userid"));
+                user.setFullname(rs.getString("fullname"));
+                user.setUsername(rs.getString("username"));
+                News news = new News();
+                news.setNewsID(rs.getInt("newsid"));
+                news.setNewstittles(rs.getString("newstitle"));
+                news.setNewscontent(rs.getString("content"));
+                news.setNewsdaterealease(rs.getString("daterelease"));
+                news.setNewsresource(rs.getString("newsresource"));
+                news.setNews_Imgs(rs.getString("news_Imgs"));
+                news.setDeleted(rs.getInt("delete_Status"));
+                news.setUser(user);
+                listallnews.add(news);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            new CloseConnection().close(conn, ps, rs);
+        }
+
+        return listallnews;
+    }
+
+    public News getNewsByID(int newsid) throws Exception {
         String query = "SELECT u.user_FullName fullname,u.user_Name username, [delete_Status],[news_ID],[news_Tittles],[news_Content],[news_DateRealease],[news_Resource],[news_Imgs],n.user_ID userid FROM [News] n \n"
                 + "inner join Users u on n.user_ID= u.user_ID where news_ID=?";
         News news = new News();
@@ -320,7 +362,7 @@ public class NewsModel {
                 news.setNewsdaterealease(rs.getString("news_DateRealease"));
                 news.setNewsresource(rs.getString("news_Resource"));
                 news.setNews_Imgs(rs.getString("news_Imgs"));
-                news.setStatus(rs.getInt("delete_Status"));
+                news.setDeleted(rs.getInt("delete_Status"));
                 news.setUser(user);
             }
         } catch (SQLException e) {
@@ -359,6 +401,7 @@ public class NewsModel {
         }
 
     }
+
     /*
      public void deleteNewById(int newid) throws Exception {
      //excute update

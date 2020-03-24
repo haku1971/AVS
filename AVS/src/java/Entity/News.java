@@ -18,12 +18,12 @@ public class News {
     private String newsresource;
     private String news_Imgs;
     private User user;
-    private int status;
+    private int deleted;
     
     public News() {
     }
 
-    public News(int newsID, String newstittles, String newscontent, String newsdaterealease, String newsresource, String news_Imgs, User user,int status) {
+    public News(int newsID, String newstittles, String newscontent, String newsdaterealease, String newsresource, String news_Imgs, User user,int deleted) {
         this.newsID = newsID;
         this.newstittles = newstittles;
         this.newscontent = newscontent;
@@ -31,15 +31,15 @@ public class News {
         this.newsresource = newsresource;
         this.news_Imgs = news_Imgs;     
         this.user = user;
-        this.status= status;
+        this.deleted= deleted;
     }
 
-    public int getStatus() {
-        return status;
+    public int getDeleted() {
+        return deleted;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
     }
     
     public String getNews_shortdescription() {
@@ -107,7 +107,5 @@ public class News {
     public void setUser(User user) {
         this.user = user;
     }
-   
-    
 
 }

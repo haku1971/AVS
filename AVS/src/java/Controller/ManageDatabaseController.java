@@ -6,9 +6,10 @@
 package Controller;
 
 import Entity.User;
+import Model.AlgorithmModel;
+import Model.HistoryModel;
 import Model.UserModel;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -37,12 +38,18 @@ public class ManageDatabaseController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             UserModel userdao = new UserModel();
+            HistoryModel historydao = new HistoryModel();
             //hien thi trang home neu nguoi dung khong phai admin
             Cookie cookie[] = request.getCookies();
             String roleid = "";
+            String adminid = "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("roleid")) {
                     roleid = ck.getValue();
+                }
+                if (ck.getName().equals("userid")) {
+                    adminid = ck.getValue();
+//                    System.out.println("adminid: " + adminid);
                 }
             }
             int adminrolenumber = 1;
@@ -51,22 +58,112 @@ public class ManageDatabaseController extends HttpServlet {
                 return;
             }
             //ket thuc kiem tra            
-            String userid = request.getParameter("userid");
-            String ban = request.getParameter("ban");
-            
-            if (ban.equals("ban")) {
-                System.out.println(ban + " success");
-                userdao.banUserID(Integer.parseInt(userid));
+            String managetype = request.getParameter("managetype");
+            switch (managetype) {
+                case "manageaccount": {
+                    String userid = request.getParameter("userid");
+                    String ban = request.getParameter("ban");
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString() ;
+
+                    if (ban.equals("ban")) {
+//                System.out.println(ban + " success");
+                        userdao.banUserID(Integer.parseInt(userid));
+                        historydao.insertUserHistory(Integer.parseInt(userid), Integer.parseInt(adminid), currenttime, 1);
+
+                    } else if (ban.equals("unban")) {
+//                System.out.println(ban + " success");
+                        userdao.unbanUserID(Integer.parseInt(userid));
+                        historydao.insertUserHistory(Integer.parseInt(userid), Integer.parseInt(adminid), currenttime, 0);
+                    }
+                    User user = userdao.getUserByUserID(userid);
+                    String category = "account";
+                    request.setAttribute("category", category);
+                    request.setAttribute("user", user);
+                    response.sendRedirect("admin?category=account");
+                    break;
+                }
+                case "addalgo": {
+                    String algoname = request.getParameter("algoname");
+                    String codejava = request.getParameter("codejava");
+                    String codecpp = request.getParameter("codecpp");
+                    String codejs = request.getParameter("codejs");
+                    String codevisual = request.getParameter("codevisual");
+                    String description = request.getParameter("description");
+                    String categoryid = request.getParameter("category");
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString() ;
+                    String resource = request.getParameter("resource");
+                    
+                    
+                    AlgorithmModel algodao = new AlgorithmModel();
+                    algodao.insertAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, "null");
+//                    System.out.println("add");
+                    int lastalgoid = algodao.getLastRecord().getAlgoID();
+                    historydao.insertAlgoHistory(Integer.parseInt(adminid), lastalgoid, currenttime, "Add");
+                    
+                    response.sendRedirect("admin?category=algorithm");
+                    break;
+                }
+                case "editalgo": {
+                    String algoid = request.getParameter("algoid");
+                    String algoname = request.getParameter("algoname");
+                    String codejava = request.getParameter("codejava");
+                    String codecpp = request.getParameter("codecpp");
+                    String codejs = request.getParameter("codejs");
+                    String codevisual = request.getParameter("codevisual");
+                    String description = request.getParameter("description");
+                    String categoryid = request.getParameter("category");
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString() ;
+                    String resource = request.getParameter("resource");
+                    
+                    codejava = codejava.replaceAll("â", "&emsp;");
+                    codecpp = codecpp.replaceAll("â", "&emsp;");
+                    codejs = codejs.replaceAll("â", "&emsp;");
+                    codevisual = codevisual.replaceAll("â", "&emsp;");
+                    
+                    AlgorithmModel algodao = new AlgorithmModel();
+                    algodao.updateAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, Integer.parseInt(algoid));
+                    historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Edit");
+                    
+                    response.sendRedirect("viewalgo?id=" + algoid);
+                    break;
+                }
+                case "deletealgo": {
+                    String algoid = request.getParameter("algoid");
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString() ;
+                    System.out.println(algoid);
+                    
+                    AlgorithmModel algodao = new AlgorithmModel();
+                    algodao.deleteAlgo(Integer.parseInt(algoid));
+                    
+                    historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Delete");
+                    response.sendRedirect("admin?category=algorithm");
+                    break;
+                }
+                case "restorealgo": {
+                    String algoid = request.getParameter("algoid");
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString() ;
+                    System.out.println(algoid);
+                    
+                    AlgorithmModel algodao = new AlgorithmModel();
+                    algodao.restoreAlgo(Integer.parseInt(algoid));
+                    
+                    historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Restore");
+                    response.sendRedirect("admin?category=algorithm");
+                    break;
+                }
+                case "addnews": {
+                    
+                    break;
+                }
+                case "editnews": {
+                    
+                    break;
+                }
+                case "deletenews": {
+                    
+                    break;
+                }
             }
-            else if (ban.equals("unban")) {
-                System.out.println(ban + " success");
-                userdao.unbanUserID(Integer.parseInt(userid));
-            }
-            User user = userdao.getUserByUserID(userid);
-            String category = "account";
-            request.setAttribute("category", category);
-            request.setAttribute("user", user);
-            response.sendRedirect("admin?category=account");
 
         } catch (Exception ex) {
             response.sendRedirect("error");

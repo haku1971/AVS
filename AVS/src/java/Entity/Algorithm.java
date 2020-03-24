@@ -15,7 +15,6 @@ public class Algorithm {
     private String algoCodeJava;
     private String algoCodeCplus;
     private String algoCodeJS;
-   
     private String algoCodeVisual;
     private String algoDescription;
     private int categoryID;
@@ -25,6 +24,7 @@ public class Algorithm {
     private String categoryName;
     private String algoFile;
     private int visualized;
+    private int deleted;
    
     public Algorithm() {
         
@@ -196,5 +196,14 @@ public class Algorithm {
     public int getVisualized() {
         return visualized;
     }
+
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
+    }
+    
     
 }

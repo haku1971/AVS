@@ -70,6 +70,7 @@
                             <th>User</th>
                             <th>Algo</th>
                             <th>Time</th>
+                            <th>Action</th>
                         </tr>
                         <% for (int i = 0; i < allhistorylist.size(); i++) {%> 
                         <tr>
@@ -77,6 +78,7 @@
                             <td><%=allhistorylist.get(i).getUser().getUsername()%></td>
                             <td><%=allhistorylist.get(i).getAlgo().getAlgoName()%></td>
                             <td><%=allhistorylist.get(i).getModTime()%></td>
+                            <td><%=allhistorylist.get(i).getAction()%></td>
                         </tr>
                         <%}%>
                     </table>
@@ -89,6 +91,7 @@
                             <th>User </th>
                             <th>News title</th>
                             <th>Time</th>
+                            <th>Action</th>
                         </tr>
                         <% for (int i = 0; i < allhistorylist.size(); i++) {%> 
                         <tr>
@@ -96,6 +99,7 @@
                             <td><%=allhistorylist.get(i).getUser().getUsername()%></td>
                             <td><%=allhistorylist.get(i).getNews().getNewstittles()%></td>
                             <td><%=allhistorylist.get(i).getModTime()%></td>
+                            <td><%=allhistorylist.get(i).getAction()%></td>
                         </tr>
                         <%}%>
                     </table>

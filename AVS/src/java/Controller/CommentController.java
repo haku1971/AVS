@@ -37,7 +37,7 @@ public class CommentController extends HttpServlet {
 
             NewsModel newmodeldao = new NewsModel();
             CommentModel commentmodel = new CommentModel();
-            News news = newmodeldao.getNewByNewsID(newsid);
+            News news = newmodeldao.getNewsByID(newsid);
             //get ra số lượng like của news
            ArrayList<Likenews> listalllikenewsbynewsid= newmodeldao.getTotalLikeNewsByNewsId(newsid);
            int total_likenews= listalllikenewsbynewsid.size();

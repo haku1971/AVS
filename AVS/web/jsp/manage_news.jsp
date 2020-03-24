@@ -22,9 +22,10 @@
         <!--<script type="text/javascript" src="js/Sort.js"></script>-->
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        
+
         <%
             ArrayList<News> allnews = (ArrayList<News>) request.getAttribute("newslist");
+            Boolean showdeleted = (Boolean) request.getAttribute("showdeleted");
         %>
     </head>
 
@@ -49,37 +50,54 @@
                         <option value="Ascending">Ascending</option>
                         <option value="Descending">Descending</option>
                     </select>
+                    <input type="checkbox" id="showdeleted" value="showdeleted" onchange="reload()">
+                    <label for="showdeleted"> Show Deleted</label>
                 </div>
-                <div class="searchbox">
-                    <form  method="POST" action="">
-                        <input type="text" id=txtsearch" name="txtsearch"/>
-                        <input type="submit" id="submitsearch" name="submitsearch" value="Search" />       
-                    </form>
-                </div>
-                <div class="tableadmin">
-                    <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Create Date</th>
-                            <th>Editor</th>
-                            <th>Detail</th>
-                        </tr>
-                        <% for (int i = 0; i < allnews.size(); i++) {%> 
-                        <tr>
-                            <td><%=allnews.get(i).getNewsID()%></td>
-                            <td><%=allnews.get(i).getNewstittles()%></td>
-                            <td><%=allnews.get(i).getNewsdaterealease()%></td>
-                            <td><%=allnews.get(i).getUser().getUsername()%></td>
-                            <td><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
-                        </tr>
-                        <%}%>
-                    </table>
-                    
-                    <a href="addnews"><button>Add</button></a>
-                </div>
+                <script>
+
+                    if (<%=showdeleted%>) {
+                        document.getElementById("showdeleted").checked = true;
+                    }
+
+                    function reload() {
+                        var currentpage = "admin?category=news";
+                        if (<%=showdeleted%>) {
+                            window.location = currentpage + "&showdeleted=false";
+                        } else {
+                            window.location = currentpage + "&showdeleted=true";
+                        }
+                    }
+                </script>
+            <div class="searchbox">
+                <form  method="POST" action="">
+                    <input type="text" id=txtsearch" name="txtsearch"/>
+                    <input type="submit" id="submitsearch" name="submitsearch" value="Search" />       
+                </form>
+            </div>
+            <div class="tableadmin">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Create Date</th>
+                        <th>Editor</th>
+                        <th>Detail</th>
+                    </tr>
+                    <% for (int i = 0; i < allnews.size(); i++) {%> 
+                    <tr>
+                        <td><%=allnews.get(i).getNewsID()%></td>
+                        <td><%=allnews.get(i).getNewstittles()%></td>
+                        <td><%=allnews.get(i).getNewsdaterealease()%></td>
+                        <td><%=allnews.get(i).getUser().getUsername()%></td>
+                        <td><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
+                    </tr>
+                    <%}%>
+                </table>
+
+                <a href="addnews"><button>Add</button></a>
             </div>
         </div>
-        <%@include file="footer.jsp" %>    
-    </body>
+    </div>
+    <%@include file="footer.jsp" %>    
+</body>
 </html>

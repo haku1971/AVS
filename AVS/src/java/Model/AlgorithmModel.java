@@ -35,9 +35,9 @@ public class AlgorithmModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT algo_ID algoid,algo_Name algoname ,algo_CodeJava algocodejava,algo_CodeCplus algocodecplus\n" +
-",algo_Description algodescription,category_ID categoryid,algo_DateTime algodate,algo_CodeJS algocodejs ,\n" +
-"algo_Resource algoresource   FROM Algorithm WHERE algo_CompareStatus = 1 AND category_ID = ? ORDER BY algo_ID";
+            String sql = "SELECT algo_ID algoid,algo_Name algoname ,algo_CodeJava algocodejava,algo_CodeCplus algocodecplus\n"
+                    + ",algo_Description algodescription,category_ID categoryid,algo_DateTime algodate,algo_CodeJS algocodejs ,\n"
+                    + "algo_Resource algoresource   FROM Algorithm WHERE algo_CompareStatus = 1 AND category_ID = ? ORDER BY algo_ID";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryID);
             rs = statement.executeQuery();
@@ -137,7 +137,10 @@ public class AlgorithmModel {
                 algo.setAlgoCodeVisual(rs.getString("algo_CodeVisual"));
                 algo.setAlgoDescription(rs.getString("algo_Description"));
                 algo.setCategoryID(rs.getInt("category_ID"));
+                algo.setAlgoDatetime(rs.getString("algo_datetime"));
+                algo.setAlgoResource(rs.getString("algo_Resource"));
                 algo.setAlgoFile(rs.getString("algo_Files"));
+                algo.setDeleted(rs.getInt("delete_status"));
                 return algo;
             }
         } catch (Exception e) {
@@ -177,7 +180,7 @@ public class AlgorithmModel {
         }
         return algos;
     }
-    
+
     public ArrayList<Algorithm> getAllAlgo() throws SQLException, Exception {
         ArrayList<Algorithm> algos = new ArrayList();
         DBContext dbManager = new DBContext();
@@ -205,5 +208,152 @@ public class AlgorithmModel {
         }
         return algos;
     }
+
+    public ArrayList<Algorithm> getAllAlgoButDeleted() throws SQLException, Exception {
+        ArrayList<Algorithm> algos = new ArrayList();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            statement
+                    = connection.prepareStatement("SELECT * from Algorithm\n"
+                            + "WHERE delete_status = 0\n"
+                            + "ORDER BY algo_ID");
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Algorithm algo = new Algorithm();
+                algo.setAlgoID(rs.getInt("algo_ID"));
+                algo.setAlgoName(rs.getString("algo_Name"));
+                algo.setCategoryID(rs.getInt("category_ID"));
+                algo.setVisualized(rs.getInt("algo_CompareStatus"));
+                algos.add(algo);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return algos;
+    }
+
+    public void insertAlgo(String algoname, String algocodejava, String algocodecpp, String algocodejs, String algocodevisual, String algodescription,
+            String categoryid, String currenttime, String resource, String file) throws Exception {
+        String query = "Insert into [Algorithm] (algo_Name, algo_CodeJava, algo_CodeCplus, algo_CodeJS, algo_CodeVisual, algo_Description, \n"
+                + "category_ID, algo_DateTime, algo_Resource, algo_Files, algo_CompareStatus, delete_Status)\n"
+                + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0)";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, algoname);
+            ps.setString(2, algocodejava);
+            ps.setString(3, algocodecpp);
+            ps.setString(4, algocodejs);
+            ps.setString(5, algocodevisual);
+            ps.setString(6, algodescription);
+            ps.setString(7, categoryid);
+            ps.setString(8, currenttime);
+            ps.setString(9, resource);
+            ps.setString(10, file);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Algorithm getLastRecord() throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            statement
+                    = connection.prepareStatement("SELECT TOP 1 * FROM [Algorithm] ORDER BY [algo_ID] DESC");
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                Algorithm algo = new Algorithm();
+                algo.setAlgoID(rs.getInt("algo_ID"));
+                algo.setAlgoName(rs.getString("algo_Name"));
+                algo.setCategoryID(rs.getInt("category_ID"));
+                algo.setVisualized(rs.getInt("algo_CompareStatus"));
+                return algo;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return null;
+    }
+
+    public void deleteAlgo(int algoid) throws Exception {
+        String query = "update [Algorithm]\n"
+                + "set delete_Status = 1\n"
+                + "where algo_id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null; 
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, algoid);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
+    public void restoreAlgo(int algoid) throws Exception {
+        String query = "update [Algorithm]\n"
+                + "set delete_Status = 0\n"
+                + "where algo_id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null; 
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, algoid);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateAlgo(String algoname, String algocodejava, String algocodecpp, String algocodejs, String algocodevisual, String algodescription,
+            String categoryid, String currenttime, String resource, int algoid) throws Exception {
+        String query = "update Algorithm\n"
+                + "set algo_Name=?, algo_CodeJava=?,algo_CodeCplus=?,algo_CodeJS=?,algo_CodeVisual=?,\n"
+                + "algo_Description=?,category_ID=?,algo_DateTime=?,algo_Resource=?\n"
+                + "where algo_ID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null; 
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, algoname);
+            ps.setString(2, algocodejava);
+            ps.setString(3, algocodecpp);
+            ps.setString(4, algocodejs);
+            ps.setString(5, algocodevisual);
+            ps.setString(6, algodescription);
+            ps.setString(7, categoryid);
+            ps.setString(8, currenttime);
+            ps.setString(9, resource);
+            ps.setInt(10, algoid);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

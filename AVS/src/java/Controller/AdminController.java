@@ -70,11 +70,11 @@ public class AdminController extends HttpServlet {
                     ArrayList<User> userlist = userdao.getAllUser();
 
                     String sortoption = request.getParameter("sortoption");
-                    if(sortoption==null) {
+                    if (sortoption == null) {
                         sortoption = "id";
                     }
                     String sortdirection = request.getParameter("sortdirection");
-                    if(sortdirection==null) {
+                    if (sortdirection == null) {
                         sortdirection = "ascending";
                     }
                     request.setAttribute("sortdirection", sortdirection);
@@ -87,8 +87,16 @@ public class AdminController extends HttpServlet {
                 }
                 case "algorithm": {
                     AlgorithmModel algodao = new AlgorithmModel();
-                    ArrayList<Algorithm> algolist = algodao.getAllAlgo();
-
+                    boolean showdeleted = Boolean.parseBoolean(request.getParameter("showdeleted"));
+                    ArrayList<Algorithm> algolist = new ArrayList();
+                    if (showdeleted) {
+                        algolist = algodao.getAllAlgo();
+                    } else {
+                        algolist = algodao.getAllAlgoButDeleted();
+                    }
+                    
+                    
+                    request.setAttribute("showdeleted", showdeleted);
                     request.setAttribute("algolist", algolist);
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("jsp/manage_algorithm.jsp").forward(request, response);
@@ -97,19 +105,26 @@ public class AdminController extends HttpServlet {
                 }
                 case "news": {
                     NewsModel newsdao = new NewsModel();
-                    ArrayList<News> newslist = newsdao.getAllNews();
+                    boolean showdeleted = Boolean.parseBoolean(request.getParameter("showdeleted"));
+                    ArrayList<News> newslist = new ArrayList();
+                    if (showdeleted) {
+                        newslist = newsdao.getAllNews();
+                    } else {
+                        newslist = newsdao.getAllNewsButDeleted();
+                    }
 
+                    request.setAttribute("showdeleted", showdeleted);
                     request.setAttribute("newslist", newslist);
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("jsp/manage_news.jsp").forward(request, response);
 
                     break;
                 }
-                
+
                 case "user_history": {
                     HistoryModel historydao = new HistoryModel();
                     ArrayList<History> historylist = historydao.getUserHistory();
-                    
+
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "user_history");
@@ -117,11 +132,11 @@ public class AdminController extends HttpServlet {
 
                     break;
                 }
-                
+
                 case "algo_history": {
                     HistoryModel historydao = new HistoryModel();
                     ArrayList<History> historylist = historydao.getAlgoHistory();
-                    
+
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "algo_history");
@@ -129,11 +144,11 @@ public class AdminController extends HttpServlet {
 
                     break;
                 }
-                
+
                 case "news_history": {
                     HistoryModel historydao = new HistoryModel();
                     ArrayList<History> historylist = historydao.getNewsHistory();
-                    
+
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "news_history");

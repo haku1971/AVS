@@ -12,31 +12,32 @@ import java.sql.Date;
  * @author Ukah
  */
 public class History {
-    private int modID;
+    private int modid;
     private User user;
     private Algorithm algo;
     private User admin;
     private News news;
-    private String modTime;
+    private String modtime;
     private int banStatus;
+    private String action;
 
     public History() {
     }
    
     public int getModID() {
-        return modID;
+        return modid;
     }
 
-    public void setModID(int modID) {
-        this.modID = modID;
+    public void setModID(int modid) {
+        this.modid = modid;
     }
 
     public String getModTime() {
-        return modTime;
+        return modtime;
     }
 
-    public void setModTime(String modTime) {
-        this.modTime = modTime;
+    public void setModTime(String modtime) {
+        this.modtime = modtime;
     }
 
     public int getBanStatus() {
@@ -85,8 +86,13 @@ public class History {
     public void setNews(News news) {
         this.news = news;
     }
-    
-    
-    
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
     
 }

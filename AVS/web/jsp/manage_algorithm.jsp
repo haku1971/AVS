@@ -24,6 +24,7 @@
 
         <%
             ArrayList<Algorithm> allalgolist = (ArrayList<Algorithm>) request.getAttribute("algolist");
+            Boolean showdeleted = (Boolean) request.getAttribute("showdeleted");
         %>
     </head>
 
@@ -48,7 +49,24 @@
                         <option value="Ascending">Ascending</option>
                         <option value="Descending">Descending</option>
                     </select>
+                    <input type="checkbox" id="showdeleted" value="showdeleted" onchange="reload()">
+                    <label for="showdeleted"> Show Deleted</label>
                 </div>
+                <script>
+                    
+                    if(<%=showdeleted%>) {
+                        document.getElementById("showdeleted").checked = true;
+                    }
+                    
+                    function reload() {
+                        var currentpage = "admin?category=algorithm";
+                        if (<%=showdeleted%>) {
+                            window.location = currentpage + "&showdeleted=false";
+                        } else {
+                            window.location = currentpage + "&showdeleted=true";
+                        }
+                    }
+                </script>
                 <div class="searchbox">
                     <form  method="POST" action="">
                         <input type="text" id=txtsearch" name="txtsearch"/>

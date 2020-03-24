@@ -21,7 +21,7 @@
         <!--<script type="text/javascript" src="js/Sort.js"></script>-->
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        
+
         <%
             User thisuser = (User) request.getAttribute("user");
         %>
@@ -49,17 +49,16 @@
                     <div class="phone">Phone: <%=thisuser.getPhone()%></div>
                 </div>
                 <form method="POST" action="manage">
+                    <input type="hidden" name="managetype" value="manageaccount">
                     <input type="hidden" name="userid" value="<%=thisuser.getId()%>">
-                    <input type="hidden" name="ban" <%if(thisuser.getBanstatus()==1){%>value="unban"<%}else{%>value="ban"<%}%>>
-                    <input type="submit" <%if(thisuser.getBanstatus()==1){%>value="Unban"<%}else{%>value="Ban"<%}%>>
+                    <input type="hidden" name="ban" <%if (thisuser.getBanstatus() == 1) {%>value="unban"<%} else {%>value="ban"<%}%>>
+                    <input type="submit" <%if (thisuser.getBanstatus() == 1) {%>value="Unban"<%} else {%>value="Ban"<%}%>>
                 </form>
                 <a href="admin?category=account"><button>Back</button></a>
 
 
             </div>
-            <%@include file="footer.jsp" %>    
-            <!--<script type="text/javascript" src="js/code.js"></script>-->
+            <%@include file="footer.jsp" %>
+            < !--<script type="text/javascript" src="js/code.js"></script>-->
     </body>
-    
-
 </html>

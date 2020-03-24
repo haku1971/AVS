@@ -76,7 +76,7 @@ public class HistoryModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT m.modalgo_ID, m.user_ID, m.algo_ID, m.modalgo_Time, u.user_Name, a.algo_Name\n"
+            String sql = "SELECT m.modalgo_ID, m.user_ID, m.algo_ID, m.modalgo_Time, m.action , u.user_Name, a.algo_Name\n"
                     + "FROM ModifyAlgorithm m\n"
                     + "inner join Users u on m.user_ID = u.user_ID\n"
                     + "inner join [Algorithm] a on m.algo_ID = a.algo_ID";
@@ -94,6 +94,7 @@ public class HistoryModel {
                 algo.setAlgoName(rs.getString("algo_name"));
                 history.setAlgo(algo);
                 history.setModTime(rs.getString("modalgo_time"));
+                history.setAction(rs.getString("action"));
                 listalgohistory.add(history);
             }
         } catch (Exception e) {
@@ -112,7 +113,7 @@ public class HistoryModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT m.modnews_ID, m.user_ID, m.news_ID, m.modnews_Time, u.user_Name, n.news_Tittles\n"
+            String sql = "SELECT m.modnews_ID, m.user_ID, m.news_ID, m.modnews_Time, m.action , u.user_Name, n.news_Tittles\n"
                     + "FROM ModifyNews m\n"
                     + "inner join Users u on m.user_ID = u.user_ID\n"
                     + "inner join News n on m.news_ID = n.news_ID";
@@ -130,6 +131,7 @@ public class HistoryModel {
                 news.setNewstittles(rs.getString("news_tittles"));
                 history.setNews(news);
                 history.setModTime(rs.getString("modnews_time"));
+                history.setAction(rs.getString("Action"));
                 listalgohistory.add(history);
             }
         } catch (Exception e) {
@@ -139,4 +141,65 @@ public class HistoryModel {
         }
         return listalgohistory;
     }
+
+    public void insertUserHistory(int userid, int adminid, String datetime, int banstatus) throws Exception {
+        String query = "Insert into Modify_Users(user_ID,admin_id,moduser_Time,ban_Status)\n"
+                + "values (?,?,?,?)";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userid);
+            ps.setInt(2, adminid);
+            ps.setString(3, datetime);
+            ps.setInt(4, banstatus);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertAlgoHistory(int userid, int algoid, String datetime, String action) throws Exception {
+        String query = "Insert into ModifyAlgorithm (user_ID, algo_ID, modalgo_Time, action)\n"
+                + "values (?,?,?,?)";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userid);
+            ps.setInt(2, algoid);
+            ps.setString(3, datetime);
+            ps.setString(4, action);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertNewsHistory(int userid, int adminid, String datetime, int banstatus) throws Exception {
+        String query = "Insert into Modify_Users(user_ID,admin_id,moduser_Time,ban_Status)\n"
+                + "values (?,?,?,?)";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userid);
+            ps.setInt(2, adminid);
+            ps.setString(3, datetime);
+            ps.setInt(4, banstatus);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
