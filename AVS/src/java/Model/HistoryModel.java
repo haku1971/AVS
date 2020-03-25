@@ -142,7 +142,7 @@ public class HistoryModel {
         return listalgohistory;
     }
 
-    public void insertUserHistory(int userid, int adminid, String datetime, int banstatus) throws Exception {
+    public void insertUserHistory(int userid, int adminid, String currenttime, int banstatus) throws Exception {
         String query = "Insert into Modify_Users(user_ID,admin_id,moduser_Time,ban_Status)\n"
                 + "values (?,?,?,?)";
         Connection conn = null;
@@ -153,7 +153,7 @@ public class HistoryModel {
             ps = conn.prepareStatement(query);
             ps.setInt(1, userid);
             ps.setInt(2, adminid);
-            ps.setString(3, datetime);
+            ps.setString(3, currenttime);
             ps.setInt(4, banstatus);
             ps.executeQuery();
 
@@ -162,7 +162,7 @@ public class HistoryModel {
         }
     }
 
-    public void insertAlgoHistory(int userid, int algoid, String datetime, String action) throws Exception {
+    public void insertAlgoHistory(int userid, int algoid, String currenttime, String action) throws Exception {
         String query = "Insert into ModifyAlgorithm (user_ID, algo_ID, modalgo_Time, action)\n"
                 + "values (?,?,?,?)";
         Connection conn = null;
@@ -173,7 +173,7 @@ public class HistoryModel {
             ps = conn.prepareStatement(query);
             ps.setInt(1, userid);
             ps.setInt(2, algoid);
-            ps.setString(3, datetime);
+            ps.setString(3, currenttime);
             ps.setString(4, action);
             ps.executeQuery();
 
@@ -182,8 +182,8 @@ public class HistoryModel {
         }
     }
 
-    public void insertNewsHistory(int userid, int adminid, String datetime, int banstatus) throws Exception {
-        String query = "Insert into Modify_Users(user_ID,admin_id,moduser_Time,ban_Status)\n"
+    public void insertNewsHistory(int userid, int newsid, String currenttime, String action) throws Exception {
+        String query = "Insert into ModifyNews(user_ID,news_id,modnews_Time,action)\n"
                 + "values (?,?,?,?)";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
@@ -192,9 +192,9 @@ public class HistoryModel {
             conn = db.getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, userid);
-            ps.setInt(2, adminid);
-            ps.setString(3, datetime);
-            ps.setInt(4, banstatus);
+            ps.setInt(2, newsid);
+            ps.setString(3, currenttime);
+            ps.setString(4, action);
             ps.executeQuery();
 
         } catch (SQLException e) {

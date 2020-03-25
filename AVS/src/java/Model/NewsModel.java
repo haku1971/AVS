@@ -107,7 +107,7 @@ public class NewsModel {
     }
 
     //delete cua like comment by comment id
-    public void deleteLikeNewsByNewsId(int newsid,int userid) throws Exception {
+    public void deleteLikeNewsByNewsId(int newsid, int userid) throws Exception {
         //excute update
         String query = "DELETE FROM LikeNews WHERE news_ID = ? and user_ID= ?";
         DBContext dbManager = new DBContext();
@@ -421,7 +421,6 @@ public class NewsModel {
      }
      */
 //tao ra new, phai sua code ben trong truoc khi su dung
-
     public void createNews(String title, String newcontent, String newdate, String newresource, String newimage, int newsid) throws Exception {
         //excute insert
         String query = "INSERT INTO [AVS_Database_Final].[dbo].[News] VALUES  (?,?,?,?,?,?)";
@@ -438,6 +437,122 @@ public class NewsModel {
             ps.setString(5, newimage);
             ps.setInt(6, newsid);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public News getLastRecord() throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            statement
+                    = connection.prepareStatement("SELECT TOP 1 * FROM [News] ORDER BY [news_ID] DESC");
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                News news = new News();
+                news.setNewsID(rs.getInt("news_ID"));
+                news.setNewstittles(rs.getString("news_Tittles"));
+                news.setNewscontent(rs.getString("news_Content"));
+                news.setNewsdaterealease(rs.getString("news_DateRealease"));
+                news.setNewsresource(rs.getString("news_Resource"));
+                news.setNews_Imgs(rs.getString("news_Imgs"));
+                news.setDeleted(rs.getInt("delete_Status"));
+                return news;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return null;
+    }
+
+    public void insertNews(String title, String content, String currenttime, String resource, String imageurl, int userid) throws Exception {
+        //excute insert
+        String query = "INSERT INTO [dbo].[News] ([news_Tittles],[news_Content],[news_DateRealease],[news_Resource],[news_Imgs],[user_ID])\n"
+                + "VALUES (?,?,?,?,?,?)";
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, title);
+            ps.setString(2, content);
+            ps.setString(3, currenttime);
+            ps.setString(4, resource);
+            ps.setString(5, imageurl);
+            ps.setInt(6, userid);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("----Error at " + currenttime + "-----");
+            e.printStackTrace();
+        }
+    }
+
+    public void updateNews(String title, String content, String currenttime, String resource, String imageurl, int userid, int newsid) throws Exception {
+
+        String query = "Update News\n"
+                + "Set news_Tittles=?,news_Content=?,news_DateRealease=?, news_Resource=?,news_Imgs=?,user_ID=?\n"
+                + "where news_ID = ?";
+        DBContext db = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, title);
+            ps.setString(2, content);
+            ps.setString(3, currenttime);
+            ps.setString(4, resource);
+            ps.setString(5, imageurl);
+            ps.setInt(6, userid);
+            ps.setInt(7, newsid);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteNews(int newsid) throws Exception {
+        String query = "Update News\n"
+                + "Set delete_status = 1\n"
+                + "where news_ID = ?";
+        DBContext db = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, newsid);
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void restoreNews(int newsid) throws Exception {
+        String query = "Update News\n"
+                + "Set delete_status = 0\n"
+                + "where news_ID = ?";
+        DBContext db = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, newsid);
+            ps.executeQuery();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

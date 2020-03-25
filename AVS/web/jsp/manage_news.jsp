@@ -81,6 +81,7 @@
                         <th>Title</th>
                         <th>Create Date</th>
                         <th>Editor</th>
+                        <th>Image</th>
                         <th>Detail</th>
                     </tr>
                     <% for (int i = 0; i < allnews.size(); i++) {%> 
@@ -89,6 +90,7 @@
                         <td><%=allnews.get(i).getNewstittles()%></td>
                         <td><%=allnews.get(i).getNewsdaterealease()%></td>
                         <td><%=allnews.get(i).getUser().getUsername()%></td>
+                        <td><%=allnews.get(i).getNews_Imgs()%></td>
                         <td><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
                     </tr>
                     <%}%>
