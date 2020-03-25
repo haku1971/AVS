@@ -1231,7 +1231,7 @@ body {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
-    
+
 }
 
 .dropdown-content a:hover {background-color: #f1f1f1}
@@ -1251,8 +1251,10 @@ body {
     background-color:white ;
     border-bottom: 1px solid lightgray;
     min-height: 500px;
-
-}
+    margin-top: 25px;
+    display: flex;
+    margin: auto;
+   }
 
 .main3 .news_box{
     margin-top: -30px;
@@ -1270,7 +1272,7 @@ body {
     border-radius: 5px;
     border:#999999 2px solid ;
     height: 400px;
-
+    margin: auto;
 }
 
 .main3 .news_box .news_title small{
