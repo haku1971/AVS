@@ -21,7 +21,30 @@
 
 
         <%@include file="header.jsp" %> 
+        <style>
+            .hiddeninputtag{
+                overflow:hidden;
+                pointer-events:none;
+                border: none;
+                width: 0px;
+                height: 0px;
+            }
+            .show {
+                overflow: auto;
+                border:solid 1px;
+                width:200px;
+                height: 80px;
+            }
+            .likecounter{           
+                pointer-events:none;
+                border: none;
+                width: auto;
+                background-color: #edf0f4;
+                height: 15px;
+                text-align: center;
+            }
 
+        </style>
     </head>
     <body>   
 
@@ -67,8 +90,18 @@
                 </h1>
 
                 <div class="news_content">
-
-
+                    <div class="detail">
+                        <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
+                        <div class="subdetail">
+                            <h3 style="text-align: justify;margin-left: 40px;" class="news_detail2">News Details</h3>
+                        <ul style="list-style-type:none;">
+                            <li>Time: <%=news.getNewsdaterealease()%></li>
+                            <li>Create By:<%=news.getUser().getFullname()%></li>
+                            <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
+                        </ul>
+                    </div>
+                    </div>
+                    
                     <p>  <%=news.getNewscontent()%> </p>
 
                     <%
@@ -87,17 +120,9 @@
                     <i onclick="LikeNewsFunction(this,<%=news.getNewsID()%>,<%=Integer.parseInt(userid)%>)" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>
 
                     <div id="likenew">${thumplikenewsup ?("Liked"):("Unliked")}</div> 
-                    <input class="hiddeninputnumberlike" id="txtlikenewsnumber" type="text" name="" value="<%=total_likenews%>" />
+                    <input class="likecounter" id="txtlikenewsnumber" type="text" name="" value="<%=total_likenews%>" />
                 </div>
-                <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt="">
-                <div class="detail">
-                    <h3 class="news_detail">News Details</h3>
-                    <ul>
-                        <li>Time: <%=news.getNewsdaterealease()%></li>
-                        <li>Create By:<%=news.getUser().getFullname()%> </li>
-                        <li>Has <%=listallcommentbynewid.size()%> comment in this news </li>
-                    </ul>
-                </div>
+
             </div>
         </div>     
         <script>
@@ -144,64 +169,39 @@
                     }
         %>
         <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>
-        <%      //ko phai nguoi đang đăng nhập
-            if (!username.equals(listallcommentbynewid.get(i).getUser().getUsername())) {
-        %>
-
-
         <div id="<%=i%>">
-            <hr>
-            <%=thumbup%>
-
-            <c:out value = "${thumpup}"/>
-
-            <%="nguoi khac" + commentid%>
             <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <div id="content_<%=commentid%>"><%=listallcommentbynewid.get(i).getContent()%> </div> 
+            <textarea class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" ><%=listallcommentbynewid.get(i).getContent()%></textarea>
             <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
             <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-3x"):("far fa-heart fa-3x")}"></i>
             <div id="like_<%=commentid%>">${thumpup ?("Liked"):("Unliked")}</div>       
-            <input class="hiddeninputnumberlike" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
-        </div>
-        <% }
-            //là người đang đăng nhập sẽ hiển thị xoá,sửa            
-            if (username.equals(listallcommentbynewid.get(i).getUser().getUsername())) {%> 
-        <div id="<%=i%>">          
-            <hr>
-            <div>
-                <div>  <%= listallcommentbynewid.get(i).getUser().getUsername()%></div>
-                <%=thumbup%>
-                <%="tao da" + commentid%>
-                <div  id="content_<%=commentid%>">   
-                    <%=listallcommentbynewid.get(i).getContent()%> 
-                </div>
-                <input class="hidden" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" value="<%=listallcommentbynewid.get(i).getContent()%>" />
-                <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>
+            <input class="likecounter" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
 
-                <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-3x"):("far fa-heart fa-3x")}"></i>
-                <div id="like_<%=commentid%>">${thumpup ?("Liked"):("Unliked")}</div> 
-                <input class="hiddeninputnumberlike" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
-                <form>            
+            <%
+                //là người đang đăng nhập sẽ hiển thị xoá,sửa            
+                if (username.equals(listallcommentbynewid.get(i).getUser().getUsername())) {%> 
 
-                    <input type="hidden" name="commentid" value="<%=commentid%>" />
-                    <input  type="hidden" name="newsid" value="<%=news.getNewsID()%>" />                      
-                </form>         
-                <table>
-                    <tr> 
-                        <td><input id="save_<%=commentid%>" type="submit" name ="save" onclick="savecomment(<%=commentid%>);" value="Save"  /></td>
-                        <td>  <input id="cancel_<%=commentid%>" type="submit" name ="cancel" onclick="cancel(<%=commentid%>)" value="Cancel" /></td>
-                    </tr>
-                    <tr>
-                        <td><input id="edit_<%=commentid%>"  type="submit" name ="Edit" value="Edit" onclick="edit(<%=commentid%>);" />    </td>     
-                        <td><input id="delete_<%=commentid%>" type="submit" name="Delete" value="Deleteofuser" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/></td>
-                    </tr>
-                </table>
-            </div>
+            <form>            
+                <input type="hidden" name="commentid" value="<%=commentid%>" />
+                <input  type="hidden" name="newsid" value="<%=news.getNewsID()%>" />                      
+            </form>         
+            <table>
+                <tr> 
+                    <td><input id="save_<%=commentid%>" type="submit" name ="save" onclick="savecomment(<%=commentid%>);" value="Save"  /></td>
+                    <td>  <input id="cancel_<%=commentid%>" type="submit" name ="cancel" onclick="cancel(<%=commentid%>)" value="Cancel" /></td>
+                </tr>
+                <tr>
+                    <td><input id="edit_<%=commentid%>"  type="submit" name ="Edit" value="Edit" onclick="edit(<%=commentid%>);" />    </td>     
+                    <td><input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/></td>
+                </tr>
+            </table>          
             <% } else if (roleid.equals("1")) { // la admin thi co the xoa
 
             %>
-            <input id="delete_<%=commentid%>" type="submit" name="Delete" value="deletead_<%=commentid%>" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/>
-
+            <table>
+                <td><input id="delete_<%=commentid%>" type="submit" name="Delete" value="Delete this comment" onclick="btndelete(<%=i%>,<%=commentid%>,<%=news.getNewsID()%>);"/></td>
+            </table>
             <% }%>
 
             <script>
@@ -292,7 +292,7 @@
                     document.getElementById('edit_' + btn_position).style.visibility = status;
                 }
                 function cancel(commentid) {
-                    document.getElementById("txtedit_" + commentid).className = "hidden";
+                    document.getElementById("txtedit_" + commentid).className = "hiddeninputtag";
                     setDeleteButtonStatus(commentid, 'visible');
                     //  setTxteditStatus(commentid, 'hidden');
                     setSaveButtonStatus(commentid, 'hidden');
@@ -303,7 +303,7 @@
                     checkedit = 0;
                 }
                 function savecomment(commentid) {
-                    document.getElementById("txtedit_" + commentid).className = "hidden";
+                    document.getElementById("txtedit_" + commentid).className = "hiddeninputtag";
                     setSaveButtonStatus(commentid, "hidden");
                     setDeleteButtonStatus(commentid, "visible");
                     //  setTxteditStatus(commentid, "hidden");
@@ -326,6 +326,7 @@
 
             </script>
         </div>
+
         <!--check nguoi dang dang nhap co nhung comment nao -->
 
         <%  }
@@ -385,8 +386,8 @@
                     %>
                     <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
                     <i  class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>            
-                    <input class="hiddeninputnumberlike"  type="text" name="" value="<%=total_likenews%>" />
-                    
+                    <input class="likecounter"  type="text" name="" value="<%=total_likenews%>" />
+
                     <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt="">
                     <div class="detail">
                         <h3 class="news_detail">News Details</h3>
@@ -419,7 +420,7 @@
             <div><%=listallcommentbynewid.get(i).getContent()%> </div> 
             <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
             <i  class= "${thumpup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>             
-            <input class="hiddeninputnumberlike"  type="text"  value="<%=numberlike%>" />
+            <input class="likecounter"  type="text"  value="<%=numberlike%>" />
         </div>
         <%} //hien thi tung comment
                 } //neu mang comment > 0

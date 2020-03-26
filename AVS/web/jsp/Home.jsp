@@ -19,7 +19,7 @@
         %>
     </head>
     <body>
-            <%@include file="header.jsp" %>
+        <%@include file="header.jsp" %>
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
