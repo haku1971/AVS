@@ -64,21 +64,43 @@ public class AdminController extends HttpServlet {
             if (category == null) {
                 category = "account";
             }
+
+            int page;
+            if (request.getParameter("page") == null) {
+                page = 1;
+            } else {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            int rowperpage = 10;
+            int start = rowperpage * (page - 1) + 1;
+            int end = rowperpage * page;
             switch (category) {
                 case "account": {
                     UserModel userdao = new UserModel();
                     ArrayList<User> userlist = userdao.getAllUser();
 
-                    String sortoption = request.getParameter("sortoption");
-                    if (sortoption == null) {
-                        sortoption = "id";
+                    String searchstring = request.getParameter("searchtxt");
+                    String columnname = request.getParameter("columnname");
+                    String sortorder = request.getParameter("sortorder");
+
+                    if (searchstring == null) {
+                        searchstring = "";
                     }
-                    String sortdirection = request.getParameter("sortdirection");
-                    if (sortdirection == null) {
-                        sortdirection = "ascending";
+                    if (columnname == null || columnname.isEmpty()) {
+                        columnname = "user_id";
                     }
-                    request.setAttribute("sortdirection", sortdirection);
-                    request.setAttribute("sortoption", sortoption);
+                    if (sortorder == null || sortorder.isEmpty()) {
+                        sortorder = "ASC";
+                    }
+
+                    userlist = userdao.getPagingSearchUser(searchstring, columnname, sortorder, start, end);
+
+                    int totalpage = (int) Math.ceil((double)userdao.getAllSearchUser(searchstring) / rowperpage);
+                    
+                    request.setAttribute("totalpage", totalpage);
+                    request.setAttribute("searchstring", searchstring);
+                    request.setAttribute("columnname", columnname);
+                    request.setAttribute("sortorder", sortorder);
                     request.setAttribute("userlist", userlist);
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("jsp/manage_account.jsp").forward(request, response);
@@ -87,16 +109,34 @@ public class AdminController extends HttpServlet {
                 }
                 case "algorithm": {
                     AlgorithmModel algodao = new AlgorithmModel();
-                    boolean showdeleted = Boolean.parseBoolean(request.getParameter("showdeleted"));
-                    ArrayList<Algorithm> algolist = new ArrayList();
-                    if (showdeleted) {
-                        algolist = algodao.getAllAlgo();
-                    } else {
-                        algolist = algodao.getAllAlgoButDeleted();
+                    String searchstring = request.getParameter("searchtxt");
+                    String deleted = request.getParameter("showdeleted");
+                    String columnname = request.getParameter("columnname");
+                    String sortorder = request.getParameter("sortorder");
+
+                    if (searchstring == null) {
+                        searchstring = "";
                     }
-                    
-                    
-                    request.setAttribute("showdeleted", showdeleted);
+                    if (deleted != null) {
+                        deleted = "showdeleted";
+                    }
+                    if (columnname == null || columnname.isEmpty()) {
+                        columnname = "algo_id";
+                    }
+                    if (sortorder == null || sortorder.isEmpty()) {
+                        sortorder = "ASC";
+                    }
+
+                    ArrayList<Algorithm> algolist = new ArrayList();
+                    algolist = algodao.getPagingSearchAlgo(searchstring, deleted, columnname, sortorder, start, end);
+
+                    int totalpage = (int) Math.ceil((double)algodao.getAllSearchAlgo(searchstring, deleted) / rowperpage);
+
+                    request.setAttribute("totalpage", totalpage);
+                    request.setAttribute("showdeleted", deleted);
+                    request.setAttribute("searchstring", searchstring);
+                    request.setAttribute("columnname", columnname);
+                    request.setAttribute("sortorder", sortorder);
                     request.setAttribute("algolist", algolist);
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("jsp/manage_algorithm.jsp").forward(request, response);
@@ -105,15 +145,34 @@ public class AdminController extends HttpServlet {
                 }
                 case "news": {
                     NewsModel newsdao = new NewsModel();
-                    boolean showdeleted = Boolean.parseBoolean(request.getParameter("showdeleted"));
                     ArrayList<News> newslist = new ArrayList();
-                    if (showdeleted) {
-                        newslist = newsdao.getAllNews();
-                    } else {
-                        newslist = newsdao.getAllNewsButDeleted();
+                    String searchstring = request.getParameter("searchtxt");
+                    String deleted = request.getParameter("showdeleted");
+                    String columnname = request.getParameter("columnname");
+                    String sortorder = request.getParameter("sortorder");
+
+                    if (searchstring == null) {
+                        searchstring = "";
+                    }
+                    if (deleted != null) {
+                        deleted = "showdeleted";
+                    }
+                    if (columnname == null || columnname.isEmpty()) {
+                        columnname = "news_ID";
+                    }
+                    if (sortorder == null || sortorder.isEmpty()) {
+                        sortorder = "ASC";
                     }
 
-                    request.setAttribute("showdeleted", showdeleted);
+                    newslist = newsdao.getPagingSearchNews(searchstring, deleted, columnname, sortorder, start, end);
+
+                    int totalpage = (int) Math.ceil((double)newsdao.getAllSearchNews(searchstring, deleted) / rowperpage);
+
+                    request.setAttribute("totalpage", totalpage);
+                    request.setAttribute("showdeleted", deleted);
+                    request.setAttribute("searchstring", searchstring);
+                    request.setAttribute("columnname", columnname);
+                    request.setAttribute("sortorder", sortorder);
                     request.setAttribute("newslist", newslist);
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("jsp/manage_news.jsp").forward(request, response);
@@ -123,8 +182,13 @@ public class AdminController extends HttpServlet {
 
                 case "user_history": {
                     HistoryModel historydao = new HistoryModel();
-                    ArrayList<History> historylist = historydao.getUserHistory();
+                    ArrayList<History> historylist = historydao.getPagingUserHistory(start, end);
 
+                    int totalpage = (int) Math.ceil((double)historydao.getTotalUsersHistory() / rowperpage);
+                    
+                    category = "history";
+
+                    request.setAttribute("totalpage", totalpage);
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "user_history");
@@ -135,8 +199,13 @@ public class AdminController extends HttpServlet {
 
                 case "algo_history": {
                     HistoryModel historydao = new HistoryModel();
-                    ArrayList<History> historylist = historydao.getAlgoHistory();
+                    ArrayList<History> historylist = historydao.getPagingAlgoHistory(start, end);
+                    
+                    int totalpage = (int) Math.ceil((double)historydao.getTotalAlgoHistory()/ rowperpage);
+                    
+                    category = "history";
 
+                    request.setAttribute("totalpage", totalpage);
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "algo_history");
@@ -147,8 +216,13 @@ public class AdminController extends HttpServlet {
 
                 case "news_history": {
                     HistoryModel historydao = new HistoryModel();
-                    ArrayList<History> historylist = historydao.getNewsHistory();
+                    ArrayList<History> historylist = historydao.getPagingNewsHistory(start, end);
+                    
+                    int totalpage = (int) Math.ceil((double)historydao.getTotalNewsHistory()/ rowperpage);
+                    
+                    category = "history";
 
+                    request.setAttribute("totalpage", totalpage);
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "news_history");
@@ -158,16 +232,12 @@ public class AdminController extends HttpServlet {
                 }
 
                 default: {
-                    UserModel userdao = new UserModel();
-                    ArrayList<User> userlist = userdao.getAllUser();
-
-                    request.setAttribute("userlist", userlist);
-                    request.setAttribute("category", category);
-                    request.getRequestDispatcher("jsp/manage_account.jsp").forward(request, response);
+                    response.sendRedirect("error");
                 }
             }
 
         } catch (Exception ex) {
+            System.out.println(ex);
             response.sendRedirect("error");
         }
     }

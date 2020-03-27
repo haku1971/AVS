@@ -201,5 +201,212 @@ public class HistoryModel {
             e.printStackTrace();
         }
     }
-    
+
+    public ArrayList<History> getPagingUserHistory(int start, int end) throws SQLException, Exception {
+        ArrayList<History> listhistory = new ArrayList();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT m.moduser_ID, m.user_ID, m.admin_id, m.moduser_Time, m.ban_Status, u.user_Name, a.user_Name as adminname\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by moduser_id desc) as rownumber from Modify_Users) as m\n"
+                    + "inner join Users u on u.user_ID = m.user_ID\n"
+                    + "inner join Users a on a.user_ID = m.admin_id\n"
+                    + "WHERE  m.rownumber >= ? and m.rownumber <= ?";
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setInt(1, start);
+            statement.setInt(2, end);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                History history = new History();
+                history.setModID(rs.getInt("moduser_ID"));
+                User user = new User();
+                user.setId(rs.getInt("user_ID"));
+                user.setUsername(rs.getString("user_name"));
+                history.setUser(user);
+                User admin = new User();
+                admin.setId(rs.getInt("admin_ID"));
+                admin.setUsername(rs.getString("adminname"));
+                history.setAdmin(admin);
+                history.setModTime(rs.getString("moduser_time"));
+                history.setBanStatus(rs.getInt("ban_status"));
+                listhistory.add(history);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return listhistory;
+    }
+
+    public int getTotalUsersHistory() throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT count(*) as totalpage\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by moduser_id desc) as rownumber from Modify_Users) as m\n"
+                    + "inner join Users u on u.user_ID = m.user_ID\n"
+                    + "inner join Users a on a.user_ID = m.admin_id";
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt("totalpage"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+
+        return 0;
+    }
+
+    public ArrayList<History> getPagingAlgoHistory(int start, int end) throws SQLException, Exception {
+        ArrayList<History> listhistory = new ArrayList();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT m.modalgo_ID, m.user_ID, m.algo_ID, m.modalgo_Time, m.action , u.user_Name, a.algo_Name\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by modalgo_ID desc) as rownumber from ModifyAlgorithm) as m\n"
+                    + "inner join Users u on m.user_ID = u.user_ID\n"
+                    + "inner join [Algorithm] a on m.algo_ID = a.algo_ID\n"
+                    + "WHERE  m.rownumber >= ? and m.rownumber <= ?";
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setInt(1, start);
+            statement.setInt(2, end);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                History history = new History();
+                history.setModID(rs.getInt("modalgo_ID"));
+                User user = new User();
+                user.setId(rs.getInt("user_ID"));
+                user.setUsername(rs.getString("user_name"));
+                history.setUser(user);
+                Algorithm algo = new Algorithm();
+                algo.setAlgoID(rs.getInt("algo_ID"));
+                algo.setAlgoName(rs.getString("algo_name"));
+                history.setAlgo(algo);
+                history.setModTime(rs.getString("modalgo_time"));
+                history.setAction(rs.getString("action"));
+                listhistory.add(history);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return listhistory;
+    }
+
+    public int getTotalAlgoHistory() throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT count(*) as totalpage\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by modalgo_ID desc) as rownumber from ModifyAlgorithm) as m\n"
+                    + "inner join Users u on m.user_ID = u.user_ID\n"
+                    + "inner join [Algorithm] a on m.algo_ID = a.algo_ID";
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt("totalpage"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+
+        return 0;
+    }
+
+    public ArrayList<History> getPagingNewsHistory(int start, int end) throws SQLException, Exception {
+        ArrayList<History> listhistory = new ArrayList();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT m.modnews_ID, m.user_ID, m.news_ID, m.modnews_Time, m.action , u.user_Name, n.news_Tittles\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by modnews_ID desc) as rownumber from ModifyNews) as m\n"
+                    + "inner join Users u on m.user_ID = u.user_ID\n"
+                    + "inner join News n on m.news_ID = n.news_ID\n"
+                    + "WHERE  m.rownumber >= ? and m.rownumber <= ?";
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setInt(1, start);
+            statement.setInt(2, end);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                History history = new History();
+                history.setModID(rs.getInt("modnews_ID"));
+                User user = new User();
+                user.setId(rs.getInt("user_ID"));
+                user.setUsername(rs.getString("user_name"));
+                history.setUser(user);
+                News news = new News();
+                news.setNewsID(rs.getInt("news_ID"));
+                news.setNewstittles(rs.getString("news_tittles"));
+                history.setNews(news);
+                history.setModTime(rs.getString("modnews_time"));
+                history.setAction(rs.getString("Action"));
+                listhistory.add(history);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return listhistory;
+    }
+
+    public int getTotalNewsHistory() throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT count(*) as totalpage\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by modnews_ID desc) as rownumber from ModifyNews) as m\n"
+                    + "inner join Users u on m.user_ID = u.user_ID\n"
+                    + "inner join News n on m.news_ID = n.news_ID";
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt("totalpage"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+
+        return 0;
+    }
+
 }

@@ -538,7 +538,7 @@ public class NewsModel {
             e.printStackTrace();
         }
     }
-    
+
     public void restoreNews(int newsid) throws Exception {
         String query = "Update News\n"
                 + "Set delete_status = 0\n"
@@ -556,5 +556,85 @@ public class NewsModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getAllSearchNews(String searchstring, String deleted) throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT COUNT(*) as totalpage\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by news_id) as rownumber from News ";
+            if (!"showdeleted".equals(deleted)) {
+                statementstring += "where delete_Status = 0";
+            }
+            statementstring += ") as n\n"
+                    + "WHERE news_Tittles like ? ";
+            System.out.println(statementstring);
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setString(1, '%' + searchstring + '%');
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt("totalpage"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return 0;
+    }
+
+    public ArrayList<News> getPagingSearchNews(String searchstring, String deleted, String columnname, String sortorder, int start, int end) throws SQLException, Exception {
+        ArrayList<News> listnews = new ArrayList();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "Select u.user_Name username,u.user_FullName userfullname,n.news_ID newsid,n.delete_Status delete_Status,\n"
+                    + "n.news_Content content,n.news_DateRealease newsdaterelease,n.news_Imgs newsimg,\n"
+                    + "n.news_Resource newsresource,n.news_Tittles newstitle,n.user_ID userid \n"
+                    + "from (select *, ROW_NUMBER() over(order by news_ID) as rownumber from News ";
+            if (!"showdeleted".equals(deleted)) {
+                statementstring += "where delete_Status = 0\n";
+            }
+            statementstring += ")\n"
+                    + "as n inner join Users u on u.user_ID= n.user_ID \n"
+                    + "where n.rownumber >= ? and n.rownumber <= ? and n.news_Tittles like ? ";
+            statementstring += "ORDER BY " + columnname + " " + sortorder;
+//            System.out.println(statementstring);
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setInt(1, start);
+            statement.setInt(2, end);
+            statement.setString(3, '%' + searchstring + '%');
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("userid"));
+                user.setFullname(rs.getString("userfullname"));
+                user.setUsername(rs.getString("username"));
+                News news = new News();
+                news.setNewsID(rs.getInt("newsid"));
+                news.setNewstittles(rs.getString("newstitle"));
+                news.setNewscontent(rs.getString("content"));
+                news.setNewsdaterealease(rs.getString("newsdaterelease"));
+                news.setNewsresource(rs.getString("newsresource"));
+                news.setNews_Imgs(rs.getString("newsimg"));
+                news.setDeleted(rs.getInt("delete_Status"));
+                news.setUser(user);
+                listnews.add(news);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return listnews;
     }
 }

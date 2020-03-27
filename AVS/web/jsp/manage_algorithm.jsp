@@ -24,7 +24,14 @@
 
         <%
             ArrayList<Algorithm> allalgolist = (ArrayList<Algorithm>) request.getAttribute("algolist");
-            Boolean showdeleted = (Boolean) request.getAttribute("showdeleted");
+            int totalpage = (Integer) request.getAttribute("totalpage");
+            String showdeleted = (String) request.getAttribute("showdeleted");
+            if (showdeleted == null) {
+                showdeleted = "notshow";
+            }
+            String searchstring = (String) request.getAttribute("searchstring");
+            String columnname = (String) request.getAttribute("columnname");
+            String sortorder = (String) request.getAttribute("sortorder");
         %>
     </head>
 
@@ -39,40 +46,31 @@
             <%@include file="adminleft.jsp" %> 
 
             <div class="right">
-                <div class="sortby">
-                    Sort by: 
-                    <select id="select_column">
-                        <option value="ID">ID</option>
-                        <option value="Name">Name</option>
-                    </select>
-                    <select id="select_sorttype">
-                        <option value="Ascending">Ascending</option>
-                        <option value="Descending">Descending</option>
-                    </select>
-                    <input type="checkbox" id="showdeleted" value="showdeleted" onchange="reload()">
-                    <label for="showdeleted"> Show Deleted</label>
-                </div>
-                <script>
-                    
-                    if(<%=showdeleted%>) {
-                        document.getElementById("showdeleted").checked = true;
-                    }
-                    
-                    function reload() {
-                        var currentpage = "admin?category=algorithm";
-                        if (<%=showdeleted%>) {
-                            window.location = currentpage + "&showdeleted=false";
-                        } else {
-                            window.location = currentpage + "&showdeleted=true";
-                        }
-                    }
-                </script>
-                <div class="searchbox">
-                    <form  method="POST" action="">
-                        <input type="text" id=txtsearch" name="txtsearch"/>
-                        <input type="submit" id="submitsearch" name="submitsearch" value="Search" />       
-                    </form>
-                </div>
+                <form action="admin">
+                    <input type="hidden" name="category" value="algorithm">
+                    <input type="hidden" id="inputcolumn" name="columnname">
+                    <input type="hidden" id="inputsorttype" name="sortorder">
+                    <div class="sortby">
+                        Sort by: 
+                        <select id="select_column" onchange="changeselected()">
+                            <option value="algo_id">ID</option>
+                            <option value="algo_name">Name</option>
+                            <option value="category_id">Category</option>
+                            <option value="algo_comparestatus">Visualized</option>
+                        </select>
+                        <select id="select_sorttype" onchange="changeselected()">
+                            <option value="ASC">Ascending</option>
+                            <option value="DESC">Descending</option>
+                        </select>
+                        <input type="checkbox" id="checkshowdeleted" name="showdeleted">
+                        <label for="showdeleted"> Show Deleted</label>
+                    </div>
+
+                    <div class="searchbox">
+                        <input type="text" id="txtsearch" name="searchtxt"/>
+                        <input type="submit" value="Search" />       
+                    </div>
+                </form>
                 <div class="tableadmin">
                     <table>
                         <tr>
@@ -92,12 +90,85 @@
                         </tr>
                         <%}%>
                     </table>
-
+                    <div>
+                        <%
+                            String currentpageurl = "admin?category=algorithm";
+                            String columnnameurl = "&columnname=" + columnname;
+                            String sortorderurl = "&sortorder=" + sortorder;
+                            String showdeletedurl = "";
+                            if (showdeleted == "showdeleted") {
+                                showdeletedurl = "&showdeleted=on";
+                            }
+                            String searchtxturl = "&searchtxt="+searchstring;
+                            String currenturl = currentpageurl+columnnameurl+sortorderurl+showdeletedurl+searchtxturl;
+                        %>
+                        <% for (int i = 1; i <= totalpage; i++) {%>
+                        <a href="<%=currenturl+"&page="+i%>"><%=i%></a>
+                        <%}%>
+                    </div>
                     <a href="addalgo"><button>Add</button></a>
                 </div>
             </div>
         </div>
         <%@include file="footer.jsp" %>    
     </body>
+    <script>
+        var selectcolumn = document.getElementById("select_column");
+        var selectsortype = document.getElementById("select_sorttype");
+        var checkshowdeleted = document.getElementById("checkshowdeleted");
+        var txtsearch = document.getElementById("txtsearch");
+        function init() {
+            var columnname = '<%=columnname%>';
+            var sortorder = '<%=sortorder%>'
+            switch (columnname) {
+                case 'algo_id' :
+                {
+                    selectcolumn.selectedIndex = 0;
+                    break;
+                }
+                case 'algo_name' :
+                {
+                    selectcolumn.selectedIndex = 1;
+                    break;
+                }
+                case 'category_id' :
+                {
+                    selectcolumn.selectedIndex = 2;
+                    break;
+                }
+                case 'algo_comparestatus' :
+                {
+                    selectcolumn.selectedIndex = 3;
+                    break;
+                }
+            }
+            switch (sortorder) {
+                case 'ASC' :
+                {
+                    selectsortype.selectedIndex = 0;
+                    break;
+                }
+                case 'DESC' :
+                {
+                    selectsortype.selectedIndex = 1;
+                    break;
+                }
+            }
+            var showdeleted = "<%=showdeleted%>";
+            if (showdeleted === "showdeleted") {
+                checkshowdeleted.checked = "checked";
+            }
+            txtsearch.value = "<%=searchstring%>";
+        }
+        function changeselected() {
+
+            document.getElementById("inputcolumn").value = selectcolumn.options[selectcolumn.selectedIndex].value;
+
+            document.getElementById("inputsorttype").value = selectsortype.options[selectsortype.selectedIndex].value;
+        }
+
+        init();
+        changeselected();
+    </script>
 </html>
 

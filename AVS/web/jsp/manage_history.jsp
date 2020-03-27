@@ -26,6 +26,7 @@
         <%
             ArrayList<History> allhistorylist = (ArrayList<History>) request.getAttribute("historylist");
             String historytype = (String) request.getAttribute("historytype");
+            int totalpage = (Integer) request.getAttribute("totalpage");
         %>
     </head>
 
@@ -40,9 +41,9 @@
             <%@include file="adminleft.jsp" %> 
 
             <div class="right">
-                
+
                 <div class="tableadmin">
-                    <%if(historytype== "user_history" ) {%>
+                    <%if (historytype == "user_history") {%>
                     <table>
                         <tr>
                             <th>ID</th>
@@ -62,8 +63,8 @@
                         <%}%>
                     </table>
                     <%}%>
-                    
-                    <%if(historytype== "algo_history" ) {%>
+
+                    <%if (historytype == "algo_history") {%>
                     <table>
                         <tr>
                             <th>ID</th>
@@ -83,8 +84,8 @@
                         <%}%>
                     </table>
                     <%}%>
-                    
-                    <%if(historytype== "news_history" ) {%>
+
+                    <%if (historytype == "news_history") {%>
                     <table>
                         <tr>
                             <th>ID</th>
@@ -104,9 +105,20 @@
                         <%}%>
                     </table>
                     <%}%>
+                    <div>
+                        <%
+                            String currentpageurl = "admin?category=" + historytype;
+                        %>
+                        <% for (int i = 1; i <= totalpage; i++) {%>
+                        <a href="<%=currentpageurl + "&page=" + i%>"><%=i%></a>
+                        <%}%>
+                    </div>
                 </div>
             </div>
         </div>
         <%@include file="footer.jsp" %>    
     </body>
+    <script>
+        
+    </script>
 </html>

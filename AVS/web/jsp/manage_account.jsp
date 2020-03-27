@@ -20,11 +20,13 @@
         <!--<script type="text/javascript" src="js/Sort.js"></script>-->
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        
+
         <%
             ArrayList<User> alluserlist = (ArrayList<User>) request.getAttribute("userlist");
-            String sortoption = (String) request.getAttribute("sortoption");
-            String sortdirection = (String) request.getAttribute("sortdirection");
+            int totalpage = (Integer) request.getAttribute("totalpage");
+            String searchstring = (String) request.getAttribute("searchstring");
+            String columnname = (String) request.getAttribute("columnname");
+            String sortorder = (String) request.getAttribute("sortorder");
         %>
     </head>
 
@@ -37,49 +39,39 @@
         </div>
         <div class="main">
             <%@include file="adminleft.jsp" %> 
-                <div class="right">
+            <div class="right">
+                <form action="admin">
+                    <input type="hidden" name="category" value="account">
+                    <input type="hidden" id="inputcolumn" name="columnname">
+                    <input type="hidden" id="inputsorttype" name="sortorder">
                     <div class="sortby">
                         Sort by: 
-                        <select id="select_column" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                            <option id="option_id"  value="sortoption=id" <%if(sortoption.equals("id")){%>selected="selected" <%}%>>ID</option>
-                            <option id="option_name" value="sortoption=name" <%if(sortoption.equals("name")){%>selected="selected" <%}%>>Name</option>
-                            <option id="option_role" value="sortoption=role" <%if(sortoption.equals("role")){%>selected="selected" <%}%>>Role</option>
-                            <option id="option_banstatus" value="sortoption=banstatus" <%if(sortoption.equals("banstatus")){%>selected="selected" <%}%>>Ban Status</option>
+                        <select id="select_column" onchange="changeselected()">
+                            <option value="user_id">ID</option>
+                            <option value="user_name">Name</option>
+                            <option value="user_rolenum">Role</option>
+                            <option value="ban_status">Ban Status</option>
                         </select>
-                        <select id="select_sortdirection" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                            <option id="option_ascending" value="sortdirection=ascending" <%if(sortdirection.equals("ascending")){%>selected="selected" <%}%>>Ascending</option>
-                            <option id="option_descending" value="sortdirection=descending" <%if(sortdirection.equals("descending")){%>selected="selected" <%}%>>Descending</option>
+                        <select id="select_sorttype" onchange="changeselected()">
+                            <option value="ASC">Ascending</option>
+                            <option value="DESC">Descending</option>
                         </select>
-                        <script>
-                            var select_column = document.getElementById("select_column");
-                            var select_sortdirection = document.getElementById("select_sortdirection");
-                            var selectedsortoption = select_column.options[select_column.selectedIndex].value;
-                            var selectedsortdirection = select_sortdirection.options[select_sortdirection.selectedIndex].value;
-                            var currentpage = "admin?category=account";
-                            document.getElementById("option_id").value = currentpage + "&sortoption=id&" + selectedsortdirection;
-                            document.getElementById("option_name").value = currentpage + "&sortoption=name&" + selectedsortdirection;
-                            document.getElementById("option_role").value = currentpage + "&sortoption=role&" + selectedsortdirection;
-                            document.getElementById("option_banstatus").value = currentpage + "&sortoption=banstatus&" + selectedsortdirection;
-                            
-                            document.getElementById("option_ascending").value = currentpage + "&" + selectedsortoption + "&sortdirection=ascending";
-                            document.getElementById("option_descending").value = currentpage + "&" + selectedsortoption + "&sortdirection=descending";
-                        </script>
                     </div>
+
                     <div class="searchbox">
-                        <form  method="POST" action="">
-                            <input type="text" id=txtsearch" name="txtsearch"/>
-                            <input type="submit" id="submitsearch" name="submitsearch" value="Search" />       
-                        </form>
+                        <input type="text" id="txtsearch" name="searchtxt"/>
+                        <input type="submit" value="Search" />       
                     </div>
-                    <div class="tableadmin">
-                        <table>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Ban Status</th>
-                                <th>View</th>
-                            </tr>
+                </form>
+                <div class="tableadmin">
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Ban Status</th>
+                            <th>View</th>
+                        </tr>
                         <% for (int i = 0; i < alluserlist.size(); i++) {%> 
                         <tr>
                             <td><%=alluserlist.get(i).getId()%></td>
@@ -90,9 +82,75 @@
                         </tr>
                         <%}%>
                     </table>
+                    <div>
+                        <%
+                            String currentpageurl = "admin?category=account";
+                            String columnnameurl = "&columnname=" + columnname;
+                            String sortorderurl = "&sortorder=" + sortorder;
+                            String searchtxturl = "&searchtxt="+searchstring;
+                            String currenturl = currentpageurl+columnnameurl+sortorderurl+searchtxturl;
+                        %>
+                        <% for (int i = 1; i <= totalpage; i++) {%>
+                        <a href="<%=currenturl+"&page="+i%>"><%=i%></a>
+                        <%}%>
+                    </div>
                 </div>
             </div>
             <%@include file="footer.jsp" %>    
-            
+
     </body>
+    <script>
+        var selectcolumn = document.getElementById("select_column");
+        var selectsortype = document.getElementById("select_sorttype");
+        var checkshowdeleted = document.getElementById("checkshowdeleted");
+        var txtsearch = document.getElementById("txtsearch");
+        function init() {
+            var columnname = '<%=columnname%>';
+            var sortorder = '<%=sortorder%>'
+            switch (columnname) {
+                case 'user_id' :
+                {
+                    selectcolumn.selectedIndex = 0;
+                    break;
+                }
+                case 'user_name' :
+                {
+                    selectcolumn.selectedIndex = 1;
+                    break;
+                }
+                case 'user_rolenum' :
+                {
+                    selectcolumn.selectedIndex = 2;
+                    break;
+                }
+                case 'ban_status' :
+                {
+                    selectcolumn.selectedIndex = 3;
+                    break;
+                }
+            }
+            switch (sortorder) {
+                case 'ASC' :
+                {
+                    selectsortype.selectedIndex = 0;
+                    break;
+                }
+                case 'DESC' :
+                {
+                    selectsortype.selectedIndex = 1;
+                    break;
+                }
+            }
+            txtsearch.value = "<%=searchstring%>";
+        }
+        function changeselected() {
+
+            document.getElementById("inputcolumn").value = selectcolumn.options[selectcolumn.selectedIndex].value;
+
+            document.getElementById("inputsorttype").value = selectsortype.options[selectsortype.selectedIndex].value;
+        }
+
+        init();
+        changeselected();
+    </script>
 </html>

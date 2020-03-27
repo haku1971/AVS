@@ -57,7 +57,7 @@ public class ViewNewsController extends HttpServlet {
             NewsModel newsdao = new NewsModel();
             News thisnews = newsdao.getNewsByID(newsid);
             
-            String category = "algorithm";
+            String category = "news";
             request.setAttribute("category", category);
             request.setAttribute("news", thisnews);
             request.setAttribute("addnew", false);
