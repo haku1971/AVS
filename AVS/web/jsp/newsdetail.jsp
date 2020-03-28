@@ -43,9 +43,6 @@
                 height: 15px;
                 text-align: center;
             }
-            .news_img{
-                width: 100%;
-            }
 
         </style>
     </head>
@@ -94,7 +91,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                        <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="">
+                        <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
                         <div class="subdetail">
                             <h3 style="text-align: justify;margin-left: 40px;" class="news_detail2">News Details</h3>
                         <ul style="list-style-type:none;">
