@@ -57,9 +57,9 @@ public class ChangeInforController extends HttpServlet {
             throws ServletException, IOException {
         String username = "";
         String fullname = "None";
-        String age = "None";
+        String age = "";
         String sex = "None";
-        String phone = "None";
+        String phone = "";
         String workplace = "None";
         String selectnone = "";
         String selectstudent = "";
@@ -107,23 +107,23 @@ public class ChangeInforController extends HttpServlet {
                 switch (jobid) {
                     case 1:
                         selectteacher = "selected";
-                        request.setAttribute("selectteacher", selectteacher);
+                        request.setAttribute(Integer.toString(jobid), selectteacher);
                         break;
                     case 2:
                         selectstudent = "selected";
-                        request.setAttribute("selectstudent", selectstudent);
+                        request.setAttribute(Integer.toString(jobid), selectstudent);
                         break;
                     case 3:
                         selectemployee = "selected";
-                        request.setAttribute("selectemployee", selectemployee);
+                        request.setAttribute(Integer.toString(jobid), selectemployee);
                         break;
                     case 4:
                         selectmanager = "selected";
-                        request.setAttribute("selectmanager", selectmanager);
+                        request.setAttribute(Integer.toString(jobid), selectmanager);
                         break;
                     case 5:
                         selectnone = "selected";
-                        request.setAttribute("selectnone", selectnone);
+                        request.setAttribute(Integer.toString(jobid), selectnone);
                         break;
 
                 }

@@ -4,9 +4,15 @@
     Author     : BinhNT
 --%>
 
+<%@page import="Entity.Jobs"%>
+<%@page import="Model.JobsModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <!DOCTYPE html>
+<%
+    JobsModel jobdao = new JobsModel();
+    ArrayList<Jobs> jobs = jobdao.getJobs();
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -104,13 +110,17 @@
                 </div>
                 <div class="signup_item6">
                     <select name="job">
-                        <option value="1">You are Teacher</option>
-                        <option value="2" selected>You are Student</option>
-                        <option value="3">You are Employee</option>
-                        <option value="4">You are Manager</option>
+                        <%for (int i = 0; i < jobs.size(); i++) {
+                                if (jobs.get(i).getJobid() == 5) {%>
+                        <option value=<%=Integer.toString(jobs.get(i).getJobid())%> selected>About your jobs</option>
+                        <%} else {%>
+                        <option value=<%=Integer.toString(jobs.get(i).getJobid())%>>You are <%=jobs.get(i).getJobname()%></option>
+                        <%}
+                            }%>
+                        
                     </select>
                 </div>
-                
+
                 <button id="bottun" type="submit"><span>Sign Up</span></button>               
             </form>
 

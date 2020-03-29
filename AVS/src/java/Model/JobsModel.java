@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -45,6 +46,31 @@ public class JobsModel {
         }
 
         return null;
+    }
+    public ArrayList<Jobs> getJobs() throws Exception {
+        String query = "select * from Jobs";
+        ArrayList<Jobs> jobs = new ArrayList<>();
+        DBContext dbManager = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = dbManager.getConnection();
+            ps = conn.prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Jobs job = new Jobs();
+                job.setJobid(rs.getInt("job_ID"));
+                job.setJobname(rs.getString("job_Name"));
+                jobs.add(job);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return jobs;
     }
    
 }

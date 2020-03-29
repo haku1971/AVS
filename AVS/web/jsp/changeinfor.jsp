@@ -4,10 +4,13 @@
     Author     : BinhNT
 --%>
 
+<%@page import="Entity.Jobs"%>
+<%@page import="Model.JobsModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%
-
+    JobsModel jobdao = new JobsModel();
+    ArrayList<Jobs> jobs = jobdao.getJobs();
 %>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -69,11 +72,13 @@
                 </div>
                 <span id="span6">Jobs: </span>
                 <select name="job">
-                    <option value="5"<%=request.getAttribute("selectnone")%>>About your Job</option>
-                    <option value="1"<%=request.getAttribute("selectteacher")%>>You are Teacher</option>
-                    <option value="2"<%=request.getAttribute("selectstudent")%>>You are Student</option>
-                    <option value="3"<%=request.getAttribute("selectemployee")%>>You are Employee</option>
-                    <option value="4"<%=request.getAttribute("selectmanager")%>>You are Manager</option>
+                    <%for (int i = 0; i < jobs.size(); i++) {
+                                if (jobs.get(i).getJobid() == 5) {%>
+                        <option value=<%=Integer.toString(jobs.get(i).getJobid())%> <%=request.getAttribute(Integer.toString(jobs.get(i).getJobid()))%>>About your jobs</option>
+                        <%} else {%>
+                        <option value=<%=Integer.toString(jobs.get(i).getJobid())%> <%=request.getAttribute(Integer.toString(jobs.get(i).getJobid()))%>>You are <%=jobs.get(i).getJobname()%></option>
+                        <%}
+                            }%>
                 </select>
 
                 <br>
