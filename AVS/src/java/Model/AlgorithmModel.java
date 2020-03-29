@@ -297,7 +297,7 @@ public class AlgorithmModel {
                 + "set delete_Status = 1\n"
                 + "where algo_id = ?";
         Connection conn = null;
-        PreparedStatement ps = null; 
+        PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = db.getConnection();
@@ -309,13 +309,13 @@ public class AlgorithmModel {
             e.printStackTrace();
         }
     }
-    
+
     public void restoreAlgo(int algoid) throws Exception {
         String query = "update [Algorithm]\n"
                 + "set delete_Status = 0\n"
                 + "where algo_id = ?";
         Connection conn = null;
-        PreparedStatement ps = null; 
+        PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = db.getConnection();
@@ -335,7 +335,7 @@ public class AlgorithmModel {
                 + "algo_Description=?,category_ID=?,algo_DateTime=?,algo_Resource=?\n"
                 + "where algo_ID = ?";
         Connection conn = null;
-        PreparedStatement ps = null; 
+        PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = db.getConnection();
@@ -355,5 +355,74 @@ public class AlgorithmModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getAllSearchAlgo(String searchstring, String deleted) throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT COUNT(*) as totalpage\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by algo_id) as rownumber from Algorithm) as n\n"
+                    + "WHERE algo_Name like ? ";
+            if (!"showdeleted".equals(deleted)) {
+                statementstring += "and delete_Status = 0\n";
+            }
+//            System.out.println(statementstring);
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setString(1, '%' + searchstring + '%');
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt("totalpage"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return 0;
+    }
+
+    public ArrayList<Algorithm> getPagingSearchAlgo(String searchstring, String deleted, String columnname, String sortorder, int start, int end) throws SQLException, Exception {
+        ArrayList<Algorithm> algos = new ArrayList();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT *\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by algo_id) as rownumber from Algorithm ";
+            if (!"showdeleted".equals(deleted)) {
+                statementstring += "where delete_Status = 0";
+            }
+            statementstring += ") as n\n"
+                    + "WHERE  n.rownumber >= ? and n.rownumber <= ? and algo_Name like ? ";
+            statementstring += "ORDER BY " + columnname + " " + sortorder;
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setInt(1, start);
+            statement.setInt(2, end);
+            statement.setString(3, '%' + searchstring + '%');
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Algorithm algo = new Algorithm();
+                algo.setAlgoID(rs.getInt("algo_ID"));
+                algo.setAlgoName(rs.getString("algo_Name"));
+                algo.setCategoryID(rs.getInt("category_ID"));
+                algo.setVisualized(rs.getInt("algo_CompareStatus"));
+                algos.add(algo);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return algos;
     }
 }

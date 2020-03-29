@@ -144,18 +144,24 @@ function randomFrom1to9() {
 
 
 function inputByUser() {
+    var maxlength = 15;
     //Array
     arr_by_user = document.getElementById("txtElement").value;
-    arr_by_user = arr_by_user.split(',');
+    arr_by_user = arr_by_user.split("");
     if (arr_by_user.length > 0) {
-        initarray = arr_by_user;
+        if (arr_by_user.length > maxlength) {
+            window.alert("Array lenght too long, try array lenght <= 15!");
+        }
+        if (arr_by_user.length <= maxlength) {
+            initarray = arr_by_user;
+        }
     }
     //Searchnumber
     if (document.getElementById("txtSearchnumber").value !== '') {
         searchnumber = document.getElementById("txtSearchnumber").value;
-  
+
     }
-    
+
     init(algorithmtype);
 }
 
@@ -188,17 +194,25 @@ function back() {
 }
 
 function resume() {
-    if (boolRun) {
-//đang trong trạng thái chạy
-        clearInterval(run);
-        document.getElementById("PauseOrCon").value = 'Play';
-        boolRun = false;
-    } else {
-//đang trong trạng thái pause
+    if (currentstep === totalstep) {
+        currentstep = 0;
         clearInterval(run);
         document.getElementById("PauseOrCon").value = 'Pause';
         boolRun = true;
         run = setTimeout(loadingAnimation, speed);
+    } else {
+        if (boolRun) {
+//đang trong trạng thái chạy
+            clearInterval(run);
+            document.getElementById("PauseOrCon").value = 'Play';
+            boolRun = false;
+        } else {
+//đang trong trạng thái pause
+            clearInterval(run);
+            document.getElementById("PauseOrCon").value = 'Pause';
+            boolRun = true;
+            run = setTimeout(loadingAnimation, speed);
+        }
     }
 }
 
@@ -267,7 +281,7 @@ function drawGraph(data) {
     if (numberdigits < 0 || numberdigits === 0) {
         numberdigits = 1;
     }
- 
+
     var constant = Math.pow(10, numberdigits - 1); // cai z cua Mạnh
     var vertical_axis_top_value = (parseInt(biggest_value_of_array / constant) + 1) * constant;
     if (vertical_axis_top_value < 10) {
@@ -437,8 +451,6 @@ function setInputFilter(textbox, inputFilter) {
         if (textbox === null) {
             console.log('Null pointer exception!');
         } else {
-
-
             textbox.addEventListener(event, function () {
                 if (inputFilter(this.value)) {
                     this.oldValue = this.value;
@@ -479,6 +491,7 @@ function draw(step) {
     }
     if (step === totalstep) {
         document.getElementById("btnNext").disabled = true;
+        document.getElementById("PauseOrCon").value = 'Play';
     } else {
         document.getElementById("btnNext").disabled = false;
     }
@@ -582,7 +595,7 @@ function printLog(currentstep) {
     document.getElementById("txtlog").innerHTML = text;
     var scrollBox = document.getElementById("txtlog");
     scrollBox.scrollTop = scrollBox.scrollHeight;
-    
+
 }
 
 function bubbleSort(array) {

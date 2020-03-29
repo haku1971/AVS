@@ -6,6 +6,7 @@
 package Model;
 
 import DBContext.DBContext;
+import Entity.Algorithm;
 import Entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,6 +59,7 @@ public class UserModel {
 
         return null;
     }
+
     public User getUserByMail(String mail) throws Exception {
         String query = "select * from Users where user_Mail=?";
         Connection conn = null;
@@ -91,6 +93,7 @@ public class UserModel {
 
         return null;
     }
+
     public User getUserByUserID(String userid) throws Exception {
         String query = "select * from Users where user_ID=?";
         Connection conn = null;
@@ -226,6 +229,20 @@ public class UserModel {
                 userlist.add(user);
             }
         } catch (SQLException e) {
+            User user = new User();
+            user.setId(rs.getInt("user_ID"));
+            user.setUsername(rs.getString("user_Name"));
+            user.setPassword(rs.getString("user_Password"));
+            user.setRolenum(rs.getInt("user_RoleNum"));
+            user.setAge(rs.getInt("user_Age"));
+            user.setJob(rs.getInt("job_ID"));
+            user.setWorkplace(rs.getString("user_Workplaces"));
+            user.setGender(rs.getInt("user_Gender"));
+            user.setMail(rs.getString("user_Mail"));
+            user.setPhone(rs.getString("user_Phone"));
+            user.setFullname(rs.getString("user_Fullname"));
+            user.setBanstatus(rs.getInt("ban_status"));
+            userlist.add(user);
             e.printStackTrace();
         }
 
@@ -266,5 +283,73 @@ public class UserModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getAllSearchUser(String searchstring) throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT COUNT(*) as totalpage\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by user_id) as rownumber from Users) as n\n"
+                    + "WHERE  user_Name like ?";
+
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setString(1, '%' + searchstring + '%');
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt("totalpage"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return 0;
+    }
+
+    public ArrayList<User> getPagingSearchUser(String searchstring, String columnname, String sortorder, int start, int end) throws SQLException, Exception {
+        ArrayList<User> userlist = new ArrayList();
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            String statementstring = "SELECT *\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by user_id) as rownumber from Users) as n\n"
+                    + "WHERE  n.rownumber >= ? and n.rownumber <= ? and user_Name like ? ";
+            statementstring += "ORDER BY " + columnname + " " + sortorder;
+            statement
+                    = connection.prepareStatement(statementstring);
+            statement.setInt(1, start);
+            statement.setInt(2, end);
+            statement.setString(3, '%' + searchstring + '%');
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("user_ID"));
+                user.setUsername(rs.getString("user_Name"));
+                user.setPassword(rs.getString("user_Password"));
+                user.setRolenum(rs.getInt("user_RoleNum"));
+                user.setAge(rs.getInt("user_Age"));
+                user.setJob(rs.getInt("job_ID"));
+                user.setWorkplace(rs.getString("user_Workplaces"));
+                user.setGender(rs.getInt("user_Gender"));
+                user.setMail(rs.getString("user_Mail"));
+                user.setPhone(rs.getString("user_Phone"));
+                user.setFullname(rs.getString("user_Fullname"));
+                user.setBanstatus(rs.getInt("ban_status"));
+                userlist.add(user);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+        return userlist;
     }
 }

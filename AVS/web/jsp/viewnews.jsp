@@ -24,7 +24,7 @@
         
         <%
             News news = (News) request.getAttribute("news");
-            Boolean addnew = (Boolean) request.getAttribute("addnew");
+            Boolean addnews = (Boolean) request.getAttribute("addnew");
         %>
     </head>
 
@@ -40,29 +40,38 @@
                 <div class="right">
 
                     <div class="newsinfomation">
-                    <%if (addnew) {%>
+                    <%if (addnews) {%>
                     <!--trang addnew-->
-                    <form>
-                        <div>Title: </div> <div><input type="text" value=""></div>
-                        <div>Content:  </div> <div><textarea name="txtcode" rows="10" cols="30" ></textarea></div>
-                        <div>Source: </div> <div><input type="text" value=""></div>
-                        
+                    <form method="POST" action="manage" enctype="multipart/form-data">
+                        <input type="hidden" name="managetype" value="addnews">
+                        <div>Title: </div> <div><input type="text" name="title" value=""></div>
+                        <div>Content:  </div> <div><textarea name="content" rows="10" cols="30" ></textarea></div>
+                        <div>Source: </div> <div><input type="text" name="source" value=""></div>
+                        <br>
+                        <div>Image: <input type="file" name="image"></div>
+                        <br>
                         <input type="submit" value="Save">
                     </form>
                     <a href="admin?category=news"><button>Cancel</button></a>
                     <%} else {%>
                     <!--trang view-->
                     <div class="algoid">News ID: <%=news.getNewsID()%></div>
-                    <form>
-                        <div>Title: </div> <div><input type="text" value="<%=news.getNewstittles()%>"></div>
-                        <div>Content:  </div> <div><textarea name="txtcode" rows="10" cols="30" ><%=news.getNewscontent()%></textarea></div>
-                        <div>Source: </div> <div><input type="text" value="<%=news.getNewsresource()%>"></div>
+                    <form method="POST" action="manage" enctype="multipart/form-data">
+                        <input type="hidden" name="newsid" value="<%=news.getNewsID()%>" >
+                        <input type="hidden" name="managetype" value="editnews">
+                        <input type="hidden" name="imageurl" value="<%=news.getNews_Imgs()%>" >
+                        <div>Title: </div> <div><input type="text" name="title" value="<%=news.getNewstittles()%>"></div>
+                        <div>Content:  </div> <div><textarea name="content" rows="10" cols="30" ><%=news.getNewscontent()%></textarea></div>
+                        <div>Source: </div> <div><input type="text" name="source" value="<%=news.getNewsresource()%>"></div>
                         
+                        <div>Image: <img src="<%=news.getNews_Imgs()%>"> <input type="file" name="image"></div>
                         <input type="submit" value="Save">
                     </form>
                     <a href="admin?category=news"><button>Back</button></a>
-                    <form>
-                        <input type="submit" value="Delete">
+                    <form method="POST" action="manage">
+                        <input type="hidden" name="managetype" <%if(news.getDeleted()==1){%>value="restorenews"<%}else{%>value="deletenews"<%}%>>
+                        <input type="hidden" name="newsid" value="<%=news.getNewsID()%>" >
+                        <input type="submit" <%if(news.getDeleted()==1){%>value="Restore"<%}else{%>value="Delete"<%}%>>
                     </form>
                     <%}%>
                 </div>

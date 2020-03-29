@@ -33,8 +33,8 @@ and open the template in the editor.
     max-width: 500px;
     height: 20px;
     border: 2px solid gray;
-    /*border-radius: 20px;*/
     margin-bottom: 20px;
+    letter-spacing: 26px;
 }
 
 #txtButton{
@@ -199,10 +199,10 @@ pre{
     counter-reset: line;
 }
 
-tr{
+.tabcontent tr{
     counter-increment: line;
 }
-tr:before{
+.tabcontent tr:before{
     content: counter(line);
     border-right: solid 1px;
     padding-right: 5px;

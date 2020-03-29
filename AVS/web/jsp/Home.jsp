@@ -19,7 +19,7 @@
         %>
     </head>
     <body>
-        <%@include file="header.jsp" %>
+            <%@include file="header.jsp" %>
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
@@ -38,33 +38,33 @@
                         if (changeCategory) {
                             changeCategory = false;
                             if (startUL) {%>
-                                </ul>
-                            </div>
-                            <%}%>
+                </ul>
+            </div>
+            <%}%>
             <button type="button" class="collapsible"><%=a.getCategoryName()%></button>
             <div class="content">
                 <ul class="list_items"> 
                     <% startUL = true; %>
                     <%}%>
                     <li><a style=" text-decoration: none;" id="AlgoNameList" href="Detail?AlgoID=<%=a.getAlgoID()%>"><%=a.getAlgoName()%></a></li>
-                    <%}%>
+                        <%}%>
                 </ul>
             </div>
-                    <button type="button" class="collapsible">Others Algorithm</button>
-                    <div class="content">
-                        <ul class="list_items">
-                            <li>Comming Soon</li>
-                        </ul>
-                    </div>
-            </div>
-            <div class="right">
-                <h1>Algorithm Visualize System</h1>
-                <h5 id="h5_1">Algorithm Visualize System is a interactive online platform that visualize algorithm from code</h5>
-                <h5 id="h5_2">Learning algorithm much easier with animation and explain,Still confuse? Check out for more information</h5>
+            <button type="button" class="collapsible">Others Algorithm</button>
+            <div class="content">
+                <ul class="list_items">
+                    <li>Comming Soon</li>
+                </ul>
             </div>
         </div>
+        <div class="right">
+            <h1>Algorithm Visualize System</h1>
+            <h5 id="h5_1">Algorithm Visualize System is a interactive online platform that visualize algorithm from code</h5>
+            <h5 id="h5_2">Learning algorithm much easier with animation and explain,Still confuse? Check out for more information</h5>
+        </div>
     </div>
-    <%@include file="footer.jsp" %>
-    <script type="text/javascript" src="js/code.js"></script>
+</div>
+<%@include file="footer.jsp" %>
+<script type="text/javascript" src="js/code.js"></script>
 </body>
 </html>

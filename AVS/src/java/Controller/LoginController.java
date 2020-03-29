@@ -112,11 +112,6 @@ public class LoginController extends HttpServlet {
                 try {
                     userDao = new UserModel();
                     User user = userDao.getUserByUsername(username);
-                    if (user.getBanstatus() == 1) {
-                        request.setAttribute("errorMessage", "This account was banned");
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-                        dispatcher.forward(request, response);
-                    }
                     rolenumber = user.getRolenum();
                     id = user.getId();
                 } catch (Exception ex) {

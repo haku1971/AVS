@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="js/Sort.js"></script>
+        <script type="text/javascript" src="js/visualize.js"></script>
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
 
@@ -116,7 +116,7 @@
             <div id="Visualizer" class="tabcontent">
                 <div class="Visual">
                     <div class="leftAlgo">
-                        <div><input id="txtElement" type="text" name="name" value="" /></div>
+                        <div><input id="txtElement" type="text" name="name" maxlength="15"/></div>
                         <div><input id="txtSearchnumber" type="text" value="" /></div>
                         <div id="progress"> 
                             <div id="progresstext">
@@ -171,7 +171,8 @@
         <script type="text/javascript" src="js/code.js"></script>
         <script>
                                 setInputFilter(document.getElementById("txtElement"), function (value) {
-                                    return /^[0-9,-,]*$/i.test(value);
+//                                    return /^[0-9,-,]*$/i.test(value);
+                                    return /^\d*$/.test(value);
                                 }
                                 );
                                 setInputFilter(document.getElementById("txtSearchnumber"), function (value) {

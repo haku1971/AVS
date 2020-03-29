@@ -1,3 +1,13 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 27, 2020, 5:25:31 PM
+    Author     : Asus
+*/
+
 body {
     width: auto;
     margin: 0px auto;
@@ -1221,11 +1231,10 @@ body {
 .dropdown-content {
     display: none;
     position: absolute;
-    width: 90px;
+    background-color: #f9f9f9;
+    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    background: #edf0f4 ;
-    border: none;
 }
 
 .dropdown-content a {

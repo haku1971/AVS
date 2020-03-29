@@ -33,6 +33,9 @@ public class CommentController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html; charset=UTF-8");
             int newsid = Integer.parseInt(request.getParameter("newsid"));
 
             NewsModel newmodeldao = new NewsModel();
@@ -80,7 +83,8 @@ public class CommentController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=UTF-8");
             CommentModel commentmodel = new CommentModel();
             String newid = request.getParameter("newsid");
