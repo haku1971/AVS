@@ -5,11 +5,14 @@
  */
 package Controller;
 
+import Entity.Jobs;
 import Entity.User;
 import Model.AuthenticateManagement;
+import Model.JobsModel;
 import Model.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -61,11 +64,6 @@ public class ChangeInforController extends HttpServlet {
         String sex = "None";
         String phone = "";
         String workplace = "None";
-        String selectnone = "";
-        String selectstudent = "";
-        String selectteacher = "";
-        String selectemployee = "";
-        String selectmanager = "";
         if (request.getCookies() != null) {
             Cookie cookie[] = request.getCookies();
             int agecookie = cookie[0].getMaxAge();
@@ -104,29 +102,16 @@ public class ChangeInforController extends HttpServlet {
                 }
                 int jobid = user.getJob();
 
-                switch (jobid) {
-                    case 1:
-                        selectteacher = "selected";
-                        request.setAttribute(Integer.toString(jobid), selectteacher);
-                        break;
-                    case 2:
-                        selectstudent = "selected";
-                        request.setAttribute(Integer.toString(jobid), selectstudent);
-                        break;
-                    case 3:
-                        selectemployee = "selected";
-                        request.setAttribute(Integer.toString(jobid), selectemployee);
-                        break;
-                    case 4:
-                        selectmanager = "selected";
-                        request.setAttribute(Integer.toString(jobid), selectmanager);
-                        break;
-                    case 5:
-                        selectnone = "selected";
-                        request.setAttribute(Integer.toString(jobid), selectnone);
-                        break;
-
+                JobsModel jobdao = new JobsModel();
+                ArrayList<Jobs> jobs = jobdao.getJobs();
+                for (int i = 0; i < jobs.size(); i++) {
+                    if (jobid == jobs.get(i).getJobid()) {
+                        request.setAttribute(Integer.toString(jobid), "selected");
+                    } else {
+                        request.setAttribute(Integer.toString(jobs.get(i).getJobid()), "");
+                    }
                 }
+
                 request.setAttribute("fullname", fullname);
                 request.setAttribute("age", age);
                 request.setAttribute("sex", sex);

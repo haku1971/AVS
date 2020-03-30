@@ -4,7 +4,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : Mar 27, 2020, 5:25:31 PM
+    Created on : Mar 31, 2020, 5:13:54 AM
     Author     : Asus
 */
 
@@ -37,9 +37,9 @@ body {
 
 }
 
-#hover:hover {
+#hover a:hover {
     color: pink;
-    font-weight: bold;
+    font-weight: bold;  
     /*font-size: 40px; vì thay đổi kích thước nên box element's size bị thay đổi làm thay đổi khoảng cách so với ban đầu*/
     text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px white;
     cursor: pointer;
@@ -52,6 +52,12 @@ body {
     display: flex;
     flex-direction: column;
     background-color: white;
+    
+}
+
+.header a{
+    text-decoration: none;
+    color: black;
 }
 
 .header img {
@@ -151,6 +157,7 @@ body {
 
 .banner h1 {
     padding-top: 20px;
+    margin-top: -10px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
@@ -236,6 +243,11 @@ body {
     background-color: gray;
     color: aqua;
 }
+.activeAlgo{
+    color: #10dbe6 !important;
+    font-weight: bold;
+    font-size: 20px;
+}
 
 .content {
     padding: 0 18px;
@@ -256,6 +268,7 @@ body {
 .active:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
+
 
 
 
@@ -1231,10 +1244,11 @@ body {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
+    width: 90px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    background: #edf0f4 ;
+    border: none;
 }
 
 .dropdown-content a {
@@ -1269,14 +1283,12 @@ body {
 }
 
 .main3 .news_box{
-    margin-top: -30px;
     padding: 40px;
     background: #EDF0F4;
     text-align: center; 
     border-radius: 5px;
     border-radius: 5px;
     border:#999999 2px solid ;
-    margin: auto;
     overflow: hidden;
     width: auto;
 }
@@ -1290,7 +1302,7 @@ body {
     position: absolute;
     top:20px;
     left:20px;
-    
+
 }
 
 
@@ -1316,7 +1328,12 @@ body {
 .main3 .news_box .news_content .detail {
     float: right;
     width: 50%;
+
+}
+.main3 .news_box .news_content .detail img{
     
+    width: 100%;
+
 }
 
 .main3 .news_box .news_content .detail .news_detail2{
@@ -1337,4 +1354,146 @@ body {
     text-align: justify;
 }
 
+.changeinfo_box #gender {
+    position: absolute;
+    bottom: 342px;
+    left: 616px;
+
+}
+
+
+
+.post_button {
+
+    background:#1bd5a7;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius:5px;
+    transition:0.3s background;
+
+
+}
+.post_button:hover {
+    background:#63f2cf;
+}
+
+.save_button {
+
+    background:#1bd5a7;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius:5px;
+    transition:0.3s background;
+
+
+}
+.save_button:hover {
+    background:#63f2cf;
+}
+
+.cancel_button {
+
+    background:#1bd5a7;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius:5px;
+    transition:0.3s background;
+
+
+}
+.cancel_button:hover {
+    background:#63f2cf;
+}
+
+.edit_button {
+
+    background:#1bd5a7;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius:5px;
+    transition:0.3s background;
+
+
+}
+.edit_button:hover {
+    background:#63f2cf;
+}
+
+.delete_button {
+
+    background:#1bd5a7;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius:5px;
+    transition:0.3s background;
+
+
+}
+.delete_button:hover {
+    background:#63f2cf;
+}
+
+.admin_delete {
+
+    background:orange;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius:5px;
+    transition:0.3s background;
+
+
+}
+.admin_delete:hover {
+    background:#63f2cf;
+}
+
+.cmt_items {
+    background: #EDF0F4;
+    border-radius: 5px;
+    border:#999999 2px solid ;
+    margin: 10px;
+}
+
+.let_first {
+    color: red;
+    margin-left: 13px;
+}
+
+.user_name {
+    font-weight: bold;
+    font-size: 25px;
+    font-family: cursive;
+    letter-spacing: 1px;
+    color: pink;
+    margin-left: 10px;
+}
+.comment_content {
+    background: #EDF0F4;
+    margin-left: 10px;
+    border-radius: 5px;
+    border:#999999 2px solid ;  
+    padding: 10px;
+}
+
+.cmt_detail {
+    margin-left:20px;
+}
+
+.textarea_cmt {
+    border-radius: 5px;
+    border:#999999 2px solid ; 
+    width: 700px;
+    overflow: auto;
+    
+    
+    position: relative;
+    top: 14px;
+    height: 50px;
+}
 

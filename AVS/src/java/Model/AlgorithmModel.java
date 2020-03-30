@@ -70,10 +70,7 @@ public class AlgorithmModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT [algo_ID],[algo_Name],[algo_CodeJS],[category_Name] "
-                    + "FROM Algorithm INNER JOIN Category "
-                    + "ON Category.category_ID = Algorithm.category_ID "
-                    + "ORDER BY Algorithm.category_ID;";
+            String sql = "SELECT [algo_ID],[algo_Name],[algo_CodeJS],Algorithm.category_ID,[category_Name] FROM Algorithm INNER JOIN Category ON Category.category_ID = Algorithm.category_ID ORDER BY Algorithm.category_ID";
 
             statement = connection.prepareStatement(sql);
             rs = statement.executeQuery();
@@ -81,7 +78,7 @@ public class AlgorithmModel {
                 Algorithm algorithm = new Algorithm();
                 algorithm.setAlgoID(rs.getInt("algo_ID"));
                 algorithm.setAlgoName(rs.getString("algo_Name"));
-                algorithm.setAlgoCodeJS(rs.getString("algo_CodeJS"));
+                algorithm.setCategoryID(rs.getInt("category_ID"));
                 algorithm.setCategoryName(rs.getString("category_Name"));
                 listAllAlgorithms.add(algorithm);
             }

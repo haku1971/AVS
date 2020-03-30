@@ -32,8 +32,9 @@ public class AddNewsController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            response.setContentType("text/html;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
             //hien thi trang home neu nguoi dung khong phai admin
             Cookie cookie[] = request.getCookies();
             String roleid = "";
@@ -48,7 +49,7 @@ public class AddNewsController extends HttpServlet {
                 return;
             }
             //ket thuc kiem tra
-            
+
             String category = "news";
             request.setAttribute("category", category);
             request.setAttribute("addnew", true);

@@ -62,13 +62,9 @@
             int age = cookie[0].getMaxAge();
             String username = "";
             String userid = "";
-            String roleid = "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("username")) {
                     username = ck.getValue();
-                }
-                if (ck.getName().equals("roleid")) {
-                    roleid = ck.getValue();
                 }
                 if (ck.getName().equals("userid")) {
                     userid = ck.getValue();
@@ -100,7 +96,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                        <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
+                        <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="">
                         <div class="subdetail">
                             <h3 style="text-align: justify;margin-left: 40px;" class="news_detail2">News Details</h3>
                             <ul style="list-style-type:none;">

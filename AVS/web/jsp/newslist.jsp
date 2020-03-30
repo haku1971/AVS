@@ -71,39 +71,9 @@
     <body>
 
 
-        <%
-            Cookie cookie[] = request.getCookies();
-            int age = cookie[0].getMaxAge();
-            String username = "";
-            String userid = "";
-            String roleid = "";
-            for (Cookie ck : cookie) {
-                if (ck.getName().equals("username")) {
-                    username = ck.getValue();
-                }
-                if (ck.getName().equals("roleid")) {
-                    roleid = ck.getValue();
-                }
-                if (ck.getName().equals("userid")) {
-                    userid = ck.getValue();
-                }
-                if (age == 0) {
-                    username = "";
-                }
-            }
-        %>
-
-
-
-        <div class="jumbotron text-center">
-            <h1 style="padding-top: 20px;
-                text-align: center;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: bold;
-                color: #3b4754;">News Page</h1>
-            <p style="font-family: Arial, Helvetica, sans-serif;
-               font-weight: bold;font-size: 10px;
-               color: #3b4754;">Welcome to news page</p> 
+        <div class="banner">
+            <h1 >News Page</h1>
+            <h5>Welcome to news page</h5> 
         </div>
         ${numberofsearchresult}
 
