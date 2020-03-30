@@ -60,7 +60,9 @@
             .text-center {
                 background-color: #eee;
                 text-align: center !important;
-                
+                width: auto;
+                height: 150px;
+                background-color: #edf0f4;
             }
 
         </style>
@@ -94,7 +96,9 @@
 
 
         <div class="jumbotron text-center">
-            <h1 style="font-family: Arial, Helvetica, sans-serif;
+            <h1 style="padding-top: 20px;
+                text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
                 font-weight: bold;
                 color: #3b4754;">News Page</h1>
             <p style="font-family: Arial, Helvetica, sans-serif;
@@ -145,6 +149,6 @@
                 </div>
             </div>
         </div>
- 
+
     </body>
 </html>

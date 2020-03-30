@@ -27,7 +27,7 @@
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
-        <div class="main">
+        <div class="main2">
             <form id="changeinfor" class="changeinfo_box" action="ChangeInforController" method="post">
                 <h1>Edit Profile</h1>
                 <img src="images\user.png" />
