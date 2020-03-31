@@ -75,7 +75,7 @@
             <h1 >News Page</h1>
             <h5>Welcome to news page</h5> 
         </div>
-        ${numberofsearchresult}
+        
 
         <% ArrayList<News> listallnews = (ArrayList<News>) request.getAttribute("listallnews");
             String search = (String) request.getAttribute("search");
@@ -84,6 +84,7 @@
         %>
 
         <div class="container">
+            <div class="SearchResult">${numberofsearchresult}</div>
             <div class="col-lm-4"><h3> List of news</h3></div>
 
             <div  class="col-lm-4">  
@@ -102,8 +103,6 @@
                 <p>Do not have list of news now</p>
                 <%}%>
             </div>        
-
-
             <div class="col-lm-4" >
                 <div class="pagination">
                     <% for (int i = 1; i <= numberOfPage; i++) {

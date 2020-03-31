@@ -89,7 +89,7 @@
                         </tr>
                         <%}%>
                     </table>
-                    <div>
+                    <div class="adminPaging">
                         <%
                             String currentpageurl = "admin?category=algorithm";
                             String columnnameurl = "&columnname=" + columnname;
@@ -98,14 +98,17 @@
                             if (showdeleted == "showdeleted") {
                                 showdeletedurl = "&showdeleted=on";
                             }
-                            String searchtxturl = "&searchtxt="+searchstring;
-                            String currenturl = currentpageurl+columnnameurl+sortorderurl+showdeletedurl+searchtxturl;
+                            String searchtxturl = "&searchtxt=" + searchstring;
+                            String currenturl = currentpageurl + columnnameurl + sortorderurl + showdeletedurl + searchtxturl;
                         %>
                         <% for (int i = 1; i <= totalpage; i++) {%>
-                        <a href="<%=currenturl+"&page="+i%>"><%=i%></a>
+                        <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
+                        <div class="addBtn">
+                            <a href="addalgo"><button>Add</button></a>
+                        </div>
                     </div>
-                    <a href="addalgo"><button>Add</button></a>
+
                 </div>
             </div>
         </div>

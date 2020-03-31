@@ -72,6 +72,7 @@
                         <input type="text" id="txtsearch" name="searchtxt"/>
                         <input type="submit" value="Search" />       
                     </div>
+
                 </form>
                 <div class="tableadmin">
                     <table>
@@ -94,7 +95,7 @@
                         </tr>
                         <%}%>
                     </table>
-                    <div>
+                    <div class="adminPaging">
                         <%
                             String currentpageurl = "admin?category=news";
                             String columnnameurl = "&columnname=" + columnname;
@@ -109,8 +110,10 @@
                         <% for (int i = 1; i <= totalpage; i++) {%>
                         <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
+                        <div class="addBtn">
+                            <a href="addnews"><button>Add</button></a>
+                        </div>
                     </div>
-                    <a href="addnews"><button>Add</button></a>
                 </div>
             </div>
         </div>

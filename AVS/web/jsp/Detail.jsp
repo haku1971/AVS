@@ -30,6 +30,8 @@
 
     <body onload ="init('<%=algo.getAlgoFile()%>');">
         <%@include file="header.jsp" %> 
+        <div><input id="algoid" type="hidden" value="<%= algo.getAlgoID()%>" /></div>
+        <script type="text/javascript" src="js/tracking.js"></script>
 
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
@@ -126,8 +128,8 @@
                     <%}%>
                     <div class="Visual">
                         <div class="leftAlgo">
-                            <div><input id="txtElement" type="text" name="name" maxlength="15"/></div>
-                            <div><input id="txtSearchnumber" type="text" value="" /></div>
+                            <div>Array Input:<br><input id="txtElement" type="text" name="name" maxlength="15"/></div>
+                            <div><input placeholder="Search Value" id="txtSearchnumber" type="text" value="" /></div>
                             <div id="progress"> 
                                 <div id="progresstext">
                                     Progress:<br> <br>
@@ -153,16 +155,16 @@
 
                         <div class="rightAlgo">
                             <div id="txtButton">
-                                <input class="button button--nuka button--round-s button--text-thick" type="submit" onclick="inputByUser();" value="Nhập data" />
+                                <Button class="button button--nuka button--round-s button--text-thick" type="submit" onclick="inputByUser();">Input Data</button>
                                 <!--cần sửa id thành btnRandom-->
-                                <input id="btnShuffle" type="submit" onclick="random();" value="Random" />
+                                <Button class="button button--nuka button--round-s button--text-thick" id="btnShuffle" type="submit" onclick="random();">Random</Button>
                             </div>
-                            <div id="progress"><a>Speed</a> <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1"> </div>
+                            <div id="progress"><a>Speed: x0.25 </a> <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1"> <a>x2</a></div>
                             <div id="stepButton">
-                                <input id="btnPrev" type="submit" onclick="back();" value="<" />
-                                <input type="submit" onclick=" init('<%=algo.getAlgoFile()%>');" value="Restart" />
-                                <input id="PauseOrCon" type="submit" onclick="resume();" value="Pause" />
-                                <input id="btnNext" type="submit" onclick="next();" value=">" />
+                                <Button class="button button--nuka button--round-s button--text-thick" id="btnPrev" type="submit" onclick="back();"><</Button>
+                                <Button class="button button--nuka button--round-s button--text-thick" type="submit" onclick=" init('<%=algo.getAlgoFile()%>');">Restart</Button> 
+                                <Button onclick="resume();" class="button button--nuka button--round-s button--text-thick Resumebtn"><input class="Resumeinput" id="PauseOrCon" type="submit" value="Pause"/></button>
+                                <Button class="button button--nuka button--round-s button--text-thick" id="btnNext" type="submit" onclick="next();">></Button>
                             </div>
                             <div> 
                                 <pre>
@@ -177,28 +179,28 @@
             </div>
             <%}%>
         </div>
+    </div>
+    <%@include file="footer.jsp" %>
 
-        <%@include file="footer.jsp" %>
-
-        <script type="text/javascript" src="js/code.js"></script>
-        <script>
-                                    setInputFilter(document.getElementById("txtElement"), function (value) {
+    <script type="text/javascript" src="js/code.js"></script>
+    <script>
+                                setInputFilter(document.getElementById("txtElement"), function (value) {
 //                                    return /^[0-9,-,]*$/i.test(value);
-                                        return /^\d*$/.test(value);
-                                    }
-                                    );
-                                    setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
-                                        return /^\d*$/.test(value);
-                                    }
-                                    );
-        </script>
-        <script type="text/javascript" src="js/tabFunction.js"></script>
-        <script>document.getElementById(<%=algo.getCategoryID()%>).click();</script>
-        <script>
+                                    return /^\d*$/.test(value);
+                                }
+                                );
+                                setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
+                                    return /^\d*$/.test(value);
+                                }
+                                );
+    </script>
+    <script type="text/javascript" src="js/tabFunction.js"></script>
+    <script>document.getElementById(<%=algo.getCategoryID()%>).click();</script>
+    <script>
             var activeItem = document.getElementsByClassName(<%=algo.getAlgoID()%>);
             activeItem[0].className = "activeAlgo";
-        </script>
-        
-    </body>
+    </script>
+
+</body>
 
 </html>

@@ -104,7 +104,7 @@
                         <%}%>
                     </table>
                     <%}%>
-                    <div>
+                    <div class="adminPaging">
                         <%
                             String currentpageurl = "admin?category=" + historytype;
                         %>

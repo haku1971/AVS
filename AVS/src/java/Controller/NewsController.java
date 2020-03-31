@@ -38,9 +38,10 @@ public class NewsController extends HttpServlet {
             }
             if (request.getParameter("search") != null) {
                 String search= request.getParameter("search");
+                request.setAttribute("SearchValue", search);
                 listallnews = newsmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, search);
                 int numberoffnews = newsmodeldao.countDBresultsearch(search);
-                String numberofsearchresult = "Found "+ numberoffnews + "result";
+                String numberofsearchresult = "Found "+ numberoffnews + " result contain \"" + search + "\"" ;
                 request.setAttribute("search", search);
                 request.setAttribute("numberofsearchresult", numberofsearchresult);
                 double dataSize = (double) numberoffnews;

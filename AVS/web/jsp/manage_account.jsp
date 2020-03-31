@@ -81,7 +81,7 @@
                         </tr>
                         <%}%>
                     </table>
-                    <div>
+                    <div class="adminPaging">
                         <%
                             String currentpageurl = "admin?category=account";
                             String columnnameurl = "&columnname=" + columnname;

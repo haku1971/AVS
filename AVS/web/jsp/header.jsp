@@ -69,7 +69,7 @@
                 </li>
                 <li id="loginButton">
                     <form id="search"  action="NewsController">
-                        <input type="text" placeholder="  Search.." name="search">
+                        <input type="text" value="${SearchValue}" placeholder="  Search.." name="search">
                         <button type="submit">Submit</button>
                     </form>
                 </li>

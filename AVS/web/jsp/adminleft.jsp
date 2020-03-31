@@ -45,6 +45,28 @@
 
             .tableadmin>table {
                 border-collapse: collapse;
+                width: 95%;
+                margin: 30px;
+            }
+            .adminPaging{
+                margin-left: 30px;
+            }
+            .sortby{
+                margin: 20px 0px 20px 30px;
+                float: left;
+                display: inline-block;
+            }
+            
+            .addBtn{
+                float: right;
+                margin-right: 30px;
+            }
+            
+            .searchbox{
+                margin-top: 20px;
+                margin-right: 30px;
+                float: right;
+                display: block;
             }
 
             table,th,td{
