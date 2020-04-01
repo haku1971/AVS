@@ -10,19 +10,22 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
-
-
 /**
  *
  * @author BinhNT
  */
 public class IdTokenVerifierAndParser {
-    private static final String GOOGLE_CLIENT_ID = "912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com";
+//deploy sever
+//    private static final String GOOGLE_CLIENT_ID = "912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com";
+    
+    //localhost
+    private static final String GOOGLE_CLIENT_ID = "912620741556-hcmv2c3g46fti4psnqsjduu2hqcjo0qj.apps.googleusercontent.com";
+    
 
     public static GoogleIdToken.Payload getPayload(String tokenString) throws Exception {
 
         JacksonFactory jacksonFactory = new JacksonFactory();
-        GoogleIdTokenVerifier googleIdTokenVerifier= new GoogleIdTokenVerifier(new NetHttpTransport(), jacksonFactory);
+        GoogleIdTokenVerifier googleIdTokenVerifier = new GoogleIdTokenVerifier(new NetHttpTransport(), jacksonFactory);
         GoogleIdToken token = GoogleIdToken.parse(jacksonFactory, tokenString);
         if (googleIdTokenVerifier.verify(token)) {
             GoogleIdToken.Payload payload = token.getPayload();

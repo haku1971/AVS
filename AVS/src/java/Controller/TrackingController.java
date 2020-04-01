@@ -5,8 +5,12 @@
  */
 package Controller;
 
+import Model.TrackingModel;
+import Entity.Tracking;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.ServletException;
@@ -21,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "TrackingController", urlPatterns = {"/TrackingController"})
 public class TrackingController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,13 +47,22 @@ public class TrackingController extends HttpServlet {
             int algoid = Integer.parseInt(request.getParameter("algoid"));
             String ipuser = request.getParameter("ipuser");
             String dateaccess = request.getParameter("dateaccess");
-            int totaltime = Integer.parseInt(request.getParameter("totaltime"));
-            Date date1 = new SimpleDateFormat("yyyy/MM/dd  HH:mm:ss").parse(dateaccess);
-            //   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd  HH:mm:ss");         
-            System.out.println("algoid" + algoid + " ipuser: " + ipuser + " time:" + date1 + "totaltime" + totaltime);
-            //commentmodel.deleteLikeComment(commentid, userid);
+            String totaltime = request.getParameter("totaltime");
+            BigInteger timeCount = new BigInteger(totaltime);
+            System.out.println(ipuser);
+            System.out.println("Prin dau algoid " + algoid + " ipuser: " + ipuser + " time:" + dateaccess + "totaltime" + timeCount);
+            TrackingModel trackingModel = new TrackingModel();
+//            Tracking trackingUser = trackingModel.getUserAccess(ipuser, algoid, dateaccess);
+//            if (trackingUser != null) {
+//                timeCount = timeCount.add(trackingUser.getTotalTime());
+//                trackingModel.updateTracking(ipuser, algoid, dateaccess, timeCount);
+//            } else {
+//                trackingModel.saveTracking(ipuser, algoid, dateaccess, timeCount);
+//            }
+
+            System.out.println("algoid " + algoid + " ipuser: " + ipuser + " time:" + dateaccess + "totaltime" + timeCount);
         } catch (Exception ex) {
-            System.out.println("hihi");
+            System.out.println(ex + "from tracking");
         }
     }
 

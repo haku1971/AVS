@@ -280,8 +280,10 @@ public class ManageDatabaseController extends HttpServlet {
     public String getFolderUpload() {
         String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
         //can be a bug after uploading on cloud server
-        for (int i = 0; i < 6; i++) {
+        System.out.println(absolutePath + "trươc for");
+        for (int i = 0; i < 5; i++) {
             absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));
+            System.out.println("tại i = " + i + "abso = " + absolutePath);
         }
         absolutePath = absolutePath.substring(1) + "/web/images";
         return absolutePath;

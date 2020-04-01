@@ -34,7 +34,11 @@
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <!--<script type="text/javascript" src="js/PreventF12.js"></script>-->
         <meta name="google-signin-scope" content="profile email">
-        <meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">
+        <!--deploy sever-->
+        <!--<meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">-->
+        
+        <!--local host-->
+        <meta name="google-signin-client_id" content="912620741556-hcmv2c3g46fti4psnqsjduu2hqcjo0qj.apps.googleusercontent.com">
         <title>Header</title>
         <!-- BEGIN Pre-requisites -->
 

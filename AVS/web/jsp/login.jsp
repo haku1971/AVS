@@ -12,7 +12,6 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <meta name="google-signin-scope" content="profile email">
-        <meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">
         <title>AVS</title>
 
     </head>
