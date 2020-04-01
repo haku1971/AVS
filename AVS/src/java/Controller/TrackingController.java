@@ -49,20 +49,18 @@ public class TrackingController extends HttpServlet {
             String dateaccess = request.getParameter("dateaccess");
             String totaltime = request.getParameter("totaltime");
             BigInteger timeCount = new BigInteger(totaltime);
-            System.out.println(ipuser);
-            System.out.println("Prin dau algoid " + algoid + " ipuser: " + ipuser + " time:" + dateaccess + "totaltime" + timeCount);
             TrackingModel trackingModel = new TrackingModel();
-//            Tracking trackingUser = trackingModel.getUserAccess(ipuser, algoid, dateaccess);
-//            if (trackingUser != null) {
-//                timeCount = timeCount.add(trackingUser.getTotalTime());
-//                trackingModel.updateTracking(ipuser, algoid, dateaccess, timeCount);
-//            } else {
-//                trackingModel.saveTracking(ipuser, algoid, dateaccess, timeCount);
-//            }
+            Tracking trackingUser = trackingModel.getUserAccess(ipuser, algoid, dateaccess);
+            if (trackingUser != null) {
+                timeCount = timeCount.add(trackingUser.getTotalTime());
+                trackingModel.updateTracking(ipuser, algoid, dateaccess, timeCount);
+            } else {
+                trackingModel.saveTracking(ipuser, algoid, dateaccess, timeCount);
+            }
 
             System.out.println("algoid " + algoid + " ipuser: " + ipuser + " time:" + dateaccess + "totaltime" + timeCount);
         } catch (Exception ex) {
-            System.out.println(ex + "from tracking");
+            System.out.println(ex);
         }
     }
 

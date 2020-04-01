@@ -91,12 +91,14 @@
             <a style="text-decoration: none"  href="admin?category=account"><div <c:if test="${category eq 'account'}">class="category_active"</c:if> id="category">Account</div></a>
             <a style="text-decoration: none"  href="admin?category=algorithm"><div <c:if test="${category eq 'algorithm'}">class="category_active"</c:if>id="category" >Algorithm</div></a>
             <a style="text-decoration: none"  href="admin?category=news"><div <c:if test="${category eq 'news'}">class="category_active"</c:if>id="category" >News</div></a>
+            <a style="text-decoration: none"  href="admin?category=tracking"><div <c:if test="${category eq 'tracking'}">class="category_active"</c:if>id="category" >Tracking</div></a>
             <button type="button" class="collapsible" id="historybutton">History</button>
             <div class="content show">
                 <ul class="list_items"> 
                     <li><a style=" text-decoration: none;" id="user_history" href="admin?category=user_history"">User history</a></li>
                     <li><a style=" text-decoration: none;" id="algo_history" href="admin?category=algo_history"">Algorithm history</a></li>
                     <li><a style=" text-decoration: none;" id="news_history" href="admin?category=news_history"">News history</a></li>
+                    
                 </ul>
             </div>
         </div>

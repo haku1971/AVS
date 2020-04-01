@@ -29,6 +29,8 @@
     </head>
 
     <body onload ="init('<%=algo.getAlgoFile()%>');">
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
         <%@include file="header.jsp" %> 
         <div><input id="algoid" type="hidden" value="<%= algo.getAlgoID()%>" /></div>
         <script type="text/javascript" src="js/tracking.js"></script>
@@ -36,6 +38,7 @@
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
+             <div class="fb-share-button" data-href="http://34.70.41.246.xip.io/AVS/LoginController" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
         </div>
         <div class="main">
             <div class="left">
@@ -172,6 +175,7 @@
                                 </pre>
                             </div>
                             <div class="scrollLog" id="txtlog">Log:</div>
+                           
                         </div>
                     </div>
                 </div>
@@ -184,21 +188,21 @@
 
     <script type="text/javascript" src="js/code.js"></script>
     <script>
-                                setInputFilter(document.getElementById("txtElement"), function (value) {
+                                    setInputFilter(document.getElementById("txtElement"), function (value) {
 //                                    return /^[0-9,-,]*$/i.test(value);
-                                    return /^\d*$/.test(value);
-                                }
-                                );
-                                setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
-                                    return /^\d*$/.test(value);
-                                }
-                                );
+                                        return /^\d*$/.test(value);
+                                    }
+                                    );
+                                    setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
+                                        return /^\d*$/.test(value);
+                                    }
+                                    );
     </script>
     <script type="text/javascript" src="js/tabFunction.js"></script>
     <script>document.getElementById(<%=algo.getCategoryID()%>).click();</script>
     <script>
-            var activeItem = document.getElementsByClassName(<%=algo.getAlgoID()%>);
-            activeItem[0].className = "activeAlgo";
+        var activeItem = document.getElementsByClassName(<%=algo.getAlgoID()%>);
+        activeItem[0].className = "activeAlgo";
     </script>
 
 </body>

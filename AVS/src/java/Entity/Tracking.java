@@ -17,7 +17,17 @@ public class Tracking {
     private int algoID;
     private Date dateAccess;
     private BigInteger totalTime;
+    private int totalPeople;
 
+    public int getTotalPeople() {
+        return totalPeople;
+    }
+
+    public void setTotalPeople(int totalPeople) {
+        this.totalPeople = totalPeople;
+    }
+
+    
     public String getUserID() {
         return userID;
     }
