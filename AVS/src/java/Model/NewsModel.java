@@ -127,7 +127,7 @@ public class NewsModel {
 
     //
     public ArrayList<News> searchNews(int from, int to, String searchtxt) throws Exception {
-        System.out.println(searchtxt);
+//        System.out.println(searchtxt);
         String query = "Select n.delete_Status delete_Status, u.user_ID userid,u.user_Name username,u.user_FullName fullname, n.news_ID newsid,n.news_Content content,n.news_DateRealease daterelease,n.news_Imgs,n.news_Resource newsresource,n.news_Tittles newstitle \n"
                 + "from (select *, ROW_NUMBER() over(order by news_DateRealease DESC) as rownumber from News  where ((news_Tittles like ? OR news_Content like ?)) )\n"
                 + "as n inner join Users u on u.user_ID= n.user_ID\n"
@@ -513,7 +513,7 @@ public class NewsModel {
             ps.setString(5, imageurl);
             ps.setInt(6, userid);
             ps.setInt(7, newsid);
-            ps.executeQuery();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -532,7 +532,7 @@ public class NewsModel {
             conn = db.getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, newsid);
-            ps.executeQuery();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -551,7 +551,7 @@ public class NewsModel {
             conn = db.getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, newsid);
-            ps.executeQuery();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -572,7 +572,7 @@ public class NewsModel {
             }
             statementstring += ") as n\n"
                     + "WHERE news_Tittles like ? ";
-            System.out.println(statementstring);
+//            System.out.println(statementstring);
             statement
                     = connection.prepareStatement(statementstring);
             statement.setString(1, '%' + searchstring + '%');

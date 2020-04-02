@@ -195,7 +195,7 @@ public class HistoryModel {
             ps.setInt(2, newsid);
             ps.setString(3, currenttime);
             ps.setString(4, action);
-            ps.executeQuery();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

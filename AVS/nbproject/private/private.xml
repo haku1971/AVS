@@ -3,8 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/TrackingController.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/DBContext/DBContext.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/Detail.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/js/tracking.js</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ErrorController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AdminController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/NewsModel.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/TrackingModel.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/error.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/newsdetail.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/HistoryModel.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_tracking.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/AlgorithmModel.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/TrackingController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/adminleft.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ManageDatabaseController.java</file>
         </group>
     </open-files>
 </project-private>

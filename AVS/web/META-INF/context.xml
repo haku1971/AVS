@@ -3,11 +3,16 @@
 <!--quang-->
 <!--LAPTOP-FIFP9IMA-->
 <!--anna chan-->
-<!--DESKTOP-C22NL51-->
-<!--manh-->
-<!--duong DESKTOP-I7Q337l-->
+<!--manh DESKTOP-C22NL51 -->
+<!--duong DESKTOP-I7Q337l -->
+<!--
+servername: 34.70.151.219
+usernamedb: sa
+passwordb: Kgt2tQw4LjhydM8ats
+-->
+
 <Context path="/AVS">
-  <Environment name="serverName" type="java.lang.String" value="LAPTOP-FIFP9IMA"/>
+  <Environment name="serverName" type="java.lang.String" value="DESKTOP-C22NL51"/>
   <Environment name="port" type="java.lang.String" value="1433"/>
   <Environment name="user" type="java.lang.String" value="sa"/>
   <Environment name="password" type="java.lang.String" value="123456"/>

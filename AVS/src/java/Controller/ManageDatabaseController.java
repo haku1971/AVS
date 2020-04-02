@@ -48,6 +48,9 @@ public class ManageDatabaseController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html; charset=UTF-8");
             UserModel userdao = new UserModel();
             HistoryModel historydao = new HistoryModel();
             //hien thi trang home neu nguoi dung khong phai admin
@@ -202,9 +205,13 @@ public class ManageDatabaseController extends HttpServlet {
                     String source = request.getParameter("source");
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String imageurl = request.getParameter("imageurl");
+                    Boolean haveimg = !imageurl.equals("null");
                     
                     NewsModel newsdao = new NewsModel();
-                    newsdao.updateNews(title, content, currenttime, source, imageurl, Integer.parseInt(adminid), Integer.parseInt(newsid));
+                    if(haveimg) {
+                        newsdao.updateNews(title, content, currenttime, source, imageurl, Integer.parseInt(adminid), Integer.parseInt(newsid));
+                    }
+                    
 
                     InputStream inputStream = null; // input stream of the upload file
                     Part part = request.getPart("image");
@@ -217,12 +224,16 @@ public class ManageDatabaseController extends HttpServlet {
                         String extentfilename = filename.substring(filename.lastIndexOf("."));
                         String newsimagename = "newsimage_" + newsid;
                         imageurl = getFolderUpload() + File.separator + newsimagename + extentfilename;
-
+                        System.out.println("imageurl = " + imageurl);
                         File targetFile = new File(imageurl);
                         OutputStream outStream = new FileOutputStream(targetFile);
                         outStream.write(buffer);
                         TimeUnit.SECONDS.sleep(3);
+                        if(!haveimg) {
+                            newsdao.updateNews(title, content, currenttime, source, "./images/" + newsimagename + extentfilename, Integer.parseInt(adminid), Integer.parseInt(newsid));
+                        }
                     }
+                    
                     
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Edit");
 
@@ -259,7 +270,7 @@ public class ManageDatabaseController extends HttpServlet {
             String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
             System.out.println("----Execute at " + currenttime + "----");
             System.out.println(ex);
-            response.sendRedirect("error");
+            response.sendRedirect("error?error=" + ex);
         }
     }
 
@@ -280,12 +291,11 @@ public class ManageDatabaseController extends HttpServlet {
     public String getFolderUpload() {
         String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
         //can be a bug after uploading on cloud server
-        System.out.println(absolutePath + "trươc for");
-        for (int i = 0; i < 5; i++) {
-            absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));
-            System.out.println("tại i = " + i + "abso = " + absolutePath);
-        }
-        absolutePath = absolutePath.substring(1) + "/web/images";
+        absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("AVS") + 3);
+        //local
+        absolutePath += "/web/images";
+        //server
+//        absolutePath += "/images";
         return absolutePath;
     }
 

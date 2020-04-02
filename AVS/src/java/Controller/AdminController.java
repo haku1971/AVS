@@ -237,7 +237,7 @@ public class AdminController extends HttpServlet {
                     TrackingModel trackingdao = new TrackingModel();
                     ArrayList<Tracking> trackinglist = trackingdao.getPagingTrackingHistory(start, end,daysago);
                     int totalpage = (int) Math.ceil((double) trackingdao.getTotalTrackingHistory(daysago) / rowperpage);
-//                    request.setAttribute("totalpage", totalpage);
+                    request.setAttribute("totalpage", totalpage);
                     request.setAttribute("trackinglist", trackinglist);
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("jsp/manage_tracking.jsp").forward(request, response);
@@ -250,8 +250,7 @@ public class AdminController extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex);
-            response.sendRedirect("error");
+            response.sendRedirect("error?error=" + ex);
         }
     }
 

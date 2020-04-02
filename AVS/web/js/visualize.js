@@ -532,7 +532,7 @@ function drawHighlightAnimation(currentstep, ctx) {
     for (var i = 0; i < eachStepArr[currentstep].length; i++) {
         for (var j = 0; j < highlightcheck[currentstep].length; j++) {
             if (highlightcheck[currentstep][j] === i) {
-                if (color[currentstep] === "swap") {
+                if (color[currentstep] === "swap" || color[currentstep] === "found") {
                     ctx.fillStyle = "#c51162";
                     ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
                     ctx.fillStyle = "#000000";
@@ -819,7 +819,7 @@ function linearSearch(array) {
             eachStepArr.push(array);
             highlightcheck.push([i]);
             highlightsorted.push(null);
-            color.push("swap");
+            color.push("found");
             highlightcode.push([3]);
             logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + " at position i = " + i + '<br>');
             break;
@@ -857,7 +857,7 @@ function binarySearchexe(arr, l, r, searchnumber) {
             eachStepArr.push(initarray);
             highlightcheck.push([mid]);
             highlightsorted.push(null);
-            color.push('check');
+            color.push("found");
             highlightcode.push([5]);
             logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + mid + '<br>');
             return mid;
@@ -970,7 +970,7 @@ function interpolationSearch(array) {
                 eachStepArr.push(array);
                 highlightcheck.push(highlightcheckarr);
                 highlightsorted.push(null);
-                color.push(0);
+                color.push("found");
                 highlightcode.push([6]);
                 logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + pos);
                 found = true;
@@ -998,7 +998,7 @@ function interpolationSearch(array) {
             eachStepArr.push(array);
             highlightcheck.push([pos]);
             highlightsorted.push(null);
-            color.push(0);
+            color.push("found");
             highlightcode.push([13]);
             logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + pos);
             found = true;
