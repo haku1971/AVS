@@ -233,10 +233,17 @@ public class AdminController extends HttpServlet {
                     break;
                 }
                 case "tracking": {
-                    int daysago = 1; //1 là trong 24h qua, 7 là trong 1 tuần qua, 30 là trong 1 tháng qua
+                    int daysago;
+                    if (request.getParameter("daystracking") == null || request.getParameter("daystracking").equals("")) {
+                        daysago = 1; 
+                    } else {
+                        daysago = Integer.parseInt(request.getParameter("daystracking")); //1 là trong 24h qua, 7 là trong 1 tuần qua, 30 là trong 1 tháng qua
+                    }
+                    
                     TrackingModel trackingdao = new TrackingModel();
-                    ArrayList<Tracking> trackinglist = trackingdao.getPagingTrackingHistory(start, end,daysago);
+                    ArrayList<Tracking> trackinglist = trackingdao.getPagingTrackingHistory(start, end, daysago);
                     int totalpage = (int) Math.ceil((double) trackingdao.getTotalTrackingHistory(daysago) / rowperpage);
+                    request.setAttribute("daystracking", "" + daysago);
                     request.setAttribute("totalpage", totalpage);
                     request.setAttribute("trackinglist", trackinglist);
                     request.setAttribute("category", category);
