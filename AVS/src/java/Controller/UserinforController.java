@@ -10,7 +10,7 @@ import Entity.User;
 import Model.JobsModel;
 import Model.UserModel;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -58,7 +58,7 @@ public class UserinforController extends HttpServlet {
         String username = "";
         String mail = "";
         String fullname = "None";
-        String age = "None";
+        String dob = "";
         String sex = "None";
         String phone = "None";
         String workplace = "None";
@@ -86,10 +86,10 @@ public class UserinforController extends HttpServlet {
                 if (user.getFullname().length() > 0) {
                     fullname = user.getFullname();
                 }
-                if (user.getAge() != 0) {
-                    age = Integer.toString(user.getAge());
-                }
-
+//                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+//                Date date;
+//                date = (Date)sdf.parse(user.getDob());
+                    dob=user.getDob();
                 int gender = user.getGender();
                 if (gender == 1) {
                     sex = "Male";
@@ -112,7 +112,7 @@ public class UserinforController extends HttpServlet {
             request.setAttribute("username", username);
             request.setAttribute("mail", mail);
             request.setAttribute("fullname", fullname);
-            request.setAttribute("age", age);
+            request.setAttribute("birthday", dob);
             request.setAttribute("gender", sex);
             request.setAttribute("phone", phone);
             request.setAttribute("workplace", workplace);

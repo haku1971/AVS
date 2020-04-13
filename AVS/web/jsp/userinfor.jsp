@@ -35,7 +35,7 @@
                     <span class="span_info">Full-Name :</span>
                     <input class="su_infor3" type="text" name="fullname" value="<%=request.getAttribute("fullname")%>"readonly/></br>
                     <span class="span_info">Age :</span>
-                    <input class="su_infor3" type="text" name="age" value="<%=request.getAttribute("age")%>" readonly/></br>
+                    <input class="su_infor3" type="date" name="birthday" value="<%=request.getAttribute("birthday")%>" readonly/></br>
                 </div>
                 <div class="info_item3">
                 <span class="span_info">Gender :</span>

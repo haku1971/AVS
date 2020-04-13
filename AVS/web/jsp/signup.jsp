@@ -79,15 +79,8 @@
                 </div>
                 <div class ="signup_item3">
                     <input class="su_info3" type="text" name="fullname" placeholder="Enter your Name"/></br>
-                    <input class="su_info3" type="text" name="age" placeholder="Enter your Age"/></br>
-                    <%if (request.getAttribute("errorAge") != null) {
-                    %>
-                    <div class="errormess_age">
-                        <p> <%=request.getAttribute("errorAge")%></p>
-                    </div>
-                    <%
-                        }
-                    %>
+                    <input class="su_info3" type="date" name="birthday" value="1900-01-01"/></br>
+                   
                 </div>
                 <div class="signup_item5">
                     <span>Gender :</span>

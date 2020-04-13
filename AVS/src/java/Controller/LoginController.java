@@ -169,7 +169,7 @@ public class LoginController extends HttpServlet {
                 response.addCookie(cookieuserid);
                     response.sendRedirect("/AVS/HomeController");
                 } else {
-                    userDao.insertUser(email, "null", name, 0, 5,
+                    userDao.insertUser(email, "null", name, "", 5,
                             "", 1, email, "");
                     User user = userDao.getUserByMail(email);
                     Cookie cookieusername = new Cookie("username", user.getUsername());

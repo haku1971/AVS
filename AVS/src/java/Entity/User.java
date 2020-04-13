@@ -15,7 +15,7 @@ public class User {
     private String username;
     private String password;
     private int rolenum;
-    private int age;
+    private String dob;
     private int job;
     private String workplace;
     private int gender;
@@ -27,12 +27,12 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String password, int rolenum, int age, int job, String workplace, int gender, String mail, String phone, String fullname) {
+    public User(int id, String username, String password, int rolenum, String dob, int job, String workplace, int gender, String mail, String phone, String fullname) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.rolenum = rolenum;
-        this.age = age;
+        this.dob = dob;
         this.job = job;
         this.workplace = workplace;
         this.gender = gender;
@@ -88,13 +88,15 @@ public class User {
         this.rolenum = rolenum;
     }
 
-    public int getAge() {
-        return age;
+    public String getDob() {
+        return dob;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
+
+    
 
     public int getJob() {
         return job;

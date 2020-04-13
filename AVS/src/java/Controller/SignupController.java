@@ -73,7 +73,7 @@ public class SignupController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String mail = request.getParameter("email");
-        String age = request.getParameter("age");
+        String birthday = request.getParameter("birthday");
         String phone = request.getParameter("phone");
         String workplace = request.getParameter("workplace");
         String fullname = request.getParameter("fullname");
@@ -86,7 +86,6 @@ public class SignupController extends HttpServlet {
         AuthenticateManagement authenticateManagement = new AuthenticateManagement();
         AuthenticateManagement.CheckResult result = authenticateManagement.checkUserSignUp(username);
         AuthenticateManagement.CheckResult passresult = authenticateManagement.checkPassword(password, repassword);
-        AuthenticateManagement.CheckResult ageresult = authenticateManagement.checkNumber(age);
         AuthenticateManagement.CheckResult phoneresult = authenticateManagement.checkNumber(phone);
         AuthenticateManagement.CheckResult mailresult = authenticateManagement.checkMail(mail);
         int success = 1;
@@ -119,25 +118,28 @@ public class SignupController extends HttpServlet {
             request.setAttribute("errorMail", "E-mail is used ");
             success = 0;
         }
-        if (ageresult == AuthenticateManagement.CheckResult.NOT_NUMBER && !age.equals("")) {
-            request.setAttribute("errorAge", "Age must be a number ");
-            success = 0;
-        }
+        
         if (phoneresult == AuthenticateManagement.CheckResult.NOT_NUMBER && !phone.equals("")) {
             request.setAttribute("errorPhone", "Phone must be numbers ");
             success = 0;
+        }else if (phone.length()>10) {
+            request.setAttribute("errorPhone", "Phone must less than 11 digits");
+            success = 0;
+        }else if (!phone.equals("")) {
+            if (phone.charAt(0)!='0') {
+                request.setAttribute("errorPhone", "Phone must start with 0");
+            success = 0;
+            }
+            
         }
         if (success == 0) {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/signup.jsp");
             dispatcher.forward(request, response);
         } else if (success == 1) {
-            int agenumber = 0;
+            
             try {
                 UserModel usermod = new UserModel();
-                if (!age.equals("")) {
-                    agenumber = Integer.parseInt(age);
-                }
-                usermod.insertUser(username, password, fullname, agenumber, job,
+                usermod.insertUser(username, password, fullname, birthday, job,
                         workplace, gender, mail, phone);
                 try {
                     userDao = new UserModel();

@@ -34,8 +34,8 @@
                 <div class="changeinfo_item1">
                     <span id="span1">Full-Name: </span>
                     <input class="su_changeinfor" type="text" name="fullname" value="<%=request.getAttribute("fullname")%>"/></br>
-                    <span id="span2">Age: </span>
-                    <input class="su_changeinfor" type="text" name="age" value="<%=request.getAttribute("age")%>" /></br>
+                    <span id="span2">DOB: </span>
+                    <input class="su_changeinfor" type="date" name="birthday" value="<%=request.getAttribute("birthday")%>" /></br>
 
                     <%if (session.getAttribute("errorAge") != null) {
                     %>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="changeinfo_item2">
                     <span id="span4">Phone: </span>
-                    <input class="su_changeinfor" type="text" name="phone" value="<%=request.getAttribute("phone")%>"/></br>
+                    <input class="su_changeinfor" type="text" name="phone" value="<%=request.getAttribute("phone")%>"min="1" max="10"/></br>
                     <%if (session.getAttribute("errorPhone") != null) {
                     %>
                     <div class="errormesschangeinfo2">

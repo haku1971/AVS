@@ -43,7 +43,7 @@ public class UserModel {
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
                 user.setRolenum(rs.getInt("user_RoleNum"));
-                user.setAge(rs.getInt("user_Age"));
+                user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
                 user.setGender(rs.getInt("user_Gender"));
@@ -77,7 +77,7 @@ public class UserModel {
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
                 user.setRolenum(rs.getInt("user_RoleNum"));
-                user.setAge(rs.getInt("user_Age"));
+                user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
                 user.setGender(rs.getInt("user_Gender"));
@@ -111,7 +111,7 @@ public class UserModel {
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
                 user.setRolenum(rs.getInt("user_RoleNum"));
-                user.setAge(rs.getInt("user_Age"));
+                user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
                 user.setGender(rs.getInt("user_Gender"));
@@ -129,10 +129,10 @@ public class UserModel {
     }
 
     public void insertUser(String username,
-            String password, String fullname, int age, int job,
+            String password, String fullname, String dob, int job,
             String workplace, int gender, String mail, String phone) throws Exception {
         String query1 = "insert into Users(user_Name,user_Password,user_RoleNum,"
-                + "user_Fullname,user_Age,user_Workplaces,user_Gender,user_Mail,"
+                + "user_Fullname,user_DOB,user_Workplaces,user_Gender,user_Mail,"
                 + "user_Phone,job_ID,ban_Status)\n"
                 + "values (?,?,2,?,?,?,?,?,?,?,0)";
         Connection conn = null;
@@ -144,7 +144,7 @@ public class UserModel {
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setString(3, fullname);
-            ps.setInt(4, age);
+            ps.setString(4, dob);
             ps.setString(5, workplace);
             ps.setInt(6, gender);
             ps.setString(7, mail);
@@ -157,10 +157,10 @@ public class UserModel {
         }
     }
 
-    public void UpdateUser(int id, String fullname, int age, int job,
+    public void UpdateUser(int id, String fullname, String dob, int job,
             String workplace, int gender, String phone) throws Exception {
         String query1 = "UPDATE Users\n"
-                + "SET user_FullName=?,user_Age=?,user_Workplaces=?,user_gender=?,user_Phone=?,job_ID=? \n"
+                + "SET user_FullName=?,user_DOB=?,user_Workplaces=?,user_gender=?,user_Phone=?,job_ID=? \n"
                 + "WHERE user_ID = ?";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
@@ -169,7 +169,7 @@ public class UserModel {
             conn = db.getConnection();
             ps = conn.prepareStatement(query1);
             ps.setString(1, fullname);
-            ps.setInt(2, age);
+            ps.setString(2, dob);
             ps.setString(3, workplace);
             ps.setInt(4, gender);
             ps.setString(5, phone);
@@ -218,7 +218,7 @@ public class UserModel {
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
                 user.setRolenum(rs.getInt("user_RoleNum"));
-                user.setAge(rs.getInt("user_Age"));
+                user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
                 user.setGender(rs.getInt("user_Gender"));
@@ -234,7 +234,7 @@ public class UserModel {
             user.setUsername(rs.getString("user_Name"));
             user.setPassword(rs.getString("user_Password"));
             user.setRolenum(rs.getInt("user_RoleNum"));
-            user.setAge(rs.getInt("user_Age"));
+            user.setDob(rs.getString("user_DOB"));
             user.setJob(rs.getInt("job_ID"));
             user.setWorkplace(rs.getString("user_Workplaces"));
             user.setGender(rs.getInt("user_Gender"));
@@ -335,7 +335,7 @@ public class UserModel {
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
                 user.setRolenum(rs.getInt("user_RoleNum"));
-                user.setAge(rs.getInt("user_Age"));
+                user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
                 user.setGender(rs.getInt("user_Gender"));

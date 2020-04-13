@@ -60,7 +60,7 @@ public class ChangeInforController extends HttpServlet {
             throws ServletException, IOException {
         String username = "";
         String fullname = "None";
-        String age = "";
+        String dob = "";
         String sex = "None";
         String phone = "";
         String workplace = "None";
@@ -84,10 +84,7 @@ public class ChangeInforController extends HttpServlet {
                 if (user.getFullname().length() > 0) {
                     fullname = user.getFullname();
                 }
-                if (user.getAge() != 0) {
-                    age = Integer.toString(user.getAge());
-                }
-
+                    dob=user.getDob();
                 int gender = user.getGender();
                 if (gender == 1) {
                     sex = "Male";
@@ -113,7 +110,7 @@ public class ChangeInforController extends HttpServlet {
                 }
 
                 request.setAttribute("fullname", fullname);
-                request.setAttribute("age", age);
+                request.setAttribute("birthday", dob);
                 request.setAttribute("sex", sex);
                 request.setAttribute("phone", phone);
                 request.setAttribute("workplace", workplace);
@@ -137,7 +134,7 @@ public class ChangeInforController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String age = request.getParameter("age");
+        String dob = request.getParameter("birthday");
         String phone = request.getParameter("phone");
         String workplace = request.getParameter("workplace");
         String fullname = request.getParameter("fullname");
@@ -146,18 +143,22 @@ public class ChangeInforController extends HttpServlet {
         int id = 0;
         HttpSession session = request.getSession();
         AuthenticateManagement authenticateManagement = new AuthenticateManagement();
-        AuthenticateManagement.CheckResult ageresult = authenticateManagement.checkNumber(age);
         AuthenticateManagement.CheckResult phoneresult = authenticateManagement.checkNumber(phone);
         int success = 1;
-        if (ageresult == AuthenticateManagement.CheckResult.NOT_NUMBER && !age.equals("")) {
-//            request.setAttribute("errorAge", "Age must be a number");
-            session.setAttribute("errorAge", "Age must be a number");
-            success = 0;
-        }
+
         if (phoneresult == AuthenticateManagement.CheckResult.NOT_NUMBER && !phone.equals("")) {
 //            request.setAttribute("errorPhone", "Phone must be numbers ");
             session.setAttribute("errorPhone", "Phone must be numbers ");
             success = 0;
+        }else if (phone.length()>10) {
+            request.setAttribute("errorPhone", "Phone must less than 11 digits");
+            success = 0;
+        }else if (!phone.equals("")) {
+            if (phone.charAt(0)!='0') {
+                request.setAttribute("errorPhone", "Phone must start with 0");
+            success = 0;
+            }
+            
         }
         if (success == 0) {
 //            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changeinfor.jsp");
@@ -179,10 +180,7 @@ public class ChangeInforController extends HttpServlet {
                 int useridnum = Integer.parseInt(userid);
                 try {
                     UserModel usermod = new UserModel();
-                    if (!age.equals("")) {
-                        agenumber = Integer.parseInt(age);
-                    }
-                    usermod.UpdateUser(useridnum, fullname, agenumber, job, workplace, gender, phone);
+                    usermod.UpdateUser(useridnum, fullname, dob, job, workplace, gender, phone);
                     response.sendRedirect("/AVS/UserinforController");
 
                 } catch (Exception ex) {
