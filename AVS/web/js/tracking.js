@@ -2,6 +2,7 @@ var algoid;
 var oldtime;
 var dateaccess;
 var ipuser;
+var url = window.location.href;
 
 $(document).ready(function () {
     //id cua page
@@ -20,6 +21,10 @@ $(document).ready(function () {
 
         returnip(data.ip);
     });
+    
+    href = $("#linkfb").attr("data-href");
+    $("#linkfb").attr("data-href", url);
+
 });
 function returnip(ipaddress) {
     ipuser = ipaddress;

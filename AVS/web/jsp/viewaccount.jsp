@@ -18,8 +18,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Admin Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/Visual.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/admin.css" />
 
         <%
             User thisuser = (User) request.getAttribute("user");
@@ -35,29 +34,90 @@
         </div>
         <div class="main">
             <%@include file="adminleft.jsp" %> 
-            <div class="right">
+            <div class="adminright">
+                <div class="admininfo_box">
+                    <table class="admininfortable">
+                        <tr> 
+                            <td><h1><%=thisuser.getRolenum()%></h1></td> 
+                            <td>
+                                <span class="adminspan_info">User-Name :</span>
+                                <input class="su_infor" type="text" name="username" value="<%=thisuser.getUsername()%>"readonly/>
+                            </td>
+                            <td>
+                                <span class="adminspan_info">Full-Name :</span>
+                                <input class="su_infor" type="text" name="fullname" value="<%=thisuser.getFullname()%>"readonly/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4">
+                                <img src="images\user.png" />
+                            </td>
+                            <td>
+                                <span class="adminspan_info">E-mail :</span>
+                                <input class="su_infor" type="text" name="email" value="<%=thisuser.getMail()%>" readonly/>
+                            </td>
+                            <td>
+                                <span class="adminspan_info">Date of Birth :</span>
+                                <input class="su_infor" type="date" name="birthday" value="<%=thisuser.getDob()%>" readonly/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="adminspan_info">Gender :</span>
+                                <input class="su_infor" type="text" name="gender" value="<%=thisuser.getGender()%>"readonly/>
+                            </td>
+                            <td>
+                                <span class="adminspan_info">Work-Place</span>
+                                <input class="su_infor" type="text" name="workplace" value="<%=thisuser.getWorkplace()%>"readonly/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="adminspan_info">Phone :</span>
+                                <input class="su_infor" type="text" name="phone" value="<%=thisuser.getPhone()%>"readonly/>
+                            </td>
+                            <td>
+                                <span class="adminspan_info">Jobs :</span>
+                                <input class="su_infor" type="text" name="job" value="<%=thisuser.getRolenum()%>"readonly/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%if (thisuser.getBanstatus() == 0) {%>
+                                <h3>Status: <div class="notban">Active</div></h3>
+                                <%} else {%>
+                                <h3>Status: <div class="banned">Banned</div></h3>
+                                <%}%>
+                            </td>
+                            <td>
+                                <form method="POST" action="manage">
+                                    <input type="hidden" name="managetype" value="manageaccount">
+                                    <input type="hidden" name="userid" value="<%=thisuser.getId()%>">
+                                    <input type="hidden" name="ban" <%if (thisuser.getBanstatus() == 1) {%>value="unban"<%} else {%>value="ban"<%}%>>
+                                    <input id="but1" type="submit" <%if (thisuser.getBanstatus() == 1) {%>value="Unban"<%} else {%>value="Ban"<%}%>>
+                                </form>
+                                <a href="admin?category=account"><button id="but2">Back</button></a>
 
-                <div class="userinfomation">
-                    <div class="username"><%=thisuser.getUsername()%></div>
-                    <div class="mail"><%=thisuser.getMail()%></div>
-                    <div class="fullname">Fullname: <%=thisuser.getFullname()%></div>
-                    <div class="gender">Gender: <%=thisuser.getGender()%></div>
-                    <div class="age">Age: <%=thisuser.getAge()%></div>
-                    <div class="workplace">Workplace: <%=thisuser.getWorkplace()%></div>
-                    <div class="role">Role: <%=thisuser.getRolenum()%></div>
-                    <div class="phone">Phone: <%=thisuser.getPhone()%></div>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <form method="POST" action="manage">
-                    <input type="hidden" name="managetype" value="manageaccount">
-                    <input type="hidden" name="userid" value="<%=thisuser.getId()%>">
-                    <input type="hidden" name="ban" <%if (thisuser.getBanstatus() == 1) {%>value="unban"<%} else {%>value="ban"<%}%>>
-                    <input type="submit" <%if (thisuser.getBanstatus() == 1) {%>value="Unban"<%} else {%>value="Ban"<%}%>>
-                </form>
-                <a href="admin?category=account"><button>Back</button></a>
 
 
             </div>
-            <%@include file="footer.jsp" %>
-            < !--<script type="text/javascript" src="js/code.js"></script>-->
+        </div>
+        <%@include file="footer.jsp" %>
+
     </body>
 </html>

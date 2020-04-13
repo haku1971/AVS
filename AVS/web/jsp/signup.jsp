@@ -31,94 +31,156 @@
         <div class="main">
             <form class="box2" action="SignupController" method="post">
                 <h1><b>Sign Up</b></h1>
-                <img src="images\user.png" />
-
-                <div class ="signup_item1">
-                    <input class="su_info1" type="text" name="username" placeholder="Username"required/></br>
-                    <%if (request.getAttribute("errorUsername") != null) {
-                    %>
-                    <div class="errormess_username">
-                        <p> <%=request.getAttribute("errorUsername")%></p>
-                    </div>
-                    <%
-                        }
-                    %>
-
-                    <input class="su_info1" type="text" name="email" placeholder="Email"required/></br>
-                    <%if (request.getAttribute("errorMail") != null) {
-                    %>
-                    <div class="errormess_mail">
-                        <p> <%=request.getAttribute("errorMail")%></p>
-                    </div>
-                    <%
-                        }
-                    %>
-
-
-                </div>
-                <div class ="signup_item2">
-                    <input class="su_info2" type="password" name="password" placeholder="Password"required/></br>
-                    <%if (request.getAttribute("errorPass") != null) {
-                    %>
-                    <div class="errormess_pass">
-                        <p> <%=request.getAttribute("errorPass")%></p>
-                    </div>
-                    <%
-                        }
-                    %>
-
-                    <input class="su_info2" type="password" name="repassword" placeholder="Re-Password"required/></br>
-                    <%if (request.getAttribute("errorRepass") != null) {
-                    %>
-                    <div class="errormess_repass">
-                        <p> <%=request.getAttribute("errorRepass")%></p>
-                    </div>
-                    <%
-                        }
-                    %>
-                </div>
-                <div class ="signup_item3">
-                    <input class="su_info3" type="text" name="fullname" placeholder="Enter your Name"/></br>
-                    <input class="su_info3" type="date" name="birthday" value="1900-01-01"/></br>
-                   
-                </div>
-                <div class="signup_item5">
-                    <span>Gender :</span>
-                    <input type="radio" id="male" name="gender" value="1" checked="true">Male</input>
-                    <input type="radio" id="female" name="gender" value="0">Female</input>
-                </div>
-                <br>
-                <br>
-                <div class ="signup_item4">
-                    <input class="su_info3" type="text" name="phone" placeholder="Enter your Phone Number"/></br>
-                    <%if (request.getAttribute("errorPhone") != null) {
-                    %>
-                    <div class="errormess_phone">
-                        <p> <%=request.getAttribute("errorPhone")%></p>
-                    </div>
-                    <%
-                        }
-                    %>             
-                    <input class="su_info3" type="text" name="workplace" placeholder="Enter your Work Place"/></br>
-                </div>
-                <div class="signup_item6">
-                    <select name="job">
-                        <%for (int i = 0; i < jobs.size(); i++) {
-                                if (jobs.get(i).getJobid() == 5) {%>
-                        <option value=<%=Integer.toString(jobs.get(i).getJobid())%> selected>About your jobs</option>
-                        <%} else {%>
-                        <option value=<%=Integer.toString(jobs.get(i).getJobid())%>>You are <%=jobs.get(i).getJobname()%></option>
-                        <%}
-                            }%>
-                        
-                    </select>
-                </div>
-
-                <button id="bottun" type="submit"><span>Sign Up</span></button>               
+                <table class="infortable">
+                    <tr> 
+                        <td rowspan="10"><img src="images\user.png" /></td> 
+                        <td>
+                            <%if (request.getAttribute("errorUsername") != null) {
+                            %>
+                            <div class="errormess">
+                                <%=request.getAttribute("errorUsername")%>
+                            </div>
+                            <%
+                                } else {
+                            %>
+                            &nbsp;
+                            <%}%>
+                        </td>
+                        <td>
+                            
+                            <%if (request.getAttribute("errorPass") != null) {
+                            %>
+                            <div class="errormess">
+                                <%=request.getAttribute("errorPass")%>
+                            </div>
+                            <%
+                                } else {
+                            %>
+                            &nbsp;
+                            <%}%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="su_info1" type="text" name="username" placeholder="Username"required/>
+                        </td>
+                        <td>
+                            <input class="su_info2" type="password" name="password" placeholder="Password"required/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            
+                            <%if (request.getAttribute("errorMail") != null) {
+                            %>
+                            <div class="errormess">
+                                <%=request.getAttribute("errorMail")%>
+                            </div>
+                            <%
+                                } else {
+                            %>
+                            &nbsp;
+                            <%}%>
+                        </td>
+                        <td>
+                            &nbsp;
+                            <%if (request.getAttribute("errorRepass") != null) {
+                            %>
+                            <div class="errormess">
+                                <%=request.getAttribute("errorRepass")%>
+                            </div>
+                            <%
+                                } else {
+                            %>
+                            &nbsp;
+                            <%}%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="su_info1" type="text" name="email" placeholder="Email"required/>
+                        </td>
+                        <td>
+                            <input class="su_info2" type="password" name="repassword" placeholder="Re-Password"required/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                           
+                            <%if (request.getAttribute("errorPhone") != null) {
+                            %>
+                            <div class="errormess">
+                                <%=request.getAttribute("errorPhone")%>
+                            </div>
+                            <%
+                                } else {
+                            %>
+                            &nbsp;
+                            <%}%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="su_info3" type="text" name="fullname" placeholder="Enter your Name"/>
+                        </td>
+                        <td>
+                            <input class="su_info3" type="text" name="phone" placeholder="Enter your Phone Number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="su_info3" type="date" name="birthday" value="1900-01-01"/>
+                        </td>
+                        <td>
+                            <input class="su_info3" type="text" name="workplace" placeholder="Enter your Work Place"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="signup_item5">
+                                <span>Gender :</span>
+                                <input type="radio" id="male" name="gender" value="1" checked="true">Male</input>
+                                <input type="radio" id="female" name="gender" value="0">Female</input>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="signup_item6">
+                                <select name="job">
+                                    <%for (int i = 0; i < jobs.size(); i++) {
+                                            if (jobs.get(i).getJobid() == 5) {%>
+                                    <option value=<%=Integer.toString(jobs.get(i).getJobid())%> selected>About your jobs</option>
+                                    <%} else {%>
+                                    <option value=<%=Integer.toString(jobs.get(i).getJobid())%>>You are <%=jobs.get(i).getJobname()%></option>
+                                    <%}
+                                        }%>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </table>   
+                <button id="bottun" type="submit"><span>Sign Up</span></button>
             </form>
 
         </div>
         <%@include file="footer.jsp" %>
-        <script type="text/javascript" src="js/code.js"></script>
     </body>
 </html>

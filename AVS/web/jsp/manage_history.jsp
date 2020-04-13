@@ -39,7 +39,7 @@
         <div class="main">
             <%@include file="adminleft.jsp" %> 
 
-            <div class="right">
+            <div class="adminright">
 
                 <div class="tableadmin">
                     <%if (historytype == "user_history") {%>

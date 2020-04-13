@@ -95,15 +95,16 @@ public class TrackingModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String statementstring = "SELECT a.algo_ID, Sum(a.totalTime) as totalTime,Count(a.IP) as TotalPeople\n"
-                    + "FROM (select *, ROW_NUMBER() over(order by history_ID desc) as rownumber from History) as a\n"
-                    + "WHERE  a.rownumber >= ? and a.rownumber <= ? and dateAccess > CURRENT_TIMESTAMP-? GROUP BY algo_ID";
+            String statementstring = "SELECT tableSum.algo_ID, tableSum.totalTime, tableSum.TotalPeople \n"
+                    + "from (SELECT tabletime.algo_ID, Sum(tabletime.totalTime) as totalTime,Count(tabletime.IP) as TotalPeople,ROW_NUMBER() over(order by algo_ID asc) as rownumber \n"
+                    + "FROM (select *, ROW_NUMBER() over(order by history_ID desc) as rownumber from History where dateAccess > CURRENT_TIMESTAMP-?) as tabletime\n"
+                    + "GROUP BY algo_ID) as tableSum where tableSum.rownumber >= ? and tableSum.rownumber <= ?";
 
             statement
                     = connection.prepareStatement(statementstring);
-            statement.setInt(1, start);
-            statement.setInt(2, end);
-            statement.setInt(3, daysago);
+            statement.setInt(2, start);
+            statement.setInt(3, end);
+            statement.setInt(1, daysago);
             rs = statement.executeQuery();
             while (rs.next()) {
                 Tracking tracking = new Tracking();

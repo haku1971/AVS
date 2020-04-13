@@ -4,6 +4,8 @@
     Author     : Asus
 --%>
 
+<%@page import="java.util.concurrent.TimeUnit"%>
+<%@page import="java.math.BigInteger"%>
 <%@page import="Entity.Tracking"%>
 <%@page import="Entity.History"%>
 <%@page import="Model.UserModel"%>
@@ -40,14 +42,16 @@
         <div class="main">
             <%@include file="adminleft.jsp" %> 
 
-            <div class="right">
-
-                Days Tracking: 
-                <select id="select_daystracking" onchange="changeDaysTracking(this.value)">
-                    <option value="1">1</option>
-                    <option value="7">7</option>
-                    <option value="30">30</option>
-                </select>
+            <div class="adminright">
+                <div class="sortby">
+                    Get data from 
+                    <select id="select_daystracking" onchange="changeDaysTracking(this.value)">
+                        <option value="1">1</option>
+                        <option value="7">7</option>
+                        <option value="30">30</option>
+                    </select> 
+                    days ago.
+                </div>
                 <script>
                     var select_daystracking = document.getElementById("select_daystracking");
                     var daystracking = "<%=daystracking%>";
@@ -63,29 +67,44 @@
                         window.location.assign("admin?category=tracking&daystracking=" + value);
                     }
                 </script>
-                <table>
-                    <tr>
-                        <th>AlgoID</th>
-                        <th>Total Time</th>
-                        <th>Total People</th>
+                <div class="tableadmin">
+                    <table>
+                        <tr>
+                            <th>AlgoID</th>
+                            <th>Total Time</th>
+                            <th>Total People</th>
 
-                    </tr>
-                    <% for (int i = 0; i < alltrackinglist.size(); i++) {%> 
-                    <tr>
-                        <td><%=alltrackinglist.get(i).getAlgoID()%></td>
-                        <td><%=alltrackinglist.get(i).getTotalTime()%></td>
-                        <td><%=alltrackinglist.get(i).getTotalPeople()%></td>
-                    </tr>
-                    <%}%>
-                </table>
+                        </tr>
+                        <% for (int i = 0; i < alltrackinglist.size(); i++) {%> 
+                        <tr>
+                            <td><%=alltrackinglist.get(i).getAlgoID()%></td>
+                            <%
+                                long millisecon = alltrackinglist.get(i).getTotalTime().longValue();
+                                long day = TimeUnit.MILLISECONDS.toDays(millisecon);
+                                long hour = TimeUnit.MILLISECONDS.toHours(millisecon) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisecon));
+                                long minute = TimeUnit.MILLISECONDS.toMinutes(millisecon) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecon));
+                                long second = TimeUnit.MILLISECONDS.toSeconds(millisecon) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecon));
+                            %>
+                            <td>
+                                <%if (day != 0) {%> <%=day%> Days <%}%>
+                                <%if (hour != 0) {%> <%=hour%> Hours<%}%>
+                                <%if (minute != 0) {%> <%=minute%> Minutes<%}%>
+                                <%=second%> Second</td>
+                            <td><%=alltrackinglist.get(i).getTotalPeople()%></td>
+                        </tr>
+                        <%}%>
+                    </table>
+                </div>
                 <%
                     String currentpageurl = "admin?category=tracking";
                     String daystrackingurl = "&daystracking=" + daystracking;
                     String currenturl = currentpageurl + daystrackingurl;
                 %>
-                <% for (int i = 1; i <= totalpage; i++) {%>
-                <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
-                <%}%>
+                <div class="adminPaging">
+                    <% for (int i = 1; i <= totalpage; i++) {%>
+                    <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
+                    <%}%>
+                </div>
             </div>
         </div>
         <%@include file="footer.jsp" %>    

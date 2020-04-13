@@ -65,40 +65,60 @@
 
                     <%} else {%>
                     <!--trang view-->
+
                     <div class="algoid">Algorithm ID: <%=algo.getAlgoID()%></div>
                     <div> Added Time: <%=algo.getAlgoDatetime()%></div>
+
+                    <br>
                     <form method="POST" action="manage">
                         <input type="hidden" name="managetype" value="editalgo">
                         <input type="hidden" name="algoid" value="<%=algo.getAlgoID()%>" >
-                        <div>Name: </div> <div><input type="text" name="algoname" value="<%=algo.getAlgoName()%>"></div>
-                        <div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="30" ><%=algo.getAlgoCodeJava()%></textarea></div>
-                        <div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="30" ><%=algo.getAlgoCodeCplus()%></textarea></div>
-                        <div>Code JS:  </div> <div><textarea name="codejs" rows="10" cols="30" ><%=algo.getAlgoCodeJS()%></textarea></div>
-                        <div>Code Visualize:  </div> <div><textarea name="codevisual" rows="10" cols="30" ><%=algo.getAlgoCodeVisual()%></textarea></div>
-                        <div>Description: </div> <div><textarea name="description" rows="10" cols="30" ><%=algo.getAlgoDescription()%></textarea></div>
-                        <div>Resource: </div> <div><input type="text" name="resource" value="<%=algo.getAlgoResource()%>"></div>
-                        <div>Category: </div> <div>
-                            <input type="hidden" name="category" id="inputcategory" value="<%=algo.getCategoryID()%>">
-                            <select id="selectcategory" onchange="changeCategory(this)">
-                                <option value="1">Sort</option>
-                                <option value="2">Search</option>
-                                <option value="3">Other</option>
-                            </select></div>
-                        <input type="submit" value="Save">
+                        <div class="modifyleft">
+                            <div style="display: inline-block">Name: </div> 
+                            <div style="display: block"><input type="text" name="algoname" value="<%=algo.getAlgoName()%>"></div>
+                        </div>
+                        <div class="modifyright">
+                            <div>Category: </div>
+                            <div>
+                                <input type="hidden" name="category" id="inputcategory" value="<%=algo.getCategoryID()%>">
+                                <select id="selectcategory" onchange="changeCategory(this)">
+                                    <option value="1">Sort</option>
+                                    <option value="2">Search</option>
+                                    <option value="3">Other</option>
+                                </select></div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="modifyleft"><div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="60" ><%=algo.getAlgoCodeJava()%></textarea></div></div>
+                        <div class="modifyright"><div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="60" ><%=algo.getAlgoCodeCplus()%></textarea></div></div>
+                        <br>
+                        <div class="modifyleft"><div>Code JS:  </div> <div><textarea name="codejs" rows="10" cols="60" ><%=algo.getAlgoCodeJS()%></textarea></div></div>
+                        <div class="modifyright"><div>Code Visualize:  </div> <div><textarea name="codevisual" rows="10" cols="60" ><%=algo.getAlgoCodeVisual()%></textarea></div></div>
+                        <br>
+                        <div class="modifyleft"><div>Description: </div> <div><textarea name="description" rows="10" cols="60" ><%=algo.getAlgoDescription()%></textarea></div></div>
+                        <div class="modifyrightlast">
+                            <div>Resource: </div> <div><input type="text" name="resource" value="<%=algo.getAlgoResource()%>"></div>
+                            <input type="submit" value="Save">
+                        </div>
                     </form>
-                    <a href="admin?category=algorithm"><button>Back</button></a>
-                    <form method="POST" action="manage">
-                        <input type="hidden" name="managetype" <%if(algo.getDeleted()==1){%>value="restorealgo"<%}else{%>value="deletealgo"<%}%>>
-                        <input type="hidden" name="algoid" value="<%=algo.getAlgoID()%>" >
-                        <input type="submit" <%if(algo.getDeleted()==1){%>value="Restore"<%}else{%>value="Delete"<%}%>>
-                    </form>
+                    <div>
+                        <a href="admin?category=algorithm"><button>Back</button></a>
+                        <form method="POST" action="manage">
+                            <input type="hidden" name="managetype" <%if (algo.getDeleted() == 1) {%>value="restorealgo"<%} else {%>value="deletealgo"<%}%>>
+                            <input type="hidden" name="algoid" value="<%=algo.getAlgoID()%>" >
+                            <input type="submit" <%if (algo.getDeleted() == 1) {%>value="Restore"<%} else {%>value="Delete"<%}%>>
+                        </form>
+                    </div>
+                    <br>
+
                     <script>
-                        document.getElementById("selectcategory").selectedIndex = <%=algo.getCategoryID()%> - 1;
+                    document.getElementById("selectcategory").selectedIndex = <%=algo.getCategoryID()%> - 1;
                     </script>
                     <%}%>
                 </div>
             </div>
-            <%@include file="footer.jsp" %>    
+        </div>
+        <%@include file="footer.jsp" %>    
 
     </body>
     <script>

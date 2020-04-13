@@ -17,6 +17,5 @@
             <img id="avs" src="images/avs_logo.png" />
             <img id="fb" src="images/facebook.PNG" />
         </div>
-        <p>Copyright 2020.</p>
     </body>
 </html>

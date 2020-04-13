@@ -32,14 +32,10 @@
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
         <%@include file="header.jsp" %> 
-        <div><input id="algoid" type="hidden" value="<%= algo.getAlgoID()%>" /></div>
-        <script type="text/javascript" src="js/tracking.js"></script>
-
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
-             <div class="fb-share-button" data-href="http://34.70.41.246.xip.io/AVS/LoginController" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-        </div>
+        </div>    
         <div class="main">
             <div class="left">
 
@@ -66,19 +62,19 @@
                         <%}%>
                 </ul>
             </div>
-            <button type="button" class="collapsible">Others Algorithm</button>
-
-            <div class="content">
-                <ul class="list_items">
-                    <li>Comming Soon</li>
-                </ul>
-            </div>
         </div>
         <div class="right">
-
+            <div>
+                <div id="algoTitle"><h1><%= algo.getAlgoName()%></h1>
+                    <h5 style="text-align: center;"><%= algo.getAlgoDescription()%></h5></div>
+                    <div style="float: right; margin-right: 10px;" class="fb-share-button" data-href="" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share this page</a></div>
+                <div><input id="algoid" type="hidden" value="<%= algo.getAlgoID()%>" /></div>
+                <script type="text/javascript" src="js/tracking.js"></script>
+            </div>
+                <br>
+                <br>
             <div class="tab">
-                <button class="tablinks" onclick="openTab(event, 'Tutorial')" id="defaultOpen">Tutorial</button>
-                <button class="tablinks" onclick="openTab(event, 'CodeCPlus')">C++</button>
+                <button class="tablinks" onclick="openTab(event, 'CodeCPlus')" id="defaultOpen">C++</button>
                 <button class="tablinks" onclick="openTab(event, 'CodeJava')">Java</button>
                 <button class="tablinks" onclick="openTab(event, 'CodeJavaScript')">JavaScript</button>
                 <% if (!algo.getAlgoFile().equalsIgnoreCase("null")) {%>
@@ -87,10 +83,7 @@
 
             </div>
 
-            <div id="Tutorial" class="tabcontent">
-                <div id="algoTitle"><h1><%= algo.getAlgoName()%></h1>
-                    <h5><%= algo.getAlgoDescription()%></h5></div>
-            </div>
+
 
             <div id="CodeCPlus" class="tabcontent">
                 <% if (algo.getAlgoCodeCplus().equalsIgnoreCase("null")) {%>
@@ -175,7 +168,7 @@
                                 </pre>
                             </div>
                             <div class="scrollLog" id="txtlog">Log:</div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -183,8 +176,9 @@
             </div>
             <%}%>
         </div>
+        <%@include file="footer.jsp" %>
     </div>
-    <%@include file="footer.jsp" %>
+
 
     <script type="text/javascript" src="js/code.js"></script>
     <script>

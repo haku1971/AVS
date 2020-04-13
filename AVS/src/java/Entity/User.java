@@ -81,7 +81,7 @@ public class User {
         if(rolenum==1) {
             return "Admin";
         }
-        return "None";
+        return "User";
     }
 
     public void setRolenum(int rolenum) {
@@ -147,7 +147,7 @@ public class User {
         if(banstatus==1) {
             return "Banned";
         }
-        return "None";
+        return "Active";
     }
 
     public void setBanstatus(int banstatus) {

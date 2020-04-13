@@ -38,7 +38,7 @@
         </div>
         <div class="main">
             <%@include file="adminleft.jsp" %> 
-            <div class="right">
+            <div class="adminright">
                 <form action="admin">
                     <input type="hidden" name="category" value="account">
                     <input type="hidden" id="inputcolumn" name="columnname">
@@ -86,16 +86,17 @@
                             String currentpageurl = "admin?category=account";
                             String columnnameurl = "&columnname=" + columnname;
                             String sortorderurl = "&sortorder=" + sortorder;
-                            String searchtxturl = "&searchtxt="+searchstring;
-                            String currenturl = currentpageurl+columnnameurl+sortorderurl+searchtxturl;
+                            String searchtxturl = "&searchtxt=" + searchstring;
+                            String currenturl = currentpageurl + columnnameurl + sortorderurl + searchtxturl;
                         %>
                         <% for (int i = 1; i <= totalpage; i++) {%>
-                        <a href="<%=currenturl+"&page="+i%>"><%=i%></a>
+                        <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
                     </div>
                 </div>
             </div>
-            <%@include file="footer.jsp" %>    
+        </div>
+        <%@include file="footer.jsp" %>    
 
     </body>
     <script>

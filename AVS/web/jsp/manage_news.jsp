@@ -46,7 +46,7 @@
         <div class="main">
             <%@include file="adminleft.jsp" %> 
 
-            <div class="right">
+            <div class="adminright">
                 <form action="admin">
                     <input type="hidden" name="category" value="news">
                     <input type="hidden" id="inputcolumn" name="columnname">

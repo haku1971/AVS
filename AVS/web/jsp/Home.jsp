@@ -50,12 +50,6 @@
                         <%}%>
                 </ul>
             </div>
-            <button type="button" class="collapsible">Others Algorithm</button>
-            <div class="content">
-                <ul class="list_items">
-                    <li>Comming Soon</li>
-                </ul>
-            </div>
         </div>
         <div class="right">
             <h1>Algorithm Visualize System</h1>
