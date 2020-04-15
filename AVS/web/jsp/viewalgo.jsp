@@ -4,6 +4,7 @@
     Author     : Ukah
 --%>
 
+<%@page import="Entity.Category"%>
 <%@page import="Model.UserModel"%>
 <%@page import="Entity.User"%>
 <%@page import="org.json.JSONArray"%>
@@ -24,6 +25,7 @@
         <%
             Algorithm algo = (Algorithm) request.getAttribute("algo");
             Boolean addnew = (Boolean) request.getAttribute("addnew");
+            ArrayList<Category> listalgocategory = (ArrayList<Category>) request.getAttribute("listalgocategory");
         %>
     </head>
 
@@ -82,9 +84,9 @@
                             <div>
                                 <input type="hidden" name="category" id="inputcategory" value="<%=algo.getCategoryID()%>">
                                 <select id="selectcategory" onchange="changeCategory(this)">
-                                    <option value="1">Sort</option>
-                                    <option value="2">Search</option>
-                                    <option value="3">Other</option>
+                                    <% for(int i=0; i<listalgocategory.size();i++) {%>
+                                    <option value="<%=listalgocategory.get(i).getCategoryID()%>"><%=listalgocategory.get(i).getCategoryName()%></option>
+                                    <%}%>
                                 </select></div>
                         </div>
                         <br>

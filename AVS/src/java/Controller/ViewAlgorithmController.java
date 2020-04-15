@@ -6,11 +6,10 @@
 package Controller;
 
 import Entity.Algorithm;
-import Entity.User;
+import Entity.Category;
 import Model.AlgorithmModel;
-import Model.UserModel;
+import Model.CategoryModel;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,10 +61,14 @@ public class ViewAlgorithmController extends HttpServlet {
             AlgorithmModel algodao = new AlgorithmModel();
             Algorithm thisalgo = algodao.getAlgoByID(algoid);
             
+            CategoryModel catedao = new CategoryModel();
+            ArrayList<Category> listcate = catedao.getAllCategory();
+            
             String category = "algorithm";
             request.setAttribute("category", category);
             request.setAttribute("algo", thisalgo);
             request.setAttribute("addnew", false);
+            request.setAttribute("listalgocategory", listcate);
             request.getRequestDispatcher("jsp/viewalgo.jsp").forward(request, response);
 
         } catch (Exception ex) {

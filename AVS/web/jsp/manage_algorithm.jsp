@@ -83,7 +83,7 @@
                         <tr>
                             <td><%=allalgolist.get(i).getAlgoID()%></td>
                             <td><%=allalgolist.get(i).getAlgoName()%></td>
-                            <td><%=allalgolist.get(i).getCategoryNametoString()%></td>
+                            <td><%=allalgolist.get(i).getCategoryName()%></td>
                             <td><%=allalgolist.get(i).getVisualizedToString()%></td>
                             <td><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>">View</a></td>
                         </tr>

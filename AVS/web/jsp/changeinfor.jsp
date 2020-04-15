@@ -28,7 +28,7 @@
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
         <div class="main2">
-            <form id="changeinfor" class="changeinfo_box" action="ChangeInforController" method="post">
+            <form id="changeinfor" class="changeinfo_box" action="changeinfo" method="post">
                 <h1>Edit Profile</h1>
                 <img src="images\user.png" />
                 <div class="changeinfo_item1">
@@ -83,7 +83,7 @@
 
                 <br>
                 <button id="but3" type="submit"  value="save" onclick="checkyes()"/><span>Save</span></button>
-                <button id="but4" onclick="document.location = '/AVS/UserinforController';return false" value="cancel"><span>Cancel</span></button>
+                <button id="but4" onclick="document.location = '/AVS/userinfo';return false" value="cancel"><span>Cancel</span></button>
             </form>
 
         </div>

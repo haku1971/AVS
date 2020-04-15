@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BinhNT
  */
-@WebServlet(name = "UserinforController", urlPatterns = {"/UserinforController"})
+@WebServlet(name = "UserinforController", urlPatterns = {"/userinfo"})
 public class UserinforController extends HttpServlet {
 
     /**

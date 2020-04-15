@@ -20,7 +20,7 @@
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
         <div class="main2">
-            <form class="changepass_box" action="ChangePassController" method="post">
+            <form class="changepass_box" action="changepass" method="post">
                 <h1><b>Change Password</b></h1>
                 <div class="changepass_items">
                     <p class="caution" title="You must fill this !!"></p>
@@ -59,7 +59,7 @@
                     <br>
                     <br>
                     <button id="but5" type="submit"  value="save" onclick="checkyes()"><span>Save</span></button>
-                    <button id="but6" onclick="document.location = '/AVS/UserinforController';return false" value="cancel"><span>Cancel</span></button>
+                    <button id="but6" onclick="document.location = '/AVS/userinfo';return false" value="cancel"><span>Cancel</span></button>
                     <!--  <input type="submit" name="" value="Login">-->
                     <%if (request.getAttribute("success") != null) {
                     %>

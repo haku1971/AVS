@@ -19,6 +19,7 @@ var highlightsorted = [];
 var color = [];
 var logarray = [];
 var algorithmtype;
+var category;
 //window.init = init;
 //window.shuffle = shuffle;
 //window.initarray = initarray;
@@ -26,41 +27,66 @@ var algorithmtype;
 //window.back = back;
 //window.resume = resume;
 
-function init(algorithmtype) {
+function init(algorithmtype, category) {
     this.algorithmtype = algorithmtype;
-    removeHighlightedCode();
-    startSorting();
-    currentstep = 0;
-    canvas = document.getElementById('canvasAnimation');
-    draw(currentstep);
-    boolRun = true;
-    resume();
+    this.category = category;
+    var isvisualized = true;
+    document.getElementById("txtElement").value = initarray.join('');
+    document.getElementById("txtSearchnumber").value = searchnumber;
+    if (algorithmtype === "null") {
+        isvisualized = false;
+    }
+    startVisualizing(isvisualized, category);
+    if (isvisualized) {
+        removeHighlightedCode();
+        currentstep = 0;
+        canvas = document.getElementById('canvasAnimation');
+        draw(currentstep);
+        boolRun = true;
+        resume();
+    } else {
+        document.getElementById("progress").hidden = true;
+        document.getElementById("canvasAnimation").hidden = true;
+        document.getElementById("speed").hidden = true;
+        document.getElementById("stepButton").hidden = true;
+        document.getElementById("txtlog").hidden = true;
+    }
 }
 
-function startSorting() {
-    switch (algorithmtype) {
-        case 'bubblesort' :
-            bubbleSort(initarray);
+function startVisualizing(isvisualized, category) {
+    if (isvisualized) {
+        switch (algorithmtype) {
+            case 'bubblesort' :
+                if (isvisualized)
+                    bubbleSort(initarray);
+                break;
+            case 'insertionsort' :
+                if (isvisualized)
+                    insertionSort(initarray);
+                break;
+            case 'selectionsort' :
+                if (isvisualized)
+                    selectionSort(initarray);
+                break;
+            case 'linearsearch' :
+                if (isvisualized)
+                    linearSearch(initarray);
+                break;
+            case 'binarysearch' :
+                if (isvisualized)
+                    binarySearch(initarray);
+                break;
+            case 'interpolationsearch' :
+                if (isvisualized)
+                    interpolationSearch(initarray);
+                break;
+        }
+    }
+    switch (category) {
+        case 1 :
             getAjaxSortData();
             break;
-        case 'insertionsort' :
-            insertionSort(initarray);
-            getAjaxSortData();
-            break;
-        case 'selectionsort' :
-            selectionSort(initarray);
-            getAjaxSortData();
-            break;
-        case 'linearsearch' :
-            linearSearch(initarray);
-            getAjaxSearchData();
-            break;
-        case 'binarysearch' :
-            binarySearch(initarray);
-            getAjaxSearchData();
-            break;
-        case 'interpolationsearch' :
-            interpolationSearch(initarray);
+        case 2 :
             getAjaxSearchData();
             break;
     }
@@ -108,19 +134,6 @@ function getAjaxSearchData() {
     );
 }
 
-//deleted
-function shuffle() {
-    var oldPos = initarray.length,
-            newPos, temp;
-    while (--oldPos) {
-        newPos = Math.floor(Math.random() * (oldPos + 1));
-        temp = initarray[oldPos];
-        initarray[oldPos] = initarray[newPos];
-        initarray[newPos] = temp;
-    }
-
-    init(algorithmtype);
-}
 
 function random() {
     searchnumber = randomFrom1to9(); // returns a random integer from 0 to 9
@@ -129,9 +142,9 @@ function random() {
     for (var i = 0; i < arraylenght; i++) {
         initarray.push(randomFrom1to9());
     }
-    console.log(1);
+    document.getElementById("txtElement").value = initarray.join('');
     removeHighlightedCode();
-    init(algorithmtype);
+    init(algorithmtype, category);
 }
 
 function randomFrom1to9() {
@@ -145,24 +158,29 @@ function randomFrom1to9() {
 
 function inputByUser() {
     var maxlength = 15;
+    var isvalid = true;
     //Array
     arr_by_user = document.getElementById("txtElement").value;
     arr_by_user = arr_by_user.split("");
     if (arr_by_user.length > 0) {
         if (arr_by_user.length > maxlength) {
             window.alert("Array lenght too long, try array lenght <= 15!");
+            isvalid = false;
         }
         if (arr_by_user.length <= maxlength) {
             initarray = arr_by_user;
         }
+    } else {
+        isvalid = false;
     }
     //Searchnumber
     if (document.getElementById("txtSearchnumber").value !== '') {
         searchnumber = document.getElementById("txtSearchnumber").value;
 
     }
-
-    init(algorithmtype);
+    if (isvalid) {
+        init(algorithmtype, category);
+    }
 }
 
 function next() {
@@ -298,7 +316,7 @@ function drawGraph(data) {
     var root_cordinate_pos = center - context.measureText("0").width;
     var horizon_gap_left = left + center + right;
     var horizon_gap_right = 20;
-    var vertical_axis_name = 'number of steps';
+    var vertical_axis_name = 'Time (Big O)';
     var margin_left = 20;
     var margin_right = 20;
     var margin_top_collumn = 10;
@@ -316,9 +334,6 @@ function drawGraph(data) {
         return vertical_gap_top + vertical_axis - colHeight(stepValue);
     }
     var distance_arrow_to_underline = 20;
-    var color_red_value = 10;
-    var green = 10;
-    var blue = 100;
     //draw each collum
     for (i = 0; i < data.length; i++) {
 //set color for each collum       
@@ -380,8 +395,8 @@ function drawGraph(data) {
     function fillColHeader(headerValue, horCor, verCor) {
         context.fillStyle = "black";
         context.font = "19 pt Arial;";
-        var lengthtemp = context.measureText(headerValue).width;
-        context.fillText(headerValue, horCor + (colum_width / 2) - (lengthtemp / 2), verCor);
+        var lengthtemp = context.measureText("O(" +headerValue+")").width;
+        context.fillText("O(" +headerValue+")", horCor + (colum_width / 2) - (lengthtemp / 2), verCor);
     }
 
     //var underline_length = 5;
@@ -415,35 +430,6 @@ function drawGraph(data) {
         underline_value -= (vertical_axis_top_value / number_of_underline);
     }
     context.stroke();
-    //set lai gia tri ve nhu cu cho no
-    //number_of_underline = 5;
-    // next_underline_pos = 0;
-    //vẽ nét đứt
-    /* 
-     context.beginPath();
-     for (var i = 0; i < number_of_underline; i++) {
-     context.setLineDash([5, 15]);
-     if (i === 0) {
-     //ve hang net dut
-     context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline);
-     context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline);
-     
-     } else if (i > 0 && i <= number_of_underline - 2) {
-     
-     context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-     context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-     } else {
-     context.moveTo(horizon_gap_left + right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-     context.lineTo(canvas_width - horizon_gap_right, vertical_gap_top + distance_arrow_to_underline + next_underline_pos);
-     
-     }
-     next_underline_pos += (vertical_axis - distance_arrow_to_underline) / number_of_underline;
-     underline_value -= (vertical_axis_top_value / number_of_underline);
-     }
-     context.stroke();
-     */
-
-
 }
 
 function setInputFilter(textbox, inputFilter) {

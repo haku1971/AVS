@@ -345,13 +345,13 @@
         %>
 
         <div>
-            <form  class ="comment_content" method="POST" action="CommentController">
+            <form  class ="comment_content" method="POST" action="newsdetail">
                 <%DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd  HH:mm:ss");
                     LocalDateTime now = LocalDateTime.now();
                     String strdate = dtf.format(now);
                 %>
                 <input type="hidden" name="strdate" value="<%=strdate%>" />
-                <input type="hidden" name="newsid" value="<%=news.getNewsID()%> " />
+                <input type="hidden" name="id" value="<%=news.getNewsID()%> " />
                 <textarea class="textarea_cmt" id="txtsavedb" width="500"  name="commentcontent" placeholder="Type your think....."></textarea>
                 <input class="post_button" type="submit" id="postcomment" name="postodb" value="Post comment" />       
             </form>

@@ -49,7 +49,7 @@
             <ul>
                 <li><img src="images\avs_logo.png" /></li>
                 <li id="hover"><a href="home">Home</a></li>
-                <li id="hover"><a href="NewsController">News</a></li>
+                <li id="hover"><a href="news">News</a></li>
                 <% if(roleid.equals("1")){%>
                 <li id="hover"><a href="admin">Admin</a></li>
                 <%}%>
@@ -62,17 +62,17 @@
                             <button style="pointer-events: none"><span>+</span></button>
                             <div class="dropdown-content">
                                 <div style = "display:none" align="middle" class="g-signin2" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
-                                <button onclick="document.location = '/AVS/UserinforController';return false">Information</button>
+                                <button onclick="document.location = '/AVS/userinfo';return false">Information</button>
                                 <button id="logout" onclick="signOut()">Log out</button>
                             </div>
                         </div>
                         <%} else {%>
-                        <button onclick="document.location = '/AVS/LoginController';return false">Sign in</button>
-                        <button onclick="document.location = '/AVS/SignupController';return false">Sign Up</button><%}%>
+                        <button onclick="document.location = '/AVS/login';return false">Sign in</button>
+                        <button onclick="document.location = '/AVS/register';return false">Sign Up</button><%}%>
                     </form>
                 </li>
                 <li id="loginButton">
-                    <form id="search"  action="NewsController">
+                    <form id="search"  action="news">
                         <input type="text" value="${SearchValue}" placeholder="  Search.." name="search">
                         <button type="submit">Submit</button>
                     </form>

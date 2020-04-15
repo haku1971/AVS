@@ -91,7 +91,7 @@
                 <% if (listallnews != null) {
                         for (int i = 0; i < listallnews.size(); i++) {%>
 
-                <a href="CommentController?newsid=<%=listallnews.get(i).getNewsID()%>"><%=listallnews.get(i).getNewstittles()%> </a>
+                <a href="newsdetail?id=<%=listallnews.get(i).getNewsID()%>"><%=listallnews.get(i).getNewstittles()%> </a>
                 <br>     
                 <p>By: <%=listallnews.get(i).getUser().getFullname()%> <p>
                 <p>Content: <%=listallnews.get(i).getNews_shortdescription()%> <p>  
@@ -110,9 +110,9 @@
 
                     <a class="active"> <%=i%></a>
                     <%} else if (search != null) {%>
-                    <a href="NewsController?page=<%=i%>&search=<%=search%>"><%=i%></a>
+                    <a href="news?page=<%=i%>&search=<%=search%>"><%=i%></a>
                     <%} else {%>
-                    <a href="NewsController?page=<%=i%>"><%=i%></a>
+                    <a href="news?page=<%=i%>"><%=i%></a>
                     <%}
                         }%>
                 </div>

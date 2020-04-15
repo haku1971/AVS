@@ -29,7 +29,7 @@
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
         <div class="main">
-            <form class="box2" action="SignupController" method="post">
+            <form class="box2" action="register" method="post">
                 <h1><b>Sign Up</b></h1>
                 <table class="infortable">
                     <tr> 

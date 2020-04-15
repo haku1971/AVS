@@ -22,7 +22,7 @@
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
         <div class="main">
-            <form class="box" action="LoginController" method="post">
+            <form class="box" action="login" method="post">
                 <h1><b>Login</b></h1>
                 <input id="infor" type="text" name="username" placeholder="Username" required /></br>
 
@@ -44,7 +44,7 @@
                 <hr>
                 <h4>Don't have an account</h4>
 
-                <button id="sign" onclick="document.location = '/AVS/SignupController';return false">Register</button>
+                <button id="sign" onclick="document.location = '/AVS/register';return false">Register</button>
             </form>
         </div>
 

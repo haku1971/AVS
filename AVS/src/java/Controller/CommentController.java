@@ -36,7 +36,7 @@ public class CommentController extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html; charset=UTF-8");
-            int newsid = Integer.parseInt(request.getParameter("newsid"));
+            int newsid = Integer.parseInt(request.getParameter("id"));
 
             NewsModel newmodeldao = new NewsModel();
             CommentModel commentmodel = new CommentModel();
@@ -87,7 +87,7 @@ public class CommentController extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=UTF-8");
             CommentModel commentmodel = new CommentModel();
-            String newid = request.getParameter("newsid");
+            String newid = request.getParameter("id");
             int newsid = convertStringToInt(newid);
             String comment = "";
             String strdate = "";
@@ -125,12 +125,12 @@ public class CommentController extends HttpServlet {
                 comment = request.getParameter("commentcontent");
                 strdate = request.getParameter("strdate");
                 commentmodel.saveCommenttoDB(comment, strdate, usersid, newsid);
-                response.sendRedirect("CommentController?newsid=" + newsid);
+                response.sendRedirect("newsdetail?id=" + newsid);
                 return;
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(CommentController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 

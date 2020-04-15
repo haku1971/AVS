@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BinhNT
  */
-@WebServlet(name = "ChangePassController", urlPatterns = {"/ChangePassController"})
+@WebServlet(name = "ChangePassController", urlPatterns = {"/changepass"})
 public class ChangePassController extends HttpServlet {
 
     /**

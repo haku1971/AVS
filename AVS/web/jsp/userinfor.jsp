@@ -22,7 +22,7 @@
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
         <div class="main">
-            <form class="info_box" action="UserinforController" method="post">
+            <form class="info_box" action="userinfo" method="post">
                 <table class="infortable">
                     <tr> 
                         <td><h1>My Profile</h1></td> 
@@ -82,11 +82,11 @@
                         </td>
                         <td>
 
-                            <button id="but1" onclick="document.location = '/AVS/ChangeInforController';return false" value="changeinfor"><span>Change Information</span></button>
+                            <button id="but1" onclick="document.location = '/AVS/changeinfo';return false" value="changeinfor"><span>Change Information</span></button>
                         </td>
                         <td>
                             <%if (!request.getAttribute("username").equals(request.getAttribute("mail"))) {%>
-                            <button id="but2" onclick="document.location = '/AVS/ChangePassController';return false" value="changepass"><span>Change Password</span></button>
+                            <button id="but2" onclick="document.location = '/AVS/changepass';return false" value="changepass"><span>Change Password</span></button>
                             <%}%>
                         </td>
                     </tr>

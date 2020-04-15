@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author BinhNT
  */
-@WebServlet(name = "ChangeInforController", urlPatterns = {"/ChangeInforController"})
+@WebServlet(name = "ChangeInforController", urlPatterns = {"/changeinfo"})
 public class ChangeInforController extends HttpServlet {
 
     /**

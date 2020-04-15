@@ -392,8 +392,9 @@ public class AlgorithmModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String statementstring = "SELECT *\n"
-                    + "FROM (select *, ROW_NUMBER() over(order by algo_id) as rownumber from Algorithm ";
+            String statementstring = "SELECT n.*\n"
+                    + "FROM (select a.*,c.category_Name, ROW_NUMBER() over(order by algo_id) as rownumber from Algorithm as a \n"
+                    + "inner join Category as c	on a.category_ID = c.category_ID ";
             if (!"showdeleted".equals(deleted)) {
                 statementstring += "where delete_Status = 0";
             }
@@ -413,6 +414,7 @@ public class AlgorithmModel {
                 algo.setAlgoName(rs.getString("algo_Name"));
                 algo.setCategoryID(rs.getInt("category_ID"));
                 algo.setVisualized(rs.getInt("algo_CompareStatus"));
+                algo.setCategoryName(rs.getString("category_Name"));
                 algos.add(algo);
             }
         } catch (Exception e) {
