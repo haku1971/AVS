@@ -12,7 +12,7 @@ passwordb: Kgt2tQw4LjhydM8ats
 -->
 
 <Context path="/AVS">
-  <Environment name="serverName" type="java.lang.String" value="DESKTOP-E2PVDU3\SQLEXPRESS"/>
+  <Environment name="serverName" type="java.lang.String" value="DESKTOP-C22NL51"/>
   <Environment name="port" type="java.lang.String" value="1433"/>
   <Environment name="user" type="java.lang.String" value="sa"/>
   <Environment name="password" type="java.lang.String" value="123456"/>

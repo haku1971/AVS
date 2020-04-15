@@ -41,20 +41,20 @@
                                 <%=request.getAttribute("errorUsername")%>
                             </div>
                             <%
-                                } else {
+                            } else {
                             %>
                             &nbsp;
                             <%}%>
                         </td>
                         <td>
-                            
+
                             <%if (request.getAttribute("errorPass") != null) {
                             %>
                             <div class="errormess">
                                 <%=request.getAttribute("errorPass")%>
                             </div>
                             <%
-                                } else {
+                            } else {
                             %>
                             &nbsp;
                             <%}%>
@@ -72,14 +72,14 @@
                     </tr>
                     <tr>
                         <td>
-                            
+
                             <%if (request.getAttribute("errorMail") != null) {
                             %>
                             <div class="errormess">
                                 <%=request.getAttribute("errorMail")%>
                             </div>
                             <%
-                                } else {
+                            } else {
                             %>
                             &nbsp;
                             <%}%>
@@ -92,7 +92,7 @@
                                 <%=request.getAttribute("errorRepass")%>
                             </div>
                             <%
-                                } else {
+                            } else {
                             %>
                             &nbsp;
                             <%}%>
@@ -104,7 +104,7 @@
                             <input class="su_info1" type="text" name="email" placeholder="xyz@qwe.abc.com"required/>
                         </td>
                         <td>
-                            <span class="span_info1">RePass:</span>
+                            <span class="span_info1">Re-password:</span>
                             <input class="su_info2" type="password" name="repassword" placeholder="At least 6 character"required/>
                         </td>
                     </tr>
@@ -113,14 +113,14 @@
                             &nbsp;
                         </td>
                         <td>
-                           
+
                             <%if (request.getAttribute("errorPhone") != null) {
                             %>
                             <div class="errormess">
                                 <%=request.getAttribute("errorPhone")%>
                             </div>
                             <%
-                                } else {
+                            } else {
                             %>
                             &nbsp;
                             <%}%>
@@ -133,7 +133,7 @@
                         </td>
                         <td>
                             <span class="span_info1">Phone:</span>
-                            <input class="su_info3" type="text" name="phone" placeholder="Phone must be numbers"/>
+                            <input class="su_info3" id="su_info_phone" type="text" name="phone" placeholder="Phone must be numbers" maxlength="10"/>
                         </td>
                     </tr>
                     <tr>
@@ -146,7 +146,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="span_info1">DayOfBirth:</span>
+                            <span class="span_info1">DoB:</span>
                             <input class="su_info3" type="date" name="birthday" value="1900-01-01"/>
                         </td>
                         <td>
@@ -192,4 +192,30 @@
         </div>
         <%@include file="footer.jsp" %>
     </body>
+    <script>
+        function setInputFilter(textbox, inputFilter) {
+            ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+                if (textbox === null) {
+                    console.log('Null pointer exception!');
+                } else {
+                    textbox.addEventListener(event, function () {
+                        if (inputFilter(this.value)) {
+                            this.oldValue = this.value;
+                            this.oldSelectionStart = this.selectionStart;
+                            this.oldSelectionEnd = this.selectionEnd;
+                        } else if (this.hasOwnProperty("oldValue")) {
+                            this.value = this.oldValue;
+                            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                        } else {
+                            this.value = "";
+                        }
+                    });
+                }
+            });
+        }
+        setInputFilter(document.getElementById("su_info_phone"), function (value) {
+            return /^\d*$/.test(value);
+        }
+        );
+    </script>
 </html>
