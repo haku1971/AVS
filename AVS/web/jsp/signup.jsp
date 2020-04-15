@@ -62,10 +62,12 @@
                     </tr>
                     <tr>
                         <td>
-                            <input class="su_info1" type="text" name="username" placeholder="Username"required/>
+                            <span class="span_info1">UserName:</span>
+                            <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)"required/>
                         </td>
                         <td>
-                            <input class="su_info2" type="password" name="password" placeholder="Password"required/>
+                            <span class="span_info1">Password:</span>
+                            <input class="su_info2" type="password" name="password" placeholder="At least 6 character"required/>
                         </td>
                     </tr>
                     <tr>
@@ -98,10 +100,12 @@
                     </tr>
                     <tr>
                         <td>
-                            <input class="su_info1" type="text" name="email" placeholder="Email"required/>
+                            <span class="span_info1">Email:</span>
+                            <input class="su_info1" type="text" name="email" placeholder="xyz@qwe.abc.com"required/>
                         </td>
                         <td>
-                            <input class="su_info2" type="password" name="repassword" placeholder="Re-Password"required/>
+                            <span class="span_info1">RePass:</span>
+                            <input class="su_info2" type="password" name="repassword" placeholder="At least 6 character"required/>
                         </td>
                     </tr>
                     <tr>
@@ -124,10 +128,12 @@
                     </tr>
                     <tr>
                         <td>
+                            <span class="span_info1">FullName:</span>
                             <input class="su_info3" type="text" name="fullname" placeholder="Enter your Name"/>
                         </td>
                         <td>
-                            <input class="su_info3" type="text" name="phone" placeholder="Enter your Phone Number"/>
+                            <span class="span_info1">Phone:</span>
+                            <input class="su_info3" type="text" name="phone" placeholder="Phone must be numbers"/>
                         </td>
                     </tr>
                     <tr>
@@ -140,9 +146,11 @@
                     </tr>
                     <tr>
                         <td>
+                            <span class="span_info1">DayOfBirth:</span>
                             <input class="su_info3" type="date" name="birthday" value="1900-01-01"/>
                         </td>
                         <td>
+                            <span class="span_info1">Workplace:</span>
                             <input class="su_info3" type="text" name="workplace" placeholder="Enter your Work Place"/>
                         </td>
                     </tr>
@@ -164,6 +172,7 @@
                         </td>
                         <td>
                             <div class="signup_item6">
+                                <span class="span_info1">Jobs:</span>
                                 <select name="job">
                                     <%for (int i = 0; i < jobs.size(); i++) {
                                             if (jobs.get(i).getJobid() == 5) {%>

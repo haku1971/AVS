@@ -607,7 +607,6 @@ body {
 
 .info_box{
     margin-top: 20px;
-    /*width: 1300px;*/
     padding: 40px;
     background: #EDF0F4;
     text-align: center;
@@ -657,6 +656,16 @@ body {
     /*position: absolute;*/
     left:0px;
     display: inline-block;
+}
+.span_info1 {
+    font-family: fantasy;
+    font-size: 20px;
+    width: 40px;
+    float: left;
+    margin-top: 13px;
+    margin-right: 35px;
+    display: inline-block;
+    
 }
 .info_item2 {
     /*position: absolute;*/
@@ -1296,7 +1305,7 @@ body {
 
 .changeinfo_box #gender {
     position: absolute;
-    bottom: 342px;
+    bottom: 363px;
     left: 616px;
 
 }
@@ -1453,3 +1462,7 @@ body {
     min-height: 30px;
 }
 
+.box2 .infortable .label1 {
+    position: absolute;
+
+}
