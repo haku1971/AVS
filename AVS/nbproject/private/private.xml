@@ -3,18 +3,49 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/signup.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Entity/Category.java</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/Detail.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/changepass.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_history.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/newslist.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ViewAlgorithmController.java</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/js/visualize.js</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Entity/Algorithm.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/footer.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/header.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ChangeInforController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/CommentController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_account.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AddNewsController.java</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/UserinforController.java</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/SaveLikeCommentController.java</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/LoginController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/NewsController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/DeleteLikeCommentController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/HistoryModel.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/AlgorithmModel.java</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/TrackingController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/viewalgo.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/userinfor.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_news.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/signup.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AdminController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/NewsModel.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/login.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Entity/Algorithm.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/Algo.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/error.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/newsdetail.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/NewsController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/changeinfor.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_tracking.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ChangePassController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/DeleteLikeCommentController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/Home.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/manage_algorithm.jsp</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/viewaccount.jsp</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/LogoutController.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/CategoryModel.java</file>
+            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/jsp/adminleft.jsp</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AddAlgorithmController.java</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/SignupController.java</file>
             <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ManageDatabaseController.java</file>

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BinhNT
  */
-@WebServlet(name = "SignupController", urlPatterns = {"/SignupController"})
+@WebServlet(name = "SignupController", urlPatterns = {"/register"})
 public class SignupController extends HttpServlet {
 
     /**
