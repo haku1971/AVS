@@ -104,7 +104,7 @@
                             <input class="su_info1" type="text" name="email" placeholder="xyz@qwe.abc.com"required/>
                         </td>
                         <td>
-                            <span class="span_info1">Re-password:</span>
+                            <span class="span_info1">Re-Password:</span>
                             <input class="su_info2" type="password" name="repassword" placeholder="At least 6 character"required/>
                         </td>
                     </tr>

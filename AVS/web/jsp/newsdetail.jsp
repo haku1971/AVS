@@ -18,7 +18,7 @@
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <script src="https://kit.fontawesome.com/5a03b2ca60.js" crossorigin="anonymous"></script>      
         <link rel="stylesheet" type="text/css" href="css/style.css" />        
-        
+
 
         <%@include file="header.jsp" %> 
         <style>
@@ -41,7 +41,23 @@
                 width: auto;
                 background-color: #edf0f4;
                 height: 15px;
+                text-align: left;
+                font-family: cursive;
+                font-weight: bold;
+            }
+
+            .likecounter1a{           
+                pointer-events:none;
+                border: none;
+                width: auto;
+                background-color: #edf0f4;
+                height: 15px;
                 text-align: center;
+                font-family: cursive;
+                font-weight: bold;
+                margin-top: 60px;
+                float: left;
+                margin-left: -115px;
             }
 
             .likecounter2{           
@@ -53,6 +69,45 @@
                 margin-left: 20px;
             }
 
+            .likecounter2b{           
+                pointer-events:none;
+                border: none;
+                width: auto;
+                background-color: #edf0f4;
+                height: 15px;
+                margin-left: 20px;
+                margin-bottom: 0px;
+               
+            }
+
+            .likecounter2a{           
+                pointer-events:none;
+                border: none;
+                width: auto;
+                background-color: #edf0f4;
+                height: 15px;
+                text-align: center;
+                font-family: cursive;
+                font-weight: bold;
+                margin-top: 30px;
+                float: left;
+                margin-left: -113px;
+            }
+            #heart{
+
+                float: left;
+            }
+            .like_unlike {
+                float: left;
+                margin-top: 40px;
+                margin-left:-33px;
+            }
+            #time_cmt {
+                font-size: 10px;
+                color: gray;
+                margin-bottom: 10px;
+                margin-top: 0px;
+            }
         </style>
     </head>
     <body>   
@@ -96,19 +151,18 @@
 
                 <div class="news_content">
                     <div class="detail">
-                        <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="">
-                        <div class="subdetail">
-                            <h3 style="text-align: justify;margin-left: 40px;" class="news_detail2">News Details</h3>
-                            <ul style="list-style-type:none;">
-                                <li>Time: <%=news.getNewsdaterealease()%></li>
-                                <li>Create By:<%=news.getUser().getFullname()%></li>
-                                <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
-                            </ul>
-                        </div>
+                        <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
+
                     </div>
 
                     <p>  <%=news.getNewscontent()%> </p>
-
+                    <div class="subdetail">                       
+                        <ul>
+                            <li>Time: <%=news.getNewsdaterealease()%></li>
+                            <li>Create By:<%=news.getUser().getFullname()%></li>
+                            <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
+                        </ul>
+                    </div>
                     <%
 
                         boolean thumplikenewsup = false;
@@ -122,10 +176,10 @@
                         }
                     %>
                     <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
-                    <i onclick="LikeNewsFunction(this,<%=news.getNewsID()%>,<%=Integer.parseInt(userid)%>)" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>
+                    <i id="heart" onclick="LikeNewsFunction(this,<%=news.getNewsID()%>,<%=Integer.parseInt(userid)%>)" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>
 
-                    <div id="likenew">${thumplikenewsup ?("Liked"):("Like")}</div> 
-                    <input class="likecounter1" id="txtlikenewsnumber" type="text" name="" value="<%=total_likenews%>" readonly/>
+                    <div class="like_unlike" id="likenew">${thumplikenewsup ?("Liked"):("Like")}</div> 
+                    <input class="likecounter1a" id="txtlikenewsnumber" type="text" name="" value="<%=total_likenews%>" readonly/>
                 </div>
 
             </div>
@@ -178,10 +232,10 @@
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <div class="cmt_detail" id="content_<%=commentid%>"><%=listallcommentbynewid.get(i).getContent()%> </div> 
             <textarea class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" ><%=listallcommentbynewid.get(i).getContent()%></textarea>
-            <div class="cmt_detail"> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
-            <i onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-3x"):("far fa-heart fa-3x")}" style="margin-left:15px;"></i>
+            <div id="time_cmt" class="cmt_detail"> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
+            <i id="like_ulike_cmt" onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}" style="margin-left:15px;"></i>
             <div class="cmt_detail" id="like_<%=commentid%>">${thumpup ?("Liked"):("Like")}</div>       
-            <input  class="likecounter2" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
+            <input  class="likecounter2b" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
 
             <%
                 //là người đang đăng nhập sẽ hiển thị xoá,sửa            
@@ -383,18 +437,17 @@
                 <div class="news_content">
                     <div class="detail">
                         <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
-                        <div class="subdetail">
-                            <h3 style="text-align: justify;margin-left: 40px;" class="news_detail2">News Details</h3>
-                            <ul style="list-style-type:none;">
-                                <li>Time: <%=news.getNewsdaterealease()%></li>
-                                <li>Create By:<%=news.getUser().getFullname()%></li>
-                                <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
-                            </ul>
-                        </div>
+
                     </div>
 
                     <p>  <%=news.getNewscontent()%> </p>
-
+                    <div class="subdetail">                       
+                        <ul>
+                            <li>Time: <%=news.getNewsdaterealease()%></li>
+                            <li>Create By:<%=news.getUser().getFullname()%></li>
+                            <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
+                        </ul>
+                    </div>
                     <%
                         boolean thumplikenewsup = false;
                         if (listalllikenewsbynewsid.size() > 0) {
@@ -402,10 +455,10 @@
                         }
                     %>
                     <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
-                    <i  class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>            
-                    <input class="likecounter1"  type="text" name="" value="<%=total_likenews%>" />
+                    <i id="heart" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>            
+                    <input class="likecounter2a"  type="text" name="" value="<%=total_likenews%>" />
 
-                    
+
                 </div>
             </div>
         </div>             
@@ -434,7 +487,7 @@
         <%} //hien thi tung comment
                 } //neu mang comment > 0
             } // la guest hay user 
-%>
+        %>
         <%@include file="footer.jsp" %>  
     </body>
 </html>
