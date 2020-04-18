@@ -47,7 +47,7 @@ public class NewsController extends HttpServlet {
         try {
             NewsModel newsmodeldao = new NewsModel();
             ArrayList<News> listallnews = null;
-            String s = request.getParameter("search");
+           
             int recordPerPage = 2;
             int page = 1;
             int numberOfPage = 0;
@@ -61,7 +61,6 @@ public class NewsController extends HttpServlet {
                 listallnews = newsmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, search);
                 int numberoffnews = newsmodeldao.countDBresultsearch(search);
                 String numberofsearchresult = "Found "+ numberoffnews + " result contain \"" + search + "\"" ;
-                request.setAttribute("search", search);
                 request.setAttribute("numberofsearchresult", numberofsearchresult);
                 double dataSize = (double) numberoffnews;
                 numberOfPage = (int) Math.ceil(dataSize / recordPerPage);

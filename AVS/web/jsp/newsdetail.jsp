@@ -77,7 +77,7 @@
                 height: 15px;
                 margin-left: 20px;
                 margin-bottom: 0px;
-               
+
             }
 
             .likecounter2a{           
@@ -158,7 +158,7 @@
                     <p>  <%=news.getNewscontent()%> </p>
                     <div class="subdetail">                       
                         <ul>
-                            <li>Time: <%=news.getNewsdaterealease()%></li>
+                            <li>Time: <%=news.getNewsdaterealease().substring(0,news.getNewsdaterealease().length()-5 ) %></li>
                             <li>Create By:<%=news.getUser().getFullname()%></li>
                             <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
                         </ul>
@@ -228,11 +228,13 @@
                     }
         %>
         <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>
+        <c:set var = "conntentofcomment" scope = "session" value = "<%=listallcommentbynewid.get(i).getContent()%>"/>
+
         <div class="cmt_items" id="<%=i%>">
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
-            <div class="cmt_detail" id="content_<%=commentid%>"><%=listallcommentbynewid.get(i).getContent()%> </div> 
-            <textarea class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" ><%=listallcommentbynewid.get(i).getContent()%></textarea>
-            <div id="time_cmt" class="cmt_detail"> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
+            <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/><%--<%=listallcommentbynewid.get(i).getContent()%> --%></div> 
+            <textarea class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" >${conntentofcomment}</textarea>
+            <div id="time_cmt" class="cmt_detail"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0,listallcommentbynewid.get(i).getDatetime().length()-5) %></div>  
             <i id="like_ulike_cmt" onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}" style="margin-left:15px;"></i>
             <div class="cmt_detail" id="like_<%=commentid%>">${thumpup ?("Liked"):("Like")}</div>       
             <input  class="likecounter2b" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
@@ -361,6 +363,14 @@
                     document.getElementById('content_' + commentid).style.visibility = 'visible';
                     checkedit = 0;
                 }
+                function escapeHtml(unsafe) {
+                    return unsafe
+                            .replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(/"/g, "&quot;")
+                            .replace(/'/g, "&#039;");
+                }
                 function savecomment(commentid) {
                     document.getElementById("txtedit_" + commentid).className = "hiddeninputtag";
                     setSaveButtonStatus(commentid, "hidden");
@@ -369,12 +379,12 @@
                     setCancelButtonStatus(commentid, "hidden");
                     setEditButtonStatus(commentid, "visible");
                     var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
-                    document.getElementById('content_' + commentid).innerHTML = txt_edit_content;
+                    document.getElementById('content_' + commentid).innerHTML = escapeHtml(txt_edit_content);
                     document.getElementById('content_' + commentid).style.visibility = 'visible';
                     console.log(txt_edit_content);
                     $.ajax({
                         type: "post",
-                        url: "DeleteCommentServlet", //this is my servlet
+                        url: "DeleteCommentServlet",
                         data: {commentcontentedit: txt_edit_content, commentid: commentid},
                         success: function (msg) {
                             $('#output').append(msg);
@@ -407,11 +417,19 @@
                 <input type="hidden" name="strdate" value="<%=strdate%>" />
                 <input type="hidden" name="id" value="<%=news.getNewsID()%> " />
                 <textarea class="textarea_cmt" id="txtsavedb" width="500"  name="commentcontent" placeholder="Type your think....."></textarea>
-                <input class="post_button" type="submit" id="postcomment" name="postodb" value="Post comment" />       
+                <input class="post_button" type="submit" id="postcomment" onclick="checkContentIsEmpty()" name="postodb" value="Post comment" />       
             </form>
         </div>
 
         <script>
+            function checkContentIsEmpty() {
+                if ($('#txtsavedb').val() === "") {
+
+                    $('#postcomment').attr("disabled", true);
+                } else {
+                    $('#postcomment').attr("disabled", false);
+                }
+            }
             $('#txtsavedb').keyup(function () {
                 // Get the Login Name value and trim it
                 var name = $('#txtsavedb').val();
@@ -479,8 +497,9 @@
             <hr>          
             <c:out value = "${thumpup}"/>
             <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
-            <div><%=listallcommentbynewid.get(i).getContent()%> </div> 
-            <div> <%= "At: " + listallcommentbynewid.get(i).getDatetime()%></div>  
+            <%--  <div><%=listallcommentbynewid.get(i).getContent()%> </div> --%>
+            <c:out value="${conntentofcomment}"/>
+            <div><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0,listallcommentbynewid.get(i).getDatetime().length()-5) %></div>  
             <i  class= "${thumpup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>             
             <input class="likecounter2"  type="text"  value="<%=numberlike%>" />
         </div>

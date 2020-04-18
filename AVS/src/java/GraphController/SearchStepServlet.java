@@ -106,12 +106,28 @@ public class SearchStepServlet extends HttpServlet {
         return parser.fromJson(json, int[].class);
     }
 
-    int[] tempArray(int[] arr) {
-        int[] newarr = new int[arr.length];
+     static int[] tempArray(int[] arr) {
 
+        int[] newarr = new int[arr.length];
         for (int i = 0; i < arr.length; i++) {
             newarr[i] = arr[i];
 
+        }
+        return newarr;
+    }
+
+    static int[] bubbleSort(int arr[]) {
+        int[] newarr = tempArray(arr);
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (newarr[j] > newarr[j + 1]) {
+                    // swap arr[j+1] and arr[i] 
+                    int temp = newarr[j];
+                    newarr[j] = newarr[j + 1];
+                    newarr[j + 1] = temp;
+                }
+            }
         }
         return newarr;
     }
@@ -123,7 +139,7 @@ public class SearchStepServlet extends HttpServlet {
 
             case 9:
                 //array, left,right, searchvalue,count
-                return binarySearch(array, 0, array.length - 1, searchvalue, 0);
+                return binarySearch(bubbleSort(array), 0, array.length - 1, searchvalue, 0);
 
             case 10:
                 return interpolationSearch(array, searchvalue);
@@ -148,7 +164,7 @@ public class SearchStepServlet extends HttpServlet {
             int[] jsFileArray = toArray(json, parser);
 
             AlgorithmModel dao = new AlgorithmModel();
-            int categoryid = 2;
+            int categoryid = 5;
             ArrayList<Algorithm> listAlgo = dao.getAlgosortbyID(categoryid);
             for (int i = 0; i < listAlgo.size(); i++) {
                 int choose_algoid = listAlgo.get(i).getAlgoID();
