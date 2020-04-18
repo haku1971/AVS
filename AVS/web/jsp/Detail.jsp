@@ -25,10 +25,6 @@
             ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
             Algorithm algo = (Algorithm) request.getAttribute("algorithm");
             ArrayList<Algorithm> algorithmbycategory = (ArrayList<Algorithm>) request.getAttribute("algorithmbycategory");
-//            Boolean isvisualized = true;
-//            if(algo.getAlgoFile().equals("null")) {
-//                isvisualized = false;
-//            }
         %>
     </head>
 
@@ -37,7 +33,7 @@
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
         <%@include file="header.jsp" %> 
         <div class="banner">
-            <h1>Welcome to Algorithm Visualize System<%=algo.getCategoryID()%></h1>
+            <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>    
         <div class="main">
@@ -120,8 +116,10 @@
             <div id="Visualizer" class="tabcontent">
                 <div class="Visual">
                     <div class="leftAlgo">
-                        <div>Array:<br><input id="txtElement" type="text" name="name" maxlength="15" /></div>
-                        <div><input placeholder="Search Value" id="txtSearchnumber" type="text" value="" /></div>
+                        <div>Array:<br><input id="txtElement" type="text" name="name" maxlength="15" />
+                            <input id="txtElementHashing" type="text" name="name" maxlength="33" /></div>
+                        <div id="divSearchnumber">Search value:<br><input placeholder="Search Value" id="txtSearchnumber" type="text" value="" maxlength="2"/></div>
+                        <div id="divArraySize">Size:<br><input id="txtArraySize" type="text" maxlength="2"/></div>
                         <div id="progress"> 
                             <div id="progresstext">
                                 Progress:<br> <br>
@@ -179,7 +177,16 @@
                                     return /^\d*$/.test(value);
                                 }
                                 );
+                                setInputFilter(document.getElementById("txtElementHashing"), function (value) {
+                                    //                                    return /^[0-9,-,]*$/i.test(value);
+                                    return /^[0-9,-,]*$/i.test(value);
+                                }
+                                );
                                 setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
+                                    return /^\d*$/.test(value);
+                                }
+                                );
+                                setInputFilter(document.getElementById("txtArraySize"), function (value) {
                                     return /^\d*$/.test(value);
                                 }
                                 );

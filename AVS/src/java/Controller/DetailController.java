@@ -86,11 +86,7 @@ public class DetailController extends HttpServlet {
                 } else {
                     Algorithm algorithm = dao.getAlgoByID(Integer.parseInt(i));
                     ArrayList<Entity.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithm.getCategoryID());
-                  //  Gson parser = new Gson();
-                   //  String listalgo = parser.toJson(data);
-
-                  //  String algobyid = parser.toJson(algorithmbyid);
-                    //  String algobycategory = parser.toJson(algorithmbycategory);
+                  
                     request.setAttribute("algorithm", algorithm);
                     request.setAttribute("algorithmbycategory", algorithmbycategory);
                     request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);

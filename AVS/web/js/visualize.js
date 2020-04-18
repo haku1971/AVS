@@ -1,4 +1,5 @@
 var initarray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
+var hasharray = [10, 20, 30, 40, 1, 2, 3, 4, 8];
 var searchnumber = 8;
 var gapbetweennumber = 8;
 var N = 10; // Array Size
@@ -20,22 +21,82 @@ var color = [];
 var logarray = [];
 var algorithmtype;
 var category;
-//window.init = init;
-//window.shuffle = shuffle;
-//window.initarray = initarray;
-//window.next = next;
-//window.back = back;
-//window.resume = resume;
+var isinit = true;
+/*
+ * Hash implement
+ */
+//var hash = require('string-hash');
+var hasharraysize = 11;
+function getindex(key, arraysize) {
+//    var hash = hashfunc(key);
+    var hash = key;
+    return  hash % arraysize;
+}
 
+function hashfunc(key) {
+    var hash = key;
+    for (var i = 0; i < key.length; i++) {
+        let chr = key.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+}
+
+class OpenAddressHashTable {
+    constructor() {
+        this.list = [];
+        console.log(this.list[9]);
+    }
+
+    get(key) {
+        return this.list[getindex(key, hasharraysize)];
+    }
+
+    add(key) {
+        let index = getindex(key, hasharraysize);
+        if (this.list[index] === undefined || this.list[index] === key) {
+            this.list[index] = key;
+        } else {
+            index++;
+            if (index > hasharraysize - 1) {
+                index = 0;
+            }
+            this.addto(index, key);
+        }
+    }
+
+    addto(index, key) {
+        if (this.list[index] === undefined || this.list[index] === key) {
+            this.list[index] = key;
+        } else {
+            if (index > hasharraysize - 1) {
+                this.addto(0, key);
+            } else {
+                this.addto(index + 1, key);
+            }
+
+        }
+    }
+}
+
+var hashtable;
+function addArraytoHashTable(array) {
+    for (var i = 0; i < array.length; i++) {
+        let key = array[i];
+        hashtable.add(key);
+    }
+}
+
+
+
+/*
+ *  Other main function start here
+ */
 function init(algorithmtype, category) {
     this.algorithmtype = algorithmtype;
     this.category = category;
-    var isvisualized = true;
-    document.getElementById("txtElement").value = initarray.join('');
-    document.getElementById("txtSearchnumber").value = searchnumber;
-    if (algorithmtype === "null") {
-        isvisualized = false;
-    }
+    let isvisualized = algorithmtype === "null" ? false : true;
     startVisualizing(isvisualized, category);
     if (isvisualized) {
         removeHighlightedCode();
@@ -51,42 +112,79 @@ function init(algorithmtype, category) {
         document.getElementById("stepButton").hidden = true;
         document.getElementById("txtlog").hidden = true;
     }
+
+    switch (category) {
+        case 6 :
+        {
+            document.getElementById("txtElement").hidden = true;
+            document.getElementById("txtElementHashing").value = hasharray.join(',');
+            document.getElementById("txtSearchnumber").value = searchnumber;
+            document.getElementById("txtArraySize").value = hasharraysize;
+
+            break;
+        }
+        default :
+        {
+            document.getElementById("txtElementHashing").hidden = true;
+            document.getElementById("divArraySize").hidden = true;
+            document.getElementById("txtElement").value = initarray.join('');
+            document.getElementById("txtSearchnumber").value = searchnumber;
+            break;
+        }
+    }
 }
 
 function startVisualizing(isvisualized, category) {
     if (isvisualized) {
         switch (algorithmtype) {
+//Internal Sorting
             case 'bubblesort' :
-                if (isvisualized)
-                    bubbleSort(initarray);
+            {
+                bubbleSort(initarray);
                 break;
+            }
             case 'insertionsort' :
-                if (isvisualized)
-                    insertionSort(initarray);
+            {
+                insertionSort(initarray);
                 break;
+            }
             case 'selectionsort' :
-                if (isvisualized)
-                    selectionSort(initarray);
+            {
+                selectionSort(initarray);
                 break;
+            }
+
+//Searching by Comparision of Keys
             case 'linearsearch' :
-                if (isvisualized)
-                    linearSearch(initarray);
+            {
+                linearSearch(initarray);
                 break;
+            }
             case 'binarysearch' :
-                if (isvisualized)
-                    binarySearch(initarray);
+            {
+                binarySearch(initarray);
                 break;
+            }
             case 'interpolationsearch' :
-                if (isvisualized)
-                    interpolationSearch(initarray);
+            {
+                interpolationSearch(initarray);
+                break;
+            }
+//Hashing
+            case 'separatechaining_hash' :
+                separatechainingHash(hasharray);
+                break;
+            case 'openaddressing_hash':
+                openaddressingHash(hasharray);
                 break;
         }
     }
+
     switch (category) {
-        case 1 :
+        case 1 : //Internal Sorting
             getAjaxSortData();
             break;
-        case 2 :
+        case 5 : //Searching by Comparision of Keys
             getAjaxSearchData();
             break;
     }
@@ -110,7 +208,7 @@ function getAjaxSortData() {
         }
     }
     );
-    document.getElementById("txtSearchnumber").hidden = true;
+    document.getElementById("divSearchnumber").hidden = true;
 }
 
 function getAjaxSearchData() {
@@ -136,15 +234,33 @@ function getAjaxSearchData() {
 
 
 function random() {
-    searchnumber = randomFrom1to9(); // returns a random integer from 0 to 9
-    var arraylenght = initarray.length;
-    initarray = [];
-    for (var i = 0; i < arraylenght; i++) {
-        initarray.push(randomFrom1to9());
+    switch (category) {
+        case 6: //hashing
+        {
+            searchnumber = getRndInteger(1, 99)
+            var arraylenght = hasharray.length;
+            hasharray = [];
+            for (var i = 0; i < arraylenght; i++) {
+                hasharray.push(getRndInteger(1, 99));
+            }
+            document.getElementById("txtElementHashing").value = hasharray.join(',');
+            removeHighlightedCode();
+            init(algorithmtype, category);
+            break;
+        }
+        default: //sort and search
+        {
+            searchnumber = getRndInteger(1, 9); // returns a random integer from 0 to 9
+            var arraylenght = initarray.length;
+            initarray = [];
+            for (var i = 0; i < arraylenght; i++) {
+                initarray.push(getRndInteger(1, 9));
+            }
+            document.getElementById("txtElement").value = initarray.join('');
+            removeHighlightedCode();
+            init(algorithmtype, category);
+        }
     }
-    document.getElementById("txtElement").value = initarray.join('');
-    removeHighlightedCode();
-    init(algorithmtype, category);
 }
 
 function randomFrom1to9() {
@@ -155,30 +271,86 @@ function randomFrom1to9() {
     return random;
 }
 
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function inputByUser() {
-    var maxlength = 15;
+
     var isvalid = true;
     //Array
-    arr_by_user = document.getElementById("txtElement").value;
-    arr_by_user = arr_by_user.split("");
-    if (arr_by_user.length > 0) {
-        if (arr_by_user.length > maxlength) {
-            window.alert("Array lenght too long, try array lenght <= 15!");
-            isvalid = false;
+    switch (category) {
+        case 6: //hashing 
+        {
+            let maxlength;
+            if (document.getElementById("txtArraySize").value !== '') {
+                maxlength = document.getElementById("txtArraySize").value;
+                if (maxlength < 1) {
+                    window.alert("Size should be > 0!");
+                    isvalid = false;
+                    break;
+                }
+                if (maxlength > 11) {
+                    window.alert("Max size available is 11!");
+                    isvalid = false;
+                    break;
+                }
+            } else {
+                maxlength = hasharraysize;
+            }
+            arr_by_user = document.getElementById("txtElementHashing").value;
+            arr_by_user = arr_by_user.split(',');
+            console.log(arr_by_user);
+            for (var i = 0; i < arr_by_user.length; i++) {
+                if (arr_by_user[i] > 99) {
+                    window.alert("Element lenght too long, element lenght <= 99!");
+                    isvalid = false;
+                    break;
+                }
+            }
+            if (arr_by_user.length > 0) {
+                if (arr_by_user.length > maxlength) {
+                    window.alert("Array lenght too long, try array lenght <= " + maxlength + "!");
+                    isvalid = false;
+                }
+                if (arr_by_user.length <= maxlength) {
+                    hasharray = arr_by_user;
+                }
+            } else {
+                isvalid = false;
+            }
+            break;
         }
-        if (arr_by_user.length <= maxlength) {
-            initarray = arr_by_user;
+        default :
+        {
+            let maxlength = 15;
+            arr_by_user = document.getElementById("txtElement").value;
+            arr_by_user = arr_by_user.split("");
+            console.log(arr_by_user);
+            if (arr_by_user.length > 0) {
+                if (arr_by_user.length > maxlength) {
+                    window.alert("Array lenght too long, try array lenght <= 15!");
+                    isvalid = false;
+                }
+                if (arr_by_user.length <= maxlength) {
+                    initarray = arr_by_user;
+                }
+            } else {
+                isvalid = false;
+            }
+            break;
         }
-    } else {
-        isvalid = false;
     }
-    //Searchnumber
-    if (document.getElementById("txtSearchnumber").value !== '') {
-        searchnumber = document.getElementById("txtSearchnumber").value;
 
-    }
     if (isvalid) {
+        //Searchnumber
+        if (document.getElementById("txtSearchnumber").value !== '') {
+            searchnumber = document.getElementById("txtSearchnumber").value;
+        }
+
+        if (document.getElementById("txtArraySize").value !== '') {
+            hasharraysize = document.getElementById("txtArraySize").value;
+        }
         init(algorithmtype, category);
     }
 }
@@ -294,7 +466,6 @@ function drawGraph(data) {
         return o.number_of_step;
     }));
     var numberdigits;
-
     numberdigits = Math.floor(Math.log10(Math.abs(biggest_value_of_array))) + 1;
     if (numberdigits < 0 || numberdigits === 0) {
         numberdigits = 1;
@@ -316,7 +487,7 @@ function drawGraph(data) {
     var root_cordinate_pos = center - context.measureText("0").width;
     var horizon_gap_left = left + center + right;
     var horizon_gap_right = 20;
-    var vertical_axis_name = 'Time (Big O)';
+    var vertical_axis_name = 'Time';
     var margin_left = 20;
     var margin_right = 20;
     var margin_top_collumn = 10;
@@ -395,8 +566,8 @@ function drawGraph(data) {
     function fillColHeader(headerValue, horCor, verCor) {
         context.fillStyle = "black";
         context.font = "19 pt Arial;";
-        var lengthtemp = context.measureText("O(" +headerValue+")").width;
-        context.fillText("O(" +headerValue+")", horCor + (colum_width / 2) - (lengthtemp / 2), verCor);
+        var lengthtemp = context.measureText(headerValue).width;
+        context.fillText(headerValue, horCor + (colum_width / 2) - (lengthtemp / 2), verCor);
     }
 
     //var underline_length = 5;
@@ -461,6 +632,8 @@ function draw(step) {
         var canvaswidth = parseInt(document.getElementById("canvasAnimation").width);
         document.getElementById("canvasAnimation").height = 50;
         document.getElementById("canvasAnimation").width = initarray.length * 47;
+
+        ctx.font = "15px Arial";
         //xóa draw cũ
         ctx.fillStyle = "#edf0f4";
         ctx.fillRect(0, 0, canvaswidth, canvasheight);
@@ -499,9 +672,10 @@ function drawInitCurrent(currentstep, ctx) {
     for (var i = 0; i < eachStepArr[currentstep].length; i++) {
         ctx.fillStyle = "#AAAAAA";
         ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
-        ctx.fillStyle = "#000000";
-        ctx.font = "15px Arial";
-        ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+        if (eachStepArr[currentstep][i] !== undefined) {
+            ctx.fillStyle = "#000000";
+            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+        }
         if (highlightcode[i] !== 0) {
             var line_name = "line_" + highlightcode[i];
             if (document.getElementById(line_name) !== null) {
@@ -521,11 +695,12 @@ function drawHighlightAnimation(currentstep, ctx) {
                 if (color[currentstep] === "swap" || color[currentstep] === "found") {
                     ctx.fillStyle = "#c51162";
                     ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
-                    ctx.fillStyle = "#000000";
-                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+
                 } else {
                     ctx.fillStyle = "#2962ff";
                     ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+                }
+                if (eachStepArr[currentstep][i] !== undefined) {
                     ctx.fillStyle = "#000000";
                     ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
                 }
@@ -581,7 +756,6 @@ function printLog(currentstep) {
     document.getElementById("txtlog").innerHTML = text;
     var scrollBox = document.getElementById("txtlog");
     scrollBox.scrollTop = scrollBox.scrollHeight;
-
 }
 
 function bubbleSort(array) {
@@ -925,21 +1099,17 @@ function interpolationSearch(array) {
     color = [];
     highlightcode = [];
     logarray = [];
-
     eachStepArr.push(array);
     highlightcheck.push(0);
     highlightsorted.push(null);
     color.push(0);
     highlightcode.push([1]);
     logarray.push('Start searching number ' + searchnumber + ' in the array...<br>');
-
     var n = array.length;
     var x = searchnumber;
-
     var lo = 0, hi = (n - 1);
     var highlightcheckarr = [];
     var found = false;
-
     for (var i = lo; i <= hi; i++) {
         highlightcheckarr.push(i);
     }
@@ -949,7 +1119,6 @@ function interpolationSearch(array) {
     color.push(0);
     highlightcode.push([2]);
     logarray.push(logarray[logarray.length - 1] + 'low = ' + lo + ', high = ' + hi + '<br>');
-
     while (lo <= hi && x >= array[lo] && x <= array[hi]) {
         if (lo === hi) {
             if (array[lo] === x) {
@@ -1035,6 +1204,99 @@ function interpolationSearch(array) {
     document.getElementById("slideStep").max = eachStepArr.length - 1;
 }
 
+function separatechainingHash(array) {
+    console.log(hashtable.get(searchnumber));
+    eachStepArr = [];
+    highlightcheck = [];
+    highlightsorted = [];
+    color = [];
+    highlightcode = [];
+    logarray = [];
+}
 
+function openaddressingHash(array) {
+    hashtable = new OpenAddressHashTable();
+    addArraytoHashTable(hasharray);
+    console.log(hashtable.list);
+    //init 
+    eachStepArr = [];
+    highlightcheck = [];
+    highlightsorted = [];
+    color = [];
+    highlightcode = [];
+    logarray = [];
+    //start
+    eachStepArr.push(hashtable.list);
+    highlightcheck.push(0);
+    highlightsorted.push(0);
+    color.push(0);
+    highlightcode.push(0);
+    logarray.push('Start searching key = ' + searchnumber + '<br>');
+    let index = getindex(searchnumber, hasharraysize);
+    eachStepArr.push(hashtable.list);
+    highlightcheck.push([index]);
+    highlightsorted.push(0);
+    color.push('check');
+    highlightcode.push(0);
+    logarray.push(logarray[logarray.length - 1] + 'Index: ' + searchnumber + ' % ' + hasharraysize + ' = ' + index + '<br>'
+            + 'Checking index: ' + index + '. Value = ' + hashtable.list[index] + '<br>');
+    let isFound = true;
+    let start = index;
+    if (hashtable.list[index] !== searchnumber) {
+        if (hashtable.list[index] === undefined) {
+            logarray.push(logarray[logarray.length - 1] + 'index value undefined!<br>Can not find ' + searchnumber + '!');
+            isFound = false;
+        }
+        while (isFound === true) {
+            index++;
+            {
+                if (index > hasharraysize-1) {
+                    index = 0;
+                }
+                if (index === start) {
+                    logarray.push(logarray[logarray.length - 1] + 'Searched all index!<br>Can not find ' + searchnumber + '!');
+                    isFound = false;
+                    break;
+                }
+
+                eachStepArr.push(hashtable.list);
+                highlightcheck.push([index]);
+                highlightsorted.push(0);
+                color.push('check');
+                highlightcode.push(0);
+                logarray.push(logarray[logarray.length - 1] + 'Checking index: ' + index + '. Value = ' + hashtable.list[index] + '<br>');
+                if (hashtable.list[index] === searchnumber) {
+                    break;
+                }
+                if (hashtable.list[index] === undefined) {
+                    logarray.push(logarray[logarray.length - 1] + 'index value undefined!<br>Can not find ' + searchnumber + '!');
+                    isFound = false;
+                    break;
+                }
+
+            }
+        }
+    }
+    if (isFound) {
+        eachStepArr.push(hashtable.list);
+        highlightcheck.push([index]);
+        highlightsorted.push(0);
+        color.push('found');
+        highlightcode.push(0);
+        logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + index);
+    } else {
+        eachStepArr.push(hashtable.list);
+        highlightcheck.push(0);
+        highlightsorted.push(0);
+        color.push(0);
+        highlightcode.push(0);
+//        logarray.push(logarray[logarray.length - 1] + 'Can not find ' + searchnumber + '!');
+    }
+//set step in userview
+    totalstep = eachStepArr.length - 1;
+    document.getElementById("txtStepcount").innerHTML = '' + (currentstep + 1) + "/" + (totalstep + 1);
+    document.getElementById("progressStep").max = eachStepArr.length - 1;
+    document.getElementById("slideStep").max = eachStepArr.length - 1;
+}
 
 

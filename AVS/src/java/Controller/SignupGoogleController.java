@@ -102,7 +102,7 @@ public class SignupGoogleController extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/googlesignup.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendRedirect("/AVS/HomeController");
+            response.sendRedirect("/AVS/home");
         }
     }
 
@@ -184,7 +184,7 @@ public class SignupGoogleController extends HttpServlet {
                 response.addCookie(cookieusername);
                 response.addCookie(cookieroleid);
                 response.addCookie(cookieuserid);
-                response.sendRedirect("/AVS/HomeController");
+                response.sendRedirect("/AVS/home");
 
             } catch (Exception ex) {
                 Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
