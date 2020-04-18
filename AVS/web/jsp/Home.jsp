@@ -45,9 +45,11 @@
             <div class="content">
                 <ul class="list_items"> 
                     <% startUL = true; %>
-                    <%}%>
+                    <%} if (user.equals("anon")) {%>
+                          <li><a style=" text-decoration: none;" id="AlgoNameList" onclick="document.location = '/AVS/inputusername';return false"><%=a.getAlgoName()%></a></li>  
+                        <%}else{%>
                     <li><a style=" text-decoration: none;" id="AlgoNameList" href="Detail?AlgoID=<%=a.getAlgoID()%>"><%=a.getAlgoName()%></a></li>
-                        <%}%>
+                        <%}}%>
                 </ul>
             </div>
         </div>

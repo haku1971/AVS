@@ -42,6 +42,7 @@ public class AddAlgorithmController extends HttpServlet {
                 if (ck.getName().equals("roleid")) {
                     roleid = ck.getValue();
                 }
+               
             }
             int adminrolenumber = 1;
             if (roleid == null || Integer.parseInt(roleid) != adminrolenumber) {

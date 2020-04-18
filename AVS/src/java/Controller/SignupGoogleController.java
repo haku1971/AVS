@@ -1,12 +1,14 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package Controller;
 
+import Entity.Jobs;
 import Entity.User;
 import Model.AuthenticateManagement;
+import Model.JobsModel;
 import Model.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,13 +21,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author BinhNT
  */
-@WebServlet(name = "SignupController", urlPatterns = {"/register"})
-public class SignupController extends HttpServlet {
+@WebServlet(name = "SignupGoogleController", urlPatterns = {"/inputusername"})
+public class SignupGoogleController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +42,7 @@ public class SignupController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -91,10 +94,15 @@ public class SignupController extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            response.sendRedirect("/AVS/inputusername");
-        } else {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/signup.jsp");
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('You must input username to use this account');");
+            out.println("</script>");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/googlesignup.jsp");
             dispatcher.forward(request, response);
+        } else {
+            response.sendRedirect("/AVS/HomeController");
         }
     }
 
@@ -109,86 +117,65 @@ public class SignupController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String mail = request.getParameter("email");
-        String birthday = request.getParameter("birthday");
+        String dob = request.getParameter("birthday");
         String phone = request.getParameter("phone");
         String workplace = request.getParameter("workplace");
         String fullname = request.getParameter("fullname");
+        String email = request.getParameter("email");
+        String username = request.getParameter("username");
         int job = Integer.parseInt(request.getParameter("job"));
         int gender = Integer.parseInt(request.getParameter("gender"));
-        String repassword = request.getParameter("repassword");
-        UserModel userDao;
-        int id = 0;
-        int rolenumber = 0;
         AuthenticateManagement authenticateManagement = new AuthenticateManagement();
         AuthenticateManagement.CheckResult result = authenticateManagement.checkUserSignUp(username);
-        AuthenticateManagement.CheckResult passresult = authenticateManagement.checkPassword(password, repassword);
-        AuthenticateManagement.CheckResult phoneresult = authenticateManagement.checkNumber(phone);
-        AuthenticateManagement.CheckResult mailresult = authenticateManagement.checkMail(mail);
         int success = 1;
+        HttpSession session = request.getSession();
         if (result == AuthenticateManagement.CheckResult.USERNAME_LENGTH) {
-            request.setAttribute("errorUsername", "Username length is from 6 to 15 characters");
+            session.setAttribute("errorUsername", "Username length is from 6 to 15 characters");
             success = 0;
 
         } else if (result == AuthenticateManagement.CheckResult.INVALID_CHARACTER) {
-            request.setAttribute("errorUsername", "Contain invalid character(Valid character:a-z,0-9,(-),(_)");
+            session.setAttribute("errorUsername", "Contain invalid character(Valid character:a-z,0-9,(-),(_)");
             success = 0;
 
         } else if (result == AuthenticateManagement.CheckResult.EXIST_USERNAME) {
-            request.setAttribute("errorUsername", "Username exist");
+            session.setAttribute("errorUsername", "Username exist");
             success = 0;
         }
-        if (passresult == AuthenticateManagement.CheckResult.PASSWORD_SHORT) {
-            request.setAttribute("errorPass", "Password need at least 6 character");
-            success = 0;
-        }
-        if (passresult == AuthenticateManagement.CheckResult.NOT_MATCH) {
-            request.setAttribute("errorRepass", "Repassword is not correct ");
-            success = 0;
-
-        }
-
-        if (mailresult == AuthenticateManagement.CheckResult.WRONG_FORMAT) {
-            request.setAttribute("errorMail", "E-mail format is xyz@qwe.abc.com");
-            success = 0;
-        } else if (mailresult == AuthenticateManagement.CheckResult.EXIST_MAIL) {
-            request.setAttribute("errorMail", "E-mail is used ");
-            success = 0;
-        }
-
         if (!phone.equals("")) {
             if (phone.length() != 10) {
-                request.setAttribute("errorPhone", "Phone must be 10 digits");
+                session.setAttribute("errorPhone", "Phone must be 10 digits");
                 success = 0;
             } else if (phone.charAt(0) != '0') {
-                request.setAttribute("errorPhone", "Phone must start with 0");
+                session.setAttribute("errorPhone", "Phone must start with 0");
                 success = 0;
             }
 
         }
         if (success == 0) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/signup.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("/AVS/SignupGoogleController");
         } else if (success == 1) {
+            String userid = "";
+            if (request.getCookies() != null) {
+                Cookie cookie[] = request.getCookies();
+                int cookienum = 0;
+                while (cookienum < cookie.length) {
+                    if (cookie[cookienum].getName().equals("userid")) {
+                        userid = cookie[cookienum].getValue();
+                    }
 
-            try {
-                UserModel usermod = new UserModel();
-                usermod.insertUser(username, password, fullname, birthday, job,
-                        workplace, gender, mail, phone);
-                try {
-                    userDao = new UserModel();
-                    User user = userDao.getUserByUsername(username);
-                    rolenumber = user.getRolenum();
-                    id = user.getId();
-                } catch (Exception ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    cookienum++;
                 }
+            }
+            int agenumber = 0;
+            int useridnum = Integer.parseInt(userid);
+            try {
+
+                UserModel usermod = new UserModel();
+                usermod.UpdateUserGoogle(useridnum, username, dob, job, workplace, gender, phone);
+                User user = usermod.getUserByUsername(username);
+                Cookie cookieusername = new Cookie("username", user.getUsername());
+                int rolenumber = user.getRolenum();
                 String roleid = Integer.toString(rolenumber);
-                String userid = Integer.toString(id);
-                Cookie cookieusername = new Cookie("username", username);
                 Cookie cookieroleid = new Cookie("roleid", roleid);
                 Cookie cookieuserid = new Cookie("userid", userid);
                 cookieusername.setMaxAge(Integer.MAX_VALUE);
@@ -198,6 +185,7 @@ public class SignupController extends HttpServlet {
                 response.addCookie(cookieroleid);
                 response.addCookie(cookieuserid);
                 response.sendRedirect("/AVS/HomeController");
+
             } catch (Exception ex) {
                 Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
             }

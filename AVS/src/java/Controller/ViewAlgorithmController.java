@@ -45,9 +45,13 @@ public class ViewAlgorithmController extends HttpServlet {
             //hien thi trang home neu nguoi dung khong phai admin
             Cookie cookie[] = request.getCookies();
             String roleid = "";
+            String username = "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("roleid")) {
                     roleid = ck.getValue();
+                }
+                if (ck.getName().equals("username")) {
+                    username = ck.getValue();
                 }
             }
             int adminrolenumber = 1;
@@ -56,14 +60,14 @@ public class ViewAlgorithmController extends HttpServlet {
                 return;
             }
             //ket thuc kiem tra
-            
+
             int algoid = Integer.parseInt(request.getParameter("id"));
             AlgorithmModel algodao = new AlgorithmModel();
             Algorithm thisalgo = algodao.getAlgoByID(algoid);
-            
+
             CategoryModel catedao = new CategoryModel();
             ArrayList<Category> listcate = catedao.getAllCategory();
-            
+
             String category = "algorithm";
             request.setAttribute("category", category);
             request.setAttribute("algo", thisalgo);

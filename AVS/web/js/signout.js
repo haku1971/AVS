@@ -9,7 +9,14 @@ function signOut(){
                 auth2.signOut().then(function () {
                     console.log('User signed out.');
                     auth2.disconnect();
-                    document.location = '/AVS/LogoutController';
                 });
             }
 
+function signOut(){
+                console.log('User signed out.');
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                    auth2.disconnect();
+                });
+            }

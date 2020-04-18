@@ -62,6 +62,7 @@ public class CommentController extends HttpServlet {
             request.setAttribute("commentid_and_numberof_like", commentid_and_numberof_like);
             request.setAttribute("news", news);
             request.setAttribute("listallcommentbynewid", listallcommentbynewid);
+            
             request.getRequestDispatcher("jsp/newsdetail.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(CommentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,7 +92,7 @@ public class CommentController extends HttpServlet {
             int newsid = convertStringToInt(newid);
             String comment = "";
             String strdate = "";
-
+            
             //lay cookies nguoi dang nhap
             Cookie cookie[] = request.getCookies();
             int age = cookie[0].getMaxAge();
@@ -112,7 +113,7 @@ public class CommentController extends HttpServlet {
                     username = "";
                 }
             }
-
+            
             //check chua dang nhap thi ve home
             if (username.equals("")) {
                 response.sendRedirect("HomeController");

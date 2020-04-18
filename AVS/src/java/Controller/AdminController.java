@@ -51,9 +51,13 @@ public class AdminController extends HttpServlet {
             //hien thi trang home neu nguoi dung khong phai admin
             Cookie cookie[] = request.getCookies();
             String roleid = "";
+            String username = "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("roleid")) {
                     roleid = ck.getValue();
+                }
+                if (ck.getName().equals("username")) {
+                    username = ck.getValue();
                 }
             }
             int adminrolenumber = 1;

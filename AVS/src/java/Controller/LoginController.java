@@ -58,8 +58,35 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
 //        HttpSession session = request.getSession();
 //            session.removeAttribute("username");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-        dispatcher.forward(request, response);
+        String mail = "";
+        String fullname = "";
+        String userid = "";
+        String username = "";
+        if (request.getCookies() != null) {
+            Cookie cookie[] = request.getCookies();
+            int agecookie = cookie[0].getMaxAge();
+            int cookienum = 0;
+            while (cookienum < cookie.length) {
+                if (cookie[cookienum].getName().equals("userid")) {
+                    userid = cookie[cookienum].getValue();
+                }
+                if (cookie[cookienum].getName().equals("username")) {
+                    username = cookie[cookienum].getValue();
+                }
+                cookienum++;
+            }
+            if (agecookie == 0) {
+                userid = "";
+            }
+        }
+            if (username.equals("anon")) {
+           response.sendRedirect("/AVS/inputusername");
+            } else if (!userid.equals("")) {
+                response.sendRedirect("/AVS/HomeController");
+            } else {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+                dispatcher.forward(request, response);
+            }
     }
 
     /**
@@ -73,8 +100,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String username = request.getParameter("username");
+String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserModel userDao;
         int rolenumber = 0;
@@ -137,23 +163,25 @@ public class LoginController extends HttpServlet {
                 GoogleIdToken.Payload payLoad = IdTokenVerifierAndParser.getPayload(idToken);
                 String name = (String) payLoad.get("name");
                 String email = payLoad.getEmail();
-//            boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-//            String name = (String) payload.get("name");
-//            String pictureUrl = (String) payload.get("picture");
-//            String locale = (String) payload.get("locale");
-//            String familyName = (String) payload.get("family_name");
-//            String givenName = (String) payload.get("given_name");
-//                userDao = new UserModel();
-//                User user = userDao.getUserByUsername(username);
-//                if (user==null) {
-//                    userDao.insertUser(email, "null", name, 0, 2,
-//                        "", 3, "", "");
-//                }
+                response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter()) {
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet NewServlet</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet NewServlet at " + idToken+name + email+ "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
+
                 AuthenticateManagement authenticateManagement = new AuthenticateManagement();
                 AuthenticateManagement.CheckResult mailresult = authenticateManagement.checkMail(email);
                 userDao = new UserModel();
                 if (mailresult == AuthenticateManagement.CheckResult.EXIST_MAIL) {
                     User user = userDao.getUserByMail(email);
+
                     Cookie cookieusername = new Cookie("username", user.getUsername());
                     rolenumber = user.getRolenum();
                     id = user.getId();
@@ -166,13 +194,18 @@ public class LoginController extends HttpServlet {
                     cookieuserid.setMaxAge(Integer.MAX_VALUE);
                     response.addCookie(cookieusername);
                     response.addCookie(cookieroleid);
-                response.addCookie(cookieuserid);
-                    response.sendRedirect("/AVS/HomeController");
+                    response.addCookie(cookieuserid);
+                    if (user.getUsername().equals("anon")) {
+                        response.sendRedirect("/AVS/inputusername");
+                    } else {
+                        response.sendRedirect("/AVS/HomeController");
+                    }
                 } else {
-                    userDao.insertUser(name, "null", name, "", 5,
+                    userDao.insertUser("anon", "null", name, "", 5,
                             "", 1, email, "");
                     User user = userDao.getUserByMail(email);
                     Cookie cookieusername = new Cookie("username", user.getUsername());
+                    System.out.println(name);
                     rolenumber = user.getRolenum();
                     id = user.getId();
                     String roleid = Integer.toString(rolenumber);
@@ -184,8 +217,9 @@ public class LoginController extends HttpServlet {
                     cookieuserid.setMaxAge(Integer.MAX_VALUE);
                     response.addCookie(cookieusername);
                     response.addCookie(cookieroleid);
-                response.addCookie(cookieuserid);
-                    response.sendRedirect("/AVS/HomeController");
+                    response.addCookie(cookieuserid);
+                    response.sendRedirect("/AVS/inputusername");
+//                    response.sendRedirect("/AVS/HomeController");
                 }
 
             } catch (Exception e) {

@@ -58,6 +58,7 @@ public class ChangeInforController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String username = "";
         String fullname = "None";
         String dob = "";
@@ -72,19 +73,30 @@ public class ChangeInforController extends HttpServlet {
                 if (cookie[cookienum].getName().equals("username")) {
                     username = cookie[cookienum].getValue();
                 }
-
                 cookienum++;
             }
             if (agecookie == 0) {
                 username = "";
             }
+        }
+        if (username.equals("")) {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Account was logged out');");
+            out.println("</script>");
+            response.setHeader("Refresh", "1;url=/AVS/HomeController");
+        } else if (username.equals("anon")) {
+            response.sendRedirect("/AVS/inputusername");
+        } else {
+            session.setAttribute("username", username);
             try {
                 UserModel userDao = new UserModel();
                 User user = userDao.getUserByUsername(username);
                 if (user.getFullname().length() > 0) {
                     fullname = user.getFullname();
                 }
-                    dob=user.getDob();
+                dob = user.getDob();
                 int gender = user.getGender();
                 if (gender == 1) {
                     sex = "Male";
@@ -134,60 +146,79 @@ public class ChangeInforController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String dob = request.getParameter("birthday");
-        String phone = request.getParameter("phone");
-        String workplace = request.getParameter("workplace");
-        String fullname = request.getParameter("fullname");
-        int job = Integer.parseInt(request.getParameter("job"));
-        int gender = Integer.parseInt(request.getParameter("gender"));
-        int id = 0;
-        HttpSession session = request.getSession();
-        AuthenticateManagement authenticateManagement = new AuthenticateManagement();
-        AuthenticateManagement.CheckResult phoneresult = authenticateManagement.checkNumber(phone);
-        int success = 1;
-
-        if (phoneresult == AuthenticateManagement.CheckResult.NOT_NUMBER && !phone.equals("")) {
-//            request.setAttribute("errorPhone", "Phone must be numbers ");
-            session.setAttribute("errorPhone", "Phone must be numbers ");
-            success = 0;
-        }else if (phone.length()>10) {
-            request.setAttribute("errorPhone", "Phone must less than 11 digits");
-            success = 0;
-        }else if (!phone.equals("")) {
-            if (phone.charAt(0)!='0') {
-                request.setAttribute("errorPhone", "Phone must start with 0");
-            success = 0;
+        String userid = "";
+        String username = "";
+        if (request.getCookies() != null) {
+            Cookie cookie[] = request.getCookies();
+            int cookienum = 0;
+            while (cookienum < cookie.length) {
+                if (cookie[cookienum].getName().equals("userid")) {
+                    userid = cookie[cookienum].getValue();
+                }
+                if (cookie[cookienum].getName().equals("username")) {
+                    username = cookie[cookienum].getValue();
+                }
+                cookienum++;
             }
-            
         }
-        if (success == 0) {
-//            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changeinfor.jsp");
-//            dispatcher.forward(request, response);
-            response.sendRedirect("/AVS/ChangeInforController");
-        } else if (success == 1) {
-            String userid = "";
-            if (request.getCookies() != null) {
-                Cookie cookie[] = request.getCookies();
-                int cookienum = 0;
-                while (cookienum < cookie.length) {
-                    if (cookie[cookienum].getName().equals("userid")) {
-                        userid = cookie[cookienum].getValue();
+        if (username.equals("anon")) {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Another Account was logged in');");
+            out.println("</script>");
+            response.setHeader("Refresh", "1;url=/AVS/inputusername");
+        } else {
+            HttpSession session = request.getSession();
+            String currentuser = (String) session.getAttribute("username");
+            if (currentuser.equals(username)) {
+                String dob = request.getParameter("birthday");
+                String phone = request.getParameter("phone");
+                String workplace = request.getParameter("workplace");
+                String fullname = request.getParameter("fullname");
+                int job = Integer.parseInt(request.getParameter("job"));
+                int gender = Integer.parseInt(request.getParameter("gender"));
+                int id = 0;
+
+                AuthenticateManagement authenticateManagement = new AuthenticateManagement();
+                int success = 1;
+                if (!phone.equals("")) {
+                    if (phone.length() != 10) {
+                        session.setAttribute("errorPhone", "Phone must be 10 digits");
+                        success = 0;
+                    } else if (phone.charAt(0) != '0') {
+                        session.setAttribute("errorPhone", "Phone must start with 0");
+                        success = 0;
                     }
 
-                    cookienum++;
                 }
-                int agenumber = 0;
-                int useridnum = Integer.parseInt(userid);
-                try {
-                    UserModel usermod = new UserModel();
-                    usermod.UpdateUser(useridnum, fullname, dob, job, workplace, gender, phone);
-                    response.sendRedirect("/AVS/UserinforController");
+                if (success == 0) {
+//            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changeinfor.jsp");
+//            dispatcher.forward(request, response);
+                    response.sendRedirect("/AVS/changeinfo");
+                } else if (success == 1) {
 
-                } catch (Exception ex) {
-                    Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
+                    int agenumber = 0;
+                    int useridnum = Integer.parseInt(userid);
+                    try {
+                        UserModel usermod = new UserModel();
+                        usermod.UpdateUser(useridnum, fullname, dob, job, workplace, gender, phone);
+                        response.sendRedirect("/AVS/userinfo");
+
+                    } catch (Exception ex) {
+                        Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                 }
-
+            } else {
+                PrintWriter out = response.getWriter();
+                response.setContentType("text/html");
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Account was logged out');");
+                out.println("</script>");
+                response.setHeader("Refresh", "1;url=/AVS/HomeController");
             }
+
         }
     }
 

@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,11 +28,11 @@
                         <td><h1>My Profile</h1></td> 
                         <td>
                             <span class="span_info">User-Name :</span>
-                            <input class="su_infor3" type="text" name="username" value="<%=request.getAttribute("username")%>"readonly/>
+                            <input class="su_infor3" type="text" name="username" value="<c:out value='${requestScope["username"]}' />"readonly/>
                         </td>
                         <td>
                             <span class="span_info">Full-Name :</span>
-                            <input class="su_infor3" type="text" name="fullname" value="<%=request.getAttribute("fullname")%>"readonly/>
+                            <input class="su_infor3" type="text" name="fullname" value="<c:out value='${requestScope["fullname"]}' />"readonly/>
                         </td>
                     </tr>
                     <tr>
@@ -41,11 +41,11 @@
                         </td>
                         <td>
                             <span class="span_info">E-mail :</span>
-                            <input class="su_infor3" type="text" name="email" value="<%=request.getAttribute("mail")%>" readonly/>
+                            <input class="su_infor3" type="text" name="email" value="<c:out value='${requestScope["mail"]}' />" readonly/>
                         </td>
                         <td>
                             <span class="span_info">Age :</span>
-                            <input class="su_infor3" type="date" name="birthday" value="<%=request.getAttribute("birthday")%>" readonly/>
+                            <input class="su_infor3" type="date" name="birthday" value="<c:out value='${requestScope["birthday"]}' />" readonly/>
                         </td>
                     </tr>
                     <tr>
@@ -59,21 +59,21 @@
                     <tr>
                         <td>
                             <span class="span_info">Gender :</span>
-                            <input class="su_infor3" type="text" name="gender" value="<%=request.getAttribute("gender")%>"readonly/>
+                            <input class="su_infor3" type="text" name="gender" value="<c:out value='${requestScope["gender"]}' />"readonly/>
                         </td>
                         <td>
                             <span class="span_info">Work-Place</span>
-                            <input class="su_infor3" type="text" name="workplace" value="<%=request.getAttribute("workplace")%>"readonly/>
+                            <input class="su_infor3" type="text" name="workplace" value="<c:out value='${requestScope["workplace"]}' />"readonly/>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="span_info">Phone :</span>
-                            <input class="su_infor3" type="text" name="phone" value="<%=request.getAttribute("phone")%>"readonly/>
+                            <input class="su_infor3" type="text" name="phone" value="<c:out value='${requestScope["phone"]}' />"readonly/>
                         </td>
                         <td>
                             <span class="span_info">Jobs :</span>
-                            <input class="su_infor3" type="text" name="job" value="<%=request.getAttribute("jobname")%>"readonly/>
+                            <input class="su_infor3" type="text" name="job" value="<c:out value='${requestScope["jobname"]}' />"readonly/>
                         </td>
                     </tr>
                     <tr>

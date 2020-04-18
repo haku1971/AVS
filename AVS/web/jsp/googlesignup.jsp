@@ -3,7 +3,6 @@
     Created on : Mar 10, 2020, 4:23:33 PM
     Author     : BinhNT
 --%>
-
 <%@page import="Entity.Jobs"%>
 <%@page import="Model.JobsModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,53 +12,43 @@
     JobsModel jobdao = new JobsModel();
     ArrayList<Jobs> jobs = jobdao.getJobs();
 %>
-<html>
+<html lang ="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="../css/style.css" />
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <!--<meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">-->
         <title>AVS</title>
-
+        <meta charshet="utf-8" />
     </head>
     <body>
         <%@include file="header.jsp" %>
+        
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
         <div class="main">
-            <form class="box2" action="register" method="post">
+            <form class="box2" action="SignupGoogleController" method="post">
                 <h1><b>Sign Up</b></h1>
                 <h5><span style="color:red;">(*)</span> is required information</h5>
                 <table class="infortable">
                     <tr> 
                         <td rowspan="10"><img src="images\user.png" /></td> 
                         <td>
-                            <%if (request.getAttribute("errorUsername") != null) {
+                            <%if (session.getAttribute("errorUsername") != null) {
                             %>
                             <div class="errormess">
-                                <%=request.getAttribute("errorUsername")%>
+                                <%=session.getAttribute("errorUsername")%>
                             </div>
-                            <%
+                            
+                            <%session.removeAttribute("errorUsername"); 
                             } else {
                             %>
                             &nbsp;
                             <%}%>
                         </td>
-                        <td>
-
-                            <%if (request.getAttribute("errorPass") != null) {
-                            %>
-                            <div class="errormess">
-                                <%=request.getAttribute("errorPass")%>
-                            </div>
-                            <%
-                            } else {
-                            %>
-                            &nbsp;
-                            <%}%>
-                        </td>
+                       
                     </tr>
                     <tr>
                         <td>
@@ -67,15 +56,9 @@
                             <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)"required/>
                             <span class="red_star">(*)</span>
                         </td>
-                        <td>
-                            <span class="span_info1">Password:</span>
-                            <input class="su_info2" type="password" name="password" placeholder="From 6 to 15 characters" maxlength="15"required/>
-                            <span class="red_star">(*)</span>
-                        </td>
                     </tr>
                     <tr>
                         <td>
-
                             <%if (request.getAttribute("errorMail") != null) {
                             %>
                             <div class="errormess">
@@ -87,30 +70,13 @@
                             &nbsp;
                             <%}%>
                         </td>
-                        <td>
-                            &nbsp;
-                            <%if (request.getAttribute("errorRepass") != null) {
-                            %>
-                            <div class="errormess">
-                                <%=request.getAttribute("errorRepass")%>
-                            </div>
-                            <%
-                            } else {
-                            %>
-                            &nbsp;
-                            <%}%>
-                        </td>
+                        
                     </tr>
                     <tr>
                         <td>
                             <span class="span_info1">Email:</span>
-                            <input class="su_info1" type="text" name="email" placeholder="xyz@qwe.abc.com"required/>
-                            <span class="red_star">(*)</span>
-                        </td>
-                        <td>
-                            <span class="span_info1">Re-Password:</span>
-                            <input class="su_info2" type="password" name="repassword" placeholder="From 6 to 15 characters" maxlength="15"required/>
-                            <span class="red_star">(*)</span>
+                            <input class="su_info1a" type="text" name="email" placeholder="xyz@qwe.abc.com"required value=<%=request.getAttribute("email")%> readonly/>
+                            
                         </td>
                     </tr>
                     <tr>
@@ -118,13 +84,12 @@
                             &nbsp;
                         </td>
                         <td>
-
-                            <%if (request.getAttribute("errorPhone") != null) {
+                            <%if (session.getAttribute("errorPhone") != null) {
                             %>
                             <div class="errormess">
-                                <%=request.getAttribute("errorPhone")%>
+                                <%=session.getAttribute("errorPhone")%>
                             </div>
-                            <%
+                            <%session.removeAttribute("errorPhone");
                             } else {
                             %>
                             &nbsp;
@@ -134,7 +99,8 @@
                     <tr>
                         <td>
                             <span class="span_info1">FullName:</span>
-                            <input class="su_info3" type="text" name="fullname" placeholder="Enter your Name"/>
+                            <input class="su_info1a" type="text" name="fullname" value="<%=request.getAttribute("fullname")%>"  readonly/>
+                            
                         </td>
                         <td>
                             <span class="span_info1">Phone:</span>
@@ -193,7 +159,6 @@
                 </table>   
                 <button id="bottun" type="submit"><span>Sign Up</span></button>
             </form>
-
         </div>
         <%@include file="footer.jsp" %>
     </body>
@@ -223,4 +188,9 @@
         }
         );
     </script>
+    <script>
+  alert("You must input username to use this google acount");
+
+</script>
+    
 </html>

@@ -57,6 +57,7 @@ public class ManageDatabaseController extends HttpServlet {
             Cookie cookie[] = request.getCookies();
             String roleid = "";
             String adminid = "";
+            String username = "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("roleid")) {
                     roleid = ck.getValue();
@@ -64,6 +65,9 @@ public class ManageDatabaseController extends HttpServlet {
                 if (ck.getName().equals("userid")) {
                     adminid = ck.getValue();
 //                    System.out.println("adminid: " + adminid);
+                }
+                if (ck.getName().equals("username")) {
+                    username = ck.getValue();
                 }
             }
             int adminrolenumber = 1;

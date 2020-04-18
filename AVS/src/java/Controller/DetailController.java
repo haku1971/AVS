@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +38,23 @@ public class DetailController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        String usernametmp = "";
+        if (request.getCookies() != null) {
+            Cookie cookie[] = request.getCookies();
+            int agecookie = cookie[0].getMaxAge();
+            int cookienum = 0;
+            while (cookienum < cookie.length) {
+                
+                if (cookie[cookienum].getName().equals("username")) {
+                    usernametmp = cookie[cookienum].getValue();
+                }
+                cookienum++;
+            }
+           
+        }
+            if (usernametmp.equals("anon")) {
+                response.sendRedirect("/AVS/inputusername");
+            }else{
         try {
                 
             HttpSession session = request.getSession();
@@ -84,7 +101,7 @@ public class DetailController extends HttpServlet {
         } catch (Exception ex) {
             response.sendRedirect("error");
         }
-
+            }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

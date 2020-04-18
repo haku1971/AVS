@@ -25,7 +25,7 @@
                 <div class="changepass_items">
                     <p class="caution" title="You must fill this !!"></p>
                     <span class="sp1">(*)</span>
-                    <input class="su_changepass" type="password" name="oldpassword" placeholder="OldPassword" required /></br> 
+                    <input class="su_changepass" type="password" name="oldpassword" placeholder="OldPassword" maxlength="15" required /></br> 
                     <%if (request.getAttribute("errorOldPass") != null) {
                     %>
                     <span class="error_changepass1">
@@ -36,7 +36,7 @@
                     %>
                     <p class="caution" title="You must fill this !!"></p>
                     <span class="sp2">(*)</span>
-                    <input class="su_changepass" type="password" name="newpassword" placeholder="NewPassword"required/></br>
+                    <input class="su_changepass" type="password" name="newpassword" placeholder="NewPassword" maxlength="15" required/></br>
                     <%if (request.getAttribute("errorNewPass") != null) {
                     %>
                     <span class="error_changepass2">
@@ -47,7 +47,7 @@
                     %>
                     <p class="caution" title="You must fill this !!"></p>
                     <span class="sp3">(*)</span>
-                    <input class="su_changepass" type="password" name="repassword" placeholder="Re-Password"required/></br>
+                    <input class="su_changepass" type="password" name="repassword" placeholder="Re-Password" maxlength="15" required/></br>
                     <%if (request.getAttribute("errorRePass") != null) {
                     %>
                     <span class="error_changepass2">

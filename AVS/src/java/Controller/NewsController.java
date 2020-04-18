@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,24 @@ public class NewsController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String username = "";
+        if (request.getCookies() != null) {
+            Cookie cookie[] = request.getCookies();
+            int agecookie = cookie[0].getMaxAge();
+            int cookienum = 0;
+            while (cookienum < cookie.length) {
+                
+                if (cookie[cookienum].getName().equals("username")) {
+                    username = cookie[cookienum].getValue();
+                }
+                cookienum++;
+            }
+           
+        }
+            if (username.equals("anon")) {
+                
+                response.sendRedirect("/AVS/inputusername");
+            } else {
         try {
             NewsModel newsmodeldao = new NewsModel();
             ArrayList<News> listallnews = null;
@@ -63,6 +82,7 @@ public class NewsController extends HttpServlet {
         } catch (Exception ex) {
             System.out.println(ex);
         }
+            }
     }
 
     @Override

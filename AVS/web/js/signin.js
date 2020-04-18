@@ -16,7 +16,7 @@ function onSignIn(googleUser) {
     //do not post all above info to the server because that is not secure.
     //just send the id_token
 
-    var redirectUrl = 'LoginController';
+    var redirectUrl = 'login';
 
     //using jquery to post data dynamically
     var form = $('<form action="' + redirectUrl + '" method="post">' +

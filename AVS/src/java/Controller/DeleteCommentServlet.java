@@ -73,7 +73,6 @@ public class DeleteCommentServlet extends HttpServlet {
                 }
             }
             //check chua dang nhap thi ve home
-
             if (username.equals("")) {
                 response.sendRedirect("HomeController");
                 return;

@@ -19,6 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -54,8 +55,41 @@ public class ChangePassController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
-        dispatcher.forward(request, response);
+        HttpSession session = request.getSession();
+        String username = "";
+        String userid = "";
+        if (request.getCookies() != null) {
+            Cookie cookie[] = request.getCookies();
+            int agecookie = cookie[0].getMaxAge();
+            int cookienum = 0;
+            while (cookienum < cookie.length) {
+                if (cookie[cookienum].getName().equals("username")) {
+                    username = cookie[cookienum].getValue();
+                }
+                if (cookie[cookienum].getName().equals("userid")) {
+                    userid = cookie[cookienum].getValue();
+                }
+                cookienum++;
+            }
+            if (agecookie == 0) {
+                username = "";
+            }
+            if (username.equals("")) {
+                PrintWriter out = response.getWriter();
+                response.setContentType("text/html");
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Account was logged out');");
+                out.println("</script>");
+                response.setHeader("Refresh", "1;url=/AVS/HomeController");
+            } else if (username.equals("anon")) {
+                response.sendRedirect("/AVS/inputusername");
+            } else {
+                session.setAttribute("userid", userid);
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
+                dispatcher.forward(request, response);
+
+            }
+        }
     }
 
     /**
@@ -69,6 +103,8 @@ public class ChangePassController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = "";
         String oldpassword = request.getParameter("oldpassword");
         String newpassword = request.getParameter("newpassword");
         String repassword = request.getParameter("repassword");
@@ -82,48 +118,69 @@ public class ChangePassController extends HttpServlet {
 
             cookienum++;
         }
-        User user = new User();
-        UserModel usermod;
-        int useridnum=0;
-        try {
-            usermod = new UserModel();
-            user = usermod.getUserByUserID(userid);
-        } catch (Exception ex) {
-        }
-        AuthenticateManagement authenticateManagement = new AuthenticateManagement();
-        AuthenticateManagement.CheckResult checkpass = authenticateManagement.checkPassword(oldpassword, newpassword);
-        AuthenticateManagement.CheckResult passresult = authenticateManagement.checkPassword(newpassword, repassword);
-        int success = 1;
-        if (!oldpassword.equals(user.getPassword())) {
-            request.setAttribute("errorOldPass", "Password is not correct");
-            success = 0;
+        if (username.equals("anon")) {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Another Account was logged in');");
+            out.println("</script>");
+            response.setHeader("Refresh", "1;url=/AVS/inputusername");
+        } else {
+            User user = new User();
+            UserModel usermod;
+            int useridnum = 0;
+            String currentuserid = (String) session.getAttribute("userid");
+            if (currentuserid.equals(userid)) {
+                try {
 
-        }else if (checkpass==AuthenticateManagement.CheckResult.SUCCESS) {
-            request.setAttribute("errorNewPass", "OldPassword and NewPassword must different");
-            success = 0;
-        }else if (passresult == AuthenticateManagement.CheckResult.PASSWORD_SHORT) {
-            request.setAttribute("errorNewPass", "Password need at least 6 character");
-            success = 0;
-        }else if (passresult == AuthenticateManagement.CheckResult.NOT_MATCH) {
-            request.setAttribute("errorRePass", "Repassword is not correct ");
-            success = 0;
+                    usermod = new UserModel();
+                    user = usermod.getUserByUserID(userid);
+                } catch (Exception ex) {
+                }
+                AuthenticateManagement authenticateManagement = new AuthenticateManagement();
+                AuthenticateManagement.CheckResult checkpass = authenticateManagement.checkPassword(oldpassword, newpassword);
+                AuthenticateManagement.CheckResult passresult = authenticateManagement.checkPassword(newpassword, repassword);
+                int success = 1;
+                if (!oldpassword.equals(user.getPassword())) {
+                    request.setAttribute("errorOldPass", "Password is not correct");
+                    success = 0;
 
-        }
-        if (success == 0) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
-            dispatcher.forward(request, response);
-        }else if (success==1) {
-            try {
-                usermod = new UserModel();
-                useridnum = Integer.parseInt(userid);
-                usermod.UpdatePassword(useridnum, newpassword);
-                request.setAttribute("success", "Change password successfullly ");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
-            dispatcher.forward(request, response);
-            } catch (Exception ex) {
-                Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
+                } else if (checkpass == AuthenticateManagement.CheckResult.SUCCESS) {
+                    request.setAttribute("errorNewPass", "OldPassword and NewPassword must different");
+                    success = 0;
+                } else if (passresult == AuthenticateManagement.CheckResult.PASSWORD_SHORT) {
+                    request.setAttribute("errorNewPass", "Password need at least 6 character");
+                    success = 0;
+                } else if (passresult == AuthenticateManagement.CheckResult.NOT_MATCH) {
+                    request.setAttribute("errorRePass", "Repassword is not correct ");
+                    success = 0;
+
+                }
+                if (success == 0) {
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
+                    dispatcher.forward(request, response);
+                } else if (success == 1) {
+                    try {
+                        usermod = new UserModel();
+                        useridnum = Integer.parseInt(userid);
+                        usermod.UpdatePassword(useridnum, newpassword);
+                        request.setAttribute("success", "Change password successfullly ");
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
+                        dispatcher.forward(request, response);
+                    } catch (Exception ex) {
+                        Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }else  {
+                PrintWriter out = response.getWriter();
+                response.setContentType("text/html");
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Account was logged out');");
+                out.println("</script>");
+                response.setHeader("Refresh", "1;url=/AVS/HomeController");
             }
-                
+
         }
 
     }

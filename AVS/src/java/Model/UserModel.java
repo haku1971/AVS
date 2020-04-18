@@ -352,4 +352,29 @@ public class UserModel {
         }
         return userlist;
     }
+    public void UpdateUserGoogle(int id, String username, String dob, int job,
+            String workplace, int gender, String phone) throws Exception {
+        String query1 = "UPDATE Users\n"
+                + "SET user_Name=?,user_DOB=?,user_Workplaces=?,user_gender=?,user_Phone=?,job_ID=? \n"
+                + "WHERE user_ID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query1);
+            ps.setString(1, username);
+            ps.setString(2, dob);
+            ps.setString(3, workplace);
+            ps.setInt(4, gender);
+            ps.setString(5, phone);
+            ps.setInt(6, job);
+            ps.setInt(7, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

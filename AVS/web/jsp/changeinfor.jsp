@@ -8,6 +8,7 @@
 <%@page import="Model.JobsModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
     JobsModel jobdao = new JobsModel();
     ArrayList<Jobs> jobs = jobdao.getJobs();
@@ -33,9 +34,9 @@
                 <img src="images\user.png" />
                 <div class="changeinfo_item1">
                     <span id="span1">Full-Name: </span>
-                    <input class="su_changeinfor" type="text" name="fullname" value="<%=request.getAttribute("fullname")%>"/></br>
+                    <input class="su_changeinfor" type="text" name="fullname" value="<c:out value='${requestScope["fullname"]}' />"/></br>
                     <span id="span2">DOB: </span>
-                    <input class="su_changeinfor" type="date" name="birthday" value="<%=request.getAttribute("birthday")%>" /></br>
+                    <input class="su_changeinfor" type="date" name="birthday" value="<c:out value='${requestScope["birthday"]}' />" /></br>
 
                     <%if (session.getAttribute("errorAge") != null) {
                     %>
@@ -58,7 +59,7 @@
                 </div>
                 <div class="changeinfo_item2">
                     <span id="span4">Phone: </span>
-                    <input class="su_changeinfor" type="text" name="phone" value="<%=request.getAttribute("phone")%>"min="1" max="10"/></br>
+                    <input class="su_changeinfor" id="su_info_phone" type="text" name="phone" maxlength="10" value="<%=request.getAttribute("phone")%>"min="1" max="10"/></br>
                     <%if (session.getAttribute("errorPhone") != null) {
                     %>
                     <div class="errormesschangeinfo2">
@@ -68,7 +69,7 @@
                       session.removeAttribute("errorPhone");  }
                     %>
                     <span id="span5">WorkPlace: </span>
-                    <input class="su_changeinfor" type="text" name="workplace" value="<%=request.getAttribute("workplace")%>"/></br>
+                    <input class="su_changeinfor" type="text" name="workplace" value="<c:out value='${requestScope["workplace"]}' />"/></br>
                 </div>
                 <span id="span6">Jobs: </span>
                 <select name="job">
@@ -87,6 +88,32 @@
             </form>
 
         </div>
+                <script>
+        function setInputFilter(textbox, inputFilter) {
+            ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+                if (textbox === null) {
+                    console.log('Null pointer exception!');
+                } else {
+                    textbox.addEventListener(event, function () {
+                        if (inputFilter(this.value)) {
+                            this.oldValue = this.value;
+                            this.oldSelectionStart = this.selectionStart;
+                            this.oldSelectionEnd = this.selectionEnd;
+                        } else if (this.hasOwnProperty("oldValue")) {
+                            this.value = this.oldValue;
+                            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                        } else {
+                            this.value = "";
+                        }
+                    });
+                }
+            });
+        }
+        setInputFilter(document.getElementById("su_info_phone"), function (value) {
+            return /^\d*$/.test(value);
+        }
+        );
+    </script>
                 <script type="text/javascript" src="js/confirm.js"></script>
         <%@include file="footer.jsp" %>
     </body>

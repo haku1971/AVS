@@ -26,7 +26,7 @@
                 <h1><b>Login</b></h1>
                 <input id="infor" type="text" name="username" placeholder="Username" required /></br>
 
-                <input id="infor" type="password" name="password" placeholder="Password" required /></br> 
+                <input id="infor" type="password" name="password" placeholder="Password" maxlength="15" required /></br> 
 
                 <%if (request.getAttribute("errorMessage") != null) {
                 %>

@@ -10,6 +10,7 @@ import Entity.User;
 import Model.JobsModel;
 import Model.UserModel;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,6 +65,7 @@ public class UserinforController extends HttpServlet {
         String workplace = "None";
         String jobname = "";
         String status = "Active";
+        String userid="";
         if (request.getCookies() != null) {
             Cookie cookie[] = request.getCookies();
             int agecookie = cookie[0].getMaxAge();
@@ -72,12 +74,24 @@ public class UserinforController extends HttpServlet {
                 if (cookie[cookienum].getName().equals("username")) {
                     username = cookie[cookienum].getValue();
                 }
-
+                if (cookie[cookienum].getName().equals("userid")) {
+                    userid = cookie[cookienum].getValue();
+                }
                 cookienum++;
             }
             if (agecookie == 0) {
                 username = "";
             }
+            if (username.equals("")) {
+                PrintWriter out = response.getWriter();
+                response.setContentType("text/html");
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Account was logged out');");
+                out.println("</script>");
+                response.setHeader("Refresh", "1;url=/AVS/HomeController");
+            }else if (username.equals("anon")) {
+                response.sendRedirect("/AVS/inputusername");
+            }else{
             try {
                 UserModel userDao;
                 userDao = new UserModel();
@@ -86,9 +100,7 @@ public class UserinforController extends HttpServlet {
                 if (user.getFullname().length() > 0) {
                     fullname = user.getFullname();
                 }
-//                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
-//                Date date;
-//                date = (Date)sdf.parse(user.getDob());
+
                     dob=user.getDob();
                 int gender = user.getGender();
                 if (gender == 1) {
@@ -124,6 +136,7 @@ public class UserinforController extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/userinfor.jsp");
                 dispatcher.forward(request, response);
         }
+        }
     }
 
     /**
@@ -137,11 +150,7 @@ public class UserinforController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("changeinfor") != null) {
-            response.sendRedirect("/AVS/ChangeInforController");
-        }else if (request.getParameter("changepass") !=null) {
-            response.sendRedirect("/AVS/ChangePassController");
-        }
+        
     }
 
     /**
