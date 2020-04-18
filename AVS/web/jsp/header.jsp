@@ -2,6 +2,7 @@
 <%@page import="Model.UserModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     String user = "";
     String roleid = "";
@@ -27,13 +28,14 @@
 %>
 <!DOCTYPE html>
 <html>
-    <head>
+    <head>    
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <!--<script type="text/javascript" src="js/PreventF12.js"></script>-->
         <meta name="google-signin-scope" content="profile email">
+       
         <!--deploy sever-->
         <!--<meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">-->
 
@@ -41,8 +43,9 @@
         <meta name="google-signin-client_id" content="912620741556-hcmv2c3g46fti4psnqsjduu2hqcjo0qj.apps.googleusercontent.com">
         <title>Header</title>
         <!-- BEGIN Pre-requisites -->
-
+        <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
         <!-- END Pre-requisites -->
+       
     </head>
     <body>
         <div class="header">
@@ -75,19 +78,18 @@
                         <button onclick="document.location = '/AVS/register';return false">Sign Up</button><%}%>
                     </form>
                 </li>
-
+                <c:set var = "searchvalue" scope = "session" value ="${SearchValue}"/>  
+                              
                 <li id="loginButton">
                     <form id="search"  action="news">
                         <%if (!user.equals("anon")) {%>
-                        <input type="text" value="${SearchValue}" placeholder="  Search.." name="search">
+                        <input type="text" value="<c:out value="${searchvalue}"/>" placeholder="  Search.." name="search">
                         <button type="submit">Submit</button>
                         <%}%>
                     </form>
 
                 </li>
-            </ul><script>
-
-            </script>
+            </ul>
         </div>
         <script type="text/javascript" src="js/signout.js"></script>
     </body>

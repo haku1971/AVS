@@ -213,11 +213,11 @@ function getAjaxSortData() {
 
 function getAjaxSearchData() {
     var mydata = JSON.stringify(initarray);
-    var searchvalue = JSON.stringify(searchnumber);
+  //  var searchvalue = JSON.stringify(searchnumber);
     $.ajax({
         type: "POST",
         url: "SearchStepServlet",
-        data: {initarray: mydata, searchvalue: searchvalue}
+        data: {initarray: mydata, searchvalue: searchnumber}
         ,
         dataType: "json",
         //OK

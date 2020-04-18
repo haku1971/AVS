@@ -84,18 +84,18 @@
         %>
 
         <div class="container">
-            <div class="SearchResult">${numberofsearchresult}</div>
-            <div class="col-lm-4"><h3> List of news</h3></div>
-
+            <div class="SearchResult">${numberofsearchresult}</div>         
             <div  class="col-lm-4">  
-                <% if (listallnews != null) {
+                <% if (listallnews != null && !listallnews.isEmpty()) { %>
+                  <div class="col-lm-4"><h3> List of news</h3></div>
+                <%
                         for (int i = 0; i < listallnews.size(); i++) {%>
 
                 <a href="newsdetail?id=<%=listallnews.get(i).getNewsID()%>"><%=listallnews.get(i).getNewstittles()%> </a>
                 <br>     
                 <p>By: <%=listallnews.get(i).getUser().getFullname()%> <p>
                 <p>Content: <%=listallnews.get(i).getNews_shortdescription()%> <p>  
-                <p>At:<%=listallnews.get(i).getNewsdaterealease()%> </p>
+                <p>At:<%=listallnews.get(i).getNewsdaterealease().substring(0,listallnews.get(i).getNewsdaterealease().length()-5 )%> </p>
                 <hr>
                 <%}
 
