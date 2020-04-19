@@ -22,6 +22,8 @@
 
         <%
             User thisuser = (User) request.getAttribute("user");
+            String action = thisuser.getBanstatus() == 0 ? "ban" : "unban";
+            
         %>
     </head>
 
@@ -98,7 +100,7 @@
                                 <%}%>
                             </td>
                             <td>
-                                <form method="POST" action="manage">
+                                <form method="POST" action="manage" onsubmit="return confirm('Are you sure you want to <%=action%> this account?');">
                                     <input type="hidden" name="managetype" value="manageaccount">
                                     <input type="hidden" name="userid" value="<%=thisuser.getId()%>">
                                     <input type="hidden" name="ban" <%if (thisuser.getBanstatus() == 1) {%>value="unban"<%} else {%>value="ban"<%}%>>

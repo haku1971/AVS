@@ -5,8 +5,11 @@
  */
 package Controller;
 
+import Entity.Category;
+import Model.CategoryModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -42,7 +45,7 @@ public class AddAlgorithmController extends HttpServlet {
                 if (ck.getName().equals("roleid")) {
                     roleid = ck.getValue();
                 }
-               
+
             }
             int adminrolenumber = 1;
             if (roleid == null || Integer.parseInt(roleid) != adminrolenumber) {
@@ -50,11 +53,16 @@ public class AddAlgorithmController extends HttpServlet {
                 return;
             }
             //ket thuc kiem tra
+            CategoryModel catedao = new CategoryModel();
+            ArrayList<Category> listcate = catedao.getAllCategory();
 
             String category = "algorithm";
             request.setAttribute("category", category);
             request.setAttribute("addnew", true);
+            request.setAttribute("listalgocategory", listcate);
             request.getRequestDispatcher("jsp/viewalgo.jsp").forward(request, response);
+        } catch (Exception ex) {
+            response.sendRedirect("error");
         }
     }
 

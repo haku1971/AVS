@@ -83,6 +83,9 @@
                             <th>Editor</th>
                             <th>Image</th>
                             <th>Detail</th>
+                            <% if (showdeleted == "showdeleted") {%>
+                            <th>Deleted</th>
+                            <%}%>
                         </tr>
                         <% for (int i = 0; i < allnews.size(); i++) {%> 
                         <tr>
@@ -92,6 +95,9 @@
                             <td><%=allnews.get(i).getUser().getUsername()%></td>
                             <td><%=allnews.get(i).getNews_Imgs()%></td>
                             <td><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
+                            <% if (showdeleted == "showdeleted") {%>
+                            <td><%=allnews.get(i).getDeleted()%></td>
+                            <%}%>
                         </tr>
                         <%}%>
                     </table>

@@ -78,6 +78,9 @@
                             <th>Category</th>
                             <th>Visualized</th>
                             <th>Detail</th>
+                                <% if (showdeleted == "showdeleted") {%>
+                            <th>Deleted</th>
+                            <%}%>
                         </tr>
                         <% for (int i = 0; i < allalgolist.size(); i++) {%> 
                         <tr>
@@ -86,6 +89,9 @@
                             <td><%=allalgolist.get(i).getCategoryName()%></td>
                             <td><%=allalgolist.get(i).getVisualizedToString()%></td>
                             <td><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>">View</a></td>
+                            <% if (showdeleted == "showdeleted") {%>
+                            <td><%=allalgolist.get(i).getDeleted()%></td>
+                            <%}%>
                         </tr>
                         <%}%>
                     </table>

@@ -95,7 +95,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String category = "account";
                     request.setAttribute("category", category);
                     request.setAttribute("user", user);
-                    response.sendRedirect("admin?category=account");
+                    response.sendRedirect("viewaccount?id=" + userid);
                     break;
                 }
                 case "addalgo": {
@@ -151,7 +151,7 @@ public class ManageDatabaseController extends HttpServlet {
                     algodao.deleteAlgo(Integer.parseInt(algoid));
 
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Delete");
-                    response.sendRedirect("admin?category=algorithm");
+                    response.sendRedirect("viewalgo?id=" + algoid);
                     break;
                 }
                 case "restorealgo": {
@@ -163,7 +163,7 @@ public class ManageDatabaseController extends HttpServlet {
                     algodao.restoreAlgo(Integer.parseInt(algoid));
 
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Restore");
-                    response.sendRedirect("admin?category=algorithm");
+                    response.sendRedirect("viewalgo?id=" + algoid);
                     break;
                 }
                 case "addnews": {
@@ -253,7 +253,7 @@ public class ManageDatabaseController extends HttpServlet {
                     
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Delete");
                     
-                    response.sendRedirect("admin?category=news");
+                    response.sendRedirect("viewnews?id=" + newsid);
                     break;
                 }
                 case "restorenews": {
@@ -265,7 +265,7 @@ public class ManageDatabaseController extends HttpServlet {
                     
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Restore");
                     
-                    response.sendRedirect("admin?category=news");
+                    response.sendRedirect("viewnews?id=" + newsid);
                     break;
                 }
             }
