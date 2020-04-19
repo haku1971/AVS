@@ -43,7 +43,7 @@ public class AuthenticateManagement {
             UserModel userDao = new UserModel();
             User user = userDao.getUserByUsername(username);
             if (check != true) {
-                if (username.length() < 6||username.length() > 15) {
+                if (username.length() < 6) {
                     return CheckResult.USERNAME_LENGTH;
                 } else {
                     return CheckResult.INVALID_CHARACTER;
@@ -69,7 +69,7 @@ public class AuthenticateManagement {
             UserModel userDao = new UserModel();
             User user = userDao.getUserByUsername(username);
             if (check != true) {
-                if (username.length() < 6 || username.length() > 15) {
+                if (username.length() < 6) {
                     return CheckResult.USERNAME_LENGTH;
                 } else {
                     return CheckResult.INVALID_CHARACTER;

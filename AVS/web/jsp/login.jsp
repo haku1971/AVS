@@ -24,7 +24,7 @@
         <div class="main">
             <form class="box" action="login" method="post">
                 <h1><b>Login</b></h1>
-                <input id="infor" type="text" name="username" placeholder="Username" required /></br>
+                <input id="infor" type="text" name="username" placeholder="Username" maxlength="15" required /></br>
 
                 <input id="infor" type="password" name="password" placeholder="Password" maxlength="15" required /></br> 
 

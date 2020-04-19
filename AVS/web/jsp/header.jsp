@@ -6,6 +6,8 @@
 <%
     String user = "";
     String roleid = "";
+    String email="";
+    String fullname="";
     if (request.getCookies() != null) {
         Cookie cookie[] = request.getCookies();
         int agecookie = cookie[0].getMaxAge();
@@ -18,7 +20,12 @@
             if (cookie[cookienum].getName().equals("roleid")) {
                 roleid = cookie[cookienum].getValue();
             }
-
+            if (cookie[cookienum].getName().equals("email")) {
+                email = cookie[cookienum].getValue();
+            }
+            if (cookie[cookienum].getName().equals("fullname")) {
+                fullname = cookie[cookienum].getValue();
+            }
             cookienum++;
         }
         if (agecookie == 0) {
@@ -83,7 +90,7 @@
                 <li id="loginButton">
                     <form id="search"  action="news">
                         <%if (!user.equals("anon")) {%>
-                        <input type="text" value="<c:out value="${searchvalue}"/>" placeholder="  Search.." name="search">
+                        <pre><input type="text" placeholder="  Search.." name="search" value="<c:out value='${requestScope["searchvalue"]}' />" /></pre>
                         <button type="submit">Submit</button>
                         <%}%>
                     </form>

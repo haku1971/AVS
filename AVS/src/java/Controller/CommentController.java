@@ -32,6 +32,24 @@ public class CommentController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+                String username = "";
+        if (request.getCookies() != null) {
+            Cookie cookie[] = request.getCookies();
+            int agecookie = cookie[0].getMaxAge();
+            int cookienum = 0;
+            while (cookienum < cookie.length) {
+                
+                if (cookie[cookienum].getName().equals("username")) {
+                    username = cookie[cookienum].getValue();
+                }
+                cookienum++;
+            }
+           
+        }
+            if (username.equals("anon")) {
+                
+                response.sendRedirect("/AVS/inputusername");
+            } else {
         try {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
@@ -66,7 +84,7 @@ public class CommentController extends HttpServlet {
             request.getRequestDispatcher("jsp/newsdetail.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(CommentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }}
     }
 
     @Override

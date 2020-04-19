@@ -22,6 +22,7 @@
         <div class="main2">
             <form class="changepass_box" action="changepass" method="post">
                 <h1><b>Change Password</b></h1>
+                <h5><span style="color:red;">(*)</span> is required information</h5>
                 <div class="changepass_items">
                     <p class="caution" title="You must fill this !!"></p>
                     <span class="sp1">(*)</span>

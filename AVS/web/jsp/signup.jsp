@@ -64,7 +64,7 @@
                     <tr>
                         <td>
                             <span class="span_info1">UserName:</span>
-                            <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)"required/>
+                            <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)" maxlength="15" required/>
                             <span class="red_star">(*)</span>
                         </td>
                         <td>

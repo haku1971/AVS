@@ -201,23 +201,15 @@ String username = request.getParameter("username");
                         response.sendRedirect("/AVS/HomeController");
                     }
                 } else {
-                    userDao.insertUser("anon", "null", name, "", 5,
-                            "", 1, email, "");
-                    User user = userDao.getUserByMail(email);
-                    Cookie cookieusername = new Cookie("username", user.getUsername());
-                    System.out.println(name);
-                    rolenumber = user.getRolenum();
-                    id = user.getId();
-                    String roleid = Integer.toString(rolenumber);
-                    String userid = Integer.toString(id);
-                    Cookie cookieroleid = new Cookie("roleid", roleid);
-                    Cookie cookieuserid = new Cookie("userid", userid);
+                    Cookie cookieusername = new Cookie("username", "anon");
+                    Cookie cookieemail = new Cookie("email", email);
+                    Cookie cookiefullname = new Cookie("fullname", name);
                     cookieusername.setMaxAge(Integer.MAX_VALUE);
-                    cookieroleid.setMaxAge(Integer.MAX_VALUE);
-                    cookieuserid.setMaxAge(Integer.MAX_VALUE);
+                    cookieemail.setMaxAge(Integer.MAX_VALUE);
+                    cookiefullname.setMaxAge(Integer.MAX_VALUE);
                     response.addCookie(cookieusername);
-                    response.addCookie(cookieroleid);
-                    response.addCookie(cookieuserid);
+                    response.addCookie(cookieemail);
+                    response.addCookie(cookiefullname);
                     response.sendRedirect("/AVS/inputusername");
 //                    response.sendRedirect("/AVS/HomeController");
                 }

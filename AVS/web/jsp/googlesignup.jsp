@@ -53,7 +53,7 @@
                     <tr>
                         <td>
                             <span class="span_info1">UserName:</span>
-                            <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)"required/>
+                            <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)" maxlength="15" required/>
                             <span class="red_star">(*)</span>
                         </td>
                     </tr>
@@ -75,7 +75,7 @@
                     <tr>
                         <td>
                             <span class="span_info1">Email:</span>
-                            <input class="su_info1a" type="text" name="email" placeholder="xyz@qwe.abc.com"required value=<%=request.getAttribute("email")%> readonly/>
+                            <input class="su_info1a" type="text" name="email" placeholder="xyz@qwe.abc.com"required value=<%=email%> readonly/>
                             
                         </td>
                     </tr>
@@ -99,7 +99,7 @@
                     <tr>
                         <td>
                             <span class="span_info1">FullName:</span>
-                            <input class="su_info1a" type="text" name="fullname" value="<%=request.getAttribute("fullname")%>"  readonly/>
+                            <input class="su_info1a" type="text" name="fullname" value="<%=fullname%>"  readonly/>
                             
                         </td>
                         <td>

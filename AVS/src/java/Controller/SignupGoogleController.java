@@ -79,21 +79,7 @@ public class SignupGoogleController extends HttpServlet {
             }
         }
         if (username.equals("anon")) {
-            try {
-                UserModel userDao;
-                userDao = new UserModel();
-                User user = userDao.getUserByUserID(userid);
-                mail = user.getMail();
-                if (user.getFullname().length() > 0) {
-                    fullname = user.getFullname();
-                }
-
-                request.setAttribute("email", mail);
-                request.setAttribute("fullname", fullname);
-
-            } catch (Exception ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
             out.println("<script type=\"text/javascript\">");

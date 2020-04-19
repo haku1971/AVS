@@ -187,9 +187,30 @@ function startVisualizing(isvisualized, category) {
         case 5 : //Searching by Comparision of Keys
             getAjaxSearchData();
             break;
+        case 6:
+            getAjaxHashingSearchData();
+            break;
     }
 }
-
+function getAjaxHashingSearchData() {
+    var mydata = JSON.stringify(hasharray);
+    $.ajax({
+        type: "POST",
+        url: "HashingSearchController",  //
+        data: {initarray: mydata, searchvalue: searchnumber,hasharraysize:hasharraysize}
+        ,
+        dataType: "json",
+        //OK
+        success: function (data) {
+            drawGraph(data);
+        }
+        ,
+        error: function (error) {
+//            console.log("error", error);
+        }
+    }
+    );
+}
 function getAjaxSortData() {
     var mydata = JSON.stringify(initarray);
     $.ajax({
