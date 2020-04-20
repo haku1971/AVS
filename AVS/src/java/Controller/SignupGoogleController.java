@@ -138,27 +138,15 @@ public class SignupGoogleController extends HttpServlet {
 
         }
         if (success == 0) {
-            response.sendRedirect("/AVS/SignupGoogleController");
+            response.sendRedirect("/AVS/inputusername");
         } else if (success == 1) {
-            String userid = "";
-            if (request.getCookies() != null) {
-                Cookie cookie[] = request.getCookies();
-                int cookienum = 0;
-                while (cookienum < cookie.length) {
-                    if (cookie[cookienum].getName().equals("userid")) {
-                        userid = cookie[cookienum].getValue();
-                    }
-
-                    cookienum++;
-                }
-            }
-            int agenumber = 0;
-            int useridnum = Integer.parseInt(userid);
             try {
 
                 UserModel usermod = new UserModel();
-                usermod.UpdateUserGoogle(useridnum, username, dob, job, workplace, gender, phone);
+                usermod.insertUser(username, "null", fullname, dob, job, workplace, gender, email, phone);
                 User user = usermod.getUserByUsername(username);
+                int useridnum=user.getId();
+                String userid=Integer.toString(useridnum);
                 Cookie cookieusername = new Cookie("username", user.getUsername());
                 int rolenumber = user.getRolenum();
                 String roleid = Integer.toString(rolenumber);

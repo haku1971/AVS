@@ -2,12 +2,12 @@
 <%@page import="Model.UserModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     String user = "";
     String roleid = "";
-    String email="";
-    String fullname="";
+    String email = "";
+    String fullname = "";
     if (request.getCookies() != null) {
         Cookie cookie[] = request.getCookies();
         int agecookie = cookie[0].getMaxAge();
@@ -42,7 +42,7 @@
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <!--<script type="text/javascript" src="js/PreventF12.js"></script>-->
         <meta name="google-signin-scope" content="profile email">
-       
+
         <!--deploy sever-->
         <!--<meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">-->
 
@@ -52,7 +52,7 @@
         <!-- BEGIN Pre-requisites -->
         <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
         <!-- END Pre-requisites -->
-       
+
     </head>
     <body>
         <div class="header">
@@ -86,17 +86,39 @@
                     </form>
                 </li>
                 <c:set var = "searchvalue" scope = "session" value ="${SearchValue}"/>  
-                              
+
                 <li id="loginButton">
                     <form id="search"  action="news">
                         <%if (!user.equals("anon")) {%>
-                        <input type="text" placeholder="  Search.." name="search" value="<c:out value='${requestScope["searchvalue"]}' />" />
-                        <button type="submit">Submit</button>
+                        <input id="textsearch" type="text" placeholder="  Search.." name="search" value="<c:out value= "${searchvalue}"/>" />
+                        <button onclick="checkLengthOfSearch()" id="buttonsearch" type="submit">Submit</button>
                         <%}%>
                     </form>
+                    <script>                      
+                        function checkLengthOfSearch() {
+                            var txt_search_content = $('#textsearch').val().trim().replace("\\s+", " ");
+                            console.log(txt_search_content);
+                            if (txt_search_content === "") {
+                                $('#buttonsearch').attr("disabled", true);
+                            } else {
+                                $('#buttonsearch').attr("disabled", false);
 
+                            }
+                        }
+                        $('#textsearch').keyup(function () {
+                            var txt_search_content = $('#textsearch').val().trim().replace("\\s+", " ");
+                            if (txt_search_content.length < 1) {
+                                console.log(' <1');
+                                $('#buttonsearch').attr("disabled", true);
+                            } else {
+                                console.log('>1');
+                                $('#buttonsearch').attr("disabled", false);
+                            }
+                        });
+                    </script>
                 </li>
             </ul>
+
         </div>
         <script type="text/javascript" src="js/signout.js"></script>
     </body>

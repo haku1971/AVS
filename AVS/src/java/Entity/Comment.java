@@ -36,7 +36,7 @@ public class Comment {
     }
 
     public String getContent() {
-        return content;
+        return content.replaceAll("\\s+"," ");
     }
 
     public void setContent(String content) {

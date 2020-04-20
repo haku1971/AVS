@@ -273,7 +273,7 @@
 
                 $('#txtedit_<%=commentid%>').keyup(function () {
                     // Get the Login Name value and trim it
-                    var name = $('#txtedit_<%=commentid%>').val();
+                    var name = $('#txtedit_<%=commentid%>').val().trim();
                     console.log(name);
                     // Check if empty of not
                     if (name.length < 1) {
@@ -373,14 +373,34 @@
                 }
                 function savecomment(commentid) {
                     document.getElementById("txtedit_" + commentid).className = "hiddeninputtag";
+                    checkedit = 0;
                     setSaveButtonStatus(commentid, "hidden");
                     setDeleteButtonStatus(commentid, "visible");
                     //  setTxteditStatus(commentid, "hidden");
                     setCancelButtonStatus(commentid, "hidden");
                     setEditButtonStatus(commentid, "visible");
-                    var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
-                    document.getElementById('content_' + commentid).innerHTML = escapeHtml(txt_edit_content);
+                  //var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
+                    var txt_edit_content = $('#txtedit_' + commentid).val().trim().replace("\\s+"," ");
+                    
+                    if (txt_edit_content === "") {
+                        $('#save_' + commentid).attr("disabled", true);
+                    } else {
+                        $('#save_' + commentid).attr("disabled", false);
+                        document.getElementById('content_' + commentid).innerHTML = escapeHtml(txt_edit_content);
+                        document.getElementById('content_' + commentid).style.visibility = 'visible';
+                        $.ajax({
+                            type: "post",
+                            url: "DeleteCommentServlet",
+                            data: {commentcontentedit: txt_edit_content, commentid: commentid},
+                            success: function (msg) {
+                                $('#output').append(msg);
+                            }
+                        });
+                    }                
+               /*     document.getElementById('content_' + commentid).innerHTML = escapeHtml(txt_edit_content);
                     document.getElementById('content_' + commentid).style.visibility = 'visible';
+                 
+                
                     console.log(txt_edit_content);
                     $.ajax({
                         type: "post",
@@ -389,10 +409,9 @@
                         success: function (msg) {
                             $('#output').append(msg);
                         }
-                    });
-                    checkedit = 0;
+                    });*/                
                 }
-
+                    
             </script>
         </div>
 
@@ -422,8 +441,8 @@
         </div>
 
         <script>
-            function checkContentIsEmpty() {
-                if ($('#txtsavedb').val() === "") {
+              function checkContentIsEmpty() {
+                if ($('#txtsavedb').val().trim() === "") {
 
                     $('#postcomment').attr("disabled", true);
                 } else {
@@ -432,11 +451,9 @@
             }
             $('#txtsavedb').keyup(function () {
                 // Get the Login Name value and trim it
-                var name = $('#txtsavedb').val();
-                console.log(name);
-                // Check if empty of not
+                var name = $('#txtsavedb').val().trim();   
+               // Check if empty of not
                 if (name.length < 1) {
-                    console.log(' <1');
                     $('#postcomment').attr("disabled", true);
                 } else {
                     $('#postcomment').attr("disabled", false);

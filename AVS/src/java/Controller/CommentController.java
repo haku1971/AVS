@@ -143,7 +143,7 @@ public class CommentController extends HttpServlet {
             if (posttodb != null) {
                 comment = request.getParameter("commentcontent");
                 strdate = request.getParameter("strdate");
-                commentmodel.saveCommenttoDB(comment, strdate, usersid, newsid);
+                commentmodel.saveCommenttoDB(comment.trim(), strdate, usersid, newsid);
                 response.sendRedirect("newsdetail?id=" + newsid);
                 return;
             }

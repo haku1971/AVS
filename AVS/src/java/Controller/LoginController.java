@@ -203,13 +203,14 @@ String username = request.getParameter("username");
                 } else {
                     Cookie cookieusername = new Cookie("username", "anon");
                     Cookie cookieemail = new Cookie("email", email);
-                    Cookie cookiefullname = new Cookie("fullname", name);
+//                    name.replaceAll("\\s+","");
+//                    Cookie cookiefullname = new Cookie("fullname", name);
                     cookieusername.setMaxAge(Integer.MAX_VALUE);
                     cookieemail.setMaxAge(Integer.MAX_VALUE);
-                    cookiefullname.setMaxAge(Integer.MAX_VALUE);
+//                    cookiefullname.setMaxAge(Integer.MAX_VALUE);
                     response.addCookie(cookieusername);
                     response.addCookie(cookieemail);
-                    response.addCookie(cookiefullname);
+//                    response.addCookie(cookiefullname);
                     response.sendRedirect("/AVS/inputusername");
 //                    response.sendRedirect("/AVS/HomeController");
                 }

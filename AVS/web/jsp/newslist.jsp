@@ -78,13 +78,13 @@
         
 
         <% ArrayList<News> listallnews = (ArrayList<News>) request.getAttribute("listallnews");
-            String search = (String) request.getAttribute("search");
+            String search = (String) request.getAttribute("SearchValue");
             int numberOfPage = (Integer) request.getAttribute("numberOfPage");
             int currentPage = (Integer) request.getAttribute("currentPage");
         %>
 
         <div class="container">
-            <div class="SearchResult">${numberofsearchresult}</div>         
+            <div class="SearchResult"><c:out value="${numberofsearchresult}"/></div>         
             <div  class="col-lm-4">  
                 <% if (listallnews != null && !listallnews.isEmpty()) { %>
                   <div class="col-lm-4"><h3> List of news</h3></div>

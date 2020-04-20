@@ -99,7 +99,7 @@
                     <tr>
                         <td>
                             <span class="span_info1">FullName:</span>
-                            <input class="su_info1a" type="text" name="fullname" value="<%=fullname%>"  readonly/>
+                            <input class="su_info1a" type="text" name="fullname" placeholder="Enter your name"/>
                             
                         </td>
                         <td>

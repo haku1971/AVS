@@ -26,6 +26,9 @@ public class NewsController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=UTF-8");
         String username = "";
         if (request.getCookies() != null) {
             Cookie cookie[] = request.getCookies();
@@ -57,7 +60,7 @@ public class NewsController extends HttpServlet {
             }
             if (request.getParameter("search") != null) {
                 String search= request.getParameter("search");
-                request.setAttribute("SearchValue", search);
+                request.setAttribute("SearchValue", search.trim().replaceAll("\\s+"," "));
                 listallnews = newsmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, search);
                 int numberoffnews = newsmodeldao.countDBresultsearch(search);
                 String numberofsearchresult = "Found "+ numberoffnews + " result contain \"" + search + "\"" ;
