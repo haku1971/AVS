@@ -67,15 +67,13 @@ class OpenAddressHashTable {
     }
 
     addto(index, key) {
+        if (index > hasharraysize - 1) {
+            index = 0;
+        }
         if (this.list[index] === undefined || this.list[index] === key) {
             this.list[index] = key;
         } else {
-            if (index > hasharraysize - 1) {
-                this.addto(0, key);
-            } else {
-                this.addto(index + 1, key);
-            }
-
+            this.addto(index + 1, key);
         }
     }
 }
@@ -196,8 +194,8 @@ function getAjaxHashingSearchData() {
     var mydata = JSON.stringify(hasharray);
     $.ajax({
         type: "POST",
-        url: "HashingSearchController",  //
-        data: {initarray: mydata, searchvalue: searchnumber,hasharraysize:hasharraysize}
+        url: "HashingSearchController", //
+        data: {initarray: mydata, searchvalue: searchnumber, hasharraysize: hasharraysize}
         ,
         dataType: "json",
         //OK
@@ -234,7 +232,7 @@ function getAjaxSortData() {
 
 function getAjaxSearchData() {
     var mydata = JSON.stringify(initarray);
-  //  var searchvalue = JSON.stringify(searchnumber);
+    //  var searchvalue = JSON.stringify(searchnumber);
     $.ajax({
         type: "POST",
         url: "SearchStepServlet",
@@ -1271,7 +1269,7 @@ function openaddressingHash(array) {
         while (isFound === true) {
             index++;
             {
-                if (index > hasharraysize-1) {
+                if (index > hasharraysize - 1) {
                     index = 0;
                 }
                 if (index === start) {

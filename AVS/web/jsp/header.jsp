@@ -90,7 +90,7 @@
                 <li id="loginButton">
                     <form id="search"  action="news">
                         <%if (!user.equals("anon")) {%>
-                        <pre><input type="text" placeholder="  Search.." name="search" value="<c:out value='${requestScope["searchvalue"]}' />" /></pre>
+                        <input type="text" placeholder="  Search.." name="search" value="<c:out value='${requestScope["searchvalue"]}' />" />
                         <button type="submit">Submit</button>
                         <%}%>
                     </form>
