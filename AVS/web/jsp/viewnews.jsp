@@ -25,7 +25,6 @@
         <%
             News news = (News) request.getAttribute("news");
             Boolean addnews = (Boolean) request.getAttribute("addnew");
-            String action = news.getDeleted() == 0 ? "Delete" : "Restore";
         %>
     </head>
 
@@ -54,7 +53,8 @@
                         <input type="submit" value="Save">
                     </form>
                     <a href="admin?category=news"><button>Cancel</button></a>
-                    <%} else {%>
+                    <%} else {
+                    String action = news.getDeleted() == 0 ? "Delete" : "Restore";%>
                     <!--trang view-->
                     <div class="algoid">News ID: <%=news.getNewsID()%></div>
                     <form method="POST" action="manage" enctype="multipart/form-data" onsubmit="return validate();">

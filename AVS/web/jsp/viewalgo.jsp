@@ -26,7 +26,6 @@
             Algorithm algo = (Algorithm) request.getAttribute("algo");
             Boolean addnew = (Boolean) request.getAttribute("addnew");
             ArrayList<Category> listalgocategory = (ArrayList<Category>) request.getAttribute("listalgocategory");
-            String action = algo.getDeleted() == 0 ? "Delete" : "Restore";
         %>
     </head>
 
@@ -66,7 +65,8 @@
 
                     <a href="admin?category=algorithm"><button>Cancel</button></a>
 
-                    <%} else {%>
+                    <%} else {
+                    String action = algo.getDeleted() == 0 ? "Delete" : "Restore";%>
                     <!--trang view-->
 
                     <div class="algoid">Algorithm ID: <%=algo.getAlgoID()%></div>
@@ -143,6 +143,6 @@
                 return confirm('Do you really want to save change?');
             }
         }
-        
+
     </script>
 </html>
