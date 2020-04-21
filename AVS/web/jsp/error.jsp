@@ -11,11 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
         <link rel="stylesheet" type="text/css" href="../css/style.css" />
-        <title>AVS</title>
-        <% 
-            String errorstring = (String) request.getAttribute("errorstring");
-        %>
-        
+        <title>AVS</title>     
     </head>
     <body>
             <%@include file="header.jsp" %>
@@ -24,7 +20,7 @@
             <h5>The noblest pleasure is the joy of understanding</h5>
         </div>
         <div class="main">
-            <h1><%=errorstring%></h1>
+            <h1>${errorstring}</h1>
         </div>
         <div class="right">
             <h1>Algorithm Visualize System</h1>

@@ -9,6 +9,7 @@ import Entity.Comment;
 import Entity.News;
 import Entity.Likecomment;
 import Entity.Likenews;
+import Entity.User;
 import Model.CommentModel;
 import Model.NewsModel;
 import Model.UserModel;
@@ -55,12 +56,23 @@ public class CommentController extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html; charset=UTF-8");
             int newsid = Integer.parseInt(request.getParameter("id"));
-
+            
+            if(!username.isEmpty() ) {
+                UserModel usermodel = new UserModel();
+                User user = usermodel.getUserByUsername(username);
+                request.setAttribute("banstatus", user.getBanstatus());
+            }
             NewsModel newmodeldao = new NewsModel();
             CommentModel commentmodel = new CommentModel();
             News news = newmodeldao.getNewsByID(newsid);
+            if(news == null) {
+                request.setAttribute("errorstring", "Don't have this news page");
+                 request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+                 return;
+            }
             //get ra số lượng like của news
            ArrayList<Likenews> listalllikenewsbynewsid= newmodeldao.getTotalLikeNewsByNewsId(newsid);
+          
            int total_likenews= listalllikenewsbynewsid.size();
             request.setAttribute("listalllikenewsbynewsid", listalllikenewsbynewsid);
             request.setAttribute("total_likenews", total_likenews);

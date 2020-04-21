@@ -59,8 +59,8 @@ public class NewsController extends HttpServlet {
                 page = Integer.parseInt(request.getParameter("page"));
             }
             if (request.getParameter("search") != null) {
-                String search= request.getParameter("search");
-                request.setAttribute("SearchValue", search.trim().replaceAll("\\s+"," "));
+                String search= request.getParameter("search").trim().replaceAll("\\s+"," ");
+                request.setAttribute("SearchValue", search);
                 listallnews = newsmodeldao.searchNews((page * recordPerPage) - recordPerPage + 1, page * recordPerPage, search);
                 int numberoffnews = newsmodeldao.countDBresultsearch(search);
                 String numberofsearchresult = "Found "+ numberoffnews + " result contain \"" + search + "\"" ;
@@ -76,6 +76,7 @@ public class NewsController extends HttpServlet {
             //neu ma nguoi dung muon truy cap trang khong co
             if( page < 0 || page > numberOfPage * recordPerPage ) {
                 //chuyen qua trang error luon
+              //  response.sendRedirect("error");
             }
             request.setAttribute("numberOfPage", numberOfPage);
             request.setAttribute("currentPage", page);
