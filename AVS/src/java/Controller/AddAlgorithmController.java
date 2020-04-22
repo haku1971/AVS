@@ -35,9 +35,9 @@ public class AddAlgorithmController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            response.setContentType("text/html;charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
+            
             //hien thi trang home neu nguoi dung khong phai admin
             Cookie cookie[] = request.getCookies();
             String roleid = "";
@@ -62,6 +62,7 @@ public class AddAlgorithmController extends HttpServlet {
             request.setAttribute("listalgocategory", listcate);
             request.getRequestDispatcher("jsp/viewalgo.jsp").forward(request, response);
         } catch (Exception ex) {
+            System.out.println(ex);
             response.sendRedirect("error");
         }
     }
