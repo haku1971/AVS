@@ -54,7 +54,7 @@
                     </form>
                     <a href="admin?category=news"><button>Cancel</button></a>
                     <%} else {
-                    String action = news.getDeleted() == 0 ? "Delete" : "Restore";%>
+                        String action = news.getDeleted() == 0 ? "Delete" : "Restore";%>
                     <!--trang view-->
                     <div class="algoid">News ID: <%=news.getNewsID()%></div>
                     <form method="POST" action="manage" enctype="multipart/form-data" onsubmit="return validate();">
@@ -97,8 +97,9 @@
             } else if (contentvalue === "") {
                 alert('Content can not be empty!');
                 return false;
-            } else {
+            } else if (document.getElementById("file").files.length != 0) {
                 return validatePictureFile();
+            } else{
                 return confirm('Do you really want to save change?');
             }
         }
