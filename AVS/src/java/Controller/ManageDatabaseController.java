@@ -46,11 +46,10 @@ public class ManageDatabaseController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
         try {
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=UTF-8");
+
             UserModel userdao = new UserModel();
             HistoryModel historydao = new HistoryModel();
             //hien thi trang home neu nguoi dung khong phai admin
@@ -99,15 +98,15 @@ public class ManageDatabaseController extends HttpServlet {
                     break;
                 }
                 case "addalgo": {
-                    String algoname = request.getParameter("algoname");
-                    String codejava = request.getParameter("codejava");
-                    String codecpp = request.getParameter("codecpp");
-                    String codejs = request.getParameter("codejs");
-                    String codevisual = request.getParameter("codevisual");
-                    String description = request.getParameter("description");
-                    String categoryid = request.getParameter("category");
+                    String algoname = request.getParameter("algoname").trim();
+                    String codejava = request.getParameter("codejava").trim();
+                    String codecpp = request.getParameter("codecpp").trim();
+                    String codejs = request.getParameter("codejs").trim();
+                    String codevisual = request.getParameter("codevisual").trim();
+                    String description = request.getParameter("description").trim();
+                    String categoryid = request.getParameter("category").trim();
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
-                    String resource = request.getParameter("resource");
+                    String resource = request.getParameter("resource").trim();
 
                     AlgorithmModel algodao = new AlgorithmModel();
                     algodao.insertAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, "null");
@@ -119,16 +118,16 @@ public class ManageDatabaseController extends HttpServlet {
                     break;
                 }
                 case "editalgo": {
-                    String algoid = request.getParameter("algoid");
-                    String algoname = request.getParameter("algoname");
-                    String codejava = request.getParameter("codejava");
-                    String codecpp = request.getParameter("codecpp");
-                    String codejs = request.getParameter("codejs");
-                    String codevisual = request.getParameter("codevisual");
-                    String description = request.getParameter("description");
-                    String categoryid = request.getParameter("category");
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
-                    String resource = request.getParameter("resource");
+                    String algoid = request.getParameter("algoid").trim();
+                    String algoname = request.getParameter("algoname").trim();
+                    String codejava = request.getParameter("codejava").trim();
+                    String codecpp = request.getParameter("codecpp").trim();
+                    String codejs = request.getParameter("codejs").trim();
+                    String codevisual = request.getParameter("codevisual").trim();
+                    String description = request.getParameter("description").trim();
+                    String categoryid = request.getParameter("category").trim();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString().trim();
+                    String resource = request.getParameter("resource").trim();
 
                     codejava = codejava.replaceAll("â", "&emsp;");
                     codecpp = codecpp.replaceAll("â", "&emsp;");
@@ -167,9 +166,10 @@ public class ManageDatabaseController extends HttpServlet {
                     break;
                 }
                 case "addnews": {
-                    String title = request.getParameter("title");
-                    String content = request.getParameter("content");
-                    String source = request.getParameter("source");
+
+                    String title = request.getParameter("title").trim();
+                    String content = request.getParameter("content").trim();
+                    String source = request.getParameter("source").trim();
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String imageurl = "";
                     InputStream inputStream = null; // input stream of the upload file
@@ -193,29 +193,22 @@ public class ManageDatabaseController extends HttpServlet {
                         outStream.write(buffer);
 
                         newsdao.updateNews(title, content, currenttime, source, "./images/" + newsimagename + extentfilename, Integer.parseInt(adminid), newsid);
-                    
+
                         historydao.insertNewsHistory(Integer.parseInt(adminid), newsid, currenttime, "Add");
                     }
-                    
-                    
 
                     response.sendRedirect("admin?category=news");
                     break;
                 }
                 case "editnews": {
                     String newsid = request.getParameter("newsid");
-                    String title = request.getParameter("title");
-                    String content = request.getParameter("content");
-                    String source = request.getParameter("source");
+                    String title = request.getParameter("title").trim();
+                    String content = request.getParameter("content").trim();
+                    String source = request.getParameter("source").trim();
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
-                    String imageurl = request.getParameter("imageurl");
-                    Boolean haveimg = !imageurl.equals("null");
-                    
+                    String imageurl = request.getParameter("imageurl").trim();
+
                     NewsModel newsdao = new NewsModel();
-                    if(haveimg) {
-                        newsdao.updateNews(title, content, currenttime, source, imageurl, Integer.parseInt(adminid), Integer.parseInt(newsid));
-                    }
-                    
 
                     InputStream inputStream = null; // input stream of the upload file
                     Part part = request.getPart("image");
@@ -233,12 +226,11 @@ public class ManageDatabaseController extends HttpServlet {
                         OutputStream outStream = new FileOutputStream(targetFile);
                         outStream.write(buffer);
                         TimeUnit.SECONDS.sleep(3);
-                        if(!haveimg) {
-                            newsdao.updateNews(title, content, currenttime, source, "./images/" + newsimagename + extentfilename, Integer.parseInt(adminid), Integer.parseInt(newsid));
-                        }
+                        newsdao.updateNews(title, content, currenttime, source, "./images/" + newsimagename + extentfilename, Integer.parseInt(adminid), Integer.parseInt(newsid));
+                    } else {
+                        newsdao.updateNews(title, content, currenttime, source, imageurl, Integer.parseInt(adminid), Integer.parseInt(newsid));
                     }
-                    
-                    
+
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Edit");
 
                     response.sendRedirect("viewnews?id=" + newsid);
@@ -247,24 +239,24 @@ public class ManageDatabaseController extends HttpServlet {
                 case "deletenews": {
                     String newsid = request.getParameter("newsid");
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
-                    
+
                     NewsModel newsdao = new NewsModel();
                     newsdao.deleteNews(Integer.parseInt(newsid));
-                    
+
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Delete");
-                    
+
                     response.sendRedirect("viewnews?id=" + newsid);
                     break;
                 }
                 case "restorenews": {
                     String newsid = request.getParameter("newsid");
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
-                    
+
                     NewsModel newsdao = new NewsModel();
                     newsdao.restoreNews(Integer.parseInt(newsid));
-                    
+
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Restore");
-                    
+
                     response.sendRedirect("viewnews?id=" + newsid);
                     break;
                 }

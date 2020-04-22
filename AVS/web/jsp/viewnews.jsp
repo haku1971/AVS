@@ -64,8 +64,7 @@
                         <div>Title: </div> <div><input id="title" type="text" name="title" value="<%=news.getNewstittles()%>"></div>
                         <div>Content:  </div> 
                         <div>
-                            <textarea id="content" name="content" rows="10" cols="30" >
-                                <%=news.getNewscontent()%>
+                            <textarea id="content" name="content" rows="10" cols="30" ><%=news.getNewscontent()%>
                             </textarea>
                         </div>
                         <div>Source: </div> <div><input type="text" name="source" value="<%=news.getNewsresource()%>"></div>
@@ -90,8 +89,8 @@
     </body>
     <script>
         function validate() {
-            let titlevalue = document.getElementById("title").value;
-            let contentvalue = document.getElementById("content").value;
+            let titlevalue = document.getElementById("title").value.trim();
+            let contentvalue = document.getElementById("content").value.trim();
             if (titlevalue === "") {
                 alert('Title can not be empty!');
                 return false;

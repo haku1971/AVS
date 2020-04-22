@@ -130,9 +130,8 @@
         }
 
         function validate() {
-
-            let namevalue = document.getElementById("algoname").value;
-            let descriptionvalue = document.getElementById("description").value;
+            let namevalue = document.getElementById("algoname").value.trim();
+            let descriptionvalue = document.getElementById("description").value.trim();
             if (namevalue === "") {
                 alert('Name can not be empty!');
                 return false;
