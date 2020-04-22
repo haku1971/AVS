@@ -100,6 +100,7 @@
                 <%}
 
                 } else {%>
+                <p>${searchnoti}</p>
                 <p>Do not have list of news now</p>
                 <%}%>
             </div>        

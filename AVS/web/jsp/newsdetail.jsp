@@ -499,6 +499,7 @@
                     }
 
         %>
+          <c:set var = "conntentofcomment" scope = "session" value = "<%=listallcommentbynewid.get(i).getContent()%>"/>
         <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>   
         <div class="comment_content">                 
             <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
@@ -562,6 +563,7 @@
                     }
 
         %>
+          <c:set var = "conntentofcomment" scope = "session" value = "<%=listallcommentbynewid.get(i).getContent()%>"/>
         <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>   
         <div class="comment_content">
             <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>

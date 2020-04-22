@@ -55,7 +55,7 @@ public class CommentController extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html; charset=UTF-8");
-            int newsid = Integer.parseInt(request.getParameter("id"));
+            int newsid = Integer.parseInt(request.getParameter("id").trim());
             
             if(!username.isEmpty() ) {
                 UserModel usermodel = new UserModel();
@@ -95,7 +95,8 @@ public class CommentController extends HttpServlet {
             
             request.getRequestDispatcher("jsp/newsdetail.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(CommentController.class.getName()).log(Level.SEVERE, null, ex);
+             request.setAttribute("errorstring", "Don't have this news page");
+             request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
         }}
     }
 
