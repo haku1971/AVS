@@ -131,7 +131,6 @@
             }
         %>
 
-
         <%
             ArrayList<Comment> listallcommentbynewid = (ArrayList<Comment>) request.getAttribute("listallcommentbynewid");
             News news = (News) request.getAttribute("news");
@@ -142,7 +141,10 @@
         %>
 
 
-        <%if (!username.equals("")) {%>
+        <%if (request.getAttribute("banstatus") != null) {
+                if ((Integer) request.getAttribute("banstatus") == 0) {
+
+        %>
         <div class="main3">
             <div class="news_box">
                 <h1 class="news_title">
@@ -158,7 +160,7 @@
                     <p>  <%=news.getNewscontent()%> </p>
                     <div class="subdetail">                       
                         <ul>
-                            <li>Time: <%=news.getNewsdaterealease().substring(0,news.getNewsdaterealease().length()-5 ) %></li>
+                            <li>Time: <%=news.getNewsdaterealease().substring(0, news.getNewsdaterealease().length() - 5)%></li>
                             <li>Create By:<%=news.getUser().getFullname()%></li>
                             <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
                         </ul>
@@ -234,7 +236,7 @@
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/><%--<%=listallcommentbynewid.get(i).getContent()%> --%></div> 
             <textarea class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" >${conntentofcomment}</textarea>
-            <div id="time_cmt" class="cmt_detail"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0,listallcommentbynewid.get(i).getDatetime().length()-5) %></div>  
+            <div id="time_cmt" class="cmt_detail"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
             <i id="like_ulike_cmt" onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}" style="margin-left:15px;"></i>
             <div class="cmt_detail" id="like_<%=commentid%>">${thumpup ?("Liked"):("Like")}</div>       
             <input  class="likecounter2b" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
@@ -379,9 +381,9 @@
                     //  setTxteditStatus(commentid, "hidden");
                     setCancelButtonStatus(commentid, "hidden");
                     setEditButtonStatus(commentid, "visible");
-                  //var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
-                    var txt_edit_content = $('#txtedit_' + commentid).val().trim().replace("\\s+"," ");
-                    
+                    //var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
+                    var txt_edit_content = $('#txtedit_' + commentid).val().trim().replace("\\s+", " ");
+
                     if (txt_edit_content === "") {
                         $('#save_' + commentid).attr("disabled", true);
                     } else {
@@ -396,22 +398,9 @@
                                 $('#output').append(msg);
                             }
                         });
-                    }                
-               /*     document.getElementById('content_' + commentid).innerHTML = escapeHtml(txt_edit_content);
-                    document.getElementById('content_' + commentid).style.visibility = 'visible';
-                 
-                
-                    console.log(txt_edit_content);
-                    $.ajax({
-                        type: "post",
-                        url: "DeleteCommentServlet",
-                        data: {commentcontentedit: txt_edit_content, commentid: commentid},
-                        success: function (msg) {
-                            $('#output').append(msg);
-                        }
-                    });*/                
+                    }
                 }
-                    
+
             </script>
         </div>
 
@@ -441,7 +430,7 @@
         </div>
 
         <script>
-              function checkContentIsEmpty() {
+            function checkContentIsEmpty() {
                 if ($('#txtsavedb').val().trim() === "") {
 
                     $('#postcomment').attr("disabled", true);
@@ -451,8 +440,8 @@
             }
             $('#txtsavedb').keyup(function () {
                 // Get the Login Name value and trim it
-                var name = $('#txtsavedb').val().trim();   
-               // Check if empty of not
+                var name = $('#txtsavedb').val().trim();
+                // Check if empty of not
                 if (name.length < 1) {
                     $('#postcomment').attr("disabled", true);
                 } else {
@@ -462,7 +451,71 @@
 
         </script>
 
-        <%} else {  // trang hien thi cua guest %>
+        <%} else {%>
+        <%-- From herrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrre --%>
+        <div class="main3">
+            <div class="news_box">
+                <h1 class="news_title">
+                    <small><%=news.getNewstittles()%></small>
+                </h1>
+
+                <div class="news_content">
+                    <div class="detail">
+                        <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
+
+                    </div>
+
+                    <p>  <%=news.getNewscontent()%> </p>
+                    <div class="subdetail">                       
+                        <ul>
+                            <li>Time: <%=news.getNewsdaterealease()%></li>
+                            <li>Create By:<%=news.getUser().getFullname()%></li>
+                            <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
+                        </ul>
+                    </div>
+                    <%
+                        boolean thumplikenewsup = false;
+                        if (listalllikenewsbynewsid.size() > 0) {
+                            thumplikenewsup = true;
+                        }
+                    %>
+                    <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
+                    <i id="heart" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>            
+                    <input class="likecounter2a"  type="text" name="" value="<%=total_likenews%>" />
+
+
+                </div>
+            </div>
+        </div>             
+        <% if (!listallcommentbynewid.isEmpty()) {
+                for (int i = 0; i < listallcommentbynewid.size(); i++) {
+                    int commentid = listallcommentbynewid.get(i).getCommentid();
+                    int numberlike = commentid_and_numberof_like.get(commentid).intValue();
+                    boolean thumbup = false;
+
+                    //ng dang dang nhap tung like roi
+                    if (numberlike > 0) {
+                        thumbup = true;
+                    }
+
+        %>
+        <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>   
+        <div class="comment_content">                 
+            <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
+            <%--  <div><%=listallcommentbynewid.get(i).getContent()%> </div> --%>
+            <c:out value="${conntentofcomment}"/>
+            <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
+            <i  class= "${thumpup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>             
+            <input class="likecounter2"  type="text"  value="<%=numberlike%>" />
+        </div>
+
+        <% } //hien thi tung comment
+            } //neu mang comment > 0 %>
+        <span class="let_first">
+            <%= "You are restricted!!! "%>
+        </span>
+        <%  } // else cua check nguoi bi ban
+              } else {    //else nay la khach%>
         <div class="main3">
             <div class="news_box">
                 <h1 class="news_title">
@@ -511,19 +564,20 @@
         %>
         <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>   
         <div class="comment_content">
-            <hr>          
-            <c:out value = "${thumpup}"/>
             <div> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <%--  <div><%=listallcommentbynewid.get(i).getContent()%> </div> --%>
             <c:out value="${conntentofcomment}"/>
-            <div><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0,listallcommentbynewid.get(i).getDatetime().length()-5) %></div>  
+            <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
             <i  class= "${thumpup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>             
             <input class="likecounter2"  type="text"  value="<%=numberlike%>" />
         </div>
+
         <%} //hien thi tung comment
                 } //neu mang comment > 0
-            } // la guest hay user 
+            }
         %>
+        
+        <%-- to herrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrre --%>
         <%@include file="footer.jsp" %>  
     </body>
 </html>

@@ -1,7 +1,7 @@
 <%-- 
     Document   : userinfor
     Created on : Mar 18, 2020, 9:09:30 PM
-    Author     : BinhNT
+    Author     : DuongPH
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -78,7 +78,13 @@
                     </tr>
                     <tr>
                         <td>
-                            <h3>Status:<span> <%=request.getAttribute("status")%></span></h3>
+                            <%if(request.getAttribute("status")=="Ban") {%>
+                                <h3>Status:<span style="color:red;"> Ban </span></h3>
+                            <%} else {%>
+                                <h3>Status:<span style="color:green;"> Active </span></h3> 
+                                <%}%>
+                            
+                            <span style="font-size:11px;"><span style="font-size:15px;color:red;">(*)</span>Ban User could not comment on news</span>
                         </td>
                         <td>
 

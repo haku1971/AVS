@@ -128,6 +128,8 @@ public class NewsModel {
     //
     public ArrayList<News> searchNews(int from, int to, String searchtxt) throws Exception {
 //        System.out.println(searchtxt);
+        searchtxt = searchtxt.replaceAll("%", "[%]");
+
         String query = "Select n.delete_Status delete_Status, u.user_ID userid,u.user_Name username,u.user_FullName fullname, n.news_ID newsid,n.news_Content content,n.news_DateRealease daterelease,n.news_Imgs,n.news_Resource newsresource,n.news_Tittles newstitle \n"
                 + "from (select *, ROW_NUMBER() over(order by news_DateRealease DESC) as rownumber from News  where ((news_Tittles like ? OR news_Content like ?)) )\n"
                 + "as n inner join Users u on u.user_ID= n.user_ID\n"
@@ -139,7 +141,7 @@ public class NewsModel {
         ResultSet rs = null;
         try {
             conn = dbManager.getConnection();
-            ps = conn.prepareStatement(query);
+            ps = conn.prepareStatement(query);        
             ps.setString(1, "%" + searchtxt + "%");
             ps.setString(2, "%" + searchtxt + "%");
             ps.setInt(3, from);
@@ -172,6 +174,7 @@ public class NewsModel {
     }
 
     public int countDBresultsearch(String searchtxt) throws Exception {
+        searchtxt = searchtxt.replaceAll("%", "[%]");
         String query = "select COUNT(*) as numberrecord from News n where n.news_Tittles like ? OR n.news_Content like ?";
         int numberofrecord = 0;
         DBContext dbManager = new DBContext();
@@ -364,6 +367,7 @@ public class NewsModel {
                 news.setNews_Imgs(rs.getString("news_Imgs"));
                 news.setDeleted(rs.getInt("delete_Status"));
                 news.setUser(user);
+                return news;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -371,7 +375,7 @@ public class NewsModel {
             new CloseConnection().close(conn, ps, rs);
         }
 
-        return news;
+        return null;
     }
 
     //chuc nang edit new,su dung cho admin cung can viet lai ben trong 
