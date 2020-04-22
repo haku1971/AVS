@@ -474,9 +474,9 @@ public class NewsModel {
         }
         return null;
     }
-
-    public void insertNews(String title, String content, String currenttime, String resource, String imageurl, int userid) throws Exception {
-        //excute insert
+    
+    public void insertNews(News news) throws Exception {
+        String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
         String query = "INSERT INTO [dbo].[News] ([news_Tittles],[news_Content],[news_DateRealease],[news_Resource],[news_Imgs],[user_ID])\n"
                 + "VALUES (?,?,?,?,?,?)";
         DBContext dbManager = new DBContext();
@@ -485,19 +485,45 @@ public class NewsModel {
         try {
             conn = dbManager.getConnection();
             ps = conn.prepareStatement(query);
-            ps.setString(1, title);
-            ps.setString(2, content);
+            ps.setString(1, news.getNewstittles());
+            ps.setString(2, news.getNewscontent());
             ps.setString(3, currenttime);
-            ps.setString(4, resource);
-            ps.setString(5, imageurl);
-            ps.setInt(6, userid);
+            ps.setString(4, news.getNewsresource());
+            ps.setString(5, "null");
+            ps.setInt(6, news.getUser().getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("----Error at " + currenttime + "-----");
             e.printStackTrace();
         }
     }
+    
+    public void updateNews(News news) throws Exception {
+        String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
+        String query = "Update News\n"
+                + "Set news_Tittles=?,news_Content=?,news_DateRealease=?, news_Resource=?,news_Imgs=?,user_ID=?\n"
+                + "where news_ID = ?";
+        DBContext db = new DBContext();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, news.getNewstittles());
+            ps.setString(2, news.getNewscontent());
+            ps.setString(3, currenttime);
+            ps.setString(4, news.getNewsresource());
+            ps.setString(5, news.getNews_Imgs());
+            ps.setInt(6, news.getUser().getId());
+            ps.setInt(7, news.getNewsID());
+            ps.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void updateNews(String title, String content, String currenttime, String resource, String imageurl, int userid, int newsid) throws Exception {
 
         String query = "Update News\n"

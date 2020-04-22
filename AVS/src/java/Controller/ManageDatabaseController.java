@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import Entity.Algorithm;
+import Entity.News;
 import Entity.User;
 import Model.AlgorithmModel;
 import Model.HistoryModel;
@@ -109,8 +111,19 @@ public class ManageDatabaseController extends HttpServlet {
                     String resource = request.getParameter("resource").trim();
 
                     AlgorithmModel algodao = new AlgorithmModel();
-                    algodao.insertAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, "null");
-//                    System.out.println("add");
+                    Algorithm algo = new Algorithm();
+                    algo.setAlgoName(algoname);
+                    algo.setAlgoCodeJava(codejava);
+                    algo.setAlgoCodeCplus(codecpp);
+                    algo.setAlgoCodeJS(codejs);
+                    algo.setAlgoCodeVisual(codevisual);
+                    algo.setAlgoDescription(description);
+                    algo.setCategoryID(Integer.parseInt(categoryid));
+                    algo.setAlgoResource(resource);
+                    algodao.insertAlgo(algo);
+                    
+//                    algodao.insertAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, "null");
+
                     int lastalgoid = algodao.getLastRecord().getAlgoID();
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), lastalgoid, currenttime, "Add");
 
@@ -135,7 +148,19 @@ public class ManageDatabaseController extends HttpServlet {
                     codevisual = codevisual.replaceAll("â", "&emsp;");
 
                     AlgorithmModel algodao = new AlgorithmModel();
-                    algodao.updateAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, Integer.parseInt(algoid));
+                    Algorithm algo = new Algorithm();
+                    algo.setAlgoID(Integer.parseInt(algoid));
+                    algo.setAlgoName(algoname);
+                    algo.setAlgoCodeJava(codejava);
+                    algo.setAlgoCodeCplus(codecpp);
+                    algo.setAlgoCodeJS(codejs);
+                    algo.setAlgoCodeVisual(codevisual);
+                    algo.setAlgoDescription(description);
+                    algo.setCategoryID(Integer.parseInt(categoryid));
+                    algo.setAlgoResource(resource);
+                    
+                    algodao.updateAlgo(algo);
+//                    algodao.updateAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, Integer.parseInt(algoid));
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Edit");
 
                     response.sendRedirect("viewalgo?id=" + algoid);
@@ -173,8 +198,16 @@ public class ManageDatabaseController extends HttpServlet {
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String imageurl = "";
                     InputStream inputStream = null; // input stream of the upload file
+                    
                     NewsModel newsdao = new NewsModel();
-                    newsdao.insertNews(title, content, currenttime, source, null, Integer.parseInt(adminid));
+                    News news = new News();
+                    news.setNewstittles(title);
+                    news.setNewscontent(content);
+                    news.setNewsresource(source);
+                    User user = new User();
+                    user.setId(Integer.parseInt(adminid));
+                    news.setUser(user);
+                    newsdao.insertNews(news);
                     // obtains the upload file part in this multipart request
                     Part part = request.getPart("image");
                     inputStream = part.getInputStream();
@@ -191,9 +224,11 @@ public class ManageDatabaseController extends HttpServlet {
                         File targetFile = new File(imageurl);
                         OutputStream outStream = new FileOutputStream(targetFile);
                         outStream.write(buffer);
-
-                        newsdao.updateNews(title, content, currenttime, source, "./images/" + newsimagename + extentfilename, Integer.parseInt(adminid), newsid);
-
+                        
+                        news.setNewsID(newsid);
+                        news.setNews_Imgs("./images/" + newsimagename + extentfilename);
+                        newsdao.updateNews(news);
+                        
                         historydao.insertNewsHistory(Integer.parseInt(adminid), newsid, currenttime, "Add");
                     }
 
@@ -209,6 +244,14 @@ public class ManageDatabaseController extends HttpServlet {
                     String imageurl = request.getParameter("imageurl").trim();
 
                     NewsModel newsdao = new NewsModel();
+                    News news = new News();
+                    news.setNewsID(Integer.parseInt(newsid));
+                    news.setNewstittles(title);
+                    news.setNewscontent(content);
+                    news.setNewsresource(source);
+                    User user = new User();
+                    user.setId(Integer.parseInt(adminid));
+                    news.setUser(user);
 
                     InputStream inputStream = null; // input stream of the upload file
                     Part part = request.getPart("image");
@@ -226,10 +269,12 @@ public class ManageDatabaseController extends HttpServlet {
                         OutputStream outStream = new FileOutputStream(targetFile);
                         outStream.write(buffer);
                         TimeUnit.SECONDS.sleep(3);
-                        newsdao.updateNews(title, content, currenttime, source, "./images/" + newsimagename + extentfilename, Integer.parseInt(adminid), Integer.parseInt(newsid));
+                        news.setNews_Imgs("./images/" + newsimagename + extentfilename);
                     } else {
-                        newsdao.updateNews(title, content, currenttime, source, imageurl, Integer.parseInt(adminid), Integer.parseInt(newsid));
+                        news.setNews_Imgs(imageurl);
                     }
+                    
+                    newsdao.updateNews(news);
 
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Edit");
 
