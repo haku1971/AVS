@@ -21,6 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -121,6 +122,11 @@ public class UserinforController extends HttpServlet {
             if (user.getBanstatus() == 1) {
                 status = "Ban";
             }
+                System.out.println(user.getPassword());
+                if (user.getPassword().equals("null")) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("googleacc", "true");
+                }
             request.setAttribute("username", username);
             request.setAttribute("mail", mail);
             request.setAttribute("fullname", fullname);

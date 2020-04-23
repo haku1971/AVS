@@ -10,6 +10,7 @@ import Model.AuthenticateManagement;
 import Model.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -84,9 +85,22 @@ public class ChangePassController extends HttpServlet {
             } else if (username.equals("anon")) {
                 response.sendRedirect("/AVS/inputusername");
             } else {
+                User user = new User();
+                UserModel usermod;
+                try {
+
+                    usermod = new UserModel();
+                    user = usermod.getUserByUserID(userid);
+
+                } catch (Exception ex) {
+                }
+                if (user.getPassword().equals("null")) {
+                    session.setAttribute("googleacc", "true");
+                    response.sendRedirect("/AVS/userinfo");
+                }else{
                 session.setAttribute("userid", userid);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
-                dispatcher.forward(request, response);
+                dispatcher.forward(request, response);}
 
             }
         }
@@ -141,7 +155,8 @@ public class ChangePassController extends HttpServlet {
                 AuthenticateManagement.CheckResult checkpass = authenticateManagement.checkPassword(oldpassword, newpassword);
                 AuthenticateManagement.CheckResult passresult = authenticateManagement.checkPassword(newpassword, repassword);
                 int success = 1;
-                if (!oldpassword.equals(user.getPassword())) {
+                String oldpasswordencode = Base64.getEncoder().encodeToString(oldpassword.getBytes());
+                if (!oldpasswordencode.equals(user.getPassword())) {
                     request.setAttribute("errorOldPass", "Password is not correct");
                     success = 0;
 
@@ -163,6 +178,7 @@ public class ChangePassController extends HttpServlet {
                     try {
                         usermod = new UserModel();
                         useridnum = Integer.parseInt(userid);
+                        newpassword = Base64.getEncoder().encodeToString(newpassword.getBytes());
                         usermod.UpdatePassword(useridnum, newpassword);
                         request.setAttribute("success", "Change password successfullly ");
                         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
@@ -172,7 +188,7 @@ public class ChangePassController extends HttpServlet {
                     }
 
                 }
-            }else  {
+            } else {
                 PrintWriter out = response.getWriter();
                 response.setContentType("text/html");
                 out.println("<script type=\"text/javascript\">");

@@ -37,10 +37,17 @@ public class LogoutController extends HttpServlet {
         Cookie cookieuser = new Cookie("username", "");
         Cookie cookieroleid = new Cookie("roleid", "");
         Cookie cookieuserid = new Cookie("userid", "");
+        Cookie cookieemail = new Cookie("email", "");
         cookieuser.setMaxAge(0);
+        cookieroleid.setMaxAge(0);
+        cookieuserid.setMaxAge(0);
+        cookieemail.setMaxAge(0);
+        HttpSession session = request.getSession();
+        session.removeAttribute("googleacc");
         response.addCookie(cookieuser);
         response.addCookie(cookieroleid);
         response.addCookie(cookieuserid);
+        response.addCookie(cookieemail);
         response.sendRedirect("/AVS/HomeController");
     }
 

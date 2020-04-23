@@ -12,6 +12,7 @@ import Model.UserModel;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -101,10 +102,12 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String password = request.getParameter("password"); //ví dụ đây là mật khẩu ô get về từ người dùng nhập
         UserModel userDao;
         int rolenumber = 0;
         int id = 0;
+        //trc khi lưu vào db thì gọi câu bên dưới
+        
         if (request.getParameter("login") != null) {
 
             AuthenticateManagement authenticateManagement = new AuthenticateManagement();

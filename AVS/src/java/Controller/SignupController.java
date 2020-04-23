@@ -10,6 +10,7 @@ import Model.AuthenticateManagement;
 import Model.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -176,6 +177,7 @@ public class SignupController extends HttpServlet {
 
             try {
                 UserModel usermod = new UserModel();
+                password = Base64.getEncoder().encodeToString(password.getBytes());
                 usermod.insertUser(username, password, fullname, birthday, job,
                         workplace, gender, mail, phone);
                 try {

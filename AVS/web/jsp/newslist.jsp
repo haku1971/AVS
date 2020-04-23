@@ -17,7 +17,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <style>
-            .pagination a {
+            .pagination a, .notactive {
                 color: black;
                 float: left;
                 padding: 8px 16px;
@@ -33,9 +33,18 @@
             .pagination a.active:after{
                 content: none;
             }
-
             .pagination a:hover:not(.active) {background-color: #ddd;}
 
+            .pagination .notactive.active{
+                 background-color: dodgerblue;
+                color: white;
+                content: none;
+            }
+            .pagination .notactive:after{
+                 content: none;
+            }
+             .pagination .notactive:hover:not(.active) {background-color: #ddd;}
+             
             .container {
                 padding-right: 15px;
                 padding-left: 15px;
@@ -75,7 +84,7 @@
             <h1 >News Page</h1>
             <h5>Welcome to news page</h5> 
         </div>
-        
+
 
         <% ArrayList<News> listallnews = (ArrayList<News>) request.getAttribute("listallnews");
             String search = (String) request.getAttribute("SearchValue");
@@ -87,15 +96,15 @@
             <div class="SearchResult"><c:out value="${numberofsearchresult}"/></div>         
             <div  class="col-lm-4">  
                 <% if (listallnews != null && !listallnews.isEmpty()) { %>
-                  <div class="col-lm-4"><h3> List of news</h3></div>
+                <div class="col-lm-4"><h3> List of news</h3></div>
                 <%
-                        for (int i = 0; i < listallnews.size(); i++) {%>
+                    for (int i = 0; i < listallnews.size(); i++) {%>
 
                 <a href="newsdetail?id=<%=listallnews.get(i).getNewsID()%>"><%=listallnews.get(i).getNewstittles()%> </a>
                 <br>     
                 <p>By: <%=listallnews.get(i).getUser().getFullname()%> <p>
                 <p>Content: <%=listallnews.get(i).getNews_shortdescription()%> <p>  
-                <p>At:<%=listallnews.get(i).getNewsdaterealease().substring(0,listallnews.get(i).getNewsdaterealease().length()-5 )%> </p>
+                <p>At:<%=listallnews.get(i).getNewsdaterealease().substring(0, listallnews.get(i).getNewsdaterealease().length() - 5)%> </p>
                 <hr>
                 <%}
 
@@ -108,10 +117,14 @@
                 <div class="pagination">
                     <% for (int i = 1; i <= numberOfPage; i++) {
                             if (currentPage == i) {%>
-
                     <a class="active"> <%=i%></a>
-                    <%} else if (search != null) {%>
-                    <a href="news?page=<%=i%>&search=<%=search%>"><%=i%></a>
+                    <%} else if (search != null) {%>              
+                    <div><form method="Post" action="news">
+                            <input type="hidden" name="search" value="<%=search%>" />   
+                            <input type="hidden" name="page" value="<%=i%>" />  
+                            <button class="notactive"><%=i%></button>
+                        </form>
+                    </div>
                     <%} else {%>
                     <a href="news?page=<%=i%>"><%=i%></a>
                     <%}

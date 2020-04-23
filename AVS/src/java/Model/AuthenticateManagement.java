@@ -6,6 +6,7 @@
 package Model;
 
 import Entity.User;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +42,7 @@ public class AuthenticateManagement {
         boolean check = checkInput(regex, username);
         try {
             UserModel userDao = new UserModel();
+            String BasicBase64format  = Base64.getEncoder().encodeToString(password.getBytes());
             User user = userDao.getUserByUsername(username);
             if (check != true) {
                 if (username.length() < 6) {
@@ -52,7 +54,7 @@ public class AuthenticateManagement {
                 return CheckResult.NO_USERNAME;
             } else if (password.length() < 6) {
                 return CheckResult.PASSWORD_SHORT;
-            } else if (!user.getPassword().equals(password)) {
+            } else if (!user.getPassword().equals(BasicBase64format)) {
                 return CheckResult.WRONG_PASSWORD;
             }
             return CheckResult.SUCCESS;

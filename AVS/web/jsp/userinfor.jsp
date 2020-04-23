@@ -91,7 +91,7 @@
                             <button id="but1" onclick="document.location = '/AVS/changeinfo';return false" value="changeinfor"><span>Change Information</span></button>
                         </td>
                         <td>
-                            <%if (!request.getAttribute("username").equals(request.getAttribute("mail"))) {%>
+                            <%if (session.getAttribute("googleacc") == null) {%>
                             <button id="but2" onclick="document.location = '/AVS/changepass';return false" value="changepass"><span>Change Password</span></button>
                             <%}%>
                         </td>
