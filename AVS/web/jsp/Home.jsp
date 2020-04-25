@@ -19,7 +19,7 @@
         %>
     </head>
     <body>
-            <%@include file="header.jsp" %>
+        <%@include file="header.jsp" %>
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
@@ -45,11 +45,13 @@
             <div class="content">
                 <ul class="list_items"> 
                     <% startUL = true; %>
-                    <%} if (user.equals("anon")) {%>
-                          <li><a style=" text-decoration: none;" id="AlgoNameList" onclick="document.location = '/AVS/inputusername';return false"><%=a.getAlgoName()%></a></li>  
-                        <%}else{%>
+                    <%}
+                        if (user.equals("anon")) {%>
+                    <li><a style=" text-decoration: none;" id="AlgoNameList" onclick="document.location = '/AVS/inputusername';return false"><%=a.getAlgoName()%></a></li>  
+                        <%} else {%>
                     <li><a style=" text-decoration: none;" id="AlgoNameList" href="Detail?AlgoID=<%=a.getAlgoID()%>"><%=a.getAlgoName()%></a></li>
-                        <%}}%>
+                        <%}
+                            }%>
                 </ul>
             </div>
         </div>
@@ -58,9 +60,10 @@
             <h5 id="h5_1">Algorithm Visualize System is a interactive online platform that visualize algorithm from code</h5>
             <h5 id="h5_2">Learning algorithm much easier with animation and explain,Still confuse? Check out for more information</h5>
         </div>
+        <%@include file="footer.jsp" %>
     </div>
 </div>
-<%@include file="footer.jsp" %>
+
 <script type="text/javascript" src="js/code.js"></script>
 </body>
 </html>

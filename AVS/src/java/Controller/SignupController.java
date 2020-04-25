@@ -183,8 +183,9 @@ public class SignupController extends HttpServlet {
                 try {
                     userDao = new UserModel();
                     User user = userDao.getUserByUsername(username);
-                    rolenumber = user.getRolenum();
                     id = user.getId();
+                    userDao.setUserRole(id);
+                    rolenumber = userDao.getUserRole(id);
                 } catch (Exception ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }

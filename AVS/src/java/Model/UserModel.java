@@ -42,7 +42,6 @@ public class UserModel {
                 user.setId(rs.getInt("user_ID"));
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
-                user.setRolenum(rs.getInt("user_RoleNum"));
                 user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
@@ -76,7 +75,6 @@ public class UserModel {
                 user.setId(rs.getInt("user_ID"));
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
-                user.setRolenum(rs.getInt("user_RoleNum"));
                 user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
@@ -95,7 +93,7 @@ public class UserModel {
     }
 
     public User getUserByUserID(String userid) throws Exception {
-        String query = "select * from Users where user_ID=?";
+        String query = "select * from Users Inner Join UserRoles on Users.user_ID = UserRoles.user_ID Join Roles on UserRoles.role_ID = Roles.role_ID where Users.user_ID =?";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
         ResultSet rs = null;
@@ -110,7 +108,6 @@ public class UserModel {
                 user.setId(rs.getInt("user_ID"));
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
-                user.setRolenum(rs.getInt("user_RoleNum"));
                 user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
@@ -119,6 +116,7 @@ public class UserModel {
                 user.setPhone(rs.getString("user_Phone"));
                 user.setFullname(rs.getString("user_Fullname"));
                 user.setBanstatus(rs.getInt("ban_status"));
+                user.setRolename(rs.getString("role_Name"));
                 return user;
             }
         } catch (SQLException e) {
@@ -131,10 +129,10 @@ public class UserModel {
     public void insertUser(String username,
             String password, String fullname, String dob, int job,
             String workplace, int gender, String mail, String phone) throws Exception {
-        String query1 = "insert into Users(user_Name,user_Password,user_RoleNum,"
+        String query1 = "insert into Users(user_Name,user_Password,"
                 + "user_Fullname,user_DOB,user_Workplaces,user_Gender,user_Mail,"
                 + "user_Phone,job_ID,ban_Status)\n"
-                + "values (?,?,2,?,?,?,?,?,?,?,0)";
+                + "values (?,?,?,?,?,?,?,?,?,0)";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
         ResultSet rs = null;
@@ -217,7 +215,6 @@ public class UserModel {
                 user.setId(rs.getInt("user_ID"));
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
-                user.setRolenum(rs.getInt("user_RoleNum"));
                 user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
@@ -233,7 +230,6 @@ public class UserModel {
             user.setId(rs.getInt("user_ID"));
             user.setUsername(rs.getString("user_Name"));
             user.setPassword(rs.getString("user_Password"));
-            user.setRolenum(rs.getInt("user_RoleNum"));
             user.setDob(rs.getString("user_DOB"));
             user.setJob(rs.getInt("job_ID"));
             user.setWorkplace(rs.getString("user_Workplaces"));
@@ -319,9 +315,7 @@ public class UserModel {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String statementstring = "SELECT *\n"
-                    + "FROM (select *, ROW_NUMBER() over(order by user_id) as rownumber from Users) as n\n"
-                    + "WHERE  n.rownumber >= ? and n.rownumber <= ? and user_Name like ? ";
+            String statementstring = "SELECT * FROM (select *, ROW_NUMBER() over(order by Users.user_id) as rownumber from Users ) as n join UserRoles on n.user_ID = UserRoles.user_ID Join Roles on UserRoles.role_ID = Roles.role_ID WHERE  n.rownumber >= ? and n.rownumber <= ? and user_Name like ? ";
             statementstring += "ORDER BY " + columnname + " " + sortorder;
             statement
                     = connection.prepareStatement(statementstring);
@@ -331,10 +325,9 @@ public class UserModel {
             rs = statement.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("user_ID"));
+                user.setId(rs.getInt(1));
                 user.setUsername(rs.getString("user_Name"));
                 user.setPassword(rs.getString("user_Password"));
-                user.setRolenum(rs.getInt("user_RoleNum"));
                 user.setDob(rs.getString("user_DOB"));
                 user.setJob(rs.getInt("job_ID"));
                 user.setWorkplace(rs.getString("user_Workplaces"));
@@ -343,6 +336,7 @@ public class UserModel {
                 user.setPhone(rs.getString("user_Phone"));
                 user.setFullname(rs.getString("user_Fullname"));
                 user.setBanstatus(rs.getInt("ban_status"));
+                user.setRolename(rs.getString("role_Name"));
                 userlist.add(user);
             }
         } catch (Exception e) {
@@ -351,6 +345,45 @@ public class UserModel {
             new CloseConnection().close(connection, statement, rs);
         }
         return userlist;
+    }
+
+    public void setUserRole(int id) throws Exception {
+        String query1 = "Insert into UserRoles(user_ID,role_ID) values (?,1)";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query1);
+            ps.setInt(1, id);
+
+            ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getUserRole(int id) throws Exception {
+                String query = "select * from Users join UserRoles on Users.user_ID = UserRoles.user_ID where Users.user_ID=?";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                
+                return rs.getInt("role_ID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
     
 }

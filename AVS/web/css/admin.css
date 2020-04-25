@@ -38,17 +38,26 @@ and open the template in the editor.
     background-color: gray !important;
     color: aqua !important;
 }
-.tableadmin td,th{
+/*.tableadmin td,th{
     border: #29323d solid 1px;
 }
 .tableadmin>table{
     border-collapse: collapse;
     width: 95%;
     margin: 30px;
-    /*border: #29323d solid 1px;*/
-}
+    border: #29323d solid 1px;
+}*/
 .adminPaging{
-    margin-left: 30px;
+    width: 95%;
+    margin: auto;
+    margin-top: 20px;
+}
+.adminPaging a.pagging {
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: dodgerblue;
+    color: white;
+    content: none;
 }
 .sortby{
     margin: 20px 0px 20px 30px;
@@ -83,8 +92,9 @@ and open the template in the editor.
     /*height: 550px;*/
 }
 .admininfortable{
-    margin: 30px auto;
-    width: 1000px;
+    background-color: #edf0f4;
+    margin: 50px auto;
+    width: 95%;
 }
 
 .admininfortable tr{
@@ -126,6 +136,20 @@ and open the template in the editor.
     display: inline-block;
 }
 
+#but{
+     border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+    float: left;
+    margin-left: 15px;
+}
+
 #but1 {
     border-radius: 4px;
     background-color: #f4511e;
@@ -155,9 +179,17 @@ and open the template in the editor.
 
 }
 .main .adminright {
-    /*height: 100%;*/
-    /*position: relative;*/
-    min-height: 500px;
+    /*    height: 100%;
+        position: relative;
+        min-height: 500px;
+        overflow: auto;
+        background-color: #edf0f4;
+        margin-top: 10px;
+        margin-left: 310px;*/
+    padding-top: 20px;
+    height: 100%;
+    position: relative;
+    min-height: 700px;
     overflow: auto;
     background-color: #edf0f4;
     margin-top: 10px;
@@ -166,13 +198,20 @@ and open the template in the editor.
 }
 
 .main .adminleft {
-    /*margin-top: 10px;*/
-    /*position: relative;*/
+    /*    margin-top: 10px;
+        position: relative;
+        width: 300px;
+        background-color: #edf0f4;
+        float: left;
+        min-height: 500px;
+        height: 100%;*/
+    padding-bottom: 20px;
+    position: relative;
     width: 300px;
     background-color: #edf0f4;
     float: left;
-    min-height: 500px;
-    /*height: 100%;*/
+    min-height: 700px;
+    height: 100%;
 }
 
 .algoinfomation{
@@ -183,18 +222,97 @@ and open the template in the editor.
     font-size: 50px;
 }
 
-.modifyleft{
+.modify{
+    margin-right: 30px;
     display: inline-block;
+    /*width: 30%;*/
+    /*float: left;*/
+    /*min-height: 170px;*/
 }
 
 .modifyright{
+    /*display: inline-block;*/
+    width: 45%;
+    float: right;
+
+}
+
+.modifyleft{
+    /*display: inline-block;*/
+    width: 45%;
+    float: left;
+}
+
+.modifyleftlast{
     display: inline-block;
-    margin-left: 100px;
+    width: 15%;
+    float: left;
 }
 .modifyrightlast{
-    display: inline-block;
-    margin-left: 100px;
-    padding-top: 0;
-    position: absolute;
-    margin-top: 20px;
+    float: left;
+    margin-left: -5%;
+    /*display: inline-block;*/
+}
+
+
+table {
+    margin: auto;
+    width: 95%;
+    background-color: #fff;
+}
+
+
+
+.columnadmin {
+    padding-left: 25px;
+}
+
+.rowadmin.head th {
+    padding-top: 24px;
+    padding-bottom: 20px;
+}
+
+.rowadmin td {
+    padding-top: 18px;
+    padding-bottom: 14px;
+}
+
+
+
+/*==================================================================
+[ Ver3 ]*/
+.table100 tbody tr {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.table100 td {
+    font-family: Montserrat-Regular;
+    font-size: 14px;
+    color: #808080;
+    line-height: 1.4;
+}
+
+.table100 th {
+    font-family: Montserrat-Medium;
+    font-size: 12px;
+    color: #fff;
+    line-height: 1.4;
+    text-transform: uppercase;
+
+    background-color: #5aa6e2;
+}
+
+.table100 .rowadmin:hover td {
+    background-color: #fcebf5;
+}
+
+
+
+.table100 .rowadmin td:hover {
+    background-color: #e03e9c;
+    color: #fff;
+}
+
+.adminbtn{
+    color: none;
 }

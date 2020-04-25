@@ -1,7 +1,6 @@
 var initarray = [9, 8, 7, 6, 9, 4, 3, 2, 1, 1];
 var hasharray = [10, 20, 30, 40, 1, 2, 3, 4, 8];
 var searchnumber = 8;
-var gapbetweennumber = 8;
 var N = 10; // Array Size
 var XYs = 5; // Element Visual Size
 var Xp = 1; // Start Pos X
@@ -22,11 +21,16 @@ var logarray = [];
 var algorithmtype;
 var category;
 var isinit = true;
+var arrayheight = 50;
+var arraywidth = 50;
+var gapbetweennumber = 9.5;
+var gapbetweenbox = 1;
+var fontsize = 15;
 /*
  * Hash implement
  */
 //var hash = require('string-hash');
-var hasharraysize = 11;
+var hasharraysize = 10;
 function getindex(key, arraysize) {
 //    var hash = hashfunc(key);
     var hash = key;
@@ -309,8 +313,8 @@ function inputByUser() {
                     isvalid = false;
                     break;
                 }
-                if (maxlength > 11) {
-                    window.alert("Max size available is 11!");
+                if (maxlength > 10) {
+                    window.alert("Max size available is 10!");
                     isvalid = false;
                     break;
                 }
@@ -649,10 +653,14 @@ function draw(step) {
         var ctx = canvas.getContext('2d');
         var canvasheight = parseInt(document.getElementById("canvasAnimation").height);
         var canvaswidth = parseInt(document.getElementById("canvasAnimation").width);
-        document.getElementById("canvasAnimation").height = 50;
-        document.getElementById("canvasAnimation").width = initarray.length * 47;
+        document.getElementById("canvasAnimation").height = arrayheight;
+        if (algorithmtype === 'openaddressing_hash') {
+            document.getElementById("canvasAnimation").width = hasharraysize * (arraywidth + gapbetweenbox)
+        } else {
+            document.getElementById("canvasAnimation").width = (initarray.length) * (arraywidth + gapbetweenbox);
+        }
+        ctx.font = "15px Arial"; //must add same value to "fontsize"
 
-        ctx.font = "15px Arial";
         //xóa draw cũ
         ctx.fillStyle = "#edf0f4";
         ctx.fillRect(0, 0, canvaswidth, canvasheight);
@@ -690,10 +698,16 @@ function draw(step) {
 function drawInitCurrent(currentstep, ctx) {
     for (var i = 0; i < eachStepArr[currentstep].length; i++) {
         ctx.fillStyle = "#AAAAAA";
-        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+//        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+        ctx.fillRect((i * arraywidth) + (i * 1), Yp, arraywidth, arrayheight);
         if (eachStepArr[currentstep][i] !== undefined) {
             ctx.fillStyle = "#000000";
-            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+//            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+            if (eachStepArr[currentstep][i] > 9) {
+                ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (arraywidth / 3), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
+            } else {
+                ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (2 * arraywidth / 5), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
+            }
         }
         if (highlightcode[i] !== 0) {
             var line_name = "line_" + highlightcode[i];
@@ -713,15 +727,19 @@ function drawHighlightAnimation(currentstep, ctx) {
             if (highlightcheck[currentstep][j] === i) {
                 if (color[currentstep] === "swap" || color[currentstep] === "found") {
                     ctx.fillStyle = "#c51162";
-                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+                    ctx.fillRect((i * arraywidth) + (i * 1), Yp, arraywidth, arrayheight);
 
                 } else {
                     ctx.fillStyle = "#2962ff";
-                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+                    ctx.fillRect((i * arraywidth) + (i * 1), Yp, arraywidth, arrayheight);
                 }
                 if (eachStepArr[currentstep][i] !== undefined) {
                     ctx.fillStyle = "#000000";
-                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+                    if (eachStepArr[currentstep][i] > 9) {
+                        ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (arraywidth / 3), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
+                    } else {
+                        ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (2 * arraywidth / 5), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
+                    }
                 }
             }
         }
@@ -735,9 +753,13 @@ function drawHighlightSorted(currentstep, ctx) {
             for (var j = 0; j < highlightsorted[currentstep].length; j++) {
                 if (highlightsorted[currentstep][j] === i) {
                     ctx.fillStyle = "Green";
-                    ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
+                    ctx.fillRect((i * arraywidth) + (i * 1), Yp, arraywidth, arrayheight);
                     ctx.fillStyle = "#000000";
-                    ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
+                     if (eachStepArr[currentstep][i] > 9) {
+                ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (arraywidth / 3), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
+            } else {
+                ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (2*arraywidth /5), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
+            }
                 }
             }
         }

@@ -23,7 +23,7 @@
         <%
             User thisuser = (User) request.getAttribute("user");
             String action = thisuser.getBanstatus() == 0 ? "ban" : "unban";
-            
+
         %>
     </head>
 
@@ -40,7 +40,7 @@
                 <div class="admininfo_box">
                     <table class="admininfortable">
                         <tr> 
-                            <td><h1><%=thisuser.getRolenum()%></h1></td> 
+                            <td><h1><%=thisuser.getRolename()%></h1></td> 
                             <td>
                                 <span class="adminspan_info">User-Name :</span>
                                 <input class="su_infor" type="text" name="username" value="<%=thisuser.getUsername()%>"readonly/>
@@ -118,8 +118,9 @@
 
 
             </div>
+            <%@include file="footer.jsp" %>
         </div>
-        <%@include file="footer.jsp" %>
+
 
     </body>
 </html>

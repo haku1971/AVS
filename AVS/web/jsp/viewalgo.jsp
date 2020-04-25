@@ -38,35 +38,48 @@
         </div>
         <div class="main">
             <%@include file="adminleft.jsp" %> 
-            <div class="right">
+            <div class="adminright">
 
                 <div class="algoinfomation">
                     <%if (addnew) {%>
                     <!--trang addnew-->
+                    <div class="algoid">Add Algorithm:</div>
+                    <br>
                     <form method="POST" action="manage" onsubmit="return validate();">
                         <input type="hidden" name="managetype" value="addalgo">
+                        <div class="modify">
+                            <div style="display: inline-block;">Name: </div> 
+                            <div style="display: block; margin-bottom: 20px;"><input id="algoname" type="text" name="algoname" value=""></div>
+                        </div>
+                        <div class="modify">                        
+                            <div>Category: </div>
+                            <div style="margin-bottom: 20px;">
+                                <input type="hidden" name="category" id="inputcategory" value="1">
+                                <select id="selectcategory" onchange="changeCategory(this)">
+                                    <% for (int i = 0; i < listalgocategory.size(); i++) {%>
+                                    <option value="<%=listalgocategory.get(i).getCategoryID()%>"><%=listalgocategory.get(i).getCategoryName()%></option>
+                                    <%}%>
+                                </select></div>
+                        </div>
+                        <div class="modify">
+                            <div>Resource: </div> <div style="margin-bottom: 20px;"><input type="text" name="resource" value=""></div>
+                        </div>  
 
-                        <div>Name: </div> <div><input id="algoname" type="text" name="algoname" value=""></div>
-                        <div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="30" ></textarea></div>
-                        <div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="30" ></textarea></div>
-                        <div>Code JS:  </div> <div><textarea name="codejs" rows="10" cols="30" ></textarea></div>
-                        <div>Code Visualize:  </div> <div><textarea name="codevisual" rows="10" cols="30" ></textarea></div>
-                        <div>Description: </div> <div><textarea id="description" name="description" rows="10" cols="30" ></textarea></div>
-                        <div>Resource: </div> <div><input type="text" name="resource" value=""></div>
-                        <div>Category: </div> <div>
-                            <input type="hidden" name="category" id="inputcategory" value="1">
-                            <select id="selectcategory" onchange="changeCategory(this)">
-                                <% for (int i = 0; i < listalgocategory.size(); i++) {%>
-                                <option value="<%=listalgocategory.get(i).getCategoryID()%>"><%=listalgocategory.get(i).getCategoryName()%></option>
-                                <%}%>
-                            </select></div>
-                        <input type="submit" value="Save">
+                        <br>
+                        <div class="modifyleft"><div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="60" ></textarea></div></div>
+                        <div class="modifyright"><div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="60" ></textarea></div></div>
+                        <div class="modifyleft"><div>Code JS:  </div> <div><textarea name="codejs" rows="10" cols="60" ></textarea></div></div>
+                        <div class="modifyright"><div>Description: </div> <div><textarea id="description" name="description" rows="10" cols="60" ></textarea></div></div>
+                        <br>
+                        <div class="modifyleftlast">
+                            <input id="but" type="submit" value="Save">
+                        </div>
                     </form>
-
-                    <a href="admin?category=algorithm"><button>Cancel</button></a>
-
+                    <div class="modifyrightlast">
+                        <a href="admin?category=algorithm"><button id="but1">Cancel</button></a>
+                    </div>
                     <%} else {
-                    String action = algo.getDeleted() == 0 ? "Delete" : "Restore";%>
+                        String action = algo.getDeleted() == 0 ? "Delete" : "Restore";%>
                     <!--trang view-->
 
                     <div class="algoid">Algorithm ID: <%=algo.getAlgoID()%></div>
@@ -76,13 +89,13 @@
                     <form method="POST" action="manage" onsubmit="return validate();">
                         <input type="hidden" name="managetype" value="editalgo">
                         <input type="hidden" name="algoid" value="<%=algo.getAlgoID()%>" >
-                        <div class="modifyleft">
-                            <div style="display: inline-block">Name: </div> 
-                            <div style="display: block"><input id="algoname" type="text" name="algoname" value="<%=algo.getAlgoName()%>"></div>
+                        <div class="modify">
+                            <div style="display: inline-block;">Name: </div> 
+                            <div style="display: block; margin-bottom: 20px;"><input id="algoname" type="text" name="algoname" value="<%=algo.getAlgoName()%>"></div>
                         </div>
-                        <div class="modifyright">
+                        <div class="modify">
                             <div>Category: </div>
-                            <div>
+                            <div style="margin-bottom: 20px;">
                                 <input type="hidden" name="category" id="inputcategory" value="<%=algo.getCategoryID()%>">
                                 <select id="selectcategory" onchange="changeCategory(this)">
                                     <% for (int i = 0; i < listalgocategory.size(); i++) {%>
@@ -90,27 +103,27 @@
                                     <%}%>
                                 </select></div>
                         </div>
-                        <br>
+                        <div class="modify">
+                            <div>Resource: </div> <div style="margin-bottom: 20px;"><input type="text" name="resource" value="<%=algo.getAlgoResource()%>"></div>
+                        </div>  
                         <br>
                         <div class="modifyleft"><div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="60" ><%=algo.getAlgoCodeJava()%></textarea></div></div>
                         <div class="modifyright"><div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="60" ><%=algo.getAlgoCodeCplus()%></textarea></div></div>
-                        <br>
                         <div class="modifyleft"><div>Code JS:  </div> <div><textarea name="codejs" rows="10" cols="60" ><%=algo.getAlgoCodeJS()%></textarea></div></div>
-                        <div class="modifyright"><div>Code Visualize:  </div> <div><textarea name="codevisual" rows="10" cols="60" ><%=algo.getAlgoCodeVisual()%></textarea></div></div>
+                        <div class="modifyright"><div>Description: </div> <div><textarea id="description" name="description" rows="10" cols="60" ><%=algo.getAlgoDescription()%></textarea></div></div>
                         <br>
-                        <div class="modifyleft"><div>Description: </div> <div><textarea id="description" name="description" rows="10" cols="60" ><%=algo.getAlgoDescription()%></textarea></div></div>
-                        <div class="modifyrightlast">
-                            <div>Resource: </div> <div><input type="text" name="resource" value="<%=algo.getAlgoResource()%>"></div>
-                            <input type="submit" value="Save"  >
+                        <div class="modifyleftlast">
+                            <input id="but" type="submit" value="Save">
                         </div>
                     </form>
-                    <div>
-                        <a href="admin?category=algorithm"><button>Back</button></a>
-                        <form method="POST" action="manage" onsubmit="return confirm('<%=action%> this algorithm?');">
+                    <div class="modifyrightlast">
+
+                        <form style="display: inline-block" method="POST" action="manage" onsubmit="return confirm('<%=action%> this algorithm?');">
+                            <input id="but" type="submit" <%if (algo.getDeleted() == 1) {%>value="Restore"<%} else {%>value="Delete"<%}%>>
                             <input type="hidden" name="managetype" <%if (algo.getDeleted() == 1) {%>value="restorealgo"<%} else {%>value="deletealgo"<%}%>>
                             <input type="hidden" name="algoid" value="<%=algo.getAlgoID()%>" >
-                            <input type="submit" <%if (algo.getDeleted() == 1) {%>value="Restore"<%} else {%>value="Delete"<%}%>>
                         </form>
+                        <a href="admin?category=algorithm"><button id="but1">Back</button></a>
                     </div>
                     <br>
 
@@ -120,8 +133,9 @@
                     <%}%>
                 </div>
             </div>
+            <%@include file="footer.jsp" %>    
         </div>
-        <%@include file="footer.jsp" %>    
+
 
     </body>
     <script>

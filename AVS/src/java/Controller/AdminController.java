@@ -93,7 +93,7 @@ public class AdminController extends HttpServlet {
                         searchstring = "";
                     }
                     if (columnname == null || columnname.isEmpty()) {
-                        columnname = "user_id";
+                        columnname = "n.user_id";
                     }
                     if (sortorder == null || sortorder.isEmpty()) {
                         sortorder = "ASC";

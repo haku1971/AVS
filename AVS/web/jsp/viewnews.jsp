@@ -37,7 +37,7 @@
         </div>
         <div class="main">
             <%@include file="adminleft.jsp" %> 
-            <div class="right">
+            <div class="adminright">
 
                 <div class="newsinfomation">
                     <%if (addnews) {%>
@@ -75,16 +75,19 @@
                         </div>
                         <input type="submit" value="Save">
                     </form>
-                    <a href="admin?category=news"><button>Back</button></a>
+                    
                     <form method="POST" action="manage" onsubmit="return confirm('<%=action%> this news?');">
                         <input type="hidden" name="managetype" <%if (news.getDeleted() == 1) {%>value="restorenews"<%} else {%>value="deletenews"<%}%>>
                         <input type="hidden" name="newsid" value="<%=news.getNewsID()%>" >
                         <input type="submit" <%if (news.getDeleted() == 1) {%>value="Restore"<%} else {%>value="Delete"<%}%>>
                     </form>
+                    <a href="admin?category=news"><button>Back</button></a>
                     <%}%>
                 </div>
+
             </div>
             <%@include file="footer.jsp" %>    
+        </div>
 
     </body>
     <script>
@@ -99,7 +102,7 @@
                 return false;
             } else if (document.getElementById("file").files.length != 0) {
                 return validatePictureFile();
-            } else{
+            } else {
                 return confirm('Do you really want to save change?');
             }
         }

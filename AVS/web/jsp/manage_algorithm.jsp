@@ -70,27 +70,27 @@
                         <input type="submit" value="Search" />       
                     </div>
                 </form>
-                <div class="tableadmin">
+                <div class="table100">
                     <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Visualized</th>
-                            <th>Detail</th>
+                        <tr class="rowadmin head">
+                            <th class="columnadmin">ID</th>
+                            <th class="columnadmin">Name</th>
+                            <th class="columnadmin">Category</th>
+                            <th class="columnadmin">Visualized</th>
+                            <th class="columnadmin">Detail</th>
                                 <% if (showdeleted == "showdeleted") {%>
-                            <th>Deleted</th>
-                            <%}%>
+                            <th class="columnadmin">Deleted</th>
+                                <%}%>
                         </tr>
                         <% for (int i = 0; i < allalgolist.size(); i++) {%> 
-                        <tr>
-                            <td><%=allalgolist.get(i).getAlgoID()%></td>
-                            <td><%=allalgolist.get(i).getAlgoName()%></td>
-                            <td><%=allalgolist.get(i).getCategoryName()%></td>
-                            <td><%=allalgolist.get(i).getVisualizedToString()%></td>
-                            <td><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>">View</a></td>
+                        <tr class="rowadmin">
+                            <td class="columnadmin"><%=allalgolist.get(i).getAlgoID()%></td>
+                            <td class="columnadmin"><%=allalgolist.get(i).getAlgoName()%></td>
+                            <td class="columnadmin"><%=allalgolist.get(i).getCategoryName()%></td>
+                            <td class="columnadmin"><%=allalgolist.get(i).getVisualizedToString()%></td>
+                            <td class="columnadmin"><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>">View</a></td>
                             <% if (showdeleted == "showdeleted") {%>
-                            <td><%=allalgolist.get(i).getDeleted()%></td>
+                            <td class="columnadmin"><%=allalgolist.get(i).getDeleted()%></td>
                             <%}%>
                         </tr>
                         <%}%>
@@ -108,7 +108,7 @@
                             String currenturl = currentpageurl + columnnameurl + sortorderurl + showdeletedurl + searchtxturl;
                         %>
                         <% for (int i = 1; i <= totalpage; i++) {%>
-                        <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
+                        <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
                         <div class="addBtn">
                             <a href="addalgo"><button>Add</button></a>
@@ -117,8 +117,9 @@
 
                 </div>
             </div>
+            <%@include file="footer.jsp" %>      
         </div>
-        <%@include file="footer.jsp" %>    
+
     </body>
     <script>
         var selectcolumn = document.getElementById("select_column");

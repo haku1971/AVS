@@ -1,6 +1,9 @@
 body {
-    margin: 0;
     height: 100%;
+    width: 100%;
+    position: absolute;
+    min-width: 1500px;
+
 }
 
 /*HEADER*/
@@ -178,23 +181,23 @@ body {
 
 .main .left {
     /*margin-top: 10px;*/
-    /*position: relative;*/
+    position: relative;
     width: 300px;
     background-color: #edf0f4;
     float: left;
-    min-height: 1000px;
-    /*height: 100%;*/
+    min-height: 1200px;
+    height: 100%;
 }
 
 .main .right {
-    /*height: 100%;*/
-    /*position: relative;*/
-    min-height: 1000px;
+    height: 100%;
+    position: relative;
+    min-height: 1200px;
     overflow: auto;
     background-color: #edf0f4;
     margin-top: 10px;
     margin-left: 310px;
-
+    resize: both;
 }
 
 .main .right h1 {
@@ -1497,3 +1500,23 @@ body {
     margin-top: -35px;
 }
 
+#more {display: none;}
+#myBtn{
+    margin-left: 10px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+}
+
+#myBtn:hover {
+  background-color: #4CAF50;
+  color: white;
+}

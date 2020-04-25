@@ -74,27 +74,27 @@
                     </div>
 
                 </form>
-                <div class="tableadmin">
+                <div class="table100">
                     <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Create Date</th>
-                            <th>Editor</th>
-                            <th>Image</th>
-                            <th>Detail</th>
-                            <% if (showdeleted == "showdeleted") {%>
+                        <tr class="rowadmin head">
+                            <th class="columnadmin">ID</th>
+                            <th class="columnadmin">Title</th>
+                            <th class="columnadmin">Create Date</th>
+                            <th class="columnadmin">Editor</th>
+                            <th class="columnadmin">Image</th>
+                            <th class="columnadmin">Detail</th>
+                                <% if (showdeleted == "showdeleted") {%>
                             <th>Deleted</th>
-                            <%}%>
+                                <%}%>
                         </tr>
                         <% for (int i = 0; i < allnews.size(); i++) {%> 
-                        <tr>
-                            <td><%=allnews.get(i).getNewsID()%></td>
-                            <td><%=allnews.get(i).getNewstittles()%></td>
-                            <td><%=allnews.get(i).getNewsdaterealease()%></td>
-                            <td><%=allnews.get(i).getUser().getUsername()%></td>
-                            <td><%=allnews.get(i).getNews_Imgs()%></td>
-                            <td><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
+                        <tr class="rowadmin">
+                            <td class="columnadmin"><%=allnews.get(i).getNewsID()%></td>
+                            <td class="columnadmin"><%=allnews.get(i).getNewstittles()%></td>
+                            <td class="columnadmin"><%=allnews.get(i).getNewsdaterealease()%></td>
+                            <td class="columnadmin"><%=allnews.get(i).getUser().getUsername()%></td>
+                            <td class="columnadmin"><%=allnews.get(i).getNews_Imgs()%></td>
+                            <td class="columnadmin"><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
                             <% if (showdeleted == "showdeleted") {%>
                             <td><%=allnews.get(i).getDeleted()%></td>
                             <%}%>
@@ -114,7 +114,7 @@
                             String currenturl = currentpageurl + columnnameurl + sortorderurl + showdeletedurl + searchtxturl;
                         %>
                         <% for (int i = 1; i <= totalpage; i++) {%>
-                        <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
+                        <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
                         <div class="addBtn">
                             <a href="addnews"><button>Add</button></a>
@@ -122,8 +122,9 @@
                     </div>
                 </div>
             </div>
+            <%@include file="footer.jsp" %>  
         </div>
-        <%@include file="footer.jsp" %>    
+
     </body>
     <script>
         var selectcolumn = document.getElementById("select_column");

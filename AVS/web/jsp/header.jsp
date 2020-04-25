@@ -42,7 +42,7 @@
         <meta name="google-signin-scope" content="profile email">
 
         <!--deploy sever-->
-<!--        <meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">-->
+        <!--        <meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">-->
 
         <!--local host-->
         <meta name="google-signin-client_id" content="912620741556-hcmv2c3g46fti4psnqsjduu2hqcjo0qj.apps.googleusercontent.com">
@@ -71,7 +71,7 @@
                         <a id="userName">Hello, <%=user%></a><img  src="images\user.png" />
 
                         <div class="dropdown">
-                            <button style="pointer-events: none"><span>+</span></button>
+                            <button style="pointer-events: none"><span>&#9776</span></button>
                             <div class="dropdown-content">
                                 <div style = "display:none" align="middle" class="g-signin2" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
                                 <button onclick="document.location = '/AVS/userinfo';return false">Information</button>
@@ -92,7 +92,7 @@
                         <button onclick="checkLengthOfSearch()" id="buttonsearch" type="submit">Submit</button>
                         <%}%>
                     </form>
-                    <script>                      
+                    <script>
                         function checkLengthOfSearch() {
                             var txt_search_content = $('#textsearch').val().trim().replace("\\s+", " ");
                             console.log(txt_search_content);

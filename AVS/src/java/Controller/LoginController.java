@@ -141,7 +141,7 @@ String username = request.getParameter("username");
                 try {
                     userDao = new UserModel();
                     User user = userDao.getUserByUsername(username);
-                    rolenumber = user.getRolenum();
+                    rolenumber = userDao.getUserRole(user.getId());
                     id = user.getId();
                 } catch (Exception ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);

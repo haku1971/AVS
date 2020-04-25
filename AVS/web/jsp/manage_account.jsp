@@ -46,7 +46,7 @@
                     <div class="sortby">
                         Sort by: 
                         <select id="select_column" onchange="changeselected()">
-                            <option value="user_id">ID</option>
+                            <option value="n.user_id">ID</option>
                             <option value="user_name">Name</option>
                             <option value="user_rolenum">Role</option>
                             <option value="ban_status">Ban Status</option>
@@ -62,22 +62,22 @@
                         <input type="submit" value="Search" />       
                     </div>
                 </form>
-                <div class="tableadmin">
+                <div class="table100">
                     <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Ban Status</th>
-                            <th>View</th>
+                        <tr class="rowadmin head">
+                            <th class="columnadmin">ID</th>
+                            <th class="columnadmin">Name</th>
+                            <th class="columnadmin">Role</th>
+                            <th class="columnadmin">Ban Status</th>
+                            <th class="columnadmin">View</th>
                         </tr>
                         <% for (int i = 0; i < alluserlist.size(); i++) {%> 
-                        <tr>
-                            <td><%=alluserlist.get(i).getId()%></td>
-                            <td><%=alluserlist.get(i).getUsername()%></td>
-                            <td><%=alluserlist.get(i).getRolenumString()%></td>
-                            <td><%=alluserlist.get(i).getBanstatusString()%></td>
-                            <td><a href="viewaccount?id=<%=alluserlist.get(i).getId()%>">View</a></td>
+                        <tr class="rowadmin">
+                            <td class="columnadmin"><%=alluserlist.get(i).getId()%></td>
+                            <td class="columnadmin"><%=alluserlist.get(i).getUsername()%></td>
+                            <td class="columnadmin "><%=alluserlist.get(i).getRolename()%></td>
+                            <td class="columnadmin"><%=alluserlist.get(i).getBanstatusString()%></td>
+                            <td class="columnadmin"><a href="viewaccount?id=<%=alluserlist.get(i).getId()%>">View</a></td>
                         </tr>
                         <%}%>
                     </table>
@@ -90,13 +90,14 @@
                             String currenturl = currentpageurl + columnnameurl + sortorderurl + searchtxturl;
                         %>
                         <% for (int i = 1; i <= totalpage; i++) {%>
-                        <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
+                        <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
                     </div>
                 </div>
+
             </div>
+            <%@include file="footer.jsp" %>
         </div>
-        <%@include file="footer.jsp" %>    
 
     </body>
     <script>

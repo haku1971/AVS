@@ -41,23 +41,23 @@
 
             <div class="adminright">
 
-                <div class="tableadmin">
+                <div class="table100">
                     <%if (historytype == "user_history") {%>
                     <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>User</th>
-                            <th>Admin</th>
-                            <th>Time</th>
-                            <th>Action</th>
+                        <tr class="rowadmin head">
+                            <th class="columnadmin">ID</th>
+                            <th class="columnadmin">User</th>
+                            <th class="columnadmin">Admin</th>
+                            <th class="columnadmin">Time</th>
+                            <th class="columnadmin">Action</th>
                         </tr>
                         <% for (int i = 0; i < allhistorylist.size(); i++) {%> 
-                        <tr>
-                            <td><%=allhistorylist.get(i).getModID()%></td>
-                            <td><%=allhistorylist.get(i).getUser().getUsername()%></td>
-                            <td><%=allhistorylist.get(i).getAdmin().getUsername()%></td>
-                            <td><%=allhistorylist.get(i).getModTime()%></td>
-                            <td><%=allhistorylist.get(i).getBanStatustoString()%></td>
+                        <tr class="rowadmin">
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModID()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getUser().getUsername()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getAdmin().getUsername()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModTime()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getBanStatustoString()%></td>
                         </tr>
                         <%}%>
                     </table>
@@ -65,20 +65,20 @@
 
                     <%if (historytype == "algo_history") {%>
                     <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>User</th>
-                            <th>Algo</th>
-                            <th>Time</th>
-                            <th>Action</th>
+                        <tr class="rowadmin head">
+                            <th class="columnadmin">ID</th>
+                            <th class="columnadmin">User</th>
+                            <th class="columnadmin">Algo</th>
+                            <th class="columnadmin">Time</th>
+                            <th class="columnadmin">Action</th>
                         </tr>
                         <% for (int i = 0; i < allhistorylist.size(); i++) {%> 
-                        <tr>
-                            <td><%=allhistorylist.get(i).getModID()%></td>
-                            <td><%=allhistorylist.get(i).getUser().getUsername()%></td>
-                            <td><%=allhistorylist.get(i).getAlgo().getAlgoName()%></td>
-                            <td><%=allhistorylist.get(i).getModTime()%></td>
-                            <td><%=allhistorylist.get(i).getAction()%></td>
+                        <tr class="rowadmin">
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModID()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getUser().getUsername()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getAlgo().getAlgoName()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModTime()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getAction()%></td>
                         </tr>
                         <%}%>
                     </table>
@@ -86,20 +86,20 @@
 
                     <%if (historytype == "news_history") {%>
                     <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>User </th>
-                            <th>News title</th>
-                            <th>Time</th>
-                            <th>Action</th>
+                        <tr class="rowadmin head">
+                            <th class="columnadmin">ID</th>
+                            <th class="columnadmin">User </th>
+                            <th class="columnadmin">News title</th>
+                            <th class="columnadmin">Time</th>
+                            <th class="columnadmin">Action</th>
                         </tr>
                         <% for (int i = 0; i < allhistorylist.size(); i++) {%> 
-                        <tr>
-                            <td><%=allhistorylist.get(i).getModID()%></td>
-                            <td><%=allhistorylist.get(i).getUser().getUsername()%></td>
-                            <td><%=allhistorylist.get(i).getNews().getNewstittles()%></td>
-                            <td><%=allhistorylist.get(i).getModTime()%></td>
-                            <td><%=allhistorylist.get(i).getAction()%></td>
+                        <tr class="rowadmin">
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModID()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getUser().getUsername()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getNews().getNewstittles()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModTime()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getAction()%></td>
                         </tr>
                         <%}%>
                     </table>
@@ -114,10 +114,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <%@include file="footer.jsp" %>    
+            <%@include file="footer.jsp" %> 
+        </div>  
     </body>
     <script>
-        
+
     </script>
 </html>

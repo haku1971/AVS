@@ -67,17 +67,17 @@
                         window.location.assign("admin?category=tracking&daystracking=" + value);
                     }
                 </script>
-                <div class="tableadmin">
+                <div class="table100">
                     <table>
-                        <tr>
-                            <th>AlgoID</th>
-                            <th>Total Time</th>
-                            <th>Total People</th>
+                        <tr class="rowadmin head">
+                            <th class="columnadmin">AlgoID</th>
+                            <th class="columnadmin">Total Time</th>
+                            <th class="columnadmin">Total People</th>
 
                         </tr>
                         <% for (int i = 0; i < alltrackinglist.size(); i++) {%> 
-                        <tr>
-                            <td><%=alltrackinglist.get(i).getAlgoID()%></td>
+                        <tr class="rowadmin">
+                            <td class="columnadmin"><%=alltrackinglist.get(i).getAlgoID()%></td>
                             <%
                                 long millisecon = alltrackinglist.get(i).getTotalTime().longValue();
                                 long day = TimeUnit.MILLISECONDS.toDays(millisecon);
@@ -85,12 +85,12 @@
                                 long minute = TimeUnit.MILLISECONDS.toMinutes(millisecon) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecon));
                                 long second = TimeUnit.MILLISECONDS.toSeconds(millisecon) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecon));
                             %>
-                            <td>
+                            <td class="columnadmin">
                                 <%if (day != 0) {%> <%=day%> Days <%}%>
                                 <%if (hour != 0) {%> <%=hour%> Hours<%}%>
                                 <%if (minute != 0) {%> <%=minute%> Minutes<%}%>
                                 <%=second%> Second</td>
-                            <td><%=alltrackinglist.get(i).getTotalPeople()%></td>
+                            <td class="columnadmin"><%=alltrackinglist.get(i).getTotalPeople()%></td>
                         </tr>
                         <%}%>
                     </table>
@@ -102,12 +102,12 @@
                 %>
                 <div class="adminPaging">
                     <% for (int i = 1; i <= totalpage; i++) {%>
-                    <a href="<%=currenturl + "&page=" + i%>"><%=i%></a>
+                    <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                     <%}%>
                 </div>
             </div>
-        </div>
-        <%@include file="footer.jsp" %>    
+            <%@include file="footer.jsp" %>  
+        </div>   
     </body>
     <script>
 

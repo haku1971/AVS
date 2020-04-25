@@ -23,6 +23,7 @@ public class User {
     private String phone;
     private String fullname;
     private int banstatus;
+    private String rolename;
 
     public User() {
     }
@@ -153,6 +154,16 @@ public class User {
     public void setBanstatus(int banstatus) {
         this.banstatus = banstatus;
     }
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
+    
+    
     
     
 }

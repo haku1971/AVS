@@ -78,12 +78,12 @@
                     </tr>
                     <tr>
                         <td>
-                            <%if(request.getAttribute("status")=="Ban") {%>
-                                <h3>Status:<span style="color:red;"> Ban </span></h3>
+                            <%if (request.getAttribute("status") == "Ban") {%>
+                            <h3>Status:<span style="color:red;"> Ban </span></h3>
                             <%} else {%>
-                                <h3>Status:<span style="color:green;"> Active </span></h3> 
-                                <%}%>
-                            
+                            <h3>Status:<span style="color:green;"> Active </span></h3> 
+                            <%}%>
+
                             <span style="font-size:11px;"><span style="font-size:15px;color:red;">(*)</span>Ban User could not comment on news</span>
                         </td>
                         <td>
@@ -98,8 +98,8 @@
                     </tr>
                 </table>  
             </form>
-
+            <%@include file="footer.jsp" %>
         </div>
-        <%@include file="footer.jsp" %>
+
     </body>
 </html>

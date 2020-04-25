@@ -147,8 +147,9 @@ public class SignupGoogleController extends HttpServlet {
                 User user = usermod.getUserByUsername(username);
                 int useridnum=user.getId();
                 String userid=Integer.toString(useridnum);
+                usermod.setUserRole(useridnum);
                 Cookie cookieusername = new Cookie("username", user.getUsername());
-                int rolenumber = user.getRolenum();
+                int rolenumber = usermod.getUserRole(user.getId());
                 String roleid = Integer.toString(rolenumber);
                 Cookie cookieroleid = new Cookie("roleid", roleid);
                 Cookie cookieuserid = new Cookie("userid", userid);
