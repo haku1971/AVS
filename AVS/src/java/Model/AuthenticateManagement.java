@@ -38,10 +38,11 @@ public class AuthenticateManagement {
     }
 
     public CheckResult checkUserAccount(String username, String password) {
-        String regex = "^[a-z0-9_-]{6,15}$";
+        String regex = "^[a-zA-Z0-9_-]{6,15}$";
         boolean check = checkInput(regex, username);
         try {
             UserModel userDao = new UserModel();
+            username=username.toLowerCase();
             String BasicBase64format  = Base64.getEncoder().encodeToString(password.getBytes());
             User user = userDao.getUserByUsername(username);
             if (check != true) {
@@ -65,7 +66,8 @@ public class AuthenticateManagement {
     }
 
     public CheckResult checkUserSignUp(String username) {
-        String nameregex = "^[a-z0-9_-]{6,15}$";
+        String nameregex = "^[a-zA-Z0-9_-]{6,15}$";
+        username=username.toLowerCase();
         boolean check = checkInput(nameregex, username);
         try {
             UserModel userDao = new UserModel();

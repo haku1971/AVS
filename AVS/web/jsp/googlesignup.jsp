@@ -11,6 +11,8 @@
 <%
     JobsModel jobdao = new JobsModel();
     ArrayList<Jobs> jobs = jobdao.getJobs();
+
+
 %>
 <html lang ="vi">
     <head>
@@ -21,9 +23,9 @@
         <title>AVS</title>
         <meta charshet="utf-8" />
     </head>
-    <body>
+    <body onload="checkErrorEmpty()">
         <%@include file="header.jsp" %>
-        
+
         <div class="banner">
             <h1>Welcome to Algorithm Visualize System</h1>
             <h5>The noblest pleasure is the joy of understanding</h5>
@@ -32,6 +34,21 @@
             <form class="box2" action="inputusername" method="post">
                 <h1><b>Sign Up</b></h1>
                 <h5><span style="color:red;">(*)</span> is required information</h5>
+                <input id="checkerror" type="hidden" value="${error}"/>
+                <script>
+                    function checkErrorEmpty() {
+                        var error = document.getElementById('checkerror').value;
+                        if (error === "") {
+                            alert('You must input username to use this google acount');
+                        } else {
+
+                        }
+                    }
+
+
+
+
+                </script>
                 <table class="infortable">
                     <tr> 
                         <td rowspan="10"><img src="images\user.png" /></td> 
@@ -41,14 +58,14 @@
                             <div class="errormess">
                                 <%=session.getAttribute("errorUsername")%>
                             </div>
-                            
-                            <%session.removeAttribute("errorUsername"); 
+
+                            <%session.removeAttribute("errorUsername");
                             } else {
                             %>
                             &nbsp;
                             <%}%>
                         </td>
-                       
+
                     </tr>
                     <tr>
                         <td>
@@ -70,13 +87,13 @@
                             &nbsp;
                             <%}%>
                         </td>
-                        
+
                     </tr>
                     <tr>
                         <td>
                             <span class="span_info1">Email:</span>
                             <input class="su_info1a" type="text" name="email" placeholder="xyz@qwe.abc.com"required value=<%=email%> readonly/>
-                            
+
                         </td>
                     </tr>
                     <tr>
@@ -100,7 +117,7 @@
                         <td>
                             <span class="span_info1">FullName:</span>
                             <input class="su_info1a" type="text" name="fullname" placeholder="Enter your name"/>
-                            
+
                         </td>
                         <td>
                             <span class="span_info1">Phone:</span>
@@ -158,6 +175,7 @@
                     </tr>
                 </table>   
                 <button id="bottun" type="submit"><span>Sign Up</span></button>
+
             </form>
         </div>
         <%@include file="footer.jsp" %>
@@ -188,9 +206,7 @@
         }
         );
     </script>
-    <script>
-  alert("You must input username to use this google acount");
 
-</script>
-    
+
+
 </html>

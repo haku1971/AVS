@@ -177,6 +177,7 @@ public class SignupController extends HttpServlet {
 
             try {
                 UserModel usermod = new UserModel();
+                username=username.toLowerCase();
                 password = Base64.getEncoder().encodeToString(password.getBytes());
                 usermod.insertUser(username, password, fullname, birthday, job,
                         workplace, gender, mail, phone);

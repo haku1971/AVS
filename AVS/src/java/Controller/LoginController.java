@@ -140,6 +140,7 @@ String username = request.getParameter("username");
 
                 try {
                     userDao = new UserModel();
+                    username=username.toLowerCase();
                     User user = userDao.getUserByUsername(username);
                     rolenumber = userDao.getUserRole(user.getId());
                     id = user.getId();

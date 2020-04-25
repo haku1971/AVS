@@ -348,7 +348,7 @@ public class UserModel {
     }
 
     public void setUserRole(int id) throws Exception {
-        String query1 = "Insert into UserRoles(user_ID,role_ID) values (?,1)";
+        String query1 = "Insert into UserRoles(user_ID,role_ID) values (?,2)";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
         ResultSet rs = null;

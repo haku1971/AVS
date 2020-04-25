@@ -66,7 +66,7 @@
                         <%if (user.equals("anon")) {%>
                         <div style = "display:none" align="middle" class="g-signin2" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
 
-                        <button onclick="signOut();document.location = '/AVS/LogoutController';return false">Log out</button>
+                        <button onclick="signOut();document.location = '/AVS/LogoutController';return false;">Log out</button>
                         <%} else if (!user.equals("")) {%>
                         <a id="userName">Hello, <%=user%></a><img  src="images\user.png" />
 

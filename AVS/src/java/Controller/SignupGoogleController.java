@@ -79,12 +79,6 @@ public class SignupGoogleController extends HttpServlet {
             }
         }
         if (username.equals("anon")) {
-            
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('You must input username to use this account');");
-            out.println("</script>");
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/googlesignup.jsp");
             dispatcher.forward(request, response);
         } else {
@@ -118,30 +112,36 @@ public class SignupGoogleController extends HttpServlet {
         if (result == AuthenticateManagement.CheckResult.USERNAME_LENGTH) {
             session.setAttribute("errorUsername", "Username length is from 6 to 15 characters");
             success = 0;
+            
 
         } else if (result == AuthenticateManagement.CheckResult.INVALID_CHARACTER) {
             session.setAttribute("errorUsername", "Contain invalid character(Valid character:a-z,0-9,(-),(_)");
             success = 0;
+            
 
         } else if (result == AuthenticateManagement.CheckResult.EXIST_USERNAME) {
             session.setAttribute("errorUsername", "Username exist");
             success = 0;
+            
         }
         if (!phone.equals("")) {
             if (phone.length() != 10) {
                 session.setAttribute("errorPhone", "Phone must be 10 digits");
                 success = 0;
+                
             } else if (phone.charAt(0) != '0') {
                 session.setAttribute("errorPhone", "Phone must start with 0");
                 success = 0;
+               
             }
 
         }
         if (success == 0) {
-            response.sendRedirect("/AVS/inputusername");
+            request.setAttribute("error", "true");
+             request.getRequestDispatcher("/jsp/googlesignup.jsp").forward(request, response);
         } else if (success == 1) {
             try {
-
+                username=username.toLowerCase();
                 UserModel usermod = new UserModel();
                 usermod.insertUser(username, "null", fullname, dob, job, workplace, gender, email, phone);
                 User user = usermod.getUserByUsername(username);
