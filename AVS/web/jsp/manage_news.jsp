@@ -91,7 +91,7 @@
                         <tr class="rowadmin">
                             <td class="columnadmin"><%=allnews.get(i).getNewsID()%></td>
                             <td class="columnadmin"><%=allnews.get(i).getNewstittles()%></td>
-                            <td class="columnadmin"><%=allnews.get(i).getNewsdaterealease()%></td>
+                            <td class="columnadmin"><%=allnews.get(i).getNewsdaterealeaseToMinute()%></td>
                             <td class="columnadmin"><%=allnews.get(i).getUser().getUsername()%></td>
                             <td class="columnadmin"><%=allnews.get(i).getNews_Imgs()%></td>
                             <td class="columnadmin"><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>

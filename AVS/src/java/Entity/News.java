@@ -79,6 +79,10 @@ public class News {
     public String getNewsdaterealease() {
         return newsdaterealease;
     }
+    
+    public String getNewsdaterealeaseToMinute() {
+        return newsdaterealease.substring(0, newsdaterealease.lastIndexOf(":"));
+    }
 
     public void setNewsdaterealease(String newsdaterealease) {
         this.newsdaterealease = newsdaterealease;

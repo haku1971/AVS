@@ -56,7 +56,7 @@
                             <td class="columnadmin"><%=allhistorylist.get(i).getModID()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getUser().getUsername()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getAdmin().getUsername()%></td>
-                            <td class="columnadmin"><%=allhistorylist.get(i).getModTime()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModTimeToMinute()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getBanStatustoString()%></td>
                         </tr>
                         <%}%>
@@ -77,7 +77,7 @@
                             <td class="columnadmin"><%=allhistorylist.get(i).getModID()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getUser().getUsername()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getAlgo().getAlgoName()%></td>
-                            <td class="columnadmin"><%=allhistorylist.get(i).getModTime()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModTimeToMinute()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getAction()%></td>
                         </tr>
                         <%}%>
@@ -98,7 +98,7 @@
                             <td class="columnadmin"><%=allhistorylist.get(i).getModID()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getUser().getUsername()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getNews().getNewstittles()%></td>
-                            <td class="columnadmin"><%=allhistorylist.get(i).getModTime()%></td>
+                            <td class="columnadmin"><%=allhistorylist.get(i).getModTimeToMinute()%></td>
                             <td class="columnadmin"><%=allhistorylist.get(i).getAction()%></td>
                         </tr>
                         <%}%>

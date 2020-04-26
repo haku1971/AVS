@@ -190,7 +190,7 @@ function startVisualizing(isvisualized, category) {
             getAjaxSearchData();
             break;
         case 6:
-            getAjaxHashingSearchData();
+            numberofbox = hasharraysize;
             break;
     }
 }
@@ -647,6 +647,7 @@ function setInputFilter(textbox, inputFilter) {
     });
 }
 
+var numberofbox;
 function draw(step) {
 
     if (canvas.getContext) {
@@ -660,6 +661,11 @@ function draw(step) {
             document.getElementById("canvasAnimation").width = (initarray.length) * (arraywidth + gapbetweenbox);
         }
         ctx.font = "15px Arial"; //must add same value to "fontsize"
+        if (category === 6) {
+            numberofbox = hasharraysize;
+        } else {
+            numberofbox = eachStepArr[currentstep].length;
+        }
 
         //xóa draw cũ
         ctx.fillStyle = "#edf0f4";
@@ -696,11 +702,11 @@ function draw(step) {
 }
 
 function drawInitCurrent(currentstep, ctx) {
-    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+
+    for (var i = 0; i < numberofbox; i++) {
         ctx.fillStyle = "#AAAAAA";
-//        ctx.fillRect((Xp * i * gapbetweennumber) * XYs, Yp * XYs * 5 - 20, 45, 45);
         ctx.fillRect((i * arraywidth) + (i * 1), Yp, arraywidth, arrayheight);
-        if (eachStepArr[currentstep][i] !== undefined) {
+        if (eachStepArr[currentstep][i] !== undefined && eachStepArr[currentstep][i] !== null) {
             ctx.fillStyle = "#000000";
 //            ctx.fillText(eachStepArr[currentstep][i], (Xp * i * gapbetweennumber) * XYs + 18, Yp * XYs * 7, 60);
             if (eachStepArr[currentstep][i] > 9) {
@@ -722,7 +728,7 @@ function drawInitCurrent(currentstep, ctx) {
 }
 
 function drawHighlightAnimation(currentstep, ctx) {
-    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+    for (var i = 0; i < numberofbox; i++) {
         for (var j = 0; j < highlightcheck[currentstep].length; j++) {
             if (highlightcheck[currentstep][j] === i) {
                 if (color[currentstep] === "swap" || color[currentstep] === "found") {
@@ -733,7 +739,7 @@ function drawHighlightAnimation(currentstep, ctx) {
                     ctx.fillStyle = "#2962ff";
                     ctx.fillRect((i * arraywidth) + (i * 1), Yp, arraywidth, arrayheight);
                 }
-                if (eachStepArr[currentstep][i] !== undefined) {
+                if (eachStepArr[currentstep][i] !== undefined && eachStepArr[currentstep][i] !== null) {
                     ctx.fillStyle = "#000000";
                     if (eachStepArr[currentstep][i] > 9) {
                         ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (arraywidth / 3), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
@@ -748,18 +754,18 @@ function drawHighlightAnimation(currentstep, ctx) {
 }
 
 function drawHighlightSorted(currentstep, ctx) {
-    for (var i = 0; i < eachStepArr[currentstep].length; i++) {
+    for (var i = 0; i < numberofbox; i++) {
         if (currentstep !== 0 && highlightsorted[currentstep] !== null) {
             for (var j = 0; j < highlightsorted[currentstep].length; j++) {
                 if (highlightsorted[currentstep][j] === i) {
                     ctx.fillStyle = "Green";
                     ctx.fillRect((i * arraywidth) + (i * 1), Yp, arraywidth, arrayheight);
                     ctx.fillStyle = "#000000";
-                     if (eachStepArr[currentstep][i] > 9) {
-                ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (arraywidth / 3), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
-            } else {
-                ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (2*arraywidth /5), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
-            }
+                    if (eachStepArr[currentstep][i] > 9) {
+                        ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (arraywidth / 3), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
+                    } else {
+                        ctx.fillText(eachStepArr[currentstep][i], (i * arraywidth) + (i * gapbetweenbox) + (2 * arraywidth / 5), Yp + (3 * arrayheight / 5), arraywidth, arrayheight);
+                    }
                 }
             }
         }
@@ -1256,6 +1262,9 @@ function separatechainingHash(array) {
 }
 
 function openaddressingHash(array) {
+//    if(array[hasharraysize-1] === undefined) {
+//        array[hasharraysize-1] = null;
+//    }
     hashtable = new OpenAddressHashTable();
     addArraytoHashTable(hasharray);
     console.log(hashtable.list);

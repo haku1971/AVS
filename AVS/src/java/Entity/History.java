@@ -35,6 +35,10 @@ public class History {
     public String getModTime() {
         return modtime;
     }
+    
+    public String getModTimeToMinute() {
+        return modtime.substring(0, modtime.lastIndexOf(":"));
+    }
 
     public void setModTime(String modtime) {
         this.modtime = modtime;
