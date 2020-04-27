@@ -116,7 +116,6 @@ public class ManageDatabaseController extends HttpServlet {
                     algo.setAlgoCodeJava(codejava);
                     algo.setAlgoCodeCplus(codecpp);
                     algo.setAlgoCodeJS(codejs);
-                    algo.setAlgoCodeVisual(codevisual);
                     algo.setAlgoDescription(description);
                     algo.setCategoryID(Integer.parseInt(categoryid));
                     algo.setAlgoResource(resource);
@@ -154,7 +153,6 @@ public class ManageDatabaseController extends HttpServlet {
                     algo.setAlgoCodeJava(codejava);
                     algo.setAlgoCodeCplus(codecpp);
                     algo.setAlgoCodeJS(codejs);
-                    algo.setAlgoCodeVisual(codevisual);
                     algo.setAlgoDescription(description);
                     algo.setCategoryID(Integer.parseInt(categoryid));
                     algo.setAlgoResource(resource);

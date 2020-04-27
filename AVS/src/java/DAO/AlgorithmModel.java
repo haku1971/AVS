@@ -131,7 +131,6 @@ public class AlgorithmModel {
                 algo.setAlgoCodeJS(rs.getString("algo_CodeJS"));
                 algo.setAlgoCodeCplus(rs.getString("algo_CodeCplus"));
                 algo.setAlgoCodeJava(rs.getString("algo_CodeJava"));
-                algo.setAlgoCodeVisual(rs.getString("algo_CodeVisual"));
                 algo.setAlgoDescription(rs.getString("algo_Description"));
                 algo.setCategoryID(rs.getInt("category_ID"));
                 algo.setAlgoDatetime(rs.getString("algo_datetime"));
@@ -237,7 +236,7 @@ public class AlgorithmModel {
     
     public void insertAlgo(Algorithm algo) throws Exception {
         String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
-        String query = "Insert into [Algorithm] (algo_Name, algo_CodeJava, algo_CodeCplus, algo_CodeJS, algo_CodeVisual, algo_Description, \n"
+        String query = "Insert into [Algorithm] (algo_Name, algo_CodeJava, algo_CodeCplus, algo_CodeJS, algo_Description, \n"
                 + "category_ID, algo_DateTime, algo_Resource, algo_Files, algo_CompareStatus, delete_Status)\n"
                 + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, 'null', 0, 0)";
         Connection conn = null;
@@ -250,11 +249,10 @@ public class AlgorithmModel {
             ps.setString(2, algo.getAlgoCodeJava());
             ps.setString(3, algo.getAlgoCodeCplus());
             ps.setString(4, algo.getAlgoCodeJS());
-            ps.setString(5, algo.getAlgoCodeVisual());
-            ps.setString(6, algo.getAlgoDescription());
-            ps.setInt(7, algo.getCategoryID());
-            ps.setString(8, currenttime);
-            ps.setString(9, algo.getAlgoResource());
+            ps.setString(5, algo.getAlgoDescription());
+            ps.setInt(6, algo.getCategoryID());
+            ps.setString(7, currenttime);
+            ps.setString(8, algo.getAlgoResource());
             ps.executeQuery();
 
         } catch (SQLException e) {
@@ -327,7 +325,7 @@ public class AlgorithmModel {
     public void updateAlgo(Algorithm algo) throws Exception {
         String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
         String query = "update Algorithm\n"
-                + "set algo_Name=?, algo_CodeJava=?,algo_CodeCplus=?,algo_CodeJS=?,algo_CodeVisual=?,\n"
+                + "set algo_Name=?, algo_CodeJava=?,algo_CodeCplus=?,algo_CodeJS=?,\n"
                 + "algo_Description=?,category_ID=?,algo_DateTime=?,algo_Resource=?\n"
                 + "where algo_ID = ?";
         Connection conn = null;
@@ -340,12 +338,11 @@ public class AlgorithmModel {
             ps.setString(2, algo.getAlgoCodeJava());
             ps.setString(3, algo.getAlgoCodeCplus());
             ps.setString(4, algo.getAlgoCodeJS());
-            ps.setString(5, algo.getAlgoCodeVisual());
-            ps.setString(6, algo.getAlgoDescription());
-            ps.setInt(7, algo.getCategoryID());
-            ps.setString(8, currenttime);
-            ps.setString(9, algo.getAlgoResource());
-            ps.setInt(10, algo.getAlgoID());
+            ps.setString(5, algo.getAlgoDescription());
+            ps.setInt(6, algo.getCategoryID());
+            ps.setString(7, currenttime);
+            ps.setString(8, algo.getAlgoResource());
+            ps.setInt(9, algo.getAlgoID());
             ps.executeQuery();
 
         } catch (SQLException e) {

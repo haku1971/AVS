@@ -150,11 +150,11 @@
                         </div>
 
                         <div id="CodeJavaScript" class="tabcontent">
-                            <% if (algo.getAlgoCodeVisual().equalsIgnoreCase("null")) {%>
+                            <% if (algo.getAlgoCodeJS().equalsIgnoreCase("null")) {%>
                             <div class="emptySampleCode">This code has not been added yet!</div>
                             <%} else {%>
                             <pre>
-                <div class="sampleCode"><%=algo.getAlgoCodeVisual()%></div>
+                <div class="sampleCode"><%=algo.getAlgoCodeJS()%></div>
                             </pre>
                             <%}%>
                         </div>
