@@ -104,7 +104,6 @@ public class ManageDatabaseController extends HttpServlet {
                     String codejava = request.getParameter("codejava").trim();
                     String codecpp = request.getParameter("codecpp").trim();
                     String codejs = request.getParameter("codejs").trim();
-                    String codevisual = request.getParameter("codevisual").trim();
                     String description = request.getParameter("description").trim();
                     String categoryid = request.getParameter("category").trim();
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
@@ -135,7 +134,6 @@ public class ManageDatabaseController extends HttpServlet {
                     String codejava = request.getParameter("codejava").trim();
                     String codecpp = request.getParameter("codecpp").trim();
                     String codejs = request.getParameter("codejs").trim();
-                    String codevisual = request.getParameter("codevisual").trim();
                     String description = request.getParameter("description").trim();
                     String categoryid = request.getParameter("category").trim();
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString().trim();
@@ -144,7 +142,6 @@ public class ManageDatabaseController extends HttpServlet {
                     codejava = codejava.replaceAll("â", "&emsp;");
                     codecpp = codecpp.replaceAll("â", "&emsp;");
                     codejs = codejs.replaceAll("â", "&emsp;");
-                    codevisual = codevisual.replaceAll("â", "&emsp;");
 
                     AlgorithmModel algodao = new AlgorithmModel();
                     Algorithm algo = new Algorithm();

@@ -238,7 +238,7 @@ public class AlgorithmModel {
         String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
         String query = "Insert into [Algorithm] (algo_Name, algo_CodeJava, algo_CodeCplus, algo_CodeJS, algo_Description, \n"
                 + "category_ID, algo_DateTime, algo_Resource, algo_Files, algo_CompareStatus, delete_Status)\n"
-                + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, 'null', 0, 0)";
+                + "values (?, ?, ?, ?, ?, ?, ?, ?, 'null', 0, 0)";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
