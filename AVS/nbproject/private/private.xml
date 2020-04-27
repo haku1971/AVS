@@ -3,7 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/DetailController.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Model/Likenews.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/NewsController.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Model/Likecomment.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/view/newsdetail.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/DAO/CommentModel.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/CommentController.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/DAO/UserModel.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/DAO/NewsModel.java</file>
             <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/META-INF/context.xml</file>
         </group>
     </open-files>
