@@ -5,16 +5,16 @@
  */
 package Controller;
 
-import Entity.Algorithm;
-import Entity.History;
-import Entity.News;
-import Entity.Tracking;
-import Entity.User;
-import Model.AlgorithmModel;
-import Model.HistoryModel;
-import Model.NewsModel;
-import Model.TrackingModel;
-import Model.UserModel;
+import Model.Algorithm;
+import Model.History;
+import Model.News;
+import Model.Tracking;
+import Model.User;
+import DAO.AlgorithmModel;
+import DAO.HistoryModel;
+import DAO.NewsModel;
+import DAO.TrackingModel;
+import DAO.UserModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -109,7 +109,7 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("sortorder", sortorder);
                     request.setAttribute("userlist", userlist);
                     request.setAttribute("category", category);
-                    request.getRequestDispatcher("jsp/manage_account.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/manage_account.jsp").forward(request, response);
 
                     break;
                 }
@@ -145,7 +145,7 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("sortorder", sortorder);
                     request.setAttribute("algolist", algolist);
                     request.setAttribute("category", category);
-                    request.getRequestDispatcher("jsp/manage_algorithm.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/manage_algorithm.jsp").forward(request, response);
 
                     break;
                 }
@@ -181,7 +181,7 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("sortorder", sortorder);
                     request.setAttribute("newslist", newslist);
                     request.setAttribute("category", category);
-                    request.getRequestDispatcher("jsp/manage_news.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/manage_news.jsp").forward(request, response);
 
                     break;
                 }
@@ -198,7 +198,7 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "user_history");
-                    request.getRequestDispatcher("jsp/manage_history.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/manage_history.jsp").forward(request, response);
 
                     break;
                 }
@@ -215,7 +215,7 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "algo_history");
-                    request.getRequestDispatcher("jsp/manage_history.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/manage_history.jsp").forward(request, response);
 
                     break;
                 }
@@ -232,7 +232,7 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
                     request.setAttribute("historytype", "news_history");
-                    request.getRequestDispatcher("jsp/manage_history.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/manage_history.jsp").forward(request, response);
 
                     break;
                 }
@@ -251,7 +251,7 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("totalpage", totalpage);
                     request.setAttribute("trackinglist", trackinglist);
                     request.setAttribute("category", category);
-                    request.getRequestDispatcher("jsp/manage_tracking.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/manage_tracking.jsp").forward(request, response);
                     break;
                 }
 

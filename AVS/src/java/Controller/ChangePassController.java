@@ -5,9 +5,9 @@
  */
 package Controller;
 
-import Entity.User;
-import Model.AuthenticateManagement;
-import Model.UserModel;
+import Model.User;
+import DAO.AuthenticateManagement;
+import DAO.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Base64;
@@ -81,7 +81,7 @@ public class ChangePassController extends HttpServlet {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Account was logged out');");
                 out.println("</script>");
-                response.setHeader("Refresh", "1;url=/AVS/HomeController");
+                response.setHeader("Refresh", "1;url=/AVS/home");
             } else if (username.equals("anon")) {
                 response.sendRedirect("/AVS/inputusername");
             } else {
@@ -99,7 +99,7 @@ public class ChangePassController extends HttpServlet {
                     response.sendRedirect("/AVS/userinfo");
                 }else{
                 session.setAttribute("userid", userid);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/changepass.jsp");
                 dispatcher.forward(request, response);}
 
             }
@@ -172,7 +172,7 @@ public class ChangePassController extends HttpServlet {
 
                 }
                 if (success == 0) {
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/changepass.jsp");
                     dispatcher.forward(request, response);
                 } else if (success == 1) {
                     try {
@@ -181,7 +181,7 @@ public class ChangePassController extends HttpServlet {
                         newpassword = Base64.getEncoder().encodeToString(newpassword.getBytes());
                         usermod.UpdatePassword(useridnum, newpassword);
                         request.setAttribute("success", "Change password successfullly ");
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changepass.jsp");
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/changepass.jsp");
                         dispatcher.forward(request, response);
                     } catch (Exception ex) {
                         Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
@@ -194,7 +194,7 @@ public class ChangePassController extends HttpServlet {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Account was logged out');");
                 out.println("</script>");
-                response.setHeader("Refresh", "1;url=/AVS/HomeController");
+                response.setHeader("Refresh", "1;url=/AVS/home");
             }
 
         }

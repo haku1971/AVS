@@ -5,10 +5,10 @@
  */
 package Controller;
 
-import Entity.Algorithm;
-import Entity.Category;
-import Model.AlgorithmModel;
-import Model.CategoryModel;
+import Model.Algorithm;
+import Model.Category;
+import DAO.AlgorithmModel;
+import DAO.CategoryModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -73,7 +73,7 @@ public class ViewAlgorithmController extends HttpServlet {
             request.setAttribute("algo", thisalgo);
             request.setAttribute("addnew", false);
             request.setAttribute("listalgocategory", listcate);
-            request.getRequestDispatcher("jsp/viewalgo.jsp").forward(request, response);
+            request.getRequestDispatcher("view/viewalgo.jsp").forward(request, response);
 
         } catch (Exception ex) {
             response.sendRedirect("error");

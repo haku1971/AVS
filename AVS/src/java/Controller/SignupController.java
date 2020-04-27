@@ -5,9 +5,9 @@
  */
 package Controller;
 
-import Entity.User;
-import Model.AuthenticateManagement;
-import Model.UserModel;
+import Model.User;
+import DAO.AuthenticateManagement;
+import DAO.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Base64;
@@ -94,7 +94,7 @@ public class SignupController extends HttpServlet {
             }
             response.sendRedirect("/AVS/inputusername");
         } else {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/signup.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/signup.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -171,7 +171,7 @@ public class SignupController extends HttpServlet {
 
         }
         if (success == 0) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/signup.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/signup.jsp");
             dispatcher.forward(request, response);
         } else if (success == 1) {
 
@@ -201,7 +201,7 @@ public class SignupController extends HttpServlet {
                 response.addCookie(cookieusername);
                 response.addCookie(cookieroleid);
                 response.addCookie(cookieuserid);
-                response.sendRedirect("/AVS/HomeController");
+                response.sendRedirect("/AVS/home");
             } catch (Exception ex) {
                 Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
             }

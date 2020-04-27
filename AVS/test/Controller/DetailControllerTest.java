@@ -6,9 +6,9 @@
 package Controller;
 
 import DBContext.DBContext;
-import Entity.Algorithm;
-import Model.AlgorithmModel;
-import Model.CloseConnection;
+import Model.Algorithm;
+import DAO.AlgorithmModel;
+import DAO.CloseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

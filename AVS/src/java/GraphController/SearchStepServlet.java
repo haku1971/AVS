@@ -5,8 +5,8 @@
  */
 package GraphController;
 
-import Entity.Algorithm;
-import Model.AlgorithmModel;
+import Model.Algorithm;
+import DAO.AlgorithmModel;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;

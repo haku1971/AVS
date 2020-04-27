@@ -5,10 +5,10 @@
  */
 package Controller;
 
-import Entity.User;
-import Model.AuthenticateManagement;
-import Model.IdTokenVerifierAndParser;
-import Model.UserModel;
+import Model.User;
+import DAO.AuthenticateManagement;
+import DAO.IdTokenVerifierAndParser;
+import DAO.UserModel;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,9 +83,9 @@ public class LoginController extends HttpServlet {
             if (username.equals("anon")) {
            response.sendRedirect("/AVS/inputusername");
             } else if (!userid.equals("")) {
-                response.sendRedirect("/AVS/HomeController");
+                response.sendRedirect("/AVS/home");
             } else {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/login.jsp");
                 dispatcher.forward(request, response);
             }
     }
@@ -114,27 +114,27 @@ String username = request.getParameter("username");
             AuthenticateManagement.CheckResult result = authenticateManagement.checkUserAccount(username, password);
             if (result == AuthenticateManagement.CheckResult.USERNAME_LENGTH) {
                 request.setAttribute("errorMessage", "Username length if from 6 to 15 chacraters");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/login.jsp");
                 dispatcher.forward(request, response);
 
             } else if (result == AuthenticateManagement.CheckResult.INVALID_CHARACTER) {
                 request.setAttribute("errorMessage", "Contain invalid character(Valid character:a-z,0-9, underscore, hyphen)");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/login.jsp");
                 dispatcher.forward(request, response);
 
             } else if (result == AuthenticateManagement.CheckResult.PASSWORD_SHORT) {
                 request.setAttribute("errorMessage", "Password need at least 6 character");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/login.jsp");
                 dispatcher.forward(request, response);
 
             } else if (result == AuthenticateManagement.CheckResult.NO_USERNAME) {
                 request.setAttribute("errorMessage", "Username is not exist");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/login.jsp");
                 dispatcher.forward(request, response);
 
             } else if (result == AuthenticateManagement.CheckResult.WRONG_PASSWORD) {
                 request.setAttribute("errorMessage", "Password is incorrect");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/login.jsp");
                 dispatcher.forward(request, response);
             } else {
 
@@ -158,7 +158,7 @@ String username = request.getParameter("username");
                 response.addCookie(cookieusername);
                 response.addCookie(cookieroleid);
                 response.addCookie(cookieuserid);
-                response.sendRedirect("/AVS/HomeController");
+                response.sendRedirect("/AVS/home");
             }
         } else {
             try {
@@ -202,7 +202,7 @@ String username = request.getParameter("username");
                     if (user.getUsername().equals("anon")) {
                         response.sendRedirect("/AVS/inputusername");
                     } else {
-                        response.sendRedirect("/AVS/HomeController");
+                        response.sendRedirect("/AVS/home");
                     }
                 } else {
                     Cookie cookieusername = new Cookie("username", "anon");

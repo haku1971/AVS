@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Model.CommentModel;
-import Model.NewsModel;
+import DAO.CommentModel;
+import DAO.NewsModel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

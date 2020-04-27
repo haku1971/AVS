@@ -5,11 +5,11 @@
  */
 package Controller;
 
-import Entity.Jobs;
-import Entity.User;
-import Model.AuthenticateManagement;
-import Model.JobsModel;
-import Model.UserModel;
+import Model.Jobs;
+import Model.User;
+import DAO.AuthenticateManagement;
+import DAO.JobsModel;
+import DAO.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -79,7 +79,7 @@ public class SignupGoogleController extends HttpServlet {
             }
         }
         if (username.equals("anon")) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/googlesignup.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/googlesignup.jsp");
             dispatcher.forward(request, response);
         } else {
             response.sendRedirect("/AVS/home");
@@ -138,7 +138,7 @@ public class SignupGoogleController extends HttpServlet {
         }
         if (success == 0) {
             request.setAttribute("error", "true");
-             request.getRequestDispatcher("/jsp/googlesignup.jsp").forward(request, response);
+             request.getRequestDispatcher("/view/googlesignup.jsp").forward(request, response);
         } else if (success == 1) {
             try {
                 username=username.toLowerCase();

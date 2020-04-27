@@ -5,13 +5,13 @@
  */
 package Controller;
 
-import Entity.Algorithm;
-import Entity.News;
-import Entity.User;
-import Model.AlgorithmModel;
-import Model.HistoryModel;
-import Model.NewsModel;
-import Model.UserModel;
+import Model.Algorithm;
+import Model.News;
+import Model.User;
+import DAO.AlgorithmModel;
+import DAO.HistoryModel;
+import DAO.NewsModel;
+import DAO.UserModel;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

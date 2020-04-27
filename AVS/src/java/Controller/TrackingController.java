@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Model.TrackingModel;
-import Entity.Tracking;
+import DAO.TrackingModel;
+import Model.Tracking;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;

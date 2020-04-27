@@ -3,33 +3,38 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/viewnews.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/manage_history.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/userinfor.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/css/admin.css</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/manage_account.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Model/UserModel.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Entity/User.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/viewaccount.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/AdminController.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/newsdetail.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/js/confirm.js</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/js/readmore.js</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/manage_algorithm.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/css/style.css</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/SignupGoogleController.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/LoginController.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/viewalgo.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/Detail.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/manage_tracking.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/css/Visual.css</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/ViewAccountController.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/ManageDatabaseController.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/newslist.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/js/visualize.js</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/SignupController.java</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/manage_news.jsp</file>
-            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/jsp/header.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/manage_account.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/changeinfor.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/login.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/manage_tracking.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/adminleft.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/error.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/ChangeInforController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/changepass.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/UserinforController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/manage_news.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/viewalgo.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/DAO/IdTokenVerifierAndParser.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/manage_algorithm.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/userinfor.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/footer.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/newsdetail.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/LoginController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/SignupController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/viewaccount.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/Detail.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/googlesignup.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/signup.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/Home.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/Algo.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/newslist.jsp</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/HomeController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/SignupGoogleController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/TrackingController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/LogoutController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/src/java/Controller/ChangePassController.java</file>
+            <file>file:/C:/Users/BinhNgaoDa/Documents/GitHub/AVS/AVS/web/view/manage_history.jsp</file>
         </group>
     </open-files>
 </project-private>

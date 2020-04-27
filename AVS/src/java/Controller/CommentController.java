@@ -5,14 +5,14 @@
  */
 package Controller;
 
-import Entity.Comment;
-import Entity.News;
-import Entity.Likecomment;
-import Entity.Likenews;
-import Entity.User;
-import Model.CommentModel;
-import Model.NewsModel;
-import Model.UserModel;
+import Model.Comment;
+import Model.News;
+import Model.Likecomment;
+import Model.Likenews;
+import Model.User;
+import DAO.CommentModel;
+import DAO.NewsModel;
+import DAO.UserModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +67,7 @@ public class CommentController extends HttpServlet {
             News news = newmodeldao.getNewsByID(newsid);
             if(news == null) {
                 request.setAttribute("errorstring", "Don't have this news page");
-                 request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+                 request.getRequestDispatcher("view/error.jsp").forward(request, response);
                  return;
             }
             //get ra số lượng like của news
@@ -93,10 +93,10 @@ public class CommentController extends HttpServlet {
             request.setAttribute("news", news);
             request.setAttribute("listallcommentbynewid", listallcommentbynewid);
             
-            request.getRequestDispatcher("jsp/newsdetail.jsp").forward(request, response);
+            request.getRequestDispatcher("view/newsdetail.jsp").forward(request, response);
         } catch (Exception ex) {
              request.setAttribute("errorstring", "Don't have this news page");
-             request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+             request.getRequestDispatcher("view/error.jsp").forward(request, response);
         }}
     }
 

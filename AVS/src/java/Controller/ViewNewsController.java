@@ -5,10 +5,10 @@
  */
 package Controller;
 
-import Entity.Algorithm;
-import Entity.News;
-import Model.AlgorithmModel;
-import Model.NewsModel;
+import Model.Algorithm;
+import Model.News;
+import DAO.AlgorithmModel;
+import DAO.NewsModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -65,7 +65,7 @@ public class ViewNewsController extends HttpServlet {
             request.setAttribute("category", category);
             request.setAttribute("news", thisnews);
             request.setAttribute("addnew", false);
-            request.getRequestDispatcher("jsp/viewnews.jsp").forward(request, response);
+            request.getRequestDispatcher("view/viewnews.jsp").forward(request, response);
         } catch (Exception ex) {
             response.sendRedirect("error");
         }

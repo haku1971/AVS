@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Entity.Algorithm;
-import Model.AlgorithmModel;
+import Model.Algorithm;
+import DAO.AlgorithmModel;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,7 +62,7 @@ public class DetailController extends HttpServlet {
             String password = request.getParameter("password");
 
             AlgorithmModel dao = new AlgorithmModel();
-             ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
+             ArrayList<Model.Algorithm> data = dao.getAlgoNameAndCategory();
             request.setAttribute("AllAlgorithm", data);
 
             ArrayList<Algorithm> list = dao.getAlgoIDList();
@@ -85,11 +85,11 @@ public class DetailController extends HttpServlet {
                     System.out.println("NOT ID");
                 } else {
                     Algorithm algorithm = dao.getAlgoByID(Integer.parseInt(i));
-                    ArrayList<Entity.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithm.getCategoryID());
+                    ArrayList<Model.Algorithm> algorithmbycategory = dao.getAlgoByCategory(algorithm.getCategoryID());
                   
                     request.setAttribute("algorithm", algorithm);
                     request.setAttribute("algorithmbycategory", algorithmbycategory);
-                    request.getRequestDispatcher("jsp/Detail.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/Detail.jsp").forward(request, response);
                     //   response.sendRedirect("jsp/Detail.jsp?algorithms="+algobyid+"&AllAlgorithm="+listalgo+"");
 
                 }

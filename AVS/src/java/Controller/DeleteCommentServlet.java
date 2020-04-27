@@ -6,7 +6,7 @@
 package Controller;
 
 
-import Model.CommentModel;
+import DAO.CommentModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;

@@ -5,9 +5,9 @@
  */
 package Controller;
 
-import Entity.User;
-import Model.AlgorithmModel;
-import Model.UserModel;
+import Model.User;
+import DAO.AlgorithmModel;
+import DAO.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -62,9 +62,9 @@ public class HomeController extends HttpServlet {
                 response.sendRedirect("/AVS/inputusername");
             } else {
                 AlgorithmModel dao = new AlgorithmModel();
-            ArrayList<Entity.Algorithm> data = dao.getAlgoNameAndCategory();
+            ArrayList<Model.Algorithm> data = dao.getAlgoNameAndCategory();
             request.setAttribute("AllAlgorithm", data);
-            request.getRequestDispatcher("jsp/Home.jsp").forward(request, response);
+            request.getRequestDispatcher("view/Home.jsp").forward(request, response);
             }
             
         } catch (Exception ex) {

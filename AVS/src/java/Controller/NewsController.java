@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Entity.News;
-import Model.NewsModel;
+import Model.News;
+import DAO.NewsModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class NewsController extends HttpServlet {
                 //neu ma nguoi dung muon truy cap trang khong co
                 if ((request.getParameter("page") != null) && (page <= 0 || page > numberOfPage)) {
                     request.setAttribute("errorstring", "this page is not exist");
-                    request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/error.jsp").forward(request, response);
                     return;
                     //chuyen qua trang error luon
                     //  response.sendRedirect("error");
@@ -75,10 +75,10 @@ public class NewsController extends HttpServlet {
                 request.setAttribute("numberOfPage", numberOfPage);
                 request.setAttribute("currentPage", page);
                 request.setAttribute("listallnews", listallnews);
-                request.getRequestDispatcher("jsp/newslist.jsp").forward(request, response);
+                request.getRequestDispatcher("view/newslist.jsp").forward(request, response);
             } catch (Exception ex) {
                 request.setAttribute("errorstring", "this page is not exist");
-                request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+                request.getRequestDispatcher("view/error.jsp").forward(request, response);
             }
         }
     }
@@ -136,7 +136,7 @@ public class NewsController extends HttpServlet {
                 //neu ma nguoi dung muon truy cap trang khong co
                 if ((request.getParameter("page") != null) && (page <= 0 || page > numberOfPage)) {
                     request.setAttribute("errorstring", "Don't have this page");
-                    request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/error.jsp").forward(request, response);
                     return;
                     //chuyen qua trang error luon
                     //  response.sendRedirect("error");
@@ -144,10 +144,10 @@ public class NewsController extends HttpServlet {
                 request.setAttribute("numberOfPage", numberOfPage);
                 request.setAttribute("currentPage", page);
                 request.setAttribute("listallnews", listallnews);
-                request.getRequestDispatcher("jsp/newslist.jsp").forward(request, response);              
+                request.getRequestDispatcher("view/newslist.jsp").forward(request, response);              
             } catch (Exception ex) {
                 request.setAttribute("errorstring", "Don't have this page");
-                request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+                request.getRequestDispatcher("view/error.jsp").forward(request, response);
             }
         }
     }

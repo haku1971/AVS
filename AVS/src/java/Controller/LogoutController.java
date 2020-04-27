@@ -48,7 +48,7 @@ public class LogoutController extends HttpServlet {
         response.addCookie(cookieroleid);
         response.addCookie(cookieuserid);
         response.addCookie(cookieemail);
-        response.sendRedirect("/AVS/HomeController");
+        response.sendRedirect("/AVS/home");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

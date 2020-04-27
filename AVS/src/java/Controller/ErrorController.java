@@ -38,7 +38,7 @@ public class ErrorController extends HttpServlet {
                 errorstring = "Page not found";
             }
             request.setAttribute("errorstring", errorstring);
-            request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+            request.getRequestDispatcher("view/error.jsp").forward(request, response);
         }
     }
 

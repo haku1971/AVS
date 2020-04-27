@@ -5,9 +5,9 @@
  */
 package GraphController;
 
-import Entity.Algorithm;
+import Model.Algorithm;
 import static GraphController.SearchStepServlet.tempArray;
-import Model.AlgorithmModel;
+import DAO.AlgorithmModel;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;

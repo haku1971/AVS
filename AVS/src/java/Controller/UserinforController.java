@@ -5,10 +5,10 @@
  */
 package Controller;
 
-import Entity.Jobs;
-import Entity.User;
-import Model.JobsModel;
-import Model.UserModel;
+import Model.Jobs;
+import Model.User;
+import DAO.JobsModel;
+import DAO.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -89,7 +89,7 @@ public class UserinforController extends HttpServlet {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Account was logged out');");
                 out.println("</script>");
-                response.setHeader("Refresh", "1;url=/AVS/HomeController");
+                response.setHeader("Refresh", "1;url=/AVS/home");
             }else if (username.equals("anon")) {
                 response.sendRedirect("/AVS/inputusername");
             }else{
@@ -139,7 +139,7 @@ public class UserinforController extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/userinfor.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/userinfor.jsp");
                 dispatcher.forward(request, response);
         }
         }

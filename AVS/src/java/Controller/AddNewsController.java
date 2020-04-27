@@ -52,7 +52,7 @@ public class AddNewsController extends HttpServlet {
             String category = "news";
             request.setAttribute("category", category);
             request.setAttribute("addnew", true);
-            request.getRequestDispatcher("jsp/viewnews.jsp").forward(request, response);
+            request.getRequestDispatcher("view/viewnews.jsp").forward(request, response);
         }
     }
 

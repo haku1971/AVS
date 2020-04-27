@@ -5,11 +5,11 @@
  */
 package Controller;
 
-import Entity.Jobs;
-import Entity.User;
-import Model.AuthenticateManagement;
-import Model.JobsModel;
-import Model.UserModel;
+import Model.Jobs;
+import Model.User;
+import DAO.AuthenticateManagement;
+import DAO.JobsModel;
+import DAO.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class ChangeInforController extends HttpServlet {
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Account was logged out');");
             out.println("</script>");
-            response.setHeader("Refresh", "1;url=/AVS/HomeController");
+            response.setHeader("Refresh", "1;url=/AVS/home");
         } else if (username.equals("anon")) {
             response.sendRedirect("/AVS/inputusername");
         } else {
@@ -126,7 +126,7 @@ public class ChangeInforController extends HttpServlet {
                 request.setAttribute("sex", sex);
                 request.setAttribute("phone", phone);
                 request.setAttribute("workplace", workplace);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/changeinfor.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/changeinfor.jsp");
                 dispatcher.forward(request, response);
             } catch (Exception ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -216,7 +216,7 @@ public class ChangeInforController extends HttpServlet {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Account was logged out');");
                 out.println("</script>");
-                response.setHeader("Refresh", "1;url=/AVS/HomeController");
+                response.setHeader("Refresh", "1;url=/AVS/home");
             }
 
         }

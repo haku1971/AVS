@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Entity.User;
-import Model.UserModel;
+import Model.User;
+import DAO.UserModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

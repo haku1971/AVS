@@ -5,9 +5,9 @@
  */
 package Controller;
 
-import Entity.User;
-import Model.AlgorithmModel;
-import Model.UserModel;
+import Model.User;
+import DAO.AlgorithmModel;
+import DAO.UserModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class ViewAccountController extends HttpServlet {
             String category = "account";
             request.setAttribute("category", category);
             request.setAttribute("user", user);
-            request.getRequestDispatcher("jsp/viewaccount.jsp").forward(request, response);
+            request.getRequestDispatcher("view/viewaccount.jsp").forward(request, response);
 
         } catch (Exception ex) {
             response.sendRedirect("error");
