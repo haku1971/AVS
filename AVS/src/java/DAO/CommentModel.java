@@ -32,7 +32,7 @@ public class CommentModel {
 
     //Like comment
     public ArrayList<Likecomment> getTotalLikecommentByCommentId(int commentid) throws Exception {
-        String query = "SELECT  u.user_FullName fullname,u.user_Name username, lc.[user_ID] userid,lc.[comment_ID] commentid,lc.[Status] cmtstatus FROM LikeComment lc \n"
+        String query = "SELECT  u.user_FullName fullname,u.user_Name username, lc.[user_ID] userid,lc.[comment_ID] commentid FROM LikeComment lc \n"
                 + "               inner join Comments c on lc.comment_ID=c.comment_ID inner join Users u on u.user_ID= lc.user_ID\n"
                 + "                 where lc.comment_ID= ? order by lc.comment_ID asc";
         ArrayList<Likecomment> listalllikebycommentid = new ArrayList<>();
@@ -51,7 +51,6 @@ public class CommentModel {
                 votecomment.setUserid(rs.getInt("userid"));
                 votecomment.setFullname(rs.getString("fullname"));
                 votecomment.setUsername(rs.getString("username"));
-                votecomment.setStatus(rs.getInt("cmtstatus"));
                 votecomment.setCommentid(rs.getInt("commentid"));
                 listalllikebycommentid.add(votecomment);
             }
@@ -64,7 +63,7 @@ public class CommentModel {
 
     //Like comment
     public ArrayList<Likecomment> getAllLikeComment() throws Exception {
-        String query = "SELECT  u.user_FullName fullname,u.user_Name username, lc.[user_ID] userid,lc.[comment_ID] commentid,lc.[Status] cmtstatus "
+        String query = "SELECT  u.user_FullName fullname,u.user_Name username, lc.[user_ID] userid,lc.[comment_ID] commentid "
                 + "FROM LikeComment lc \n"
                 + "inner join Comments c on lc.comment_ID=c.comment_ID inner join Users u on u.user_ID= lc.user_ID"
                 + " order by lc.comment_ID asc";
@@ -84,7 +83,6 @@ public class CommentModel {
                 votecomment.setUserid(rs.getInt("userid"));
                 votecomment.setFullname(rs.getString("fullname"));
                 votecomment.setUsername(rs.getString("username"));
-                votecomment.setStatus(rs.getInt("cmtstatus"));
                 votecomment.setCommentid(rs.getInt("commentid"));
                 listalllike.add(votecomment);
             }

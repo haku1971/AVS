@@ -12,14 +12,12 @@ package Model;
 public class Likenews {
     private int userid;
     private int newsid;
-    private int status;
     private String username;
     private String fullname;
 
-    public Likenews(int userid, int newsid, int status, String username, String fullname) {
+    public Likenews(int userid, int newsid, String username, String fullname) {
         this.userid = userid;
         this.newsid = newsid;
-        this.status = status;
         this.username = username;
         this.fullname = fullname;
     }
@@ -42,14 +40,6 @@ public class Likenews {
 
     public void setNewsid(int newsid) {
         this.newsid = newsid;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getUsername() {

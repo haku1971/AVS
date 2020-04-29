@@ -12,7 +12,6 @@ package Model;
 public class Likecomment {
     private int userid;
     private int commentid;
-    private int status;
     private String username;
     private String fullname;
     
@@ -22,7 +21,6 @@ public class Likecomment {
     public Likecomment(int userid, int commentid, int status, String username, String fullname) {
         this.userid = userid;
         this.commentid = commentid;
-        this.status = status;
         this.username = username;
         this.fullname = fullname;
     }
@@ -41,14 +39,6 @@ public class Likecomment {
 
     public void setCommentid(int commentid) {
         this.commentid = commentid;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getUsername() {

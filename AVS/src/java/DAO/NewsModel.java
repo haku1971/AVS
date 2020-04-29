@@ -25,7 +25,7 @@ public class NewsModel {
 
     //Like comment
     public ArrayList<Likenews> getTotalLikeNewsByNewsId(int newsid) throws Exception {
-        String query = "SELECT  u.user_FullName fullname,u.user_Name username, ln.[user_ID] userid,ln.news_ID newsid,ln.[Status] cmtstatus FROM LikeNews ln\n"
+        String query = "SELECT  u.user_FullName fullname,u.user_Name username, ln.[user_ID] userid,ln.news_ID newsid FROM LikeNews ln\n"
                 + " inner join Users u on u.user_ID= ln.user_ID where ln.news_ID= ? order by ln.news_ID asc";
         ArrayList<Likenews> listalllikenewbynewstid = new ArrayList<>();
         DBContext dbManager = new DBContext();
@@ -43,7 +43,6 @@ public class NewsModel {
                 likenew.setUserid(rs.getInt("userid"));
                 likenew.setFullname(rs.getString("fullname"));
                 likenew.setUsername(rs.getString("username"));
-                likenew.setStatus(rs.getInt("cmtstatus"));
                 likenew.setNewsid(rs.getInt("newsid"));
                 listalllikenewbynewstid.add(likenew);
             }
@@ -56,7 +55,7 @@ public class NewsModel {
 
     //Like comment
     public ArrayList<Likenews> getAllLikeNews() throws Exception {
-        String query = "SELECT  u.user_FullName fullname,u.user_Name username, ln.[user_ID] userid,ln.news_ID newsid,ln.[Status] cmtstatus \n"
+        String query = "SELECT  u.user_FullName fullname,u.user_Name username, ln.[user_ID] userid,ln.news_ID newsid \n"
                 + " FROM LikeNews ln inner join Users u on u.user_ID= ln.user_ID\n"
                 + " inner join News n on n.news_ID= ln.news_ID\n"
                 + "order by ln.news_ID asc";
@@ -76,7 +75,6 @@ public class NewsModel {
                 likenew.setUserid(rs.getInt("userid"));
                 likenew.setFullname(rs.getString("fullname"));
                 likenew.setUsername(rs.getString("username"));
-                likenew.setStatus(rs.getInt("cmtstatus"));
                 likenew.setNewsid(rs.getInt("newsid"));
                 listalllikenews.add(likenew);
             }
