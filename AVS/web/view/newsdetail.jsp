@@ -93,6 +93,15 @@
                 float: left;
                 margin-left: -113px;
             }
+
+            .likecounter2c{           
+                pointer-events:none;
+                border: none;
+                width: auto;
+                background-color: #edf0f4;
+                height: 15px;
+
+            }
             #heart{
 
                 float: left;
@@ -499,15 +508,15 @@
                     }
 
         %>
-          <c:set var = "conntentofcomment" scope = "session" value = "<%=listallcommentbynewid.get(i).getContent()%>"/>
+        <c:set var = "conntentofcomment" scope = "session" value = "<%=listallcommentbynewid.get(i).getContent()%>"/>
         <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>   
         <div class="comment_content">                            
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <%--  <div><%=listallcommentbynewid.get(i).getContent()%> </div> --%>
-            <c:out value="${conntentofcomment}"/>
+            <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/> </div>
             <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
-            <i  class= "${thumpup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>             
-            <input class="likecounter2b"  type="text"  value="<%=numberlike%>" />
+            <i  class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}"></i>             
+            <input class="likecounter2c"  type="text"  value="<%=numberlike%>" />
         </div>
 
         <% } //hien thi tung comment
@@ -516,7 +525,7 @@
             <%= "You are restricted!!! "%>
         </span>
         <%  } // else cua check nguoi bi ban
-              } else {    //else nay la khach%>
+        } else {    //else nay la khach%>
         <div class="main3">
             <div class="news_box">
                 <h1 class="news_title">
@@ -563,22 +572,22 @@
                     }
 
         %>
-          <c:set var = "conntentofcomment" scope = "session" value = "<%=listallcommentbynewid.get(i).getContent()%>"/>
+        <c:set var = "conntentofcomment" scope = "session" value = "<%=listallcommentbynewid.get(i).getContent()%>"/>
         <c:set var = "thumpup" scope = "session" value = "<%=thumbup%>"/>   
         <div class="comment_content">
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <%--  <div><%=listallcommentbynewid.get(i).getContent()%> </div> --%>
-            <c:out value="${conntentofcomment}"/>
+            <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/> </div>
             <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
-            <i  class= "${thumpup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>             
-            <input class="likecounter2b"  type="text"  value="<%=numberlike%>" />
+            <i  class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}"></i>             
+            <input class="likecounter2c"  type="text"  value="<%=numberlike%>" />
         </div>
 
         <%} //hien thi tung comment
                 } //neu mang comment > 0
             }
         %>
-        
+
         <%-- to herrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrre --%>
         <%@include file="footer.jsp" %>  
     </body>

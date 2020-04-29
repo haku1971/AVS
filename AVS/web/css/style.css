@@ -1300,8 +1300,8 @@ body {
 }
 .main3 .news_box .news_content .detail img{
 
-    width: 85%;
-
+    width: 80%;
+    border-radius: 20px;
 }
 
 .main3 .news_box .news_content .detail .news_detail2{
@@ -1441,11 +1441,11 @@ body {
 
 .user_name {
     font-weight: bold;
-    font-size: 25px;
+    font-size: 30px;
     font-family: cursive;
     letter-spacing: 1px;
     color: pink;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 .comment_content {
     background: #EDF0F4;
@@ -1458,7 +1458,7 @@ body {
 }
 
 .cmt_detail {
-    margin-left:10px;
+    margin-left:15px;
 }
 
 .textarea_cmt {
