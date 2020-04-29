@@ -40,8 +40,10 @@ public class SearchStepServlet extends HttpServlet {
 
             // Probing the position with keeping 
             // uniform distribution in mind. 
-            int pos = low + (((high - low)
-                    / (arr[high] - arr[low])) * (searchvalue - arr[low]));
+//            int pos = (int) (low + ((float)((float)(high - low)
+//                    / (float)(arr[high] - arr[low])) * (searchvalue - arr[low])));
+            int pos = (int) (low + (((double)(high - low) / 
+                    (arr[high] - arr[low])) * (searchvalue - arr[low]))); 
 
             count++;
             // Condition of target found 

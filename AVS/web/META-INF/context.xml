@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--DESKTOP-BLOLB7D-->
-<!--quang-->
-<!--LAPTOP-FIFP9IMA-->
-<!--anna chan-->
+<!--quang DESKTOP-BLOLB7D-->
+<!--anna chan LAPTOP-FIFP9IMA-->
 <!--manh DESKTOP-C22NL51 -->
 <!--duong DESKTOP-I7Q337l -->
+<!--binh DESKTOP-E2PVDU3\SQLEXPRESS-->
 <!--
-servername: 34.70.151.219
+servername: 35.240.165.190
 usernamedb: sa
-passwordb: Kgt2tQw4LjhydM8ats
-DESKTOP-E2PVDU3\SQLEXPRESS
+passwordb: 232Ger$3fg
+
+TOMCAT
+http://34.70.41.246/manager/html
+username: tomcat
+pass: XrNwS1ar
 -->
 <Context path="/AVS">
-  <Environment name="serverName" type="java.lang.String" value="DESKTOP-I7Q337l"/>
+  <Environment name="serverName" type="java.lang.String" value="DESKTOP-C22NL51"/>
   <Environment name="port" type="java.lang.String" value="1433"/>
   <Environment name="user" type="java.lang.String" value="sa"/>
   <Environment name="password" type="java.lang.String" value="123456"/>

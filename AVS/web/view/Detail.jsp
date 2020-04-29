@@ -176,7 +176,7 @@
                                 );
                                 setInputFilter(document.getElementById("txtElementHashing"), function (value) {
                                     //                                    return /^[0-9,-,]*$/i.test(value);
-                                    return /^[0-9,-,]*$/i.test(value);
+                                    return /^\d{1,2}(,\d{1,2})*,*$/i.test(value) || value === '';
                                 }
                                 );
                                 setInputFilter(document.getElementById("txtSearchnumber"), function (value) {

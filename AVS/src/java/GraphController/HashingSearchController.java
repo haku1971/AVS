@@ -423,7 +423,7 @@ public class HashingSearchController extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(SortStepServlet.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 

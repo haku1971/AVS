@@ -50,7 +50,6 @@ function hashfunc(key) {
 class OpenAddressHashTable {
     constructor() {
         this.list = [];
-        console.log(this.list[9]);
     }
 
     get(key) {
@@ -96,25 +95,6 @@ function addArraytoHashTable(array) {
  *  Other main function start here
  */
 function init(algorithmtype, category) {
-    this.algorithmtype = algorithmtype;
-    this.category = category;
-    let isvisualized = algorithmtype === "null" ? false : true;
-    startVisualizing(isvisualized, category);
-    if (isvisualized) {
-        removeHighlightedCode();
-        currentstep = 0;
-        canvas = document.getElementById('canvasAnimation');
-        draw(currentstep);
-        boolRun = true;
-        resume();
-    } else {
-        document.getElementById("progress").hidden = true;
-        document.getElementById("canvasAnimation").hidden = true;
-        document.getElementById("speed").hidden = true;
-        document.getElementById("stepButton").hidden = true;
-        document.getElementById("txtlog").hidden = true;
-    }
-
     switch (category) {
         case 6 :
         {
@@ -134,6 +114,26 @@ function init(algorithmtype, category) {
             break;
         }
     }
+    this.algorithmtype = algorithmtype;
+    this.category = category;
+    let isvisualized = algorithmtype === "null" ? false : true;
+    startVisualizing(isvisualized, category);
+    if (isvisualized) {
+        removeHighlightedCode();
+        currentstep = 0;
+        canvas = document.getElementById('canvasAnimation');
+        draw(currentstep);
+        boolRun = true;
+        resume();
+    } else {
+        document.getElementById("progress").hidden = true;
+        document.getElementById("canvasAnimation").hidden = true;
+        document.getElementById("speed").hidden = true;
+        document.getElementById("stepButton").hidden = true;
+        document.getElementById("txtlog").hidden = true;
+    }
+
+    
 }
 
 function startVisualizing(isvisualized, category) {
@@ -190,6 +190,7 @@ function startVisualizing(isvisualized, category) {
             getAjaxSearchData();
             break;
         case 6:
+            getAjaxHashingSearchData();
             numberofbox = hasharraysize;
             break;
     }
@@ -202,13 +203,8 @@ function getAjaxHashingSearchData() {
         data: {initarray: mydata, searchvalue: searchnumber, hasharraysize: hasharraysize}
         ,
         dataType: "json",
-        //OK
         success: function (data) {
             drawGraph(data);
-        }
-        ,
-        error: function (error) {
-//            console.log("error", error);
         }
     }
     );
@@ -221,13 +217,8 @@ function getAjaxSortData() {
         data: {name: mydata}
         ,
         dataType: "json",
-        //OK
         success: function (data) {
             drawGraph(data);
-        }
-        ,
-        error: function (error) {
-//            console.log("error", error);
         }
     }
     );
@@ -243,13 +234,8 @@ function getAjaxSearchData() {
         data: {initarray: mydata, searchvalue: searchnumber}
         ,
         dataType: "json",
-        //OK
         success: function (data) {
             drawGraph(data);
-        }
-        ,
-        error: function (error) {
-//            console.log("error", error);
         }
     }
     );
@@ -323,7 +309,6 @@ function inputByUser() {
             }
             arr_by_user = document.getElementById("txtElementHashing").value;
             arr_by_user = arr_by_user.split(',');
-            console.log(arr_by_user);
             for (var i = 0; i < arr_by_user.length; i++) {
                 if (arr_by_user[i] > 99) {
                     window.alert("Element lenght too long, element lenght <= 99!");
@@ -349,7 +334,6 @@ function inputByUser() {
             let maxlength = 15;
             arr_by_user = document.getElementById("txtElement").value;
             arr_by_user = arr_by_user.split("");
-            console.log(arr_by_user);
             if (arr_by_user.length > 0) {
                 if (arr_by_user.length > maxlength) {
                     window.alert("Array lenght too long, try array lenght <= 15!");
@@ -628,9 +612,7 @@ function drawGraph(data) {
 
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
-        if (textbox === null) {
-            console.log('Null pointer exception!');
-        } else {
+        if (textbox !== null) {
             textbox.addEventListener(event, function () {
                 if (inputFilter(this.value)) {
                     this.oldValue = this.value;
@@ -719,9 +701,7 @@ function drawInitCurrent(currentstep, ctx) {
             var line_name = "line_" + highlightcode[i];
             if (document.getElementById(line_name) !== null) {
                 document.getElementById(line_name).style.background = "None";
-            } else {
-//                console.log(line_name + 'not found');
-            }
+            } 
         }
     }
 
@@ -1252,7 +1232,6 @@ function interpolationSearch(array) {
 }
 
 function separatechainingHash(array) {
-    console.log(hashtable.get(searchnumber));
     eachStepArr = [];
     highlightcheck = [];
     highlightsorted = [];
@@ -1267,7 +1246,6 @@ function openaddressingHash(array) {
 //    }
     hashtable = new OpenAddressHashTable();
     addArraytoHashTable(hasharray);
-    console.log(hashtable.list);
     //init 
     eachStepArr = [];
     highlightcheck = [];
