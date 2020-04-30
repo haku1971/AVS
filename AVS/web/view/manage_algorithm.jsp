@@ -76,7 +76,8 @@
                             <th class="columnadmin">ID</th>
                             <th class="columnadmin">Name</th>
                             <th class="columnadmin">Category</th>
-                            <th class="columnadmin">Visualized</th>
+                            <th class="columnadmin">Compare Status</th>
+                            <th class="columnadmin">Algorithm codename</th>
                             <th class="columnadmin">Detail</th>
                                 <% if (showdeleted == "showdeleted") {%>
                             <th class="columnadmin">Deleted</th>
@@ -88,6 +89,7 @@
                             <td class="columnadmin"><%=allalgolist.get(i).getAlgoName()%></td>
                             <td class="columnadmin"><%=allalgolist.get(i).getCategoryName()%></td>
                             <td class="columnadmin"><%=allalgolist.get(i).getVisualizedToString()%></td>
+                            <td class="columnadmin"><%=allalgolist.get(i).getAlgoFile()%></td>
                             <td class="columnadmin"><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>">View</a></td>
                             <% if (showdeleted == "showdeleted") {%>
                             <td class="columnadmin"><%=allalgolist.get(i).getDeleted()%></td>

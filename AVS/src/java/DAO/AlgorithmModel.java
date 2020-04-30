@@ -411,6 +411,7 @@ public class AlgorithmModel {
                 algo.setCategoryID(rs.getInt("category_ID"));
                 algo.setVisualized(rs.getInt("algo_CompareStatus"));
                 algo.setCategoryName(rs.getString("category_Name"));
+                algo.setAlgoFile(rs.getString("algo_Files"));
                 algo.setDeleted(rs.getInt("delete_Status"));
                 algos.add(algo);
             }

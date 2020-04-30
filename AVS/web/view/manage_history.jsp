@@ -40,7 +40,7 @@
             <%@include file="adminleft.jsp" %> 
 
             <div class="adminright">
-
+                <%if (!allhistorylist.isEmpty()) {%>
                 <div class="table100">
                     <%if (historytype == "user_history") {%>
                     <table>
@@ -113,7 +113,12 @@
                         <%}%>
                     </div>
                 </div>
+                <%} else {%>
+                <div>No data recorded</div>
+                <%}%>
             </div>
+
+
             <%@include file="footer.jsp" %> 
         </div>  
     </body>
