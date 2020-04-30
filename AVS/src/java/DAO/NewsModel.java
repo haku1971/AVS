@@ -199,7 +199,7 @@ public class NewsModel {
 //count number of record in News table
 
     public int countDB() throws Exception {
-        String query = "select COUNT(*) as numberrecord from News";
+        String query = "select COUNT(*) as numberrecord from News where delete_Status = 0";
         int numberofrecord = 0;
         DBContext dbManager = new DBContext();
         Connection conn = null;
@@ -229,8 +229,8 @@ public class NewsModel {
         ResultSet rs = null;
         try {
             conn = dbManager.getConnection();
-            ps = conn.prepareStatement("Select u.user_Name username,u.user_FullName userfullname,n.news_ID newsid,n.delete_Status delete_Status,n.news_Content content,n.news_DateRealease newsdaterelease,n.news_Imgs newsimg,n.news_Resource newsresource,n.news_Tittles newstitle,n.user_ID userid from (select *, ROW_NUMBER() over(order by news_DateRealease DESC) as rownumber from News) \n"
-                    + "as n inner join Users u on u.user_ID= n.user_ID where n.rownumber >= ? and n.rownumber <= ?");
+            ps = conn.prepareStatement("Select u.user_Name username,u.user_FullName userfullname,n.news_ID newsid,n.delete_Status delete_Status,n.news_Content content,n.news_DateRealease newsdaterelease,n.news_Imgs newsimg,n.news_Resource newsresource,n.news_Tittles newstitle,n.user_ID userid from (select *, ROW_NUMBER() over(order by news_DateRealease DESC) as rownumber from News where delete_Status = 0) \n" +
+"as n inner join Users u on u.user_ID= n.user_ID where n.rownumber >= ? and n.rownumber <= ?");
             ps.setInt(1, from);
             ps.setInt(2, to);
             rs = ps.executeQuery();

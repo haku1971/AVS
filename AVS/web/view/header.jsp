@@ -89,7 +89,7 @@
                     <form id="search" method="Post" action="news">
                         <%if (!user.equals("anon")) {%>
                         <input id="textsearch" type="text" placeholder="  Search.." name="search" value="<c:out value= "${searchvalue}"/>" />
-                        <button onclick="checkLengthOfSearch()" id="buttonsearch" type="submit">Submit</button>
+                        <button onclick="checkLengthOfSearch()" id="buttonsearch" type="submit">Search</button>
                         <%}%>
                     </form>
                     <script>

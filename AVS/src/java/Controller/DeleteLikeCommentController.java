@@ -7,6 +7,7 @@ package Controller;
 
 import DAO.CommentModel;
 import DAO.NewsModel;
+import Model.News;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -27,27 +28,38 @@ public class DeleteLikeCommentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       try {
+        try {
 
             CommentModel commentmodel = new CommentModel();
+            int newsid = Integer.parseInt(request.getParameter("newsid"));
+            NewsModel newmodeldao = new NewsModel();          
+             News news = newmodeldao.getNewsByID(newsid);
+             System.out.println("a");
+            if(news == null || news.getDeleted()== 1) {
+                 System.out.println("b");
+                request.setAttribute("errorstring", "This page is no longer available!");
+                 request.getRequestDispatcher("view/error.jsp").forward(request, response);
+                 return;
+            }
             //check ajax cho xoa like cua 1 comment
-            if (request.getParameter("commentid") != null&& request.getParameter("userid") != null) {
-                int userid= Integer.parseInt(request.getParameter("userid"));
+            if (request.getParameter("commentid") != null && request.getParameter("userid") != null) {
+                int userid = Integer.parseInt(request.getParameter("userid"));
                 int commentid = Integer.parseInt(request.getParameter("commentid"));
                 System.out.println("commentid" + commentid);
-                commentmodel.deleteLikeComment(commentid,userid);
+                commentmodel.deleteLikeComment(commentid, userid);
             }
 
             NewsModel newsmodel = new NewsModel();
             //check ajax cho xoa like cua 1 news
             if (request.getParameter("newsid") != null && request.getParameter("userid") != null) {
-                int userid= Integer.parseInt(request.getParameter("userid"));
-                int newsid = Integer.parseInt(request.getParameter("newsid"));
-                System.out.println("newsid " + newsid +"and userid: "+ userid);
-                newsmodel.deleteLikeNewsByNewsId(newsid,userid);
+                int userid = Integer.parseInt(request.getParameter("userid"));           
+                System.out.println("newsid " + newsid + "and userid: " + userid);
+                newsmodel.deleteLikeNewsByNewsId(newsid, userid);
             }
         } catch (Exception ex) {
-            Logger.getLogger(SaveLikeCommentController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("errorstring", "This page is no longer available!");
+            request.getRequestDispatcher("view/error.jsp").forward(request, response);
+
         }
     }
 

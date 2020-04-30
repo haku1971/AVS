@@ -65,8 +65,8 @@ public class CommentController extends HttpServlet {
             NewsModel newmodeldao = new NewsModel();
             CommentModel commentmodel = new CommentModel();
             News news = newmodeldao.getNewsByID(newsid);
-            if(news == null) {
-                request.setAttribute("errorstring", "Don't have this news page");
+            if(news == null || news.getDeleted()== 1) {
+                request.setAttribute("errorstring", "Don't have this news page or this page had been deleted");
                  request.getRequestDispatcher("view/error.jsp").forward(request, response);
                  return;
             }
@@ -150,6 +150,13 @@ public class CommentController extends HttpServlet {
                 response.sendRedirect("HomeController");
                 return;
             }
+            NewsModel newmodeldao = new NewsModel();
+            News news = newmodeldao.getNewsByID(newsid);
+            if(news == null || news.getDeleted()== 1) {
+                request.setAttribute("errorstring", "Don't have this news page or this page had been deleted");
+                 request.getRequestDispatcher("view/error.jsp").forward(request, response);
+                 return;
+            }
             int usersid = Integer.parseInt(userid);
             //tao ra comment
             String posttodb = request.getParameter("postodb");
@@ -157,8 +164,7 @@ public class CommentController extends HttpServlet {
                 comment = request.getParameter("commentcontent");
                 strdate = request.getParameter("strdate");
                 commentmodel.saveCommenttoDB(comment.trim(), strdate, usersid, newsid);
-                response.sendRedirect("newsdetail?id=" + newsid);
-                return;
+                response.sendRedirect("newsdetail?id=" + newsid);              
             }
 
         } catch (Exception ex) {

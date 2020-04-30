@@ -244,7 +244,7 @@
         <div class="cmt_items" id="<%=i%>">
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/><%--<%=listallcommentbynewid.get(i).getContent()%> --%></div> 
-            <textarea class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" >${conntentofcomment}</textarea>
+            <textarea maxlength="300" class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" >${conntentofcomment}</textarea>
             <div id="time_cmt" class="cmt_detail"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
             <i id="like_ulike_cmt" onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}" style="margin-left:15px;"></i>
             <div class="cmt_detail" id="like_<%=commentid%>">${thumpup ?("Liked"):("Like")}</div>       
@@ -433,7 +433,7 @@
                 %>
                 <input type="hidden" name="strdate" value="<%=strdate%>" />
                 <input type="hidden" name="id" value="<%=news.getNewsID()%> " />
-                <textarea class="textarea_cmt" id="txtsavedb" width="500"  name="commentcontent" placeholder="Type your think....."></textarea>
+                <textarea maxlength="300" class="textarea_cmt" id="txtsavedb" width="500"  name="commentcontent" placeholder="Type your think....."></textarea>
                 <input class="post_button" type="submit" id="postcomment" onclick="checkContentIsEmpty()" name="postodb" value="Post comment" />       
             </form>
         </div>

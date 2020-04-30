@@ -7,6 +7,7 @@ package Controller;
 
 import DAO.CommentModel;
 import DAO.NewsModel;
+import Model.News;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +40,16 @@ public class SaveLikeCommentController extends HttpServlet {
             int userid = (int) user_id;
 
             CommentModel commentmodel = new CommentModel();
+            NewsModel newmodeldao = new NewsModel();
+            int newsid = Integer.parseInt(request.getParameter("newsid"));
+            News news = newmodeldao.getNewsByID(newsid);
+            
+
+            if (news == null || news.getDeleted() == 1) {
+                request.setAttribute("errorstring", "This page is no longer available!");
+                request.getRequestDispatcher("view/error.jsp").forward(request, response);
+                return;
+            }
             //check ajax cho save like comment
             if (usid != null && request.getParameter("commentid") != null) {
                 int commentid = Integer.parseInt(request.getParameter("commentid"));
@@ -50,12 +61,12 @@ public class SaveLikeCommentController extends HttpServlet {
             NewsModel newsmodel = new NewsModel();
             //check ajax cho xoa like cua 1 news
             if (usid != null && request.getParameter("newsid") != null) {
-                int newsid = Integer.parseInt(request.getParameter("newsid"));
                 System.out.println("newsid: " + newsid);
                 newsmodel.saveLikeNews(userid, newsid);
             }
         } catch (Exception ex) {
-            Logger.getLogger(SaveLikeCommentController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("errorstring", "This page is no longer available!");
+            request.getRequestDispatcher("view/error.jsp").forward(request, response);
         }
 
     }

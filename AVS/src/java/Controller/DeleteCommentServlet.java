@@ -5,8 +5,9 @@
  */
 package Controller;
 
-
 import DAO.CommentModel;
+import DAO.NewsModel;
+import Model.News;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -46,7 +47,6 @@ public class DeleteCommentServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,7 +54,6 @@ public class DeleteCommentServlet extends HttpServlet {
             String commentid = request.getParameter("commentid");
             String commentcontentedit = request.getParameter("commentcontentedit");
 
-            System.out.println(commentid +"va"+ commentcontentedit);
             CommentModel commentmodel = new CommentModel();
             Cookie cookie[] = request.getCookies();
             int age = cookie[0].getMaxAge();
@@ -77,21 +76,28 @@ public class DeleteCommentServlet extends HttpServlet {
                 response.sendRedirect("HomeController");
                 return;
             }
-           // int userid = convertStringToInt(id_of_user);
-            if(request.getParameter("newsid")!= null &&request.getParameter("commentid")!= null ) {
+            NewsModel newmodeldao = new NewsModel();
+            int newsid = Integer.parseInt(request.getParameter("newsid"));
+            News news = newmodeldao.getNewsByID(newsid);
+            if (news == null || news.getDeleted() == 1) {
+                request.setAttribute("errorstring", "This page is no longer available!");
+                request.getRequestDispatcher("view/error.jsp").forward(request, response);
+                return;
+            }
+            // int userid = convertStringToInt(id_of_user);
+            if (request.getParameter("newsid") != null && request.getParameter("commentid") != null) {
                 //xoa comment la xoa ca vote
                 commentmodel.adDeleteLikeCommentBycommentId(Integer.parseInt(commentid));
                 commentmodel.deleteCommentById(Integer.parseInt(commentid));
             }
-            
-            
+
             commentmodel.editCommentById(commentcontentedit, Integer.parseInt(commentid));
         } catch (Exception ex) {
-            Logger.getLogger(DeleteCommentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("errorstring", "This page is no longer available!");
+            request.getRequestDispatcher("view/error.jsp").forward(request, response);
         }
     }
 
-   
     @Override
     public String getServletInfo() {
         return "Short description";

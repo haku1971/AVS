@@ -329,9 +329,9 @@ public class ManageDatabaseController extends HttpServlet {
         //can be a bug after uploading on cloud server
         absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("AVS") + 3);
         //local
-        absolutePath += "/web/images";
+      //  absolutePath += "/web/images";
         //server
-//        absolutePath += "/images";
+       absolutePath += "/images";
         return absolutePath;
     }
 
