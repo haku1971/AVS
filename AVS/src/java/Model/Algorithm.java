@@ -195,5 +195,9 @@ public class Algorithm {
         this.deleted = deleted;
     }
     
+    public String getDeletedToString() {
+        return deleted == 1 ? "Deleted" : "";
+    }
+    
     
 }

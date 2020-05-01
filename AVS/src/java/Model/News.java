@@ -37,6 +37,10 @@ public class News {
     public int getDeleted() {
         return deleted;
     }
+    
+    public String getDeletedToString() {
+        return deleted == 1 ? "Deleted" : "";
+    }
 
     public void setDeleted(int deleted) {
         this.deleted = deleted;

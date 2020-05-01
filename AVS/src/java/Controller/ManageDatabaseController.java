@@ -9,14 +9,17 @@ import Model.Algorithm;
 import Model.News;
 import Model.User;
 import DAO.AlgorithmModel;
+import DAO.CategoryModel;
 import DAO.HistoryModel;
 import DAO.NewsModel;
 import DAO.UserModel;
+import Model.Category;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -72,7 +75,7 @@ public class ManageDatabaseController extends HttpServlet {
                 }
             }
             int adminrolenumber = 1;
-            if (roleid == null || Integer.parseInt(roleid) != adminrolenumber) {
+            if (roleid == null || roleid.equals("") || Integer.parseInt(roleid) != adminrolenumber) {
                 response.sendRedirect("home");
                 return;
             }
@@ -110,6 +113,19 @@ public class ManageDatabaseController extends HttpServlet {
                     String resource = request.getParameter("resource").trim();
 
                     AlgorithmModel algodao = new AlgorithmModel();
+                    if (algodao.getAlgoByName(algoname) != null) {
+                        CategoryModel catedao = new CategoryModel();
+                        ArrayList<Category> listcate = catedao.getAllCategory();
+
+                        String category = "algorithm";
+                        String errormessage = "Save fail: Algorithm name has exist!";
+                        request.setAttribute("category", category);
+                        request.setAttribute("addnew", true);
+                        request.setAttribute("listalgocategory", listcate);
+                        request.setAttribute("errormessage", errormessage);
+                        request.getRequestDispatcher("view/viewalgo.jsp").forward(request, response);
+                    }
+
                     Algorithm algo = new Algorithm();
                     algo.setAlgoName(algoname);
                     algo.setAlgoCodeJava(codejava);
@@ -119,9 +135,8 @@ public class ManageDatabaseController extends HttpServlet {
                     algo.setCategoryID(Integer.parseInt(categoryid));
                     algo.setAlgoResource(resource);
                     algodao.insertAlgo(algo);
-                    
-//                    algodao.insertAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, "null");
 
+//                    algodao.insertAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, "null");
                     int lastalgoid = algodao.getLastRecord().getAlgoID();
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), lastalgoid, currenttime, "Add");
 
@@ -153,7 +168,7 @@ public class ManageDatabaseController extends HttpServlet {
                     algo.setAlgoDescription(description);
                     algo.setCategoryID(Integer.parseInt(categoryid));
                     algo.setAlgoResource(resource);
-                    
+
                     algodao.updateAlgo(algo);
 //                    algodao.updateAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, Integer.parseInt(algoid));
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Edit");
@@ -193,7 +208,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String imageurl = "";
                     InputStream inputStream = null; // input stream of the upload file
-                    
+
                     NewsModel newsdao = new NewsModel();
                     News news = new News();
                     news.setNewstittles(title);
@@ -219,11 +234,11 @@ public class ManageDatabaseController extends HttpServlet {
                         File targetFile = new File(imageurl);
                         OutputStream outStream = new FileOutputStream(targetFile);
                         outStream.write(buffer);
-                        
+
                         news.setNewsID(newsid);
                         news.setNews_Imgs("./images/" + newsimagename + extentfilename);
                         newsdao.updateNews(news);
-                        
+
                         historydao.insertNewsHistory(Integer.parseInt(adminid), newsid, currenttime, "Add");
                     }
 
@@ -268,7 +283,7 @@ public class ManageDatabaseController extends HttpServlet {
                     } else {
                         news.setNews_Imgs(imageurl);
                     }
-                    
+
                     newsdao.updateNews(news);
 
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Edit");
@@ -329,9 +344,9 @@ public class ManageDatabaseController extends HttpServlet {
         //can be a bug after uploading on cloud server
         absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("AVS") + 3);
         //local
-      //  absolutePath += "/web/images";
+        //  absolutePath += "/web/images";
         //server
-       absolutePath += "/images";
+        absolutePath += "/images";
         return absolutePath;
     }
 

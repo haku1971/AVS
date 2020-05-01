@@ -422,4 +422,28 @@ public class AlgorithmModel {
         }
         return algos;
     }
+    
+    public Algorithm getAlgoByName(String name) throws SQLException, Exception {
+        DBContext dbManager = new DBContext();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = dbManager.getConnection();
+            statement
+                    = connection.prepareStatement("SELECT * from Algorithm where algo_Name = ?;");
+            statement.setString(1, name);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                Algorithm algo = new Algorithm();
+                return algo;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            new CloseConnection().close(connection, statement, rs);
+        }
+
+        return null;
+    }
 }

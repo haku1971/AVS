@@ -96,7 +96,7 @@
                             <td class="columnadmin"><%=allnews.get(i).getNews_Imgs()%></td>
                             <td class="columnadmin"><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
                             <% if (showdeleted == "showdeleted") {%>
-                            <td><%=allnews.get(i).getDeleted()%></td>
+                            <td><%=allnews.get(i).getDeletedToString()%></td>
                             <%}%>
                         </tr>
                         <%}%>

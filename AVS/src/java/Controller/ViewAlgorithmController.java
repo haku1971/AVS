@@ -55,7 +55,7 @@ public class ViewAlgorithmController extends HttpServlet {
                 }
             }
             int adminrolenumber = 1;
-            if (roleid == null || Integer.parseInt(roleid) != adminrolenumber) {
+            if (roleid == null || roleid.equals("") || Integer.parseInt(roleid) != adminrolenumber) {
                 response.sendRedirect("home");
                 return;
             }

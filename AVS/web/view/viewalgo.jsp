@@ -26,6 +26,7 @@
             Algorithm algo = (Algorithm) request.getAttribute("algo");
             Boolean addnew = (Boolean) request.getAttribute("addnew");
             ArrayList<Category> listalgocategory = (ArrayList<Category>) request.getAttribute("listalgocategory");
+            String errormessage = (String) request.getAttribute("errormessage");
         %>
     </head>
 
@@ -43,6 +44,9 @@
                 <div class="algoinfomation">
                     <%if (addnew) {%>
                     <!--trang addnew-->
+                    <% if (errormessage != null) {%>
+                    <div class="errormess"><%=errormessage%></div>
+                    <%}%>
                     <div class="algoid">Add Algorithm:</div>
                     <br>
                     <form method="POST" action="manage" onsubmit="return validate();">

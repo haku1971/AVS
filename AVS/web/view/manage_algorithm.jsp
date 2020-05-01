@@ -92,7 +92,7 @@
                             <td class="columnadmin"><%=allalgolist.get(i).getAlgoFile()%></td>
                             <td class="columnadmin"><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>">View</a></td>
                             <% if (showdeleted == "showdeleted") {%>
-                            <td class="columnadmin"><%=allalgolist.get(i).getDeleted()%></td>
+                            <td class="columnadmin"><%=allalgolist.get(i).getDeletedToString()%></td>
                             <%}%>
                         </tr>
                         <%}%>
