@@ -295,36 +295,37 @@ function inputByUser() {
             if (document.getElementById("txtArraySize").value !== '') {
                 maxlength = document.getElementById("txtArraySize").value;
                 if (maxlength < 1) {
-                    window.alert("Size should be > 0!");
+                    window.alert("Failed! Size of hashtable > 0!");
                     isvalid = false;
                     break;
                 }
                 if (maxlength > 10) {
-                    window.alert("Max size available is 10!");
+                    window.alert("Failed! Max size available is 10!");
                     isvalid = false;
                     break;
                 }
             } else {
                 maxlength = hasharraysize;
             }
-            arr_by_user = document.getElementById("txtElementHashing").value;
-            arr_by_user = arr_by_user.split(',');
+            arr_by_user = document.getElementById("txtElementHashing").value !== "" 
+                ? document.getElementById("txtElementHashing").value.split(',') : [];
             for (var i = 0; i < arr_by_user.length; i++) {
                 if (arr_by_user[i] > 99) {
-                    window.alert("Element lenght too long, element lenght <= 99!");
+                    window.alert("Failed! Element(s) too big, element <= 99!");
                     isvalid = false;
                     break;
                 }
             }
             if (arr_by_user.length > 0) {
                 if (arr_by_user.length > maxlength) {
-                    window.alert("Array lenght too long, try array lenght <= " + maxlength + "!");
+                    window.alert("Failed! Array lenght > size of hashtable, try with array lenght <= " + maxlength + "!");
                     isvalid = false;
                 }
                 if (arr_by_user.length <= maxlength) {
                     hasharray = arr_by_user;
                 }
             } else {
+                window.alert("Failed! Array is empty!");
                 isvalid = false;
             }
             break;
@@ -336,13 +337,14 @@ function inputByUser() {
             arr_by_user = arr_by_user.split("");
             if (arr_by_user.length > 0) {
                 if (arr_by_user.length > maxlength) {
-                    window.alert("Array lenght too long, try array lenght <= 15!");
+                    window.alert("Failed! Array lenght too long, try array lenght <= 15!");
                     isvalid = false;
                 }
                 if (arr_by_user.length <= maxlength) {
                     initarray = arr_by_user;
                 }
             } else {
+                window.alert("Failed! Array is empty!");
                 isvalid = false;
             }
             break;
@@ -624,6 +626,11 @@ function setInputFilter(textbox, inputFilter) {
                 } else {
                     this.value = "";
                 }
+//                if(this.value === "") {
+//                    document.getElementById("btnInputData").disabled = true;
+//                } else {
+//                    document.getElementById("btnInputData").disabled = false;
+//                }
             });
         }
     });

@@ -109,7 +109,7 @@
 
                 <div class="rightAlgo">
                     <div id="txtButton">
-                        <Button class="button button--nuka button--round-s button--text-thick" type="submit" onclick="inputByUser();">Input Data</button>
+                        <Button class="button button--nuka button--round-s button--text-thick" id="btnInputData" type="submit" onclick="inputByUser();">Input Data</button>
                         <!--cần sửa id thành btnRandom-->
                         <Button class="button button--nuka button--round-s button--text-thick" id="btnShuffle" type="submit" onclick="random();">Random</Button>
                     </div>
