@@ -1,7 +1,7 @@
 body {
     height: 100%;
     width: 100%;
-    position: absolute;
+    /*position: absolute;*/
     min-width: 1500px;
 
 }
@@ -170,33 +170,34 @@ body {
 
 .main { 
     /*position: absolute;*/
-
+    display: flex;
     height: 100%;
     width: 100%;
-    margin: auto;
+    /*margin: auto;*/
     background-color: white;
     border-bottom: 1px solid lightgray;
 
 }
 
 .main .left {
-    /*margin-top: 10px;*/
-    position: relative;
-    width: 300px;
+    margin-top: 10px;
+    /*position: relative;*/
+    width: 400px;
     background-color: #edf0f4;
     float: left;
     min-height: 1200px;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .main .right {
+    width: 100%;
     height: 100%;
     position: relative;
     min-height: 1200px;
-    overflow: auto;
+    /*overflow: auto;*/
     background-color: #edf0f4;
     margin-top: 10px;
-    margin-left: 310px;
+    margin-left: 10px;
     resize: both;
 }
 
@@ -1503,9 +1504,9 @@ body {
 #more {display: none;}
 #myBtn{
     margin-left: 10px;
-    background-color: #4CAF50; /* Green */
-    color: white;
-    padding: 10px 16px;
+    /*background-color: #4CAF50;  Green */
+    /*color: white;*/
+    /*padding: 10px 16px;*/
     text-align: center;
     text-decoration: none;
     font-size: 16px;
@@ -1513,10 +1514,49 @@ body {
     cursor: pointer;
     background-color: white; 
     color: black; 
-    border: 2px solid #4CAF50;
+    border: 2px solid #10dbe6 ;
 }
 
 #myBtn:hover {
-  background-color: #4CAF50;
-  color: white;
+    background-color: #10dbe6 ;
+    color: white;
+}
+
+.description{
+    margin: 30px;
+}
+
+.algoName{
+    font-size: 20px;
+    display: inline-block;
+    color: green;
+}
+
+.bestcase{
+    /*color: #4CAF50;*/
+}
+
+.average{
+    /*color: blue;*/
+}
+
+.worstcase{
+    /*color: red;*/
+}
+
+/*.error{
+    text-align: right;
+    margin-right: 10px;
+}*/
+
+#hidden{
+    visibility: hidden;
+    font-family: fantasy;
+    /*font-size: 20px;*/
+    width: 30%;
+    float: left;
+    /*margin-top: 13px;*/
+    margin-right: 35px;
+    display: inline-block;
+    text-align: right;
 }

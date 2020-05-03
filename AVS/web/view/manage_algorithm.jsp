@@ -119,9 +119,9 @@
 
                 </div>
             </div>
-            <%@include file="footer.jsp" %>      
-        </div>
 
+        </div>
+        <%@include file="footer.jsp" %>   
     </body>
     <script>
         var selectcolumn = document.getElementById("select_column");

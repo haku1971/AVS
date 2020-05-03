@@ -137,7 +137,7 @@ and open the template in the editor.
 }
 
 #but{
-     border-radius: 4px;
+    border-radius: 4px;
     background-color: #f4511e;
     border: none;
     color: #FFFFFF;
@@ -190,21 +190,22 @@ and open the template in the editor.
     height: 100%;
     position: relative;
     min-height: 700px;
-    overflow: auto;
+    /*overflow: auto;*/
     background-color: #edf0f4;
     margin-top: 10px;
-    margin-left: 310px;
+    margin-left: 10px;
+    width: 100%;
 
 }
 
 .main .adminleft {
-    /*    margin-top: 10px;
-        position: relative;
-        width: 300px;
-        background-color: #edf0f4;
-        float: left;
-        min-height: 500px;
-        height: 100%;*/
+    margin-top: 10px;
+    /*        position: relative;
+            width: 300px;
+            background-color: #edf0f4;
+            float: left;
+            min-height: 500px;
+            height: 100%;*/
     padding-bottom: 20px;
     position: relative;
     width: 300px;
@@ -248,10 +249,21 @@ and open the template in the editor.
     width: 15%;
     float: left;
 }
+
+.modifynewsleftlast{
+     display: inline-block;
+    width: 45%;
+    float: left;
+}
+
 .modifyrightlast{
     float: left;
     margin-left: -5%;
-    /*display: inline-block;*/
+}
+
+.modifynewsrightlast{
+    float: left;
+    margin-left: -35%;
 }
 
 
@@ -315,4 +327,31 @@ table {
 
 .adminbtn{
     color: none;
+}
+
+.newsinfomation{
+    margin: 50px;
+}
+
+#title{
+    width: 70%;
+}
+
+#content{
+    overflow: hidden;
+    width: 70%;
+}
+
+.adminNewsLeft{
+    float: left;
+    width: 60%;
+}
+
+.adminNewsRight{
+    float: right;
+    width: 40%;
+}
+
+.adminNewsImg{
+    width: 100%;
 }

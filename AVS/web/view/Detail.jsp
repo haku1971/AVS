@@ -21,7 +21,6 @@
         <script type="text/javascript" src="js/readmore.js"></script>
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-
         <%
             ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
             Algorithm algo = (Algorithm) request.getAttribute("algorithm");
@@ -60,14 +59,14 @@
                     <% startUL = true; %>
                     <%}%>
                     <a style=" text-decoration: none;" id="AlgoNameList" class="<%=a.getAlgoID()%>" href="Detail?AlgoID=<%=a.getAlgoID()%>"><li><%=a.getAlgoName()%></li></a>
-                        <%}%>
+                            <%}%>
                 </ul>
             </div>
         </div>
         <div class="right">
             <div>
                 <div id="algoTitle"><h1><%= algo.getAlgoName()%></h1>
-                    <h5 style="text-align: center;"><%= algo.getAlgoDescription()%><span id="dots">...</span><span id="more">2222222</span></h5>
+                    <h5 class="description"><%= algo.getAlgoDescription()%></h5>
                     <button onclick="myFunction()" id="myBtn">Read more</button>
                     <!--<span id="dots">...</span><span id="more">-->
                     <div style="float: right; margin-right: 10px;" class="fb-share-button" data-href="" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share this page</a></div>
@@ -94,7 +93,7 @@
                     </div>
                     <div><canvas id="canvasAnimation"  style="border:none solid #000000; "></canvas></div>
                     <canvas id="canvasGraph"  style="border:1px solid #000000;"></canvas>
-                    <div class="graphtext">chú thích của table sẽ nằm ở đây</div>
+                    <div class="graphtext">Comparing complexity of algorithm over time</div>
                     <%
                         for (int i = 0; i < algorithmbycategory.size(); i++) {
                     %>
@@ -162,8 +161,9 @@
                     <div class="scrollLog" id="txtlog">Log:</div>
                 </div>
             </div>
+
         </div>
-        <%@include file="footer.jsp" %>
+    </div>
 
 
 
@@ -198,7 +198,7 @@
 
             }
         </script>
-
+        <%@include file="footer.jsp" %>
     </body>
 
 </html>
