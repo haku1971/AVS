@@ -6,7 +6,7 @@
 package Controller;
 
 import Model.User;
-import DAO.UserModel;
+import DAO.UserDAO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ViewAccountControllerTest {
         assertEquals("Success",expectedroleid,roleid);
     }
     @Mock
-    private UserModel userdao;
+    private UserDAO userdao;
      @Test
     public void testRoleIdIsTwo() {
         int expectedroleid = 2;

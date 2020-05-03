@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author quang
  */
-public class NewsModel {
+public class NewsDAO {
 
     //Like comment
     public ArrayList<Likenews> getTotalLikeNewsByNewsId(int newsid) throws Exception {
@@ -399,7 +399,7 @@ public class NewsModel {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(CommentModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

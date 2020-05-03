@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import DAO.CommentModel;
-import DAO.NewsModel;
+import DAO.CommentDAO;
+import DAO.NewsDAO;
 import Model.News;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,9 +30,9 @@ public class DeleteLikeCommentController extends HttpServlet {
             throws ServletException, IOException {
         try {
 
-            CommentModel commentmodel = new CommentModel();
+            CommentDAO commentmodel = new CommentDAO();
             int newsid = Integer.parseInt(request.getParameter("newsid"));
-            NewsModel newmodeldao = new NewsModel();          
+            NewsDAO newmodeldao = new NewsDAO();          
              News news = newmodeldao.getNewsByID(newsid);
              System.out.println("a");
             if(news == null || news.getDeleted()== 1) {
@@ -49,7 +49,7 @@ public class DeleteLikeCommentController extends HttpServlet {
                 commentmodel.deleteLikeComment(commentid, userid);
             }
 
-            NewsModel newsmodel = new NewsModel();
+            NewsDAO newsmodel = new NewsDAO();
             //check ajax cho xoa like cua 1 news
             if (request.getParameter("newsid") != null && request.getParameter("userid") != null) {
                 int userid = Integer.parseInt(request.getParameter("userid"));           

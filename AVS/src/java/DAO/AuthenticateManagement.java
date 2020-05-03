@@ -41,7 +41,7 @@ public class AuthenticateManagement {
         String regex = "^[a-zA-Z0-9_-]{6,15}$";
         boolean check = checkInput(regex, username);
         try {
-            UserModel userDao = new UserModel();
+            UserDAO userDao = new UserDAO();
             username=username.toLowerCase();
             String BasicBase64format  = Base64.getEncoder().encodeToString(password.getBytes());
             User user = userDao.getUserByUsername(username);
@@ -70,7 +70,7 @@ public class AuthenticateManagement {
         username=username.toLowerCase();
         boolean check = checkInput(nameregex, username);
         try {
-            UserModel userDao = new UserModel();
+            UserDAO userDao = new UserDAO();
             User user = userDao.getUserByUsername(username);
             if (check != true) {
                 if (username.length() < 6) {
@@ -121,7 +121,7 @@ public class AuthenticateManagement {
         String mailregex = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
         boolean check = checkInput(mailregex, mail);
         try {
-            UserModel userDao = new UserModel();
+            UserDAO userDao = new UserDAO();
             User user = userDao.getUserByMail(mail);
             if (check != true) {
 

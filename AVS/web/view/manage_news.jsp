@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="Model.News"%>
-<%@page import="DAO.UserModel"%>
+<%@page import="DAO.UserDAO"%>
 <%@page import="Model.User"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="java.util.ArrayList"%>

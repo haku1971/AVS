@@ -20,14 +20,14 @@ import java.util.ArrayList;
  *
  * @author Ukah
  */
-public class HistoryModel {
+public class HistoryDAO {
 
     private final DBContext db;
-    private UserModel userdao;
-    private AlgorithmModel algodao;
-    private NewsModel newsdao;
+    private UserDAO userdao;
+    private AlgorithmDAO algodao;
+    private NewsDAO newsdao;
 
-    public HistoryModel() throws Exception {
+    public HistoryDAO() throws Exception {
         db = new DBContext();
     }
 

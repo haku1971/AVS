@@ -6,7 +6,7 @@
 package Controller;
 
 import Model.News;
-import DAO.NewsModel;
+import DAO.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class NewsController extends HttpServlet {
             response.sendRedirect("/AVS/inputusername");
         } else {
             try {
-                NewsModel newsmodeldao = new NewsModel();
+                NewsDAO newsmodeldao = new NewsDAO();
                 ArrayList<News> listallnews = null;
 
                 int recordPerPage = 2;
@@ -113,7 +113,7 @@ public class NewsController extends HttpServlet {
             response.sendRedirect("/AVS/inputusername");
         } else {
             try {
-                NewsModel newsmodeldao = new NewsModel();
+                NewsDAO newsmodeldao = new NewsDAO();
                 ArrayList<News> listallnews = null;
                 int recordPerPage = 2;
                 int page = 1;

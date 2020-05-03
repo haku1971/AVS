@@ -7,7 +7,7 @@ package Controller;
 
 import Model.User;
 import DAO.AuthenticateManagement;
-import DAO.UserModel;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Base64;
@@ -78,8 +78,8 @@ public class SignupController extends HttpServlet {
         }
         if (username.equals("anon")) {
             try {
-                UserModel userDao;
-                userDao = new UserModel();
+                UserDAO userDao;
+                userDao = new UserDAO();
                 User user = userDao.getUserByUserID(userid);
                 mail = user.getMail();
                 if (user.getFullname().length() > 0) {
@@ -121,7 +121,7 @@ public class SignupController extends HttpServlet {
         int job = Integer.parseInt(request.getParameter("job"));
         int gender = Integer.parseInt(request.getParameter("gender"));
         String repassword = request.getParameter("repassword");
-        UserModel userDao;
+        UserDAO userDao;
         int id = 0;
         int rolenumber = 0;
         AuthenticateManagement authenticateManagement = new AuthenticateManagement();
@@ -176,13 +176,13 @@ public class SignupController extends HttpServlet {
         } else if (success == 1) {
 
             try {
-                UserModel usermod = new UserModel();
+                UserDAO usermod = new UserDAO();
                 username=username.toLowerCase();
                 password = Base64.getEncoder().encodeToString(password.getBytes());
                 usermod.insertUser(username, password, fullname, birthday, job,
                         workplace, gender, mail, phone);
                 try {
-                    userDao = new UserModel();
+                    userDao = new UserDAO();
                     User user = userDao.getUserByUsername(username);
                     id = user.getId();
                     userDao.setUserRole(id);

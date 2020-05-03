@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author Asus
  */
-public class TrackingModel {
+public class TrackingDAO {
 
     public void saveTracking(String ipuser, int algoid, String dateaccess, BigInteger totaltime) throws Exception {
         //excute update

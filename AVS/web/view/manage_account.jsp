@@ -3,7 +3,7 @@
     Created on : Mar 18, 2020, 9:07:52 PM
     Author     : Ukah
 --%>
-<%@page import="DAO.UserModel"%>
+<%@page import="DAO.UserDAO"%>
 <%@page import="Model.User"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="java.util.ArrayList"%>

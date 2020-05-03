@@ -1,5 +1,5 @@
 <%@page import="Model.User"%>
-<%@page import="DAO.UserModel"%>
+<%@page import="DAO.UserDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -55,7 +55,7 @@
     <body>
         <div class="header">
             <ul>
-                <li><img src="images\avs_logo.png" /></li>
+                <li><a href="home"><img src="images\avs_logo.png" /></a></li>
                 <li id="hover"><a href="home">Home</a></li>
                 <li id="hover"><a href="news">News</a></li>
                     <% if (roleid.equals("1")) {%>

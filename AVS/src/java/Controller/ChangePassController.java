@@ -7,7 +7,7 @@ package Controller;
 
 import Model.User;
 import DAO.AuthenticateManagement;
-import DAO.UserModel;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Base64;
@@ -86,10 +86,10 @@ public class ChangePassController extends HttpServlet {
                 response.sendRedirect("/AVS/inputusername");
             } else {
                 User user = new User();
-                UserModel usermod;
+                UserDAO usermod;
                 try {
 
-                    usermod = new UserModel();
+                    usermod = new UserDAO();
                     user = usermod.getUserByUserID(userid);
 
                 } catch (Exception ex) {
@@ -141,13 +141,13 @@ public class ChangePassController extends HttpServlet {
             response.setHeader("Refresh", "1;url=/AVS/inputusername");
         } else {
             User user = new User();
-            UserModel usermod;
+            UserDAO usermod;
             int useridnum = 0;
             String currentuserid = (String) session.getAttribute("userid");
             if (currentuserid.equals(userid)) {
                 try {
 
-                    usermod = new UserModel();
+                    usermod = new UserDAO();
                     user = usermod.getUserByUserID(userid);
                 } catch (Exception ex) {
                 }
@@ -176,7 +176,7 @@ public class ChangePassController extends HttpServlet {
                     dispatcher.forward(request, response);
                 } else if (success == 1) {
                     try {
-                        usermod = new UserModel();
+                        usermod = new UserDAO();
                         useridnum = Integer.parseInt(userid);
                         newpassword = Base64.getEncoder().encodeToString(newpassword.getBytes());
                         usermod.UpdatePassword(useridnum, newpassword);

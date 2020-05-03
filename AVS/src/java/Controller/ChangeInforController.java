@@ -8,8 +8,8 @@ package Controller;
 import Model.Jobs;
 import Model.User;
 import DAO.AuthenticateManagement;
-import DAO.JobsModel;
-import DAO.UserModel;
+import DAO.JobsDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class ChangeInforController extends HttpServlet {
         } else {
             session.setAttribute("username", username);
             try {
-                UserModel userDao = new UserModel();
+                UserDAO userDao = new UserDAO();
                 User user = userDao.getUserByUsername(username);
                 if (user.getFullname().length() > 0) {
                     fullname = user.getFullname();
@@ -111,7 +111,7 @@ public class ChangeInforController extends HttpServlet {
                 }
                 int jobid = user.getJob();
 
-                JobsModel jobdao = new JobsModel();
+                JobsDAO jobdao = new JobsDAO();
                 ArrayList<Jobs> jobs = jobdao.getJobs();
                 for (int i = 0; i < jobs.size(); i++) {
                     if (jobid == jobs.get(i).getJobid()) {
@@ -201,7 +201,7 @@ public class ChangeInforController extends HttpServlet {
                     int agenumber = 0;
                     int useridnum = Integer.parseInt(userid);
                     try {
-                        UserModel usermod = new UserModel();
+                        UserDAO usermod = new UserDAO();
                         usermod.UpdateUser(useridnum, fullname, dob, job, workplace, gender, phone);
                         response.sendRedirect("/AVS/userinfo");
 

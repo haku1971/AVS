@@ -6,7 +6,7 @@
 package GraphController;
 
 import Model.Algorithm;
-import DAO.AlgorithmModel;
+import DAO.AlgorithmDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -380,7 +380,7 @@ static int countquicksort=0;
             Gson parser = new Gson();
             int[] jsFileArray = toArray(json, parser);
 
-            AlgorithmModel dao = new AlgorithmModel();
+            AlgorithmDAO dao = new AlgorithmDAO();
 
             ArrayList<Algorithm> listAlgo = dao.getAlgosortbyID(1);
             for (int i = 0; i < listAlgo.size(); i++) {

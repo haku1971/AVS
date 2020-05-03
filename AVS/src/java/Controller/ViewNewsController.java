@@ -7,8 +7,8 @@ package Controller;
 
 import Model.Algorithm;
 import Model.News;
-import DAO.AlgorithmModel;
-import DAO.NewsModel;
+import DAO.AlgorithmDAO;
+import DAO.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -58,7 +58,7 @@ public class ViewNewsController extends HttpServlet {
             //ket thuc kiem tra
             
             int newsid = Integer.parseInt(request.getParameter("id"));
-            NewsModel newsdao = new NewsModel();
+            NewsDAO newsdao = new NewsDAO();
             News thisnews = newsdao.getNewsByID(newsid);
             
             String category = "news";

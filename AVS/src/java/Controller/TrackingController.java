@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import DAO.TrackingModel;
+import DAO.TrackingDAO;
 import Model.Tracking;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,7 +49,7 @@ public class TrackingController extends HttpServlet {
             String dateaccess = request.getParameter("dateaccess");
             String totaltime = request.getParameter("totaltime");
             BigInteger timeCount = new BigInteger(totaltime);
-            TrackingModel trackingModel = new TrackingModel();
+            TrackingDAO trackingModel = new TrackingDAO();
             if (request.getParameter("ipuser") != null) {
                 ipuser = request.getParameter("ipuser");
                 Tracking trackingUser = trackingModel.getUserAccess(ipuser, algoid, dateaccess);

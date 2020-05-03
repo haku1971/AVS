@@ -7,7 +7,7 @@ package GraphController;
 
 import Model.Algorithm;
 import static GraphController.SearchStepServlet.tempArray;
-import DAO.AlgorithmModel;
+import DAO.AlgorithmDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -405,7 +405,7 @@ public class HashingSearchController extends HttpServlet {
             Gson parser = new Gson();
             int[] jsFileArray = toArray(json, parser);
 
-            AlgorithmModel dao = new AlgorithmModel();
+            AlgorithmDAO dao = new AlgorithmDAO();
             int categoryid = 6;
             ArrayList<Algorithm> listAlgo = dao.getAlgosortbyID(categoryid);
             for (int i = 0; i < listAlgo.size(); i++) {

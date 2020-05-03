@@ -6,8 +6,8 @@
 package Controller;
 
 import Model.User;
-import DAO.AlgorithmModel;
-import DAO.UserModel;
+import DAO.AlgorithmDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class ViewAccountController extends HttpServlet {
         try {
             
             HttpSession session = request.getSession();
-            UserModel userdao = new UserModel();
+            UserDAO userdao = new UserDAO();
             //hien thi trang home neu nguoi dung khong phai admin
             Cookie cookie[] = request.getCookies();
             String roleid = "";
