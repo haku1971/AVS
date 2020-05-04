@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="Model.News"%>
-<%@page import="DAO.UserModel"%>
+<%@page import="DAO.UserDAO"%>
 <%@page import="Model.User"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,6 +21,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/admin.css" />
 
         <%
             News news = (News) request.getAttribute("news");
@@ -42,17 +43,24 @@
                 <div class="newsinfomation">
                     <%if (addnews) {%>
                     <!--trang addnew-->
+                    <div class="algoid">Add News:</div>
                     <form method="POST" action="manage" enctype="multipart/form-data" onsubmit="return validate();">
                         <input type="hidden" name="managetype" value="addnews">
-                        <div>Title: </div> <div><input id="title" type="text" name="title" value=""></div>
-                        <div>Content:  </div> <div><textarea id="content" name="content" rows="10" cols="30" ></textarea></div>
+                        <div>Title: </div> <div><input id="title" type="text" name="title" value=""></div><br>
+                        <div>Content:  </div> <div><textarea id="content" name="content" rows="10" cols="30" ></textarea></div><br>
                         <div>Source: </div> <div><input type="text" name="source" value=""></div>
                         <br>
                         <div>Image: <input type="file" name="image"></div>
-                        <br>
-                        <input type="submit" value="Save">
+                        <br><br>
+                        <div class="modifyleftlast">
+                            <input id="but" type="submit" value="Save">
+                        </div>
                     </form>
-                    <a href="admin?category=news"><button>Cancel</button></a>
+                    <br>    
+                    <div class="modifyrightlast" style="margin-top: -18px;">
+                        <a href="admin?category=news"><button id="but1">Cancel</button></a>
+                    </div>
+
                     <%} else {
                         String action = news.getDeleted() == 0 ? "Delete" : "Restore";%>
                     <!--trang view-->
@@ -61,34 +69,40 @@
                         <input type="hidden" name="newsid" value="<%=news.getNewsID()%>" >
                         <input type="hidden" name="managetype" value="editnews">
                         <input type="hidden" name="imageurl" value="<%=news.getNews_Imgs()%>" >
-                        <div>Title: </div> <div><input id="title" type="text" name="title" value="<%=news.getNewstittles()%>"></div>
-                        <div>Content:  </div> 
-                        <div>
-                            <textarea id="content" name="content" rows="10" cols="30" ><%=news.getNewscontent()%>
-                            </textarea>
+                        <div class="adminNewsLeft">
+                            <div>Title: </div> <div><input id="title" type="text" name="title" value="<%=news.getNewstittles()%>"></div><br>
+                            <div>Content:  </div> 
+                            <div>
+                                <textarea id="content" name="content" rows="10" cols="30" ><%=news.getNewscontent()%>
+                                </textarea>
+                            </div><br>
+                            <div>Source: </div> <div><input type="text" name="source" value="<%=news.getNewsresource()%>"></div><br>
                         </div>
-                        <div>Source: </div> <div><input type="text" name="source" value="<%=news.getNewsresource()%>"></div>
-
-                        <div>Image: <% if (!(news.getNews_Imgs() == null || news.getNews_Imgs().equals("null"))) {%>
-                            <img src="<%=news.getNews_Imgs()%>"><%}%> 
-                            <input id="file" type="file" name="image">
+                        <div class="adminNewsRight">
+                            <div>Image: <% if (!(news.getNews_Imgs() == null || news.getNews_Imgs().equals("null"))) {%>
+                                <img class="adminNewsImg" src="<%=news.getNews_Imgs()%>"><%}%> 
+                                <input id="file" type="file" name="image"><br>
+                            </div>
                         </div>
-                        <input type="submit" value="Save">
+                        <div class="modifynewsleftlast">
+                            <input id="but" type="submit" value="Save">
+                        </div>
                     </form>
-                    
-                    <form method="POST" action="manage" onsubmit="return confirm('<%=action%> this news?');">
-                        <input type="hidden" name="managetype" <%if (news.getDeleted() == 1) {%>value="restorenews"<%} else {%>value="deletenews"<%}%>>
-                        <input type="hidden" name="newsid" value="<%=news.getNewsID()%>" >
-                        <input type="submit" <%if (news.getDeleted() == 1) {%>value="Restore"<%} else {%>value="Delete"<%}%>>
-                    </form>
-                    <a href="admin?category=news"><button>Back</button></a>
+                    <div class="modifynewsrightlast">
+                        <form style="display: inline-block" method="POST" action="manage" onsubmit="return confirm('<%=action%> this news?');">
+                            <input type="hidden" name="managetype" <%if (news.getDeleted() == 1) {%>value="restorenews"<%} else {%>value="deletenews"<%}%>>
+                            <input type="hidden" name="newsid" value="<%=news.getNewsID()%>" >
+                            <input type="submit" id="but" <%if (news.getDeleted() == 1) {%>value="Restore"<%} else {%>value="Delete"<%}%>>
+                        </form>
+                        <a href="admin?category=news"><button id="but1">Back</button></a>
+                    </div>
                     <%}%>
                 </div>
 
             </div>
-            <%@include file="footer.jsp" %>    
-        </div>
 
+        </div>
+        <%@include file="footer.jsp" %> 
     </body>
     <script>
         function validate() {
