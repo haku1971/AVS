@@ -116,10 +116,10 @@ function init(algorithmtype, category) {
     }
     this.algorithmtype = algorithmtype;
     this.category = category;
-    let isvisualized = algorithmtype === "null" ? false : true;
+    let isvisualized = algorithmtype === "null" || algorithmtype === "" || algorithmtype === null ? false : true;
+    removeHighlightedCode();
     startVisualizing(isvisualized, category);
     if (isvisualized) {
-        removeHighlightedCode();
         currentstep = 0;
         canvas = document.getElementById('canvasAnimation');
         draw(currentstep);
@@ -1265,14 +1265,14 @@ function openaddressingHash(array) {
     highlightcheck.push(0);
     highlightsorted.push(0);
     color.push(0);
-    highlightcode.push(0);
+    highlightcode.push([1]);
     logarray.push('Start searching key = ' + searchnumber + '<br>');
     let index = getindex(searchnumber, hasharraysize);
     eachStepArr.push(hashtable.list);
     highlightcheck.push([index]);
     highlightsorted.push(0);
     color.push('check');
-    highlightcode.push(0);
+    highlightcode.push([4,5]);
     logarray.push(logarray[logarray.length - 1] + 'Index: ' + searchnumber + ' % ' + hasharraysize + ' = ' + index + '<br>'
             + 'Checking index: ' + index + '. Value = ' + hashtable.list[index] + '<br>');
     let isFound = true;
@@ -1298,7 +1298,7 @@ function openaddressingHash(array) {
                 highlightcheck.push([index]);
                 highlightsorted.push(0);
                 color.push('check');
-                highlightcode.push(0);
+                highlightcode.push([8]);
                 logarray.push(logarray[logarray.length - 1] + 'Checking index: ' + index + '. Value = ' + hashtable.list[index] + '<br>');
                 if (hashtable.list[index] === searchnumber) {
                     break;
@@ -1317,14 +1317,14 @@ function openaddressingHash(array) {
         highlightcheck.push([index]);
         highlightsorted.push(0);
         color.push('found');
-        highlightcode.push(0);
+        highlightcode.push([13]);
         logarray.push(logarray[logarray.length - 1] + 'Found ' + searchnumber + ' in position ' + index);
     } else {
         eachStepArr.push(hashtable.list);
         highlightcheck.push(0);
         highlightsorted.push(0);
         color.push(0);
-        highlightcode.push(0);
+        highlightcode.push([11]);
 //        logarray.push(logarray[logarray.length - 1] + 'Can not find ' + searchnumber + '!');
     }
 //set step in userview

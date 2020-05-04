@@ -48,9 +48,9 @@
                     <%}
                         if (user.equals("anon")) {%>
                     <a style=" text-decoration: none;" id="AlgoNameList" onclick="document.location = '/AVS/inputusername';return false"><li><%=a.getAlgoName()%></li></a>
-                        <%} else {%>
+                            <%} else {%>
                     <a style=" text-decoration: none;" id="AlgoNameList" href="Detail?AlgoID=<%=a.getAlgoID()%>"><li><%=a.getAlgoName()%></li></a>
-                        <%}
+                            <%}
                             }%>
                 </ul>
             </div>
@@ -60,8 +60,9 @@
             <h5 id="h5_1">Algorithm Visualize System is a interactive online platform that visualize algorithm from code</h5>
             <h5 id="h5_2">Learning algorithm much easier with animation and explain,Still confuse? Check out for more information</h5>
         </div>
-        <%@include file="footer.jsp" %>
+
     </div>
+    <%@include file="footer.jsp" %>
 </div>
 
 <script type="text/javascript" src="js/code.js"></script>

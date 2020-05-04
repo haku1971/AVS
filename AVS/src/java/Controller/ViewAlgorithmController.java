@@ -7,8 +7,8 @@ package Controller;
 
 import Model.Algorithm;
 import Model.Category;
-import DAO.AlgorithmModel;
-import DAO.CategoryModel;
+import DAO.AlgorithmDAO;
+import DAO.CategoryDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -62,10 +62,10 @@ public class ViewAlgorithmController extends HttpServlet {
             //ket thuc kiem tra
 
             int algoid = Integer.parseInt(request.getParameter("id"));
-            AlgorithmModel algodao = new AlgorithmModel();
+            AlgorithmDAO algodao = new AlgorithmDAO();
             Algorithm thisalgo = algodao.getAlgoByID(algoid);
 
-            CategoryModel catedao = new CategoryModel();
+            CategoryDAO catedao = new CategoryDAO();
             ArrayList<Category> listcate = catedao.getAllCategory();
 
             String category = "algorithm";

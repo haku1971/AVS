@@ -10,11 +10,11 @@ import Model.History;
 import Model.News;
 import Model.Tracking;
 import Model.User;
-import DAO.AlgorithmModel;
-import DAO.HistoryModel;
-import DAO.NewsModel;
-import DAO.TrackingModel;
-import DAO.UserModel;
+import DAO.AlgorithmDAO;
+import DAO.HistoryDAO;
+import DAO.NewsDAO;
+import DAO.TrackingDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -82,7 +82,7 @@ public class AdminController extends HttpServlet {
             int end = rowperpage * page;
             switch (category) {
                 case "account": {
-                    UserModel userdao = new UserModel();
+                    UserDAO userdao = new UserDAO();
                     ArrayList<User> userlist = userdao.getAllUser();
 
                     String searchstring = request.getParameter("searchtxt");
@@ -114,7 +114,7 @@ public class AdminController extends HttpServlet {
                     break;
                 }
                 case "algorithm": {
-                    AlgorithmModel algodao = new AlgorithmModel();
+                    AlgorithmDAO algodao = new AlgorithmDAO();
                     String searchstring = request.getParameter("searchtxt");
                     String deleted = request.getParameter("showdeleted");
                     String columnname = request.getParameter("columnname");
@@ -150,7 +150,7 @@ public class AdminController extends HttpServlet {
                     break;
                 }
                 case "news": {
-                    NewsModel newsdao = new NewsModel();
+                    NewsDAO newsdao = new NewsDAO();
                     ArrayList<News> newslist = new ArrayList();
                     String searchstring = request.getParameter("searchtxt");
                     String deleted = request.getParameter("showdeleted");
@@ -187,7 +187,7 @@ public class AdminController extends HttpServlet {
                 }
 
                 case "user_history": {
-                    HistoryModel historydao = new HistoryModel();
+                    HistoryDAO historydao = new HistoryDAO();
                     ArrayList<History> historylist = historydao.getPagingUserHistory(start, end);
 
                     int totalpage = (int) Math.ceil((double) historydao.getTotalUsersHistory() / rowperpage);
@@ -204,7 +204,7 @@ public class AdminController extends HttpServlet {
                 }
 
                 case "algo_history": {
-                    HistoryModel historydao = new HistoryModel();
+                    HistoryDAO historydao = new HistoryDAO();
                     ArrayList<History> historylist = historydao.getPagingAlgoHistory(start, end);
 
                     int totalpage = (int) Math.ceil((double) historydao.getTotalAlgoHistory() / rowperpage);
@@ -221,7 +221,7 @@ public class AdminController extends HttpServlet {
                 }
 
                 case "news_history": {
-                    HistoryModel historydao = new HistoryModel();
+                    HistoryDAO historydao = new HistoryDAO();
                     ArrayList<History> historylist = historydao.getPagingNewsHistory(start, end);
 
                     int totalpage = (int) Math.ceil((double) historydao.getTotalNewsHistory() / rowperpage);
@@ -244,7 +244,7 @@ public class AdminController extends HttpServlet {
                         daysago = Integer.parseInt(request.getParameter("daystracking")); //1 là trong 24h qua, 7 là trong 1 tuần qua, 30 là trong 1 tháng qua
                     }
                     
-                    TrackingModel trackingdao = new TrackingModel();
+                    TrackingDAO trackingdao = new TrackingDAO();
                     ArrayList<Tracking> trackinglist = trackingdao.getPagingTrackingHistory(start, end, daysago);
                     int totalpage = (int) Math.ceil((double) trackingdao.getTotalTrackingHistory(daysago) / rowperpage);
                     request.setAttribute("daystracking", "" + daysago);

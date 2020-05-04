@@ -8,7 +8,7 @@
 <%@page import="java.math.BigInteger"%>
 <%@page import="Model.Tracking"%>
 <%@page import="Model.History"%>
-<%@page import="DAO.UserModel"%>
+<%@page import="DAO.UserDAO"%>
 <%@page import="Model.User"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="java.util.ArrayList"%>
@@ -106,8 +106,9 @@
                     <%}%>
                 </div>
             </div>
-            <%@include file="footer.jsp" %>  
+
         </div>   
+        <%@include file="footer.jsp" %>  
     </body>
     <script>
 

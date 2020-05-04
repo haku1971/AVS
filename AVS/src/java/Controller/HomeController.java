@@ -6,8 +6,8 @@
 package Controller;
 
 import Model.User;
-import DAO.AlgorithmModel;
-import DAO.UserModel;
+import DAO.AlgorithmDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class HomeController extends HttpServlet {
                 
                 response.sendRedirect("/AVS/inputusername");
             } else {
-                AlgorithmModel dao = new AlgorithmModel();
+                AlgorithmDAO dao = new AlgorithmDAO();
             ArrayList<Model.Algorithm> data = dao.getAlgoNameAndCategory();
             request.setAttribute("AllAlgorithm", data);
             request.getRequestDispatcher("view/Home.jsp").forward(request, response);

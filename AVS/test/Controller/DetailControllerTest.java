@@ -7,7 +7,7 @@ package Controller;
 
 import DBContext.DBContext;
 import Model.Algorithm;
-import DAO.AlgorithmModel;
+import DAO.AlgorithmDAO;
 import DAO.CloseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

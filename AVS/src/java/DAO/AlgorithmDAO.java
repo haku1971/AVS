@@ -18,11 +18,11 @@ import java.util.List;
  *
  * @author Jisoo
  */
-public class AlgorithmModel {
+public class AlgorithmDAO {
 
     private final DBContext db;
 
-    public AlgorithmModel() throws Exception {
+    public AlgorithmDAO() throws Exception {
         db = new DBContext();
     }
     //new function cua quang

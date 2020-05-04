@@ -5,12 +5,12 @@
 --%>
 
 <%@page import="Model.Jobs"%>
-<%@page import="DAO.JobsModel"%>
+<%@page import="DAO.JobsDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <!DOCTYPE html>
 <%
-    JobsModel jobdao = new JobsModel();
+    JobsDAO jobdao = new JobsDAO();
     ArrayList<Jobs> jobs = jobdao.getJobs();
 %>
 <html>
@@ -35,7 +35,9 @@
                 <table class="infortable">
                     <tr> 
                         <td rowspan="10"><img src="images\user.png" /></td> 
-                        <td>
+
+                        <td class="error">
+                            <span id="hidden">UserName:</span>
                             <%if (request.getAttribute("errorUsername") != null) {
                             %>
                             <div class="errormess">
@@ -47,12 +49,12 @@
                             &nbsp;
                             <%}%>
                         </td>
-                        <td>
-
-                            <%if (request.getAttribute("errorPass") != null) {
+                        <td class="error">
+                            <span id="hidden">Email:</span>
+                            <%if (request.getAttribute("errorMail") != null) {
                             %>
                             <div class="errormess">
-                                <%=request.getAttribute("errorPass")%>
+                                <%=request.getAttribute("errorMail")%>
                             </div>
                             <%
                             } else {
@@ -68,18 +70,18 @@
                             <span class="red_star">(*)</span>
                         </td>
                         <td>
-                            <span class="span_info1">Password:</span>
-                            <input class="su_info2" type="password" name="password" placeholder="From 6 to 15 characters" maxlength="15"required/>
+                            <span class="span_info1">Email:</span>
+                            <input class="su_info1" type="text" name="email" placeholder="xyz@qwe.abc.com"required/>
                             <span class="red_star">(*)</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
-
-                            <%if (request.getAttribute("errorMail") != null) {
+                            <span id="hidden">Password:</span>
+                            <%if (request.getAttribute("errorPass") != null) {
                             %>
                             <div class="errormess">
-                                <%=request.getAttribute("errorMail")%>
+                                <%=request.getAttribute("errorPass")%>
                             </div>
                             <%
                             } else {
@@ -88,6 +90,7 @@
                             <%}%>
                         </td>
                         <td>
+                            <span id="hidden">Re-Password:</span>
                             &nbsp;
                             <%if (request.getAttribute("errorRepass") != null) {
                             %>
@@ -103,9 +106,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="span_info1">Email:</span>
-                            <input class="su_info1" type="text" name="email" placeholder="xyz@qwe.abc.com"required/>
-                            <span class="red_star">(*)</span>
+                            <span class="span_info1">Password:</span>
+                            <input class="su_info2" type="password" name="password" placeholder="From 6 to 15 characters" maxlength="15"required/>
+                            <span class="red_star">(*)</span>                         
                         </td>
                         <td>
                             <span class="span_info1">Re-Password:</span>
@@ -118,7 +121,7 @@
                             &nbsp;
                         </td>
                         <td>
-
+                            <span id="hidden">Phone:</span>
                             <%if (request.getAttribute("errorPhone") != null) {
                             %>
                             <div class="errormess">

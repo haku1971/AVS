@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import DAO.CommentModel;
-import DAO.NewsModel;
+import DAO.CommentDAO;
+import DAO.NewsDAO;
 import Model.News;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -39,8 +39,8 @@ public class SaveLikeCommentController extends HttpServlet {
             double user_id = Double.parseDouble(usid);
             int userid = (int) user_id;
 
-            CommentModel commentmodel = new CommentModel();
-            NewsModel newmodeldao = new NewsModel();
+            CommentDAO commentmodel = new CommentDAO();
+            NewsDAO newmodeldao = new NewsDAO();
             int newsid = Integer.parseInt(request.getParameter("newsid"));
             News news = newmodeldao.getNewsByID(newsid);
             
@@ -58,7 +58,7 @@ public class SaveLikeCommentController extends HttpServlet {
             }
             //News like
 
-            NewsModel newsmodel = new NewsModel();
+            NewsDAO newsmodel = new NewsDAO();
             //check ajax cho xoa like cua 1 news
             if (usid != null && request.getParameter("newsid") != null) {
                 System.out.println("newsid: " + newsid);

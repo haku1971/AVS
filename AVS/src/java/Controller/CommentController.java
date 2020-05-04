@@ -10,9 +10,9 @@ import Model.News;
 import Model.Likecomment;
 import Model.Likenews;
 import Model.User;
-import DAO.CommentModel;
-import DAO.NewsModel;
-import DAO.UserModel;
+import DAO.CommentDAO;
+import DAO.NewsDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,12 +58,12 @@ public class CommentController extends HttpServlet {
             int newsid = Integer.parseInt(request.getParameter("id").trim());
             
             if(!username.isEmpty() ) {
-                UserModel usermodel = new UserModel();
+                UserDAO usermodel = new UserDAO();
                 User user = usermodel.getUserByUsername(username);
                 request.setAttribute("banstatus", user.getBanstatus());
             }
-            NewsModel newmodeldao = new NewsModel();
-            CommentModel commentmodel = new CommentModel();
+            NewsDAO newmodeldao = new NewsDAO();
+            CommentDAO commentmodel = new CommentDAO();
             News news = newmodeldao.getNewsByID(newsid);
             if(news == null || news.getDeleted()== 1) {
                 request.setAttribute("errorstring", "Don't have this news page or this page had been deleted");
@@ -118,7 +118,7 @@ public class CommentController extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=UTF-8");
-            CommentModel commentmodel = new CommentModel();
+            CommentDAO commentmodel = new CommentDAO();
             String newid = request.getParameter("id");
             int newsid = convertStringToInt(newid);
             String comment = "";
@@ -150,7 +150,7 @@ public class CommentController extends HttpServlet {
                 response.sendRedirect("HomeController");
                 return;
             }
-            NewsModel newmodeldao = new NewsModel();
+            NewsDAO newmodeldao = new NewsDAO();
             News news = newmodeldao.getNewsByID(newsid);
             if(news == null || news.getDeleted()== 1) {
                 request.setAttribute("errorstring", "Don't have this news page or this page had been deleted");

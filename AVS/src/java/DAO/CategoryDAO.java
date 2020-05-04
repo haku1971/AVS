@@ -20,10 +20,10 @@ import java.util.ArrayList;
  *
  * @author Jisoo
  */
-public class CategoryModel {
+public class CategoryDAO {
     private final DBContext db;
 
-    public CategoryModel() throws Exception {
+    public CategoryDAO() throws Exception {
         db = new DBContext();
     }
     

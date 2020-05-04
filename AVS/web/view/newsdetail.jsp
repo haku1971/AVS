@@ -57,7 +57,7 @@
                 font-weight: bold;
                 margin-top: 60px;
                 float: left;
-                margin-left: -115px;
+                margin-left: -110px;
             }
 
             .likecounter2{           
@@ -91,7 +91,7 @@
                 font-weight: bold;
                 margin-top: 30px;
                 float: left;
-                margin-left: -113px;
+                margin-left: -109px;
             }
 
             .likecounter2c{           
@@ -109,7 +109,7 @@
             .like_unlike {
                 float: left;
                 margin-top: 40px;
-                margin-left:-33px;
+                margin-left: -31px;
             }
             #time_cmt {
                 font-size: 10px;
@@ -162,7 +162,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                        <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
+                        <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
 
                     </div>
 
@@ -198,9 +198,9 @@
         <script>
             function LikeNewsFunction(thumblikenews, newsid, userid) {
                 var numberlikenew = parseInt(document.getElementById('txtlikenewsnumber').value);
-                console.log(numberlikenew);
+
                 if (thumblikenews.classList.toggle("far")) {
-                    console.log('Ban vua an bo like' + newsid + 'va ' + userid);
+
                     $.ajax({
                         type: "post",
                         url: "DeleteLikeCommentController", //this is my servlet
@@ -210,7 +210,7 @@
                     document.getElementById('txtlikenewsnumber').value = numberlikenew - 1;
                 }
                 if (thumblikenews.classList.toggle("fas")) {
-                    console.log('Ban vua an like' + newsid + 'va ' + userid);
+
                     $.ajax({
                         type: "post",
                         url: "SaveLikeCommentController", //this is my servlet
@@ -285,7 +285,7 @@
                 $('#txtedit_<%=commentid%>').keyup(function () {
                     // Get the Login Name value and trim it
                     var name = $('#txtedit_<%=commentid%>').val().trim();
-                    console.log(name);
+
                     // Check if empty of not
                     if (name.length < 1) {
                         $("#save_<%=commentid%>").attr("disabled", true);
@@ -297,24 +297,24 @@
 
                     var numberlike = parseInt(document.getElementById('numberlike_' + commentid).value);
                     if (thumb.classList.toggle("far")) {
-                        console.log('Ban vua an bo like' + commentid + 'va ' + userid + "numberlike" + numberlike);
+
                         $.ajax({
                             type: "post",
                             url: "DeleteLikeCommentController", //this is my servlet
                             data: {userid: userid, commentid: commentid}
                         });
-                        console.log(numberlike);
+
                         document.getElementById('numberlike_' + commentid).value = numberlike - 1;
                         document.getElementById('like_' + commentid).innerHTML = 'Like';
                     }
                     if (thumb.classList.toggle("fas")) {
-                        console.log('Ban vua an like' + commentid + 'va ' + userid + "numberlike" + numberlike);
+
                         $.ajax({
                             type: "post",
                             url: "SaveLikeCommentController", //this is my servlet
                             data: {userid: userid, commentid: commentid}
                         });
-                        console.log(numberlike);
+
                         document.getElementById('numberlike_' + commentid).value = numberlike + 1;
                         document.getElementById('like_' + commentid).innerHTML = 'Liked';
                     }
@@ -324,7 +324,7 @@
                 function edit(commentid) {
                     if (checkedit === 0) {
                         checkedit = 1;
-                        console.log(commentid + " can edit");
+
                         document.getElementById("txtedit_" + commentid).className = "show";
 
                         setDeleteButtonStatus(commentid, "hidden");
@@ -337,7 +337,7 @@
                 }
                 function btndelete(divpositiontodelete, commentid, newsid) {
                     setDeleteButtonStatus(commentid, "hidden");
-                    console.log("xoa div nao: " + divpositiontodelete + " comentid: " + commentid + " newsid " + newsid);
+
                     $.ajax({
                         type: "post",
                         url: "DeleteCommentServlet", //this is my servlet
@@ -470,7 +470,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                        <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
+                        <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
 
                     </div>
 
@@ -534,7 +534,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                        <img class="news_img" src="https://genk.mediacdn.vn/GA8Ko1ApccccccccccccfqZTLfY3/Image/2012/11/1-ee82e.jpg" alt=""/>
+                        <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
 
                     </div>
 

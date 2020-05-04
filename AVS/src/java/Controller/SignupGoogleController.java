@@ -8,8 +8,8 @@ package Controller;
 import Model.Jobs;
 import Model.User;
 import DAO.AuthenticateManagement;
-import DAO.JobsModel;
-import DAO.UserModel;
+import DAO.JobsDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -142,7 +142,7 @@ public class SignupGoogleController extends HttpServlet {
         } else if (success == 1) {
             try {
                 username=username.toLowerCase();
-                UserModel usermod = new UserModel();
+                UserDAO usermod = new UserDAO();
                 usermod.insertUser(username, "null", fullname, dob, job, workplace, gender, email, phone);
                 User user = usermod.getUserByUsername(username);
                 int useridnum=user.getId();

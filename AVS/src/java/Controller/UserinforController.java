@@ -7,8 +7,8 @@ package Controller;
 
 import Model.Jobs;
 import Model.User;
-import DAO.JobsModel;
-import DAO.UserModel;
+import DAO.JobsDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -94,8 +94,8 @@ public class UserinforController extends HttpServlet {
                 response.sendRedirect("/AVS/inputusername");
             }else{
             try {
-                UserModel userDao;
-                userDao = new UserModel();
+                UserDAO userDao;
+                userDao = new UserDAO();
                 User user = userDao.getUserByUsername(username);
                 mail = user.getMail();
                 if (user.getFullname().length() > 0) {
@@ -116,7 +116,7 @@ public class UserinforController extends HttpServlet {
                     workplace = user.getWorkplace();
                 }
                 int jobid = user.getJob();
-                JobsModel jobDao= new JobsModel();
+                JobsDAO jobDao= new JobsDAO();
                Jobs job = jobDao.getJobByID(jobid);
                jobname = job.getJobname();
             if (user.getBanstatus() == 1) {

@@ -8,7 +8,7 @@ package Controller;
 import Model.User;
 import DAO.AuthenticateManagement;
 import DAO.IdTokenVerifierAndParser;
-import DAO.UserModel;
+import DAO.UserDAO;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -103,7 +103,7 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
 String username = request.getParameter("username");
         String password = request.getParameter("password"); //ví dụ đây là mật khẩu ô get về từ người dùng nhập
-        UserModel userDao;
+        UserDAO userDao;
         int rolenumber = 0;
         int id = 0;
         //trc khi lưu vào db thì gọi câu bên dưới
@@ -139,7 +139,7 @@ String username = request.getParameter("username");
             } else {
 
                 try {
-                    userDao = new UserModel();
+                    userDao = new UserDAO();
                     username=username.toLowerCase();
                     User user = userDao.getUserByUsername(username);
                     rolenumber = userDao.getUserRole(user.getId());
@@ -182,7 +182,7 @@ String username = request.getParameter("username");
 
                 AuthenticateManagement authenticateManagement = new AuthenticateManagement();
                 AuthenticateManagement.CheckResult mailresult = authenticateManagement.checkMail(email);
-                userDao = new UserModel();
+                userDao = new UserDAO();
                 if (mailresult == AuthenticateManagement.CheckResult.EXIST_MAIL) {
                     User user = userDao.getUserByMail(email);
 

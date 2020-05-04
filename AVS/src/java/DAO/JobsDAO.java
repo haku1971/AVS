@@ -17,10 +17,10 @@ import java.util.ArrayList;
  *
  * @author BinhNT
  */
-public class JobsModel {
+public class JobsDAO {
     private final DBContext db;
 
-    public JobsModel()throws Exception{
+    public JobsDAO()throws Exception{
         db = new DBContext();
     }
     public Jobs getJobByID(int jobid) throws Exception {

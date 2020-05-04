@@ -6,7 +6,7 @@
 package Controller;
 
 import Model.Algorithm;
-import DAO.AlgorithmModel;
+import DAO.AlgorithmDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,7 +61,7 @@ public class DetailController extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
-            AlgorithmModel dao = new AlgorithmModel();
+            AlgorithmDAO dao = new AlgorithmDAO();
              ArrayList<Model.Algorithm> data = dao.getAlgoNameAndCategory();
             request.setAttribute("AllAlgorithm", data);
 

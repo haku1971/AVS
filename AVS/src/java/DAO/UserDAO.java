@@ -18,11 +18,11 @@ import java.util.ArrayList;
  *
  * @author BinhNT
  */
-public class UserModel {
+public class UserDAO {
 
     private final DBContext db;
 
-    public UserModel() throws Exception {
+    public UserDAO() throws Exception {
         db = new DBContext();
     }
 

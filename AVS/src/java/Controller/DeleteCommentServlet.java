@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import DAO.CommentModel;
-import DAO.NewsModel;
+import DAO.CommentDAO;
+import DAO.NewsDAO;
 import Model.News;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -54,7 +54,7 @@ public class DeleteCommentServlet extends HttpServlet {
             String commentid = request.getParameter("commentid");
             String commentcontentedit = request.getParameter("commentcontentedit");
 
-            CommentModel commentmodel = new CommentModel();
+            CommentDAO commentmodel = new CommentDAO();
             Cookie cookie[] = request.getCookies();
             int age = cookie[0].getMaxAge();
             String username = "";
@@ -76,7 +76,7 @@ public class DeleteCommentServlet extends HttpServlet {
                 response.sendRedirect("HomeController");
                 return;
             }
-            NewsModel newmodeldao = new NewsModel();
+            NewsDAO newmodeldao = new NewsDAO();
             int newsid = Integer.parseInt(request.getParameter("newsid"));
             News news = newmodeldao.getNewsByID(newsid);
             if (news == null || news.getDeleted() == 1) {

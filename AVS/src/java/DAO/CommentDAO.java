@@ -22,11 +22,11 @@ import java.util.logging.Logger;
  *
  * @author quang
  */
-public class CommentModel {
+public class CommentDAO {
 
     private final DBContext db;
 
-    public CommentModel() throws Exception {
+    public CommentDAO() throws Exception {
         db = new DBContext();
     }
 
@@ -166,7 +166,7 @@ public class CommentModel {
                 e.printStackTrace();
             }
         } catch (Exception ex) {
-            Logger.getLogger(CommentModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -6,7 +6,7 @@
 package Controller;
 
 import Model.Category;
-import DAO.CategoryModel;
+import DAO.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class AddAlgorithmController extends HttpServlet {
                 return;
             }
             //ket thuc kiem tra
-            CategoryModel catedao = new CategoryModel();
+            CategoryDAO catedao = new CategoryDAO();
             ArrayList<Category> listcate = catedao.getAllCategory();
 
             String category = "algorithm";

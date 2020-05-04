@@ -4,12 +4,12 @@
     Author     : BinhNT
 --%>
 <%@page import="Model.Jobs"%>
-<%@page import="DAO.JobsModel"%>
+<%@page import="DAO.JobsDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <!DOCTYPE html>
 <%
-    JobsModel jobdao = new JobsModel();
+    JobsDAO jobdao = new JobsDAO();
     ArrayList<Jobs> jobs = jobdao.getJobs();
 
 

@@ -8,11 +8,11 @@ package Controller;
 import Model.Algorithm;
 import Model.News;
 import Model.User;
-import DAO.AlgorithmModel;
-import DAO.CategoryModel;
-import DAO.HistoryModel;
-import DAO.NewsModel;
-import DAO.UserModel;
+import DAO.AlgorithmDAO;
+import DAO.CategoryDAO;
+import DAO.HistoryDAO;
+import DAO.NewsDAO;
+import DAO.UserDAO;
 import Model.Category;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,8 +55,8 @@ public class ManageDatabaseController extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         try {
 
-            UserModel userdao = new UserModel();
-            HistoryModel historydao = new HistoryModel();
+            UserDAO userdao = new UserDAO();
+            HistoryDAO historydao = new HistoryDAO();
             //hien thi trang home neu nguoi dung khong phai admin
             Cookie cookie[] = request.getCookies();
             String roleid = "";
@@ -112,9 +112,9 @@ public class ManageDatabaseController extends HttpServlet {
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String resource = request.getParameter("resource").trim();
 
-                    AlgorithmModel algodao = new AlgorithmModel();
+                    AlgorithmDAO algodao = new AlgorithmDAO();
                     if (algodao.getAlgoByName(algoname) != null) {
-                        CategoryModel catedao = new CategoryModel();
+                        CategoryDAO catedao = new CategoryDAO();
                         ArrayList<Category> listcate = catedao.getAllCategory();
 
                         String category = "algorithm";
@@ -158,7 +158,7 @@ public class ManageDatabaseController extends HttpServlet {
                     codecpp = codecpp.replaceAll("â", "&emsp;");
                     codejs = codejs.replaceAll("â", "&emsp;");
 
-                    AlgorithmModel algodao = new AlgorithmModel();
+                    AlgorithmDAO algodao = new AlgorithmDAO();
                     Algorithm algo = new Algorithm();
                     algo.setAlgoID(Integer.parseInt(algoid));
                     algo.setAlgoName(algoname);
@@ -181,7 +181,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     System.out.println(algoid);
 
-                    AlgorithmModel algodao = new AlgorithmModel();
+                    AlgorithmDAO algodao = new AlgorithmDAO();
                     algodao.deleteAlgo(Integer.parseInt(algoid));
 
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Delete");
@@ -193,7 +193,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     System.out.println(algoid);
 
-                    AlgorithmModel algodao = new AlgorithmModel();
+                    AlgorithmDAO algodao = new AlgorithmDAO();
                     algodao.restoreAlgo(Integer.parseInt(algoid));
 
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Restore");
@@ -209,7 +209,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String imageurl = "";
                     InputStream inputStream = null; // input stream of the upload file
 
-                    NewsModel newsdao = new NewsModel();
+                    NewsDAO newsdao = new NewsDAO();
                     News news = new News();
                     news.setNewstittles(title);
                     news.setNewscontent(content);
@@ -253,7 +253,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String imageurl = request.getParameter("imageurl").trim();
 
-                    NewsModel newsdao = new NewsModel();
+                    NewsDAO newsdao = new NewsDAO();
                     News news = new News();
                     news.setNewsID(Integer.parseInt(newsid));
                     news.setNewstittles(title);
@@ -295,7 +295,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String newsid = request.getParameter("newsid");
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
 
-                    NewsModel newsdao = new NewsModel();
+                    NewsDAO newsdao = new NewsDAO();
                     newsdao.deleteNews(Integer.parseInt(newsid));
 
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Delete");
@@ -307,7 +307,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String newsid = request.getParameter("newsid");
                     String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
 
-                    NewsModel newsdao = new NewsModel();
+                    NewsDAO newsdao = new NewsDAO();
                     newsdao.restoreNews(Integer.parseInt(newsid));
 
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Restore");
@@ -344,9 +344,9 @@ public class ManageDatabaseController extends HttpServlet {
         //can be a bug after uploading on cloud server
         absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("AVS") + 3);
         //local
-        //  absolutePath += "/web/images";
+          absolutePath += "/web/images";
         //server
-        absolutePath += "/images";
+//        absolutePath += "/images";
         return absolutePath;
     }
 
