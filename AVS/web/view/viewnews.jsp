@@ -50,7 +50,7 @@
                         <div>Content:  </div> <div><textarea id="content" name="content" rows="10" cols="30" ></textarea></div><br>
                         <div>Source: </div> <div><input type="text" name="source" value=""></div>
                         <br>
-                        <div>Image: <input type="file" name="image"></div>
+                        <div>Image: <img id="image" src="" /><input id="file" type="file" name="image"></div>
                         <br><br>
                         <div class="modifyleftlast">
                             <input id="but" type="submit" value="Save">
@@ -79,8 +79,8 @@
                             <div>Source: </div> <div><input type="text" name="source" value="<%=news.getNewsresource()%>"></div><br>
                         </div>
                         <div class="adminNewsRight">
-                            <div>Image: <% if (!(news.getNews_Imgs() == null || news.getNews_Imgs().equals("null"))) {%>
-                                <img class="adminNewsImg" src="<%=news.getNews_Imgs()%>"><%}%> 
+                            <div>Image: 
+                                <img id="image" class="adminNewsImg" src="<% if (!(news.getNews_Imgs() == null || news.getNews_Imgs().equals("null"))) {%><%=news.getNews_Imgs()%><%}%> ">
                                 <input id="file" type="file" name="image"><br>
                             </div>
                         </div>
@@ -136,6 +136,22 @@
             }
             return confirm('Do you really want to save change?');
         }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#image").attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#file").change(function () {
+            readURL(this);
+        });
 
     </script>
 </html>
