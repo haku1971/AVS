@@ -57,7 +57,7 @@
                 font-weight: bold;
                 margin-top: 60px;
                 float: left;
-                margin-left: -115px;
+                margin-left: -110px;
             }
 
             .likecounter2{           
@@ -91,7 +91,7 @@
                 font-weight: bold;
                 margin-top: 30px;
                 float: left;
-                margin-left: -113px;
+                margin-left: -109px;
             }
 
             .likecounter2c{           
@@ -109,7 +109,7 @@
             .like_unlike {
                 float: left;
                 margin-top: 40px;
-                margin-left:-33px;
+                margin-left: -31px;
             }
             #time_cmt {
                 font-size: 10px;
