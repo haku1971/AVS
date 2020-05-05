@@ -74,6 +74,9 @@
                     </div>
 
                 </form>
+                <% if (allnews.isEmpty()) {%>
+                <div class="emptyTable">No data!</div>
+                <%} else {%>
                 <div class="table100">
                     <table>
                         <tr class="rowadmin head">
@@ -94,7 +97,7 @@
                             <td class="columnadmin"><%=allnews.get(i).getNewsdaterealeaseToMinute()%></td>
                             <td class="columnadmin"><%=allnews.get(i).getUser().getUsername()%></td>
                             <td class="columnadmin"><%=allnews.get(i).getNews_Imgs()%></td>
-                            <td class="columnadmin"><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>"><button class="buttonheader type5"View</a></td>
+                            <td class="columnadmin"><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>"><button class="buttonheader type5">View</button></a></td>
                             <% if (showdeleted == "showdeleted") {%>
                             <td><%=allnews.get(i).getDeletedToString()%></td>
                             <%}%>
@@ -121,6 +124,7 @@
                         </div>
                     </div>
                 </div>
+                <%}%>
             </div>
 
         </div>

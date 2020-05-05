@@ -26,6 +26,7 @@
             String searchstring = (String) request.getAttribute("searchstring");
             String columnname = (String) request.getAttribute("columnname");
             String sortorder = (String) request.getAttribute("sortorder");
+            int totaluser = (Integer) request.getAttribute("totaluser");
         %>
     </head>
 
@@ -59,9 +60,12 @@
 
                     <div class="searchbox">
                         <input type="text" id="txtsearch" name="searchtxt"/>
-                        <input type="submit" value="Search" />       
+                        <input type="submit" value="Search" /> 
                     </div>
                 </form>
+                <% if (alluserlist.isEmpty()) {%>
+                <div class="emptyTable">No data!</div>
+                <%} else {%>
                 <div class="table100">
                     <table>
                         <tr class="rowadmin head">
@@ -93,8 +97,11 @@
                         <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
                     </div>
-                </div>
+                    <br>
 
+                </div>
+                <%}%>
+                <div>Total user: <%=totaluser%></div>
             </div>
 
         </div>

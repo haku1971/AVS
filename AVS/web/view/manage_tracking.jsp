@@ -67,6 +67,9 @@
                         window.location.assign("admin?category=tracking&daystracking=" + value);
                     }
                 </script>
+                <% if(alltrackinglist.isEmpty()) {%>
+                <div class="emptyTable">No data recorded!</div>
+                <%} else{%>
                 <div class="table100">
                     <table>
                         <tr class="rowadmin head">
@@ -105,6 +108,7 @@
                     <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                     <%}%>
                 </div>
+                <%}%>
             </div>
 
         </div>   

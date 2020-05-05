@@ -100,6 +100,7 @@ public class AdminController extends HttpServlet {
                     }
 
                     userlist = userdao.getPagingSearchUser(searchstring, columnname, sortorder, start, end);
+                    int totaluser = userdao.getTotalUser();
 
                     int totalpage = (int) Math.ceil((double) userdao.getAllSearchUser(searchstring) / rowperpage);
 
@@ -108,6 +109,7 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("columnname", columnname);
                     request.setAttribute("sortorder", sortorder);
                     request.setAttribute("userlist", userlist);
+                    request.setAttribute("totaluser", totaluser);
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("view/manage_account.jsp").forward(request, response);
 

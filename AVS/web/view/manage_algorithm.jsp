@@ -70,6 +70,9 @@
                         <input type="submit" value="Search" />       
                     </div>
                 </form>
+                <% if (allalgolist.isEmpty()) {%>
+                <div class="emptyTable">No data!</div>
+                <%} else {%>
                 <div class="table100">
                     <table>
                         <tr class="rowadmin head">
@@ -118,6 +121,7 @@
                     </div>
 
                 </div>
+                        <%}%>
             </div>
 
         </div>

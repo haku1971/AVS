@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <%} else {%>
-                <div class="emtyTable">No data recorded!</div>
+                <div class="emptyTable">No data recorded!</div>
                 <%}%>
             </div>
 

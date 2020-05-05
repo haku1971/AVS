@@ -365,7 +365,7 @@ public class UserDAO {
     }
 
     public int getUserRole(int id) throws Exception {
-                String query = "select * from Users join UserRoles on Users.user_ID = UserRoles.user_ID where Users.user_ID=?";
+        String query = "select * from Users join UserRoles on Users.user_ID = UserRoles.user_ID where Users.user_ID=?";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
         ResultSet rs = null;
@@ -376,7 +376,7 @@ public class UserDAO {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                
+
                 return rs.getInt("role_ID");
             }
         } catch (SQLException e) {
@@ -385,5 +385,24 @@ public class UserDAO {
 
         return 0;
     }
-    
+
+    public int getTotalUser() throws Exception {
+        String query = "SELECT COUNT(*) as total FROM Users";
+        Connection conn = null;
+        PreparedStatement ps = null; //de nhan paramenter
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
 }
