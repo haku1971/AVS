@@ -124,23 +124,24 @@ public class ManageDatabaseController extends HttpServlet {
                         request.setAttribute("listalgocategory", listcate);
                         request.setAttribute("errormessage", errormessage);
                         request.getRequestDispatcher("view/viewalgo.jsp").forward(request, response);
-                    }
+                    } else {
 
-                    Algorithm algo = new Algorithm();
-                    algo.setAlgoName(algoname);
-                    algo.setAlgoCodeJava(codejava);
-                    algo.setAlgoCodeCplus(codecpp);
-                    algo.setAlgoCodeJS(codejs);
-                    algo.setAlgoDescription(description);
-                    algo.setCategoryID(Integer.parseInt(categoryid));
-                    algo.setAlgoResource(resource);
-                    algodao.insertAlgo(algo);
+                        Algorithm algo = new Algorithm();
+                        algo.setAlgoName(algoname);
+                        algo.setAlgoCodeJava(codejava);
+                        algo.setAlgoCodeCplus(codecpp);
+                        algo.setAlgoCodeJS(codejs);
+                        algo.setAlgoDescription(description);
+                        algo.setCategoryID(Integer.parseInt(categoryid));
+                        algo.setAlgoResource(resource);
+                        algodao.insertAlgo(algo);
 
 //                    algodao.insertAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, "null");
-                    int lastalgoid = algodao.getLastRecord().getAlgoID();
-                    historydao.insertAlgoHistory(Integer.parseInt(adminid), lastalgoid, currenttime, "Add");
+                        int lastalgoid = algodao.getLastRecord().getAlgoID();
+                        historydao.insertAlgoHistory(Integer.parseInt(adminid), lastalgoid, currenttime, "Add");
 
-                    response.sendRedirect("admin?category=algorithm");
+                        response.sendRedirect("admin?category=algorithm");
+                    }
                     break;
                 }
                 case "editalgo": {
@@ -344,7 +345,7 @@ public class ManageDatabaseController extends HttpServlet {
         //can be a bug after uploading on cloud server
         absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("AVS") + 3);
         //local
-          absolutePath += "/web/images";
+        absolutePath += "/web/images";
         //server
 //        absolutePath += "/images";
         return absolutePath;

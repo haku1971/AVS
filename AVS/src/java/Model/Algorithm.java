@@ -69,7 +69,7 @@ public class Algorithm {
   
 
     public String getAlgoFile() {
-        return !algoFile.equals("null") ? algoFile : "n/a";
+        return !(algoFile.equals("null") || algoFile == null)? algoFile : "";
     }
 
     public void setAlgoFile(String algoFile) {
