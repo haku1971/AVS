@@ -40,16 +40,9 @@ public class SaveLikeCommentController extends HttpServlet {
             int userid = (int) user_id;
 
             CommentDAO commentmodel = new CommentDAO();
-            NewsDAO newmodeldao = new NewsDAO();
-            int newsid = Integer.parseInt(request.getParameter("newsid"));
-            News news = newmodeldao.getNewsByID(newsid);
+        
+           
             
-
-            if (news == null || news.getDeleted() == 1) {
-                request.setAttribute("errorstring", "This page is no longer available!");
-                request.getRequestDispatcher("view/error.jsp").forward(request, response);
-                return;
-            }
             //check ajax cho save like comment
             if (usid != null && request.getParameter("commentid") != null) {
                 int commentid = Integer.parseInt(request.getParameter("commentid"));
@@ -59,6 +52,7 @@ public class SaveLikeCommentController extends HttpServlet {
             //News like
 
             NewsDAO newsmodel = new NewsDAO();
+             int newsid = Integer.parseInt(request.getParameter("newsid"));
             //check ajax cho xoa like cua 1 news
             if (usid != null && request.getParameter("newsid") != null) {
                 System.out.println("newsid: " + newsid);

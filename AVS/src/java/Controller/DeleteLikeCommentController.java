@@ -31,16 +31,7 @@ public class DeleteLikeCommentController extends HttpServlet {
         try {
 
             CommentDAO commentmodel = new CommentDAO();
-            int newsid = Integer.parseInt(request.getParameter("newsid"));
-            NewsDAO newmodeldao = new NewsDAO();          
-             News news = newmodeldao.getNewsByID(newsid);
-             System.out.println("a");
-            if(news == null || news.getDeleted()== 1) {
-                 System.out.println("b");
-                request.setAttribute("errorstring", "This page is no longer available!");
-                 request.getRequestDispatcher("view/error.jsp").forward(request, response);
-                 return;
-            }
+          
             //check ajax cho xoa like cua 1 comment
             if (request.getParameter("commentid") != null && request.getParameter("userid") != null) {
                 int userid = Integer.parseInt(request.getParameter("userid"));
@@ -50,6 +41,8 @@ public class DeleteLikeCommentController extends HttpServlet {
             }
 
             NewsDAO newsmodel = new NewsDAO();
+              int newsid = Integer.parseInt(request.getParameter("newsid"));
+          
             //check ajax cho xoa like cua 1 news
             if (request.getParameter("newsid") != null && request.getParameter("userid") != null) {
                 int userid = Integer.parseInt(request.getParameter("userid"));           

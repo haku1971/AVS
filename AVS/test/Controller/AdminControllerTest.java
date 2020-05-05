@@ -62,7 +62,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void successAccessWithRoleIdAndCategoryIsAlgorithm() {
+    public void testAccessWithRoleIdAndCategoryIsAlgorithm() {
         actualcategory = "algorithm";
          category= "algorithm";
         int expectedroleid = 1;
@@ -70,11 +70,11 @@ public class AdminControllerTest {
         if ((expectedroleid == firstroleid) && category.equals(actualcategory)) {
             is_firstroleid_and_category_is_algorithm = true;
         }
-        assertTrue("Success", is_firstroleid_and_category_is_algorithm);
+        assertTrue("Not Success", is_firstroleid_and_category_is_algorithm);
     }
-
+  
     @Test
-    public void successAccessWithRoleIdAndCategoryIsNews() {
+    public void testAccessWithRoleIdAndCategoryIsNews() {
         actualcategory = "news";
          category= "news";
         int expectedroleid = 1;
@@ -82,11 +82,11 @@ public class AdminControllerTest {
         if ((expectedroleid == firstroleid) && category.equals(actualcategory)) {
             is_firstroleid_and_category_is_news = true;
         }
-        assertTrue("Success", is_firstroleid_and_category_is_news);
+        assertTrue("Not Success", is_firstroleid_and_category_is_news);
     }
 
     @Test
-    public void successAccessWithRoleIdAndCategoryIsUserHistory() {
+    public void testAccessWithRoleIdAndCategoryIsUserHistory() {
         actualcategory = "user_history";
          category= "user_history";
         int expectedroleid = 1;
@@ -94,11 +94,11 @@ public class AdminControllerTest {
         if ((expectedroleid == firstroleid) && category.equals(actualcategory)) {
             is_firstroleid_and_category_is_user_history = true;
         }
-        assertTrue("Success", is_firstroleid_and_category_is_user_history);
+        assertTrue("Not Success", is_firstroleid_and_category_is_user_history);
     }
 
     @Test
-    public void successAccessWithRoleIdAndCategoryIsAlgoHistory() {
+    public void testAccessWithRoleIdAndCategoryIsAlgoHistory() {
         actualcategory = "algo_history";
         category= "algo_history";
         int expectedroleid = 1;
@@ -106,11 +106,11 @@ public class AdminControllerTest {
         if ((expectedroleid == firstroleid) && category.equals(actualcategory)) {
             is_firstroleid_and_category_is_algo_history = true;
         }
-        assertTrue("Success", is_firstroleid_and_category_is_algo_history);
+        assertTrue("Not Success", is_firstroleid_and_category_is_algo_history);
     }
 
     @Test
-    public void successAccessWithRoleIdAndCategoryIsNewsHistory() {
+    public void testAccessWithRoleIdAndCategoryIsNewsHistory() {
         actualcategory = "news_history";
         category = "news_history";
         int expectedroleid = 1;
@@ -118,11 +118,11 @@ public class AdminControllerTest {
         if ((expectedroleid == firstroleid) && category.equals(actualcategory)) {
             is_firstroleid_and_category_is_news_history = true;
         }
-        assertTrue("Success", is_firstroleid_and_category_is_news_history);
+        assertTrue("Not Success", is_firstroleid_and_category_is_news_history);
     }
     
     @Test
-    public void successAccessWithRoleIdAndCategoryIsTracking() {
+    public void testAccessWithRoleIdAndCategoryIsTracking() {
         actualcategory = "tracking";
         category = "tracking";
         int expectedroleid = 1;
@@ -130,11 +130,11 @@ public class AdminControllerTest {
         if ((expectedroleid == firstroleid) && category.equals(actualcategory)) {
             is_firstroleid_and_category_is_tracking = true;
         }
-        assertTrue("Success", is_firstroleid_and_category_is_tracking);
+        assertTrue("Not Success", is_firstroleid_and_category_is_tracking);
     }
     
     @Test
-    public void successAccessWithRoleIdAndCategoryIsNull() {
+    public void testAccessWithRoleIdAndCategoryIsNull() {
         actualcategory = "";
           category = "";
         int expectedroleid = 1;
@@ -142,11 +142,11 @@ public class AdminControllerTest {
         if ((expectedroleid == firstroleid) && category.equals(actualcategory)) {
             is_firstroleid_and_category_is_null = true;
         }
-        assertTrue("Success", is_firstroleid_and_category_is_null);
+        assertTrue("Not Success", is_firstroleid_and_category_is_null);
     }
     
      @Test
-    public void successAccessWithRoleIdAndCategoryIsAccount() {
+    public void testAccessWithRoleIdAndCategoryIsAccount() {
         actualcategory = "account";
         category = "account";
         int expectedroleid = 1;
@@ -154,6 +154,6 @@ public class AdminControllerTest {
         if ((expectedroleid == firstroleid) && category.equals(actualcategory)) {
             is_firstroleid_and_category_is_account = true;
         }
-        assertTrue("Success", is_firstroleid_and_category_is_account);
+        assertTrue("Not Success", is_firstroleid_and_category_is_account);
     }
 }

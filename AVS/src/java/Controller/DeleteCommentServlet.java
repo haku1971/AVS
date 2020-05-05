@@ -75,15 +75,7 @@ public class DeleteCommentServlet extends HttpServlet {
             if (username.equals("")) {
                 response.sendRedirect("HomeController");
                 return;
-            }
-            NewsDAO newmodeldao = new NewsDAO();
-            int newsid = Integer.parseInt(request.getParameter("newsid"));
-            News news = newmodeldao.getNewsByID(newsid);
-            if (news == null || news.getDeleted() == 1) {
-                request.setAttribute("errorstring", "This page is no longer available!");
-                request.getRequestDispatcher("view/error.jsp").forward(request, response);
-                return;
-            }
+            }           
             // int userid = convertStringToInt(id_of_user);
             if (request.getParameter("newsid") != null && request.getParameter("commentid") != null) {
                 //xoa comment la xoa ca vote

@@ -477,7 +477,9 @@
 
                 <div class="news_content">
                     <div class="detail">
+                       <% if (!news.getNews_Imgs().equalsIgnoreCase("null")) {%>
                         <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
+                        <%}%>
 
                     </div>
 
