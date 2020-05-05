@@ -166,7 +166,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                        <% if (!news.getNews_Imgs().equalsIgnoreCase("null")) {%>
+                        <% if (!news.getNews_Imgs().equalsIgnoreCase("")) {%>
                         <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
                         <%}%>
                     </div>
@@ -174,7 +174,7 @@
                     <p>  <%=news.getNewscontent()%> </p>
                     <div class="subdetail">                       
                         <ul>
-                            <li>Time: <%=news.getNewsdaterealease().substring(0, news.getNewsdaterealease().length() - 5)%></li>
+                            <li>Time: <%=news.getNewsdaterealease().substring(0, 16)%></li>
                             <li>Create By:<%=news.getUser().getFullname()%></li>
                             <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
                         </ul>
@@ -250,7 +250,7 @@
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/><%--<%=listallcommentbynewid.get(i).getContent()%> --%></div> 
             <textarea maxlength="300" class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" >${conntentofcomment}</textarea>
-            <div id="time_cmt" class="cmt_detail"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
+            <div id="time_cmt" class="cmt_detail"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, 16)%></div>  
             <i id="like_ulike_cmt" onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}" style="margin-left:15px;"></i>
 
             <input  class="likecounter2b" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
@@ -477,7 +477,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                       <% if (!news.getNews_Imgs().equalsIgnoreCase("null")) {%>
+                       <% if (!news.getNews_Imgs().equalsIgnoreCase("")) {%>
                         <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
                         <%}%>
 
@@ -523,7 +523,7 @@
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <%--  <div><%=listallcommentbynewid.get(i).getContent()%> </div> --%>
             <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/> </div>
-            <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
+            <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, 16)%></div>  
             <i  class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}"></i>             
             <input class="likecounter2c"  type="text"  value="<%=numberlike%>" />
         </div>
@@ -543,7 +543,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                        <% if (!news.getNews_Imgs().equalsIgnoreCase("null")) {%>
+                        <% if (!news.getNews_Imgs().equalsIgnoreCase("")) {%>
                         <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
                         <%}%>
                     </div>
@@ -588,7 +588,7 @@
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <%--  <div><%=listallcommentbynewid.get(i).getContent()%> </div> --%>
             <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/> </div>
-            <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
+            <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0,16)%></div>  
             <i  class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}"></i>             
             <input class="likecounter2c"  type="text"  value="<%=numberlike%>" />
         </div>

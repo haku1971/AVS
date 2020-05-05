@@ -15,7 +15,7 @@ username: tomcat
 pass: XrNwS1ar
 -->
 <Context path="/AVS">
-  <Environment name="serverName" type="java.lang.String" value="DESKTOP-E2PVDU3\SQLEXPRESS"/>
+  <Environment name="serverName" type="java.lang.String" value="LAPTOP-FIFP9IMA"/>
   <Environment name="port" type="java.lang.String" value="1433"/>
   <Environment name="user" type="java.lang.String" value="sa"/>
   <Environment name="password" type="java.lang.String" value="123456"/>

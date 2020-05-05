@@ -104,7 +104,7 @@
                 <br>     
                 <p>By: <%=listallnews.get(i).getUser().getFullname()%> <p>
                 <p>Content: <%=listallnews.get(i).getNews_shortdescription()%> <p>  
-                <p>At:<%=listallnews.get(i).getNewsdaterealease().substring(0, listallnews.get(i).getNewsdaterealease().length() - 5)%> </p>
+                <p>At:<%=listallnews.get(i).getNewsdaterealease().substring(0, 16)%> </p>
                 <hr>
                 <%}
 

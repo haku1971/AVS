@@ -36,35 +36,38 @@ public class SortStepServlet extends HttpServlet {
             // Find the minimum element in unsorted array 
             int min_idx = i;
             for (int j = i + 1; j < n; j++) {
+                count++;
                 if (arr[j] < arr[min_idx]) {
                     min_idx = j;
-                    // Swap the found minimum element with the first 
-                    // element 
-                    int temp = arr[min_idx];
-                    arr[min_idx] = arr[i];
-                    arr[i] = temp;
-                    count++;
                 }
+                // Swap the found minimum element with the first 
+                // element 
+
             }
+            int temp = arr[min_idx];
+            arr[min_idx] = arr[i];
+            arr[i] = temp;
+
         }
         return count;
     }
-static int countquicksort=0;
-    static int partition(int array[], int low, int high ) {
-     
+    static int countquicksort = 0;
+
+    static int partition(int array[], int low, int high) {
+
         int pivot = array[high];
         int i = (low - 1);
 
         for (int j = low; j < high; j++) {
             if (array[j] <= pivot) {
-                i++;               
+                i++;
                 int temp = array[i];
                 array[i] = array[j];
                 array[j] = temp;
                 countquicksort++;
             }
         }
-        
+
         int temp = array[i + 1];
         array[i + 1] = array[high];
         array[high] = temp;
@@ -73,12 +76,12 @@ static int countquicksort=0;
     }
 
     static void quickSort(int array[], int low, int high) {
-        if (low < high) {          
+        if (low < high) {
             int pi = partition(array, low, high);
             quickSort(array, low, pi - 1);
             quickSort(array, pi + 1, high);
         }
-       
+
     }
 
     public static int insertionSort(int arr[]) {
@@ -92,10 +95,12 @@ static int countquicksort=0;
              greater than key, to one position ahead 
              of their current position */
             while (j >= 0 && arr[j] > key) {
+                count++;
                 arr[j + 1] = arr[j];
                 j = j - 1;
-                count++;
+
             }
+            count++;
             arr[j + 1] = key;
 
         }
@@ -107,12 +112,13 @@ static int countquicksort=0;
         int count = 0;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
+                count++;
                 if (arr[j] > arr[j + 1]) {
                     // swap arr[j+1] and arr[i] 
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
-                    count++;
+
                 }
             }
         }
@@ -134,9 +140,7 @@ static int countquicksort=0;
      }
      }
      */
- 
     // A utility function to get maximum value in arr[] 
-
     static int getMax(int arr[], int n) {
         int max = arr[0];
         for (int i = 1; i < n; i++) {
@@ -149,7 +153,7 @@ static int countquicksort=0;
 
     // A function to do counting sort of arr[] according to 
     // the digit represented by exp. 
-    static void countRadixSort(int arr[], int n, int exp) {    
+    static void countRadixSort(int arr[], int n, int exp) {
         int output[] = new int[n]; // output array 
         int i;
         int counter[] = new int[10];
@@ -185,14 +189,13 @@ static int countquicksort=0;
         // Do counting sort for every digit. Note that instead 
         // of passing digit number, exp is passed. exp is 10^i 
         // where i is current digit number 
-        for (int exp = 1; max / exp > 0; exp *= 10) {        
+        for (int exp = 1; max / exp > 0; exp *= 10) {
             countRadixSort(arr, n, exp);
         }
     }
 
     // Main function that sorts arr[l..r] using 
     // merge() 
-
     static void merge(int arr[], int l, int m, int r) {
         // Find sizes of two subarrays to be merged 
         int n1 = m - l + 1;
@@ -212,7 +215,7 @@ static int countquicksort=0;
         int i = 0, j = 0;
         // Initial index of merged subarry array 
         int k = l;
-        
+
         while (i < n1 && j < n2) {
             countmerge++;
             if (L[i] <= R[j]) {
@@ -230,15 +233,15 @@ static int countquicksort=0;
             arr[k] = L[i];
             i++;
             k++;
-            
+
         }
         /* Copy remaining elements of R[] if any */
         while (j < n2) {
-             countmerge++;
+            countmerge++;
             arr[k] = R[j];
             j++;
             k++;
-           
+
         }
 
     }
@@ -254,8 +257,8 @@ static int countquicksort=0;
             merge(arr, l, m, r);
         }
     }
-   
-   public static void heapsort(int arr[]) {
+
+    public static void heapsort(int arr[]) {
         int n = arr.length;
 
         // Build heap (rearrange array) 
@@ -340,21 +343,22 @@ static int countquicksort=0;
         switch (number) {
             case 1:
                 return bubbleSort(array);
-            case 2: quickSort(array, 0, array.length - 1);
+            case 2:
+                quickSort(array, 0, array.length - 1);
                 return countquicksort;
             case 3:
                 return selectionSort(array);
-            case 4:{
+            case 4: {
                 heapsort(array);
                 return countheap;
             }
             case 5:
                 return insertionSort(array);
             case 6: {
-                mergesort(array, 0, array.length-1 );
+                mergesort(array, 0, array.length - 1);
                 return countmerge;
             }
-            case 7:{
+            case 7: {
                 radixsort(array, array.length);
                 return countradixsort;
             }
@@ -369,10 +373,10 @@ static int countquicksort=0;
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            countquicksort=0;
-            countheap=0;
-            countmerge=0;
-            countradixsort=0;
+            countquicksort = 0;
+            countheap = 0;
+            countmerge = 0;
+            countradixsort = 0;
             //goi ve cai mang ma duoc js truyen di
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");

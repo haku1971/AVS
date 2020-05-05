@@ -3,28 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/view/viewnews.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/view/manage_algorithm.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/view/manage_account.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/js/visualize.js</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/view/manage_history.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AdminController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/DAO/UserDAO.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/view/manage_news.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/DBContext/DBContext.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/css/admin.css</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/view/manage_tracking.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/Algorithm.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/NewsController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/view/viewalgo.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Model/News.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/DeleteCommentServlet.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/DetailController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/web/view/Detail.jsp</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/LogoutController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/AddAlgorithmController.java</file>
-            <file>file:/C:/Users/Ukah/Documents/GitHub/AVS/AVS/src/java/Controller/ManageDatabaseController.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/test/Controller/ManageDatabaseControllerTest.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/test/Controller/AddAlgorithmControllerTest.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/src/java/Controller/ManageDatabaseController.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/view/newslist.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/view/newsdetail.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/js/visualize.js</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/view/Detail.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/AVS/AVS/web/META-INF/context.xml</file>
         </group>
     </open-files>
 </project-private>
