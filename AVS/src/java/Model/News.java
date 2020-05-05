@@ -101,7 +101,7 @@ public class News {
     }
 
     public String getNews_Imgs() {
-        return news_Imgs;
+        return news_Imgs.equals("null") ? "" : news_Imgs;
     }
 
     public void setNews_Imgs(String news_Imgs) {

@@ -186,7 +186,7 @@ public class ManageDatabaseController extends HttpServlet {
                     algodao.deleteAlgo(Integer.parseInt(algoid));
 
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Delete");
-                    response.sendRedirect("viewalgo?id=" + algoid);
+                    response.sendRedirect("admin?category=algorithm");
                     break;
                 }
                 case "restorealgo": {
@@ -301,7 +301,7 @@ public class ManageDatabaseController extends HttpServlet {
 
                     historydao.insertNewsHistory(Integer.parseInt(adminid), Integer.parseInt(newsid), currenttime, "Delete");
 
-                    response.sendRedirect("viewnews?id=" + newsid);
+                    response.sendRedirect("admin?category=news");
                     break;
                 }
                 case "restorenews": {
