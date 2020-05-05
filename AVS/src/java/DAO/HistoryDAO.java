@@ -40,7 +40,7 @@ public class HistoryDAO {
         try {
             connection = dbManager.getConnection();
             String sql = "SELECT m.moduser_ID, m.user_ID, m.admin_id, m.moduser_Time, m.ban_Status, u.user_Name, a.user_Name as admin_name\n"
-                    + "FROM Modify_Users m\n"
+                    + "FROM ModifyUser m\n"
                     + "inner join Users u on m.user_ID = u.user_ID\n"
                     + "inner join Users a on m.admin_id = a.user_ID";
             statement = connection.prepareStatement(sql);
@@ -143,7 +143,7 @@ public class HistoryDAO {
     }
 
     public void insertUserHistory(int userid, int adminid, String currenttime, int banstatus) throws Exception {
-        String query = "Insert into Modify_Users(user_ID,admin_id,moduser_Time,ban_Status)\n"
+        String query = "Insert into ModifyUser(user_ID,admin_id,moduser_Time,ban_Status)\n"
                 + "values (?,?,?,?)";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
@@ -211,7 +211,7 @@ public class HistoryDAO {
         try {
             connection = dbManager.getConnection();
             String statementstring = "SELECT m.moduser_ID, m.user_ID, m.admin_id, m.moduser_Time, m.ban_Status, u.user_Name, a.user_Name as adminname\n"
-                    + "FROM (select *, ROW_NUMBER() over(order by moduser_id desc) as rownumber from Modify_Users) as m\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by moduser_id desc) as rownumber from ModifyUser) as m\n"
                     + "inner join Users u on u.user_ID = m.user_ID\n"
                     + "inner join Users a on a.user_ID = m.admin_id\n"
                     + "WHERE  m.rownumber >= ? and m.rownumber <= ?";
@@ -252,7 +252,7 @@ public class HistoryDAO {
         try {
             connection = dbManager.getConnection();
             String statementstring = "SELECT count(*) as totalpage\n"
-                    + "FROM (select *, ROW_NUMBER() over(order by moduser_id desc) as rownumber from Modify_Users) as m\n"
+                    + "FROM (select *, ROW_NUMBER() over(order by moduser_id desc) as rownumber from ModifyUser) as m\n"
                     + "inner join Users u on u.user_ID = m.user_ID\n"
                     + "inner join Users a on a.user_ID = m.admin_id";
 

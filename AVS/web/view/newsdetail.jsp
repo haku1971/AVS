@@ -12,8 +12,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            ArrayList<Comment> listallcommentbynewid = (ArrayList<Comment>) request.getAttribute("listallcommentbynewid");
+            News news = (News) request.getAttribute("news");
+            HashMap<Integer, Integer> commentid_and_numberof_like = (HashMap<Integer, Integer>) request.getAttribute("commentid_and_numberof_like");
+            ArrayList<Likecomment> listallvote = (ArrayList<Likecomment>) request.getAttribute("listallvote");
+            ArrayList<Likenews> listalllikenewsbynewsid = (ArrayList<Likenews>) request.getAttribute("listalllikenewsbynewsid");
+            int total_likenews = (Integer) request.getAttribute("total_likenews");
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><%=news.getNewstittles()%></title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <script src="https://kit.fontawesome.com/5a03b2ca60.js" crossorigin="anonymous"></script>      
@@ -49,15 +57,12 @@
             .likecounter1a{           
                 pointer-events:none;
                 border: none;
-                width: auto;
                 background-color: #edf0f4;
-                height: 15px;
-                text-align: center;
                 font-family: cursive;
                 font-weight: bold;
-                margin-top: 60px;
+                margin-top: 15px;
                 float: left;
-                margin-left: -110px;
+
             }
 
             .likecounter2{           
@@ -69,13 +74,14 @@
                 margin-left: 20px;
             }
 
-            .likecounter2b{           
+            .likecounter2b{        
+                display: inline-block;
                 pointer-events:none;
                 border: none;
-                width: auto;
+                width: 10px;
                 background-color: #edf0f4;
                 height: 15px;
-                margin-left: 20px;
+                /*margin-left: 20px;*/
                 margin-bottom: 0px;
 
             }
@@ -109,13 +115,18 @@
             .like_unlike {
                 float: left;
                 margin-top: 40px;
-                margin-left: -31px;
+                position: absolute;
+                margin-left: 3px;
             }
             #time_cmt {
                 font-size: 10px;
                 color: gray;
                 margin-bottom: 10px;
                 margin-top: 0px;
+            }
+
+            .likeicon{
+                margin-left: 15px;
             }
         </style>
     </head>
@@ -140,14 +151,7 @@
             }
         %>
 
-        <%
-            ArrayList<Comment> listallcommentbynewid = (ArrayList<Comment>) request.getAttribute("listallcommentbynewid");
-            News news = (News) request.getAttribute("news");
-            HashMap<Integer, Integer> commentid_and_numberof_like = (HashMap<Integer, Integer>) request.getAttribute("commentid_and_numberof_like");
-            ArrayList<Likecomment> listallvote = (ArrayList<Likecomment>) request.getAttribute("listallvote");
-            ArrayList<Likenews> listalllikenewsbynewsid = (ArrayList<Likenews>) request.getAttribute("listalllikenewsbynewsid");
-            int total_likenews = (Integer) request.getAttribute("total_likenews");
-        %>
+
 
 
         <%if (request.getAttribute("banstatus") != null) {
@@ -162,8 +166,9 @@
 
                 <div class="news_content">
                     <div class="detail">
+                        <% if (!news.getNews_Imgs().equalsIgnoreCase("null")) {%>
                         <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
-
+                        <%}%>
                     </div>
 
                     <p>  <%=news.getNewscontent()%> </p>
@@ -188,9 +193,9 @@
                     %>
                     <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
                     <i id="heart" onclick="LikeNewsFunction(this,<%=news.getNewsID()%>,<%=Integer.parseInt(userid)%>)" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>
-
-                    <div class="like_unlike" id="likenew">${thumplikenewsup ?("Liked"):("Like")}</div> 
                     <input class="likecounter1a" id="txtlikenewsnumber" type="text" name="" value="<%=total_likenews%>" readonly/>
+                    <div class="like_unlike" id="likenew">${thumplikenewsup ?("Liked"):("Like")}</div> 
+
                 </div>
 
             </div>
@@ -247,8 +252,10 @@
             <textarea maxlength="300" class="hiddeninputtag" id="txtedit_<%=commentid%>" type="text" name="commentcontentedit" >${conntentofcomment}</textarea>
             <div id="time_cmt" class="cmt_detail"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, listallcommentbynewid.get(i).getDatetime().length() - 5)%></div>  
             <i id="like_ulike_cmt" onclick="LikeCommentFunction(this,<%=commentid%>,<%=userid%>)" class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}" style="margin-left:15px;"></i>
-            <div class="cmt_detail" id="like_<%=commentid%>">${thumpup ?("Liked"):("Like")}</div>       
+
             <input  class="likecounter2b" id="numberlike_<%=commentid%>" type="text"  value="<%=numberlike%>" />
+            <div class="likeicon" id="like_<%=commentid%>"> ${thumpup ?("Liked"):("Like")}</div>       
+
 
             <%
                 //là người đang đăng nhập sẽ hiển thị xoá,sửa            
@@ -534,8 +541,9 @@
 
                 <div class="news_content">
                     <div class="detail">
+                        <% if (!news.getNews_Imgs().equalsIgnoreCase("null")) {%>
                         <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
-
+                        <%}%>
                     </div>
 
                     <p>  <%=news.getNewscontent()%> </p>

@@ -14,18 +14,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="js/visualize.js"></script>
-        <script type="text/javascript" src="js/readmore.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/Visual.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
         <%
             ArrayList<Algorithm> AllAlgorithm = (ArrayList<Algorithm>) request.getAttribute("AllAlgorithm");
             Algorithm algo = (Algorithm) request.getAttribute("algorithm");
             ArrayList<Algorithm> algorithmbycategory = (ArrayList<Algorithm>) request.getAttribute("algorithmbycategory");
         %>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><%=algo.getAlgoName()%></title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/visualize.js"></script>
+        <script type="text/javascript" src="js/readmore.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/Visual.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+
     </head>
 
     <body onload ="init('<%=algo.getAlgoFile()%>',<%=algo.getCategoryID()%>);">
@@ -67,7 +68,7 @@
             <div>
                 <div id="algoTitle"><h1><%= algo.getAlgoName()%></h1>
                     <h5 class="description"><%= algo.getAlgoDescription()%></h5>
-                    <button onclick="myFunction()" id="myBtn">Read more</button>
+                    <button onclick="myFunction()" id="myBtn" class="buttonheader type4">Read more</button>
                     <!--<span id="dots">...</span><span id="more">-->
                     <div style="float: right; margin-right: 10px;" class="fb-share-button" data-href="" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share this page</a></div>
                 </div>
@@ -80,8 +81,8 @@
                 <div class="leftAlgo">
                     <div>Array Element:<br><input id="txtElement" type="text" name="name" maxlength="10" />
                         <input id="txtElementHashing" type="text" name="name" maxlength="30" /></div>
-                    <div id="divSearchnumber">Search value:<br><input placeholder="Search Value" id="txtSearchnumber" type="text" value="" maxlength="2"/></div>
-                    <div id="divArraySize">Size of Hashing:<br><input id="txtArraySize" type="text" maxlength="2"/></div>
+                    <div class="divSearchnumber" id="divSearchnumber">Search value:<br><input placeholder="Search Value" id="txtSearchnumber" type="text" value="" maxlength="2"/></div>
+                    <div class="divArraySize" id="divArraySize">Size of Hashing:<br><input id="txtArraySize" type="text" maxlength="2"/></div>
                     <div id="progress"> 
                         <div id="progresstext">
                             Progress:<br> <br>
@@ -93,7 +94,7 @@
                     </div>
                     <div><canvas id="canvasAnimation"  style="border:none solid #000000; "></canvas></div>
                     <canvas id="canvasGraph"  style="border:1px solid #000000;"></canvas>
-                    <div class="graphtext">Comparing complexity of algorithm over time</div>
+                    <div class="graphtext">Comparing complexity of algorithm over time</div><br>
                     <%
                         for (int i = 0; i < algorithmbycategory.size(); i++) {
                     %>
@@ -107,26 +108,32 @@
                 </div>
 
                 <div class="rightAlgo">
-                    <div id="txtButton">
-                        <Button class="button button--nuka button--round-s button--text-thick" id="btnInputData" type="submit" onclick="inputByUser();">Input Data</button>
-                        <!--cần sửa id thành btnRandom-->
-                        <Button class="button button--nuka button--round-s button--text-thick" id="btnShuffle" type="submit" onclick="random();">Random</Button>
+                    <div class="top">
+                        <div class="topleft">
+                            <div id="txtButton">
+                                <Button class="button button--nuka button--round-s button--text-thick" id="btnInputData" type="submit" onclick="inputByUser();">Input Data</button>
+                                <!--cần sửa id thành btnRandom-->
+                                <Button class="button button--nuka button--round-s button--text-thick" id="btnShuffle" type="submit" onclick="random();">Random</Button>
+                            </div>
+                            <div id="speed"><a>Speed: x0.25 </a> <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1"> <a>x2</a></div>
+                            <div id="stepButton">
+                                <Button class="button button--nuka button--round-s button--text-thick" id="btnPrev" type="submit" onclick="back();"><</Button>
+                                <Button class="button button--nuka button--round-s button--text-thick" type="submit" onclick="init('<%=algo.getAlgoFile()%>',<%=algo.getCategoryID()%>);">Restart</Button> 
+                                <Button onclick="resume();" class="button button--nuka button--round-s button--text-thick Resumebtn"><input class="Resumeinput" id="PauseOrCon" type="submit" value="Pause"/></button>
+                                <Button class="button button--nuka button--round-s button--text-thick" id="btnNext" type="submit" onclick="next();">></Button>
+                            </div>
+                        </div>
+                        <div class="topright">
+                            <div class="scrollLog" id="txtlog">Log:</div>
+                        </div>
                     </div>
-                    <div id="speed"><a>Speed: x0.25 </a> <input id="rangebar" type="range" oninput="changeSpeed();" max="10" min="1" value="1"> <a>x2</a></div>
-                    <div id="stepButton">
-                        <Button class="button button--nuka button--round-s button--text-thick" id="btnPrev" type="submit" onclick="back();"><</Button>
-                        <Button class="button button--nuka button--round-s button--text-thick" type="submit" onclick="init('<%=algo.getAlgoFile()%>',<%=algo.getCategoryID()%>);">Restart</Button> 
-                        <Button onclick="resume();" class="button button--nuka button--round-s button--text-thick Resumebtn"><input class="Resumeinput" id="PauseOrCon" type="submit" value="Pause"/></button>
-                        <Button class="button button--nuka button--round-s button--text-thick" id="btnNext" type="submit" onclick="next();">></Button>
+                    <div class="tab">
+                        <button class="tablinks" onclick="openTab(event, 'CodeJava')" id="defaultOpen">Java</button>
+                        <button class="tablinks" onclick="openTab(event, 'CodeJavaScript')"  >JavaScript</button>
+                        <button class="tablinks" onclick="openTab(event, 'CodeCPlus')">C++</button>
+
                     </div>
                     <div class="codebox">
-                        <div class="tab">
-                            <button class="tablinks" onclick="openTab(event, 'CodeJavaScript')"  id="defaultOpen">JavaScript</button>
-                            <button class="tablinks" onclick="openTab(event, 'CodeCPlus')">C++</button>
-                            <button class="tablinks" onclick="openTab(event, 'CodeJava')">Java</button>
-                        </div>
-
-
 
                         <div id="CodeCPlus" class="tabcontent">
                             <% if (algo.getAlgoCodeCplus().equalsIgnoreCase("null")) {%>
@@ -158,7 +165,7 @@
                             <%}%>
                         </div>
                     </div>
-                    <div class="scrollLog" id="txtlog">Log:</div>
+
                 </div>
             </div>
 
@@ -167,38 +174,38 @@
 
 
 
-        <script type="text/javascript" src="js/code.js"></script>
-        <script>
-                                setInputFilter(document.getElementById("txtElement"), function (value) {
-                                    //                                    return /^[0-9,-,]*$/i.test(value);
-                                    return /^\d*$/.test(value);
-                                }
-                                );
-                                setInputFilter(document.getElementById("txtElementHashing"), function (value) {
-                                    //                                    return /^[0-9,-,]*$/i.test(value);
-                                    return /^\d{1,2}(,\d{1,2})*,*$/i.test(value) || value === '';
-                                }
-                                );
-                                setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
-                                    return /^\d*$/.test(value);
-                                }
-                                );
-                                setInputFilter(document.getElementById("txtArraySize"), function (value) {
-                                    return /^\d*$/.test(value);
-                                }
-                                );
-        </script>
-        <script type="text/javascript" src="js/tabFunction.js"></script>
-        <script>document.getElementById(<%=algo.getCategoryID()%>).click();</script>
-        <script>
-            var activeItem = document.getElementsByClassName(<%=algo.getAlgoID()%>);
-            activeItem[0].className = "activeAlgo";
-            var isvisualized = "<%=algo.getAlgoFile()%>";
-            if (isvisualized === "null") {
+    <script type="text/javascript" src="js/code.js"></script>
+    <script>
+                            setInputFilter(document.getElementById("txtElement"), function (value) {
+                                //                                    return /^[0-9,-,]*$/i.test(value);
+                                return /^\d*$/.test(value);
+                            }
+                            );
+                            setInputFilter(document.getElementById("txtElementHashing"), function (value) {
+                                //                                    return /^[0-9,-,]*$/i.test(value);
+                                return /^\d{1,2}(,\d{1,2})*,*$/i.test(value) || value === '';
+                            }
+                            );
+                            setInputFilter(document.getElementById("txtSearchnumber"), function (value) {
+                                return /^\d*$/.test(value);
+                            }
+                            );
+                            setInputFilter(document.getElementById("txtArraySize"), function (value) {
+                                return /^\d*$/.test(value);
+                            }
+                            );
+    </script>
+    <script type="text/javascript" src="js/tabFunction.js"></script>
+    <script>document.getElementById(<%=algo.getCategoryID()%>).click();</script>
+    <script>
+        var activeItem = document.getElementsByClassName(<%=algo.getAlgoID()%>);
+        activeItem[0].className = "activeAlgo";
+        var isvisualized = "<%=algo.getAlgoFile()%>";
+        if (isvisualized === "null") {
 
-            }
-        </script>
-        <%@include file="footer.jsp" %>
-    </body>
+        }
+    </script>
+    <%@include file="footer.jsp" %>
+</body>
 
 </html>

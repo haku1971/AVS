@@ -212,7 +212,7 @@ and open the template in the editor.
     background-color: #edf0f4;
     float: left;
     min-height: 700px;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .algoinfomation{
@@ -354,4 +354,11 @@ table {
 
 .adminNewsImg{
     width: 100%;
+}
+
+.emtyTable{
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    color: #3b4754;
 }

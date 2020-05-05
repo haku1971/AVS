@@ -362,7 +362,7 @@ public class HashingSearchController extends HttpServlet {
 
     private static int chooseHashingFunctionByAlgoID(int searchvalue, int choose_algoid, int[] array) {
         switch (choose_algoid) {
-            case 13: {
+            case 11: {
                 //separate chaining
                 Map<Integer, Integer> map = new Map<>();
                 for (int i = 0; i < array.length; i++) {
@@ -374,7 +374,7 @@ public class HashingSearchController extends HttpServlet {
                     return map.getsearchstep(searchvalue);
                 }
             }
-            case 14: { // open addressing
+            case 12: { // open addressing
                 HashMap hm = new HashMap();
                 for (int i = 0; i < array.length; i++) {
                     hm.put(array[i], array[i]);

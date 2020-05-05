@@ -10,17 +10,17 @@ and open the template in the editor.
 
 .Visual{
     margin-top: 30px;
-    margin-left: 70px;
-    margin-right: 30px;
+    margin-left: 30px;
+    /*margin-right: 30px;*/
     margin-bottom: 30px;
-    min-width: 600px;
+    /*min-width: 1000px;*/
 }
 .Visual .rightAlgo{
     /*float: right;*/
     /*width: 40%;*/
     /*min-width: 700px;*/
     overflow: auto;
-    margin-left: 100px;
+    margin-left: 30px;
     display: inline-block;
 }
 
@@ -80,6 +80,7 @@ and open the template in the editor.
 
 #stepButton{
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 #progress{
@@ -209,10 +210,11 @@ input[type=range]::-webkit-slider-thumb {
 /* Style the tab content */
 .tabcontent {
     animation: fadeEffect 1s;
-    display: none;
+    /*display: none;*/
     padding: 6px 12px;
     border: none;
     border-top: none;
+    
 }
 @keyframes fadeEffect {
     from {opacity: 0;}
@@ -337,7 +339,7 @@ pre{
 
 /* Nuka */
 .button--nuka {
-    margin: 10px;
+    margin: 9px;
     transition: color 0.3s;
     transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
@@ -424,4 +426,47 @@ pre{
 .codebox{
     border: 3px solid #ccc;
     margin-bottom: 10px;
+    /*max-width: 400px;*/
+    width: 600px;
+    overflow: auto;
+    max-height: 400px;
+}
+
+.codecomment{
+    color: green;
+    display: inline-block;
+}
+
+.table .tr .td br{
+    display: inline-block;
+}
+
+.top{
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.topleft{
+/*    margin-top: auto;
+    margin-bottom: auto;*/
+    float: left;
+    width: 45%;
+}
+
+.topright{
+    float: right;
+    width: 45%;
+}
+
+.divArraySize{
+    margin-left: 20px; 
+    display: inline-block;
+}
+
+.divSearchnumber{
+    display: inline-block;
+}
+
+.divhidden{
+    display: none;
 }

@@ -90,7 +90,7 @@
                             <td class="columnadmin"><%=allalgolist.get(i).getCategoryName()%></td>
                             <td class="columnadmin"><%=allalgolist.get(i).getVisualizedToString()%></td>
                             <td class="columnadmin"><%=allalgolist.get(i).getAlgoFile()%></td>
-                            <td class="columnadmin"><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>">View</a></td>
+                            <td class="columnadmin"><a href="viewalgo?id=<%=allalgolist.get(i).getAlgoID()%>"><button class="buttonheader type5">View</button></a></td>
                             <% if (showdeleted == "showdeleted") {%>
                             <td class="columnadmin"><%=allalgolist.get(i).getDeletedToString()%></td>
                             <%}%>
@@ -113,7 +113,7 @@
                         <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
                         <div class="addBtn">
-                            <a href="addalgo"><button>Add</button></a>
+                            <a href="addalgo"><button class="buttonheader type4">Add</button></a>
                         </div>
                     </div>
 

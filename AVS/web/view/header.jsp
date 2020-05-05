@@ -56,10 +56,10 @@
         <div class="header">
             <ul>
                 <li><a href="home"><img src="images\avs_logo.png" /></a></li>
-                <li id="hover"><a href="home">Home</a></li>
-                <li id="hover"><a href="news">News</a></li>
+                <li id="hover"><a href="home"><button class="buttonheader type1">Home</button></a></li>
+                <li id="hover"><a href="news"><button class="buttonheader type2">News</button></a></li>
                     <% if (roleid.equals("1")) {%>
-                <li id="hover"><a href="admin">Admin</a></li>
+                <li id="hover"><a href="admin"><button class="buttonheader type3">Admin</button></a></li>
                     <%}%>
                 <li>
                     <form id="account">

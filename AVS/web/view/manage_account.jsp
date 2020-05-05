@@ -77,7 +77,7 @@
                             <td class="columnadmin"><%=alluserlist.get(i).getUsername()%></td>
                             <td class="columnadmin "><%=alluserlist.get(i).getRolename()%></td>
                             <td class="columnadmin"><%=alluserlist.get(i).getBanstatusString()%></td>
-                            <td class="columnadmin"><a href="viewaccount?id=<%=alluserlist.get(i).getId()%>">View</a></td>
+                            <td class="columnadmin"><a href="viewaccount?id=<%=alluserlist.get(i).getId()%>"><button class="buttonheader type5">View</button></a></td>
                         </tr>
                         <%}%>
                     </table>

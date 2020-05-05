@@ -94,7 +94,7 @@
                             <td class="columnadmin"><%=allnews.get(i).getNewsdaterealeaseToMinute()%></td>
                             <td class="columnadmin"><%=allnews.get(i).getUser().getUsername()%></td>
                             <td class="columnadmin"><%=allnews.get(i).getNews_Imgs()%></td>
-                            <td class="columnadmin"><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>">View</a></td>
+                            <td class="columnadmin"><a href="viewnews?id=<%=allnews.get(i).getNewsID()%>"><button class="buttonheader type5"View</a></td>
                             <% if (showdeleted == "showdeleted") {%>
                             <td><%=allnews.get(i).getDeletedToString()%></td>
                             <%}%>
@@ -117,7 +117,7 @@
                         <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
                         <%}%>
                         <div class="addBtn">
-                            <a href="addnews"><button>Add</button></a>
+                            <a href="addnews"><button class="buttonheader type4">Add</button></a>
                         </div>
                     </div>
                 </div>

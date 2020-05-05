@@ -108,7 +108,8 @@ function init(algorithmtype, category) {
         default :
         {
             document.getElementById("txtElementHashing").hidden = true;
-            document.getElementById("divArraySize").hidden = true;
+            document.getElementById("divArraySize").className = "divhidden";
+//            document.getElementById("divArraySize").hidden = true;
             document.getElementById("txtElement").value = initarray.join('');
             document.getElementById("txtSearchnumber").value = searchnumber;
             break;
@@ -222,7 +223,8 @@ function getAjaxSortData() {
         }
     }
     );
-    document.getElementById("divSearchnumber").hidden = true;
+    document.getElementById("divSearchnumber").className = "divhidden";
+//     document.getElementById("divSearchnumber").hidden = true;
 }
 
 function getAjaxSearchData() {
