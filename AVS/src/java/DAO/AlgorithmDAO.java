@@ -70,7 +70,10 @@ public class AlgorithmDAO {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT [algo_ID],[algo_Name],[algo_CodeJS],Algorithm.category_ID,[category_Name] FROM Algorithm INNER JOIN Category ON Category.category_ID = Algorithm.category_ID ORDER BY Algorithm.category_ID";
+            String sql = "SELECT [algo_ID],[algo_Name],[algo_CodeJS],Algorithm.category_ID,[category_Name] \n"
+                    + "FROM Algorithm INNER JOIN Category ON Category.category_ID = Algorithm.category_ID \n"
+                    + "Where delete_Status=0\n"
+                    + "ORDER BY Algorithm.category_ID";
 
             statement = connection.prepareStatement(sql);
             rs = statement.executeQuery();
@@ -233,7 +236,7 @@ public class AlgorithmDAO {
         }
         return algos;
     }
-    
+
     public void insertAlgo(Algorithm algo) throws Exception {
         String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
         String query = "Insert into [Algorithm] (algo_Name, algo_CodeJava, algo_CodeCplus, algo_CodeJS, algo_Description, \n"
@@ -321,7 +324,7 @@ public class AlgorithmDAO {
             e.printStackTrace();
         }
     }
-    
+
     public void updateAlgo(Algorithm algo) throws Exception {
         String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
         String query = "update Algorithm\n"
@@ -422,7 +425,7 @@ public class AlgorithmDAO {
         }
         return algos;
     }
-    
+
     public Algorithm getAlgoByName(String name) throws SQLException, Exception {
         DBContext dbManager = new DBContext();
         Connection connection = null;
