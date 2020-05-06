@@ -23,7 +23,7 @@
         <%
             User thisuser = (User) request.getAttribute("user");
             String action = thisuser.getBanstatus() == 0 ? "ban" : "unban";
-
+            String Gender = thisuser.getGender() == 1 ? "Male" : "Female";
         %>
     </head>
 
@@ -42,11 +42,11 @@
                         <tr> 
                             <td><h1><%=thisuser.getRolename()%></h1></td> 
                             <td>
-                                <span class="adminspan_info">User-Name :</span>
+                                <span class="adminspan_info">Username:</span>
                                 <input class="su_infor" type="text" name="username" value="<%=thisuser.getUsername()%>"readonly/>
                             </td>
                             <td>
-                                <span class="adminspan_info">Full-Name :</span>
+                                <span class="adminspan_info">Full Name:</span>
                                 <input class="su_infor" type="text" name="fullname" value="<%=thisuser.getFullname()%>"readonly/>
                             </td>
                         </tr>
@@ -55,11 +55,11 @@
                                 <img src="images\user.png" />
                             </td>
                             <td>
-                                <span class="adminspan_info">E-mail :</span>
+                                <span class="adminspan_info">E-mail:</span>
                                 <input class="su_infor" type="text" name="email" value="<%=thisuser.getMail()%>" readonly/>
                             </td>
                             <td>
-                                <span class="adminspan_info">Date of Birth :</span>
+                                <span class="adminspan_info">Date of Birth:</span>
                                 <input class="su_infor" type="date" name="birthday" value="<%=thisuser.getDob()%>" readonly/>
                             </td>
                         </tr>
@@ -73,22 +73,22 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="adminspan_info">Gender :</span>
-                                <input class="su_infor" type="text" name="gender" value="<%=thisuser.getGender()%>"readonly/>
+                                <span class="adminspan_info">Gender:</span>
+                                <input class="su_infor" type="text" name="gender" value="<%=Gender%>"readonly/>
                             </td>
                             <td>
-                                <span class="adminspan_info">Work-Place</span>
+                                <span class="adminspan_info">Work Place:</span>
                                 <input class="su_infor" type="text" name="workplace" value="<%=thisuser.getWorkplace()%>"readonly/>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <span class="adminspan_info">Phone :</span>
+                                <span class="adminspan_info">Phone:</span>
                                 <input class="su_infor" type="text" name="phone" value="<%=thisuser.getPhone()%>"readonly/>
                             </td>
                             <td>
-                                <span class="adminspan_info">Jobs :</span>
-                                <input class="su_infor" type="text" name="job" value="<%=thisuser.getRolenum()%>"readonly/>
+                                <span class="adminspan_info">Jobs:</span>
+                                <input class="su_infor" type="text" name="job" value="<c:out value='${requestScope["jobname"]}' />"readonly/>
                             </td>
                         </tr>
                         <tr>

@@ -50,7 +50,7 @@
                             <%}%>
                         </td>
                         <td class="error">
-                            <span id="hidden">Email:</span>
+                            <span id="hidden">E-mail:</span>
                             <%if (request.getAttribute("errorMail") != null) {
                             %>
                             <div class="errormess">
@@ -65,7 +65,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="span_info1">UserName:</span>
+                            <span class="span_info1">Username:</span>
                             <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)" maxlength="15" required/>
                             <span class="red_star">(*)</span>
                         </td>
@@ -136,7 +136,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="span_info1">FullName:</span>
+                            <span class="span_info1">Full Name:</span>
                             <input class="su_info3" type="text" name="fullname" placeholder="Enter your Name"/>
                         </td>
                         <td>
@@ -154,11 +154,11 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="span_info1">DoB:</span>
+                            <span class="span_info1">Date of Birth:</span>
                             <input class="su_info3" type="date" name="birthday" value="1900-01-01"/>
                         </td>
                         <td>
-                            <span class="span_info1">Workplace:</span>
+                            <span class="span_info1">Work Place:</span>
                             <input class="su_info3" type="text" name="workplace" placeholder="Enter your Work Place"/>
                         </td>
                     </tr>

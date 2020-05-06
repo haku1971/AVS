@@ -7,7 +7,9 @@ package Controller;
 
 import Model.User;
 import DAO.AlgorithmDAO;
+import DAO.JobsDAO;
 import DAO.UserDAO;
+import Model.Jobs;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -39,13 +41,13 @@ public class ViewAccountController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            
+
             HttpSession session = request.getSession();
             UserDAO userdao = new UserDAO();
             //hien thi trang home neu nguoi dung khong phai admin
             Cookie cookie[] = request.getCookies();
             String roleid = "";
-            String username="";
+            String username = "";
             for (Cookie ck : cookie) {
                 if (ck.getName().equals("roleid")) {
                     roleid = ck.getValue();
@@ -63,8 +65,14 @@ public class ViewAccountController extends HttpServlet {
             String userid = request.getParameter("id");
             User user = userdao.getUserByUserID(userid);
             String category = "account";
+
+            JobsDAO jobDao = new JobsDAO();
+            Jobs job = jobDao.getJobByID(user.getJob());
+            String jobname = job.getJobname();
+
             request.setAttribute("category", category);
             request.setAttribute("user", user);
+            request.setAttribute("jobname", jobname);
             request.getRequestDispatcher("view/viewaccount.jsp").forward(request, response);
 
         } catch (Exception ex) {
