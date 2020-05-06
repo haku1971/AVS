@@ -173,9 +173,11 @@
                     <tr>
                         <td>
                             <div class="signup_item5">
-                                <span>Gender :</span>
-                                <input type="radio" id="male" name="gender" value="1" checked="true">Male</input>
-                                <input type="radio" id="female" name="gender" value="0">Female</input>
+                                <span class="span_info0">Gender :</span>
+                                <div class="signupgender">
+                                    <input type="radio" id="male" name="gender" value="1" checked="true">Male</input>
+                                    <input type="radio" id="female" name="gender" value="0">Female</input>
+                                </div>
                             </div>
                         </td>
                         <td>

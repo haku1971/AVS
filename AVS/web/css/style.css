@@ -678,6 +678,18 @@ body {
     left:0px;
     display: inline-block;
 }
+
+.span_info0{
+    margin-left: -40px;
+    font-family: fantasy;
+    font-size: 20px;
+    width: 30%;
+    float: left;
+    margin-top: 11px;
+    margin-right: 35px;
+    display: inline-block;
+    text-align: right;
+}
 .span_info1 {
     font-family: fantasy;
     font-size: 20px;
@@ -1704,4 +1716,10 @@ body {
 
 textarea{
     resize: none;
+}
+
+.signupgender{
+
+    padding: 14px 10px;
+
 }

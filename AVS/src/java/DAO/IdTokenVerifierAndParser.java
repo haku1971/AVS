@@ -16,10 +16,10 @@ import com.google.api.client.json.jackson2.JacksonFactory;
  */
 public class IdTokenVerifierAndParser {
 //deploy sever
-//    private static final String GOOGLE_CLIENT_ID = "912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com";
+    private static final String GOOGLE_CLIENT_ID = "912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com";
     
     //localhost
-    private static final String GOOGLE_CLIENT_ID = "912620741556-hcmv2c3g46fti4psnqsjduu2hqcjo0qj.apps.googleusercontent.com";
+//    private static final String GOOGLE_CLIENT_ID = "912620741556-hcmv2c3g46fti4psnqsjduu2hqcjo0qj.apps.googleusercontent.com";
     
 
     public static GoogleIdToken.Payload getPayload(String tokenString) throws Exception {
