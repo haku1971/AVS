@@ -70,7 +70,7 @@
                             <span class="red_star">(*)</span>
                         </td>
                         <td>
-                            <span class="span_info1">Email:</span>
+                            <span class="span_info1">E-mail:</span>
                             <input class="su_info1" type="text" name="email" placeholder="xyz@qwe.abc.com"required/>
                             <span class="red_star">(*)</span>
                         </td>
