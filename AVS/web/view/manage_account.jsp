@@ -52,7 +52,6 @@
                                     <select id="select_column" onchange="changeselected()">
                                         <option value="n.user_id">ID</option>
                                         <option value="user_name">Name</option>
-                                        <option value="user_rolenum">Role</option>
                                         <option value="ban_status">Ban Status</option>
                                     </select>
                                 </div>
@@ -139,14 +138,9 @@
                     selectcolumn.selectedIndex = 1;
                     break;
                 }
-                case 'user_rolenum' :
-                {
-                    selectcolumn.selectedIndex = 2;
-                    break;
-                }
                 case 'ban_status' :
                 {
-                    selectcolumn.selectedIndex = 3;
+                    selectcolumn.selectedIndex = 2;
                     break;
                 }
             }

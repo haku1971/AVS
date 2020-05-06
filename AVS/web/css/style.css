@@ -1474,6 +1474,8 @@ body {
 
 .cmt_detail {
     margin-left:15px;
+    word-break: break-word;
+    margin-right: 15px;
 }
 
 .textarea_cmt {

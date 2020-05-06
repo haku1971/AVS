@@ -15,7 +15,6 @@
     <body>
         <div id="footer">
             <img id="avs" src="images/avs_logo.png" />
-            <img id="fb" src="images/facebook.PNG" />
         </div>
     </body>
 </html>
