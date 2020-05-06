@@ -108,6 +108,20 @@
                 height: 15px;
 
             }
+
+            .likecounter2d{
+                pointer-events: none;
+                border: none;
+                width: auto;
+                background-color: #edf0f4;
+                height: 15px;
+                /* text-align: center; */
+                font-family: cursive;
+                font-weight: bold;
+                margin-top: 21px;
+                float: left;
+                margin-left: -7px;
+            }
             #heart{
 
                 float: left;
@@ -477,7 +491,7 @@
 
                 <div class="news_content">
                     <div class="detail">
-                       <% if (!news.getNews_Imgs().equalsIgnoreCase("")) {%>
+                        <% if (!news.getNews_Imgs().equalsIgnoreCase("")) {%>
                         <img class="news_img" src="<%=news.getNews_Imgs()%>" alt="image"/>
                         <%}%>
 
@@ -564,7 +578,7 @@
                     %>
                     <c:set var = "thumplikenewsup" scope = "session" value = "<%=thumplikenewsup%>"/>
                     <i id="heart" class= "${thumplikenewsup ?("fas fa-heart fa-2x"):("far fa-heart fa-2x")}"></i>            
-                    <input class="likecounter2a"  type="text" name="" value="<%=total_likenews%>" />
+                    <input class="likecounter2d"  type="text" name="" value="<%=total_likenews%>" />
 
 
                 </div>
@@ -588,7 +602,7 @@
             <div class="user_name"> <%=listallcommentbynewid.get(i).getUser().getUsername()%></div>
             <%--  <div><%=listallcommentbynewid.get(i).getContent()%> </div> --%>
             <div class="cmt_detail" id="content_<%=commentid%>"> <c:out value="${conntentofcomment}"/> </div>
-            <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0,16)%></div>  
+            <div id="time_cmt"><%= "At: " + listallcommentbynewid.get(i).getDatetime().substring(0, 16)%></div>  
             <i  class= "${thumpup ?("fas fa-heart fa-1x"):("far fa-heart fa-1x")}"></i>             
             <input class="likecounter2c"  type="text"  value="<%=numberlike%>" />
         </div>

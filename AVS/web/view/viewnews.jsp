@@ -45,22 +45,26 @@
                     <!--trang addnew-->
                     <div class="algoid">Add News:</div>
                     <form method="POST" action="manage" enctype="multipart/form-data" onsubmit="return validate();">
+
                         <input type="hidden" name="managetype" value="addnews">
-                        <div>Title: </div> <div><input id="title" type="text" name="title" value=""></div><br>
-                        <div>Content:  </div> <div><textarea id="content" name="content" rows="10" cols="30" ></textarea></div><br>
-                        <div>Source: </div> <div><input type="text" name="source" value=""></div>
-                        <br>
-                        <div>Image: <br>
-                            <img id="image" class="adminNewsImg" src=""><br>
-                            <input id="file" type="file" name="image"><br>
+                        <div class="adminNewsLeft">
+                            <div>Title: </div> <div><input id="title" type="text" name="title" value=""></div><br>
+                            <div>Content:  </div> <div><textarea id="content" name="content" rows="10" cols="30" ></textarea></div><br>
+                            <div>Source: </div> <div><input type="text" name="source" value=""></div>
                         </div>
-                        <br><br>
+                        <div class="adminNewsRight">
+                            <div>Image: <br>
+                                <img id="image" class="adminNewsImg" src=""><br>
+                                <input id="file" type="file" name="image"><br>
+                            </div>
+                        </div>
+                        <br>
                         <div class="modifynewsleftlast">
                             <input id="but" type="submit" value="Save">
                         </div>
                     </form>
                     <br>    
-                    <div class="modifynewsrightlast" style="margin-top: -18px;">
+                    <div class="modifynewsrightlast">
                         <a href="admin?category=news"><button id="but1">Cancel</button></a>
                     </div>
 
