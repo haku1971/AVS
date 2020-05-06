@@ -50,14 +50,17 @@
                         <div>Content:  </div> <div><textarea id="content" name="content" rows="10" cols="30" ></textarea></div><br>
                         <div>Source: </div> <div><input type="text" name="source" value=""></div>
                         <br>
-                        <div>Image: <img id="image" src="" /><input id="file" type="file" name="image"></div>
+                        <div>Image: 
+                            <img id="image" class="adminNewsImg" src="">
+                            <input id="file" type="file" name="image"><br>
+                        </div>
                         <br><br>
-                        <div class="modifyleftlast">
+                        <div class="modifynewsleftlast">
                             <input id="but" type="submit" value="Save">
                         </div>
                     </form>
                     <br>    
-                    <div class="modifyrightlast" style="margin-top: -18px;">
+                    <div class="modifynewsrightlast" style="margin-top: -18px;">
                         <a href="admin?category=news"><button id="but1">Cancel</button></a>
                     </div>
 
@@ -84,6 +87,7 @@
                                 <input id="file" type="file" name="image"><br>
                             </div>
                         </div>
+                        <br>
                         <div class="modifynewsleftlast">
                             <input id="but" type="submit" value="Save">
                         </div>
@@ -92,7 +96,7 @@
                         <form style="display: inline-block" method="POST" action="manage" onsubmit="return confirm('<%=action%> this news?');">
                             <input type="hidden" name="managetype" <%if (news.getDeleted() == 1) {%>value="restorenews"<%} else {%>value="deletenews"<%}%>>
                             <input type="hidden" name="newsid" value="<%=news.getNewsID()%>" >
-                            <input type="submit" id="but" <%if (news.getDeleted() == 1) {%>value="Restore"<%} else {%>value="Delete"<%}%>>
+                            <input type="submit" id="but1" <%if (news.getDeleted() == 1) {%>value="Restore"<%} else {%>value="Delete"<%}%>>
                         </form>
                         <a href="admin?category=news"><button id="but1">Back</button></a>
                     </div>

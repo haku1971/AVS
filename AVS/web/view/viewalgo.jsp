@@ -59,21 +59,28 @@
                             <div>Category: </div>
                             <div style="margin-bottom: 20px;">
                                 <input type="hidden" name="category" id="inputcategory" value="1">
-                                <select id="selectcategory" onchange="changeCategory(this)">
-                                    <% for (int i = 0; i < listalgocategory.size(); i++) {%>
-                                    <option value="<%=listalgocategory.get(i).getCategoryID()%>"><%=listalgocategory.get(i).getCategoryName()%></option>
-                                    <%}%>
-                                </select></div>
+                                <div class="inline">
+                                    <div class="select">
+                                        <select id="selectcategory" onchange="changeCategory(this)">
+                                            <% for (int i = 0; i < listalgocategory.size(); i++) {%>
+                                            <option value="<%=listalgocategory.get(i).getCategoryID()%>"><%=listalgocategory.get(i).getCategoryName()%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modify">
                             <div>Resource: </div> <div style="margin-bottom: 20px;"><input type="text" name="resource" value=""></div>
                         </div>  
 
                         <br>
-                        <div class="modifyleft"><div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="60" ></textarea></div></div>
-                        <div class="modifyright"><div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="60" ></textarea></div></div>
-                        <div class="modifyleft"><div>Code JS:  </div> <div><textarea name="codejs" rows="10" cols="60" ></textarea></div></div>
-                        <div class="modifyright"><div>Description: </div> <div><textarea id="description" name="description" rows="10" cols="60" ></textarea></div></div>
+                        <div class="modifyleft">
+                            <div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="60" ></textarea></div>
+                            <div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="60" ></textarea></div></div>
+                        <div class="modifyright">
+                            <div>Code JavaScript:  </div> <div><textarea name="codejs" rows="10" cols="60" ></textarea></div>
+                            <div>Description: </div> <div><textarea id="description" name="description" rows="10" cols="60" ></textarea></div></div>
                         <br>
                         <div class="modifyleftlast">
                             <input id="but" type="submit" value="Save">
@@ -101,20 +108,27 @@
                             <div>Category: </div>
                             <div style="margin-bottom: 20px;">
                                 <input type="hidden" name="category" id="inputcategory" value="<%=algo.getCategoryID()%>">
-                                <select id="selectcategory" onchange="changeCategory(this)">
-                                    <% for (int i = 0; i < listalgocategory.size(); i++) {%>
-                                    <option value="<%=listalgocategory.get(i).getCategoryID()%>"><%=listalgocategory.get(i).getCategoryName()%></option>
-                                    <%}%>
-                                </select></div>
+                                <div class="inline">
+                                    <div class="select">
+                                        <select id="selectcategory" onchange="changeCategory(this)">
+                                            <% for (int i = 0; i < listalgocategory.size(); i++) {%>
+                                            <option value="<%=listalgocategory.get(i).getCategoryID()%>"><%=listalgocategory.get(i).getCategoryName()%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modify">
                             <div>Resource: </div> <div style="margin-bottom: 20px;"><input type="text" name="resource" value="<%=algo.getAlgoResource()%>"></div>
                         </div>  
                         <br>
-                        <div class="modifyleft"><div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="60" ><%=algo.getAlgoCodeJava()%></textarea></div></div>
-                        <div class="modifyright"><div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="60" ><%=algo.getAlgoCodeCplus()%></textarea></div></div>
-                        <div class="modifyleft"><div>Code JS:  </div> <div><textarea name="codejs" rows="10" cols="60" ><%=algo.getAlgoCodeJS()%></textarea></div></div>
-                        <div class="modifyright"><div>Description: </div> <div><textarea id="description" name="description" rows="10" cols="60" ><%=algo.getAlgoDescription()%></textarea></div></div>
+                        <div class="modifyleft">
+                            <div>Code Java:  </div> <div><textarea name="codejava" rows="10" cols="60" ><%=algo.getAlgoCodeJava()%></textarea>
+                            </div><div>Code C++:  </div> <div><textarea name="codecpp" rows="10" cols="60" ><%=algo.getAlgoCodeCplus()%></textarea></div></div>
+                        <div class="modifyright">
+                            <div>Code JavaScript:  </div> <div><textarea name="codejs" rows="10" cols="60" ><%=algo.getAlgoCodeJS()%></textarea></div>
+                            <div>Description: </div> <div><textarea id="description" name="description" rows="10" cols="60" ><%=algo.getAlgoDescription()%></textarea></div></div>
                         <br>
                         <div class="modifyleftlast">
                             <input id="but" type="submit" value="Save">

@@ -100,7 +100,7 @@
                 <%
                     for (int i = 0; i < listallnews.size(); i++) {%>
 
-                <a href="newsdetail?id=<%=listallnews.get(i).getNewsID()%>"><%=listallnews.get(i).getNewstittles()%> </a>
+                    <a style="color: dodgerblue; text-decoration: none" href="newsdetail?id=<%=listallnews.get(i).getNewsID()%>"><%=listallnews.get(i).getNewstittles()%> </a>
                 <br>     
                 <p>By: <%=listallnews.get(i).getUser().getFullname()%> <p>
                 <p>Content: <%=listallnews.get(i).getNews_shortdescription()%> <p>  

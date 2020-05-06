@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="css/admin.css" />
+        
         <%
             String category = (String) request.getAttribute("category");
             if (category == null) {
@@ -28,9 +29,9 @@
             <button type="button" class="collapsible" id="historybutton">History</button>
             <div class="content show">
                 <ul class="list_items"> 
-                    <a style=" text-decoration: none;" id="user_history" href="admin?category=user_history""><li>User history</li></a>
-                    <a style=" text-decoration: none;" id="algo_history" href="admin?category=algo_history""><li>Algorithm history</li></a>
-                    <a style=" text-decoration: none;" id="news_history" href="admin?category=news_history""><li>News history</li></a>
+                    <a style=" text-decoration: none;" id="user_history" href="admin?category=user_history"><li>User history</li></a>
+                    <a style=" text-decoration: none;" id="algo_history" href="admin?category=algo_history"><li>Algorithm history</li></a>
+                    <a style=" text-decoration: none;" id="news_history" href="admin?category=news_history"><li>News history</li></a>
 
                 </ul>
             </div>

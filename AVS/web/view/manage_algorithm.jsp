@@ -46,28 +46,36 @@
 
             <div class="adminright">
                 <form action="admin">
-                    <input type="hidden" name="category" value="algorithm">
-                    <input type="hidden" id="inputcolumn" name="columnname">
-                    <input type="hidden" id="inputsorttype" name="sortorder">
-                    <div class="sortby">
-                        Sort by: 
-                        <select id="select_column" onchange="changeselected()">
-                            <option value="algo_id">ID</option>
-                            <option value="algo_name">Name</option>
-                            <option value="category_id">Category</option>
-                            <option value="algo_comparestatus">Visualized</option>
-                        </select>
-                        <select id="select_sorttype" onchange="changeselected()">
-                            <option value="ASC">Ascending</option>
-                            <option value="DESC">Descending</option>
-                        </select>
-                        <input type="checkbox" id="checkshowdeleted" name="showdeleted">
-                        <label for="showdeleted"> Show Deleted</label>
-                    </div>
+                    <div class="tool">
+                        <input type="hidden" name="category" value="algorithm">
+                        <input type="hidden" id="inputcolumn" name="columnname">
+                        <input type="hidden" id="inputsorttype" name="sortorder">
+                        <div class="sortby">
+                            Sort by: 
+                            <div class="inline">
+                                <div class="select">
+                                    <select id="select_column" onchange="changeselected()">
+                                        <option value="algo_id">ID</option>
+                                        <option value="algo_name">Name</option>
+                                        <option value="category_id">Category</option>
+                                        <option value="algo_comparestatus">Visualized</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="inline">
+                                <div class="select">
+                                    <select id="select_sorttype" onchange="changeselected()">
+                                        <option value="ASC">Ascending</option>
+                                        <option value="DESC">Descending</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="checkshowdeleted" name="showdeleted">
+                            <label for="showdeleted"> Show Deleted</label>
+                            <input type="text" id="txtsearch" name="searchtxt"/>
+                            <input class="adminSearch" type="submit" value="Search" />     
 
-                    <div class="searchbox">
-                        <input type="text" id="txtsearch" name="searchtxt"/>
-                        <input type="submit" value="Search" />       
+                        </div>
                     </div>
                 </form>
                 <% if (allalgolist.isEmpty()) {%>
@@ -121,7 +129,7 @@
                     </div>
 
                 </div>
-                        <%}%>
+                <%}%>
             </div>
 
         </div>

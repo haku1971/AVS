@@ -368,7 +368,7 @@ body {
     transition: 0.25s;
     color: #ffffff;
     background: #333333;
-    margin-right: 85px;
+    /*margin-right: 85px;*/
 }
 .box #gg{
     background: none;
@@ -866,8 +866,8 @@ body {
 .changeinfo_box select {
     background-color: #EDF0F4;
     position: absolute;
-    bottom: 335px;
-    left: 1055px;
+    bottom: 375px;
+    left: 1053px;
     width: 273px;
     height: 40px;
     border-radius: 5px;
@@ -876,7 +876,7 @@ body {
 }
 
 .changeinfo_box select:hover {
-    background: orange;
+    background: white;
 }
 
 .changeinfo_box select option {
@@ -902,9 +902,8 @@ body {
 
 .changeinfo_box #span3 {
     position: absolute;
-    top: 248px;
+    top: 225px;
     left: 500px;
-    color: red;
     font-family: fantasy;
 }
 
@@ -924,7 +923,7 @@ body {
 
 .changeinfo_box #span6 {
     position: absolute;
-    top: 250px;
+    top: 225px;
     left: 940px;
     font-family: fantasy;
 }
@@ -1326,12 +1325,12 @@ body {
     text-align: justify;
     color: #0066ff;
     font-family: fantasy;
-    margin-right: 10%;
+    margin-top: -5px;
 }
 
 .changeinfo_box #gender {
     position: absolute;
-    bottom: 363px;
+    bottom: 385px;
     left: 616px;
 
 }
@@ -1350,7 +1349,7 @@ body {
 
 }
 .post_button:hover {
-    background:#63f2cf;
+    background:#59daba;
 }
 
 .save_button {
@@ -1365,7 +1364,7 @@ body {
 
 }
 .save_button:hover {
-    background:#63f2cf;
+    background:#59daba;
 }
 
 .cancel_button {
@@ -1380,7 +1379,7 @@ body {
 
 }
 .cancel_button:hover {
-    background:#63f2cf;
+    background:#59daba;
 }
 
 .edit_button {
@@ -1395,7 +1394,7 @@ body {
 
 }
 .edit_button:hover {
-    background:#63f2cf;
+    background:#59daba;
 }
 
 .delete_button {
@@ -1410,12 +1409,12 @@ body {
 
 }
 .delete_button:hover {
-    background:#63f2cf;
+    background:#59daba;
 }
 
 .admin_delete {
 
-    background:orange;
+    background:#8744c9;
     border:none;
     padding:10px;
     color:white;
@@ -1425,7 +1424,7 @@ body {
 
 }
 .admin_delete:hover {
-    background:#63f2cf;
+    background:#9d58e2;
 }
 
 .cmt_items {
@@ -1700,4 +1699,8 @@ body {
 }
 .buttonheader.type5:hover{
     color: white;
+}
+
+textarea{
+    resize: none;
 }

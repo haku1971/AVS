@@ -21,6 +21,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/admin.css" />
 
         <%
             ArrayList<History> allhistorylist = (ArrayList<History>) request.getAttribute("historylist");
@@ -43,6 +44,7 @@
                 <%if (!allhistorylist.isEmpty()) {%>
                 <div class="table100">
                     <%if (historytype == "user_history") {%>
+                    <div class="emptyTable">User History</div>
                     <table>
                         <tr class="rowadmin head">
                             <th class="columnadmin">ID</th>
@@ -64,6 +66,7 @@
                     <%}%>
 
                     <%if (historytype == "algo_history") {%>
+                    <div class="emptyTable">Algorithm History</div>
                     <table>
                         <tr class="rowadmin head">
                             <th class="columnadmin">ID</th>
@@ -85,6 +88,7 @@
                     <%}%>
 
                     <%if (historytype == "news_history") {%>
+                    <div class="emptyTable">News History</div>
                     <table>
                         <tr class="rowadmin head">
                             <th class="columnadmin">ID</th>
@@ -109,7 +113,7 @@
                             String currentpageurl = "admin?category=" + historytype;
                         %>
                         <% for (int i = 1; i <= totalpage; i++) {%>
-                        <a href="<%=currentpageurl + "&page=" + i%>"><%=i%></a>
+                        <a class="pagging" href="<%=currentpageurl + "&page=" + i%>"><%=i%></a>
                         <%}%>
                     </div>
                 </div>

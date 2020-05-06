@@ -33,9 +33,9 @@
                 <h1>Edit Profile</h1>
                 <img src="images\user.png" />
                 <div class="changeinfo_item1">
-                    <span id="span1">Full-Name: </span>
+                    <span id="span1">Full Name: </span>
                     <input class="su_changeinfor" type="text" name="fullname" value="<c:out value='${requestScope["fullname"]}' />"/></br>
-                    <span id="span2">DOB: </span>
+                    <span id="span2">Date of Birth: </span>
                     <input class="su_changeinfor" type="date" name="birthday" value="<c:out value='${requestScope["birthday"]}' />" /></br>
 
                     <%if (session.getAttribute("errorAge") != null) {
@@ -47,9 +47,8 @@
                        session.removeAttribute("errorAge");  }
                     %>
                 </div>
-                <span id="span3">(***)</span>
+                <span id="span3">Gender:</span>
                 <div id="gender">
-                    <span>Gender :</span>
                     <%if (request.getAttribute("sex").equals("Male")) {%>
                     <input type="radio" id="male" name="gender" value="1" checked="true">Male</input>
                     <input type="radio" id="female" name="gender" value="0">Female</input>
@@ -68,7 +67,7 @@
                     <%
                       session.removeAttribute("errorPhone");  }
                     %>
-                    <span id="span5">WorkPlace: </span>
+                    <span id="span5">Work Place: </span>
                     <input class="su_changeinfor" type="text" name="workplace" value="<c:out value='${requestScope["workplace"]}' />"/></br>
                 </div>
                 <span id="span6">Jobs: </span>

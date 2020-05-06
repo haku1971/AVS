@@ -43,14 +43,20 @@
             <%@include file="adminleft.jsp" %> 
 
             <div class="adminright">
-                <div class="sortby">
-                    Get data from 
-                    <select id="select_daystracking" onchange="changeDaysTracking(this.value)">
-                        <option value="1">1</option>
-                        <option value="7">7</option>
-                        <option value="30">30</option>
-                    </select> 
-                    days ago.
+                <div class="tool">
+                    <div class="sortby">
+                        Get data from 
+                        <div class="inline">
+                            <div class="select">
+                                <select id="select_daystracking" onchange="changeDaysTracking(this.value)">
+                                    <option value="1">1</option>
+                                    <option value="7">7</option>
+                                    <option value="30">30</option>
+                                </select> 
+                            </div>
+                        </div>
+                        days ago.
+                    </div>
                 </div>
                 <script>
                     var select_daystracking = document.getElementById("select_daystracking");
@@ -67,9 +73,9 @@
                         window.location.assign("admin?category=tracking&daystracking=" + value);
                     }
                 </script>
-                <% if(alltrackinglist.isEmpty()) {%>
+                <% if (alltrackinglist.isEmpty()) {%>
                 <div class="emptyTable">No data recorded!</div>
-                <%} else{%>
+                <%} else {%>
                 <div class="table100">
                     <table>
                         <tr class="rowadmin head">

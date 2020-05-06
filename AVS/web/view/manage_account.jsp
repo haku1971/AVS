@@ -41,26 +41,38 @@
             <%@include file="adminleft.jsp" %> 
             <div class="adminright">
                 <form action="admin">
-                    <input type="hidden" name="category" value="account">
-                    <input type="hidden" id="inputcolumn" name="columnname">
-                    <input type="hidden" id="inputsorttype" name="sortorder">
-                    <div class="sortby">
-                        Sort by: 
-                        <select id="select_column" onchange="changeselected()">
-                            <option value="n.user_id">ID</option>
-                            <option value="user_name">Name</option>
-                            <option value="user_rolenum">Role</option>
-                            <option value="ban_status">Ban Status</option>
-                        </select>
-                        <select id="select_sorttype" onchange="changeselected()">
-                            <option value="ASC">Ascending</option>
-                            <option value="DESC">Descending</option>
-                        </select>
-                    </div>
+                    <div class="tool">
+                        <input type="hidden" name="category" value="account">
+                        <input type="hidden" id="inputcolumn" name="columnname">
+                        <input type="hidden" id="inputsorttype" name="sortorder">
+                        <div class="sortby">
+                            Sort by: 
+                            <div class="inline">
+                                <div class="select">
+                                    <select id="select_column" onchange="changeselected()">
+                                        <option value="n.user_id">ID</option>
+                                        <option value="user_name">Name</option>
+                                        <option value="user_rolenum">Role</option>
+                                        <option value="ban_status">Ban Status</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="inline">
+                                <div class="select">
+                                    <select id="select_sorttype" onchange="changeselected()">
+                                        <option value="ASC">Ascending</option>
+                                        <option value="DESC">Descending</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="text" id="txtsearch" name="searchtxt"/>
+                            <input class="adminSearch" type="submit" value="Search" /> 
+                        </div>
 
-                    <div class="searchbox">
-                        <input type="text" id="txtsearch" name="searchtxt"/>
-                        <input type="submit" value="Search" /> 
+
+                        <div class="searchbox">
+                            Total user: <%=totaluser%>
+                        </div>
                     </div>
                 </form>
                 <% if (alluserlist.isEmpty()) {%>
@@ -101,7 +113,7 @@
 
                 </div>
                 <%}%>
-                <div>Total user: <%=totaluser%></div>
+
             </div>
 
         </div>

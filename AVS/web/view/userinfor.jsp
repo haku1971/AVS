@@ -27,11 +27,11 @@
                     <tr> 
                         <td><h1>My Profile</h1></td> 
                         <td>
-                            <span class="span_info">User-Name :</span>
+                            <span class="span_info">Username:</span>
                             <input class="su_infor3" type="text" name="username" value="<c:out value='${requestScope["username"]}' />"readonly/>
                         </td>
                         <td>
-                            <span class="span_info">Full-Name :</span>
+                            <span class="span_info">Full Name:</span>
                             <input class="su_infor3" type="text" name="fullname" value="<c:out value='${requestScope["fullname"]}' />"readonly/>
                         </td>
                     </tr>
@@ -40,11 +40,11 @@
                             <img src="images\user.png" />
                         </td>
                         <td>
-                            <span class="span_info">E-mail :</span>
+                            <span class="span_info">E-mail:</span>
                             <input class="su_infor3" type="text" name="email" value="<c:out value='${requestScope["mail"]}' />" readonly/>
                         </td>
                         <td>
-                            <span class="span_info">Age :</span>
+                            <span class="span_info">Date of Birth:</span>
                             <input class="su_infor3" type="date" name="birthday" value="<c:out value='${requestScope["birthday"]}' />" readonly/>
                         </td>
                     </tr>
@@ -58,21 +58,21 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="span_info">Gender :</span>
+                            <span class="span_info">Gender:</span>
                             <input class="su_infor3" type="text" name="gender" value="<c:out value='${requestScope["gender"]}' />"readonly/>
                         </td>
                         <td>
-                            <span class="span_info">Work-Place</span>
+                            <span class="span_info">Work Place:</span>
                             <input class="su_infor3" type="text" name="workplace" value="<c:out value='${requestScope["workplace"]}' />"readonly/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span class="span_info">Phone :</span>
+                            <span class="span_info">Phone:</span>
                             <input class="su_infor3" type="text" name="phone" value="<c:out value='${requestScope["phone"]}' />"readonly/>
                         </td>
                         <td>
-                            <span class="span_info">Jobs :</span>
+                            <span class="span_info">Jobs:</span>
                             <input class="su_infor3" type="text" name="job" value="<c:out value='${requestScope["jobname"]}' />"readonly/>
                         </td>
                     </tr>

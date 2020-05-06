@@ -48,31 +48,37 @@
 
             <div class="adminright">
                 <form action="admin">
-                    <input type="hidden" name="category" value="news">
-                    <input type="hidden" id="inputcolumn" name="columnname">
-                    <input type="hidden" id="inputsorttype" name="sortorder">
-                    <div class="sortby">
-                        Sort by: 
-                        <select id="select_column" onchange="changeselected()">
-                            <option value="news_id">ID</option>
-                            <option value="news_Tittles">Title</option>
-                            <option value="news_DateRealease">Create Date</option>
-                            <option value="user_Name">Editor</option>
-                            <option value="news_Imgs">Image</option>
-                        </select>
-                        <select id="select_sorttype" onchange="changeselected()">
-                            <option value="ASC">Ascending</option>
-                            <option value="DESC">Descending</option>
-                        </select>
-                        <input type="checkbox" id="checkshowdeleted" name="showdeleted">
-                        <label for="showdeleted"> Show Deleted</label>
+                    <div class="tool">
+                        <input type="hidden" name="category" value="news">
+                        <input type="hidden" id="inputcolumn" name="columnname">
+                        <input type="hidden" id="inputsorttype" name="sortorder">
+                        <div class="sortby">
+                            Sort by: 
+                            <div class="inline">
+                                <div class="select">
+                                    <select id="select_column" onchange="changeselected()">
+                                        <option value="news_id">ID</option>
+                                        <option value="news_Tittles">Title</option>
+                                        <option value="news_DateRealease">Create Date</option>
+                                        <option value="user_Name">Editor</option>
+                                        <option value="news_Imgs">Image</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="inline">
+                                <div class="select">
+                                    <select id="select_sorttype" onchange="changeselected()">
+                                        <option value="ASC">Ascending</option>
+                                        <option value="DESC">Descending</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="checkshowdeleted" name="showdeleted">
+                            <label for="showdeleted"> Show Deleted</label>
+                            <input type="text" id="txtsearch" name="searchtxt"/>
+                            <input class="adminSearch" type="submit" value="Search" />     
+                        </div>
                     </div>
-
-                    <div class="searchbox">
-                        <input type="text" id="txtsearch" name="searchtxt"/>
-                        <input type="submit" value="Search" />       
-                    </div>
-
                 </form>
                 <% if (allnews.isEmpty()) {%>
                 <div class="emptyTable">No data!</div>

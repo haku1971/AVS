@@ -60,7 +60,7 @@ and open the template in the editor.
     content: none;
 }
 .sortby{
-    margin: 20px 0px 20px 30px;
+    margin: 20px 0px 20px 3px;
     float: left;
     display: inline-block;
 }
@@ -72,9 +72,12 @@ and open the template in the editor.
 
 .searchbox{
     margin-top: 20px;
-    margin-right: 30px;
+    margin-right: 3px;
     float: right;
     display: block;
+    font-size: 20px;
+    font-weight: bold;
+    color: #5aa6e2;
 }
 
 .admininfo_box{
@@ -127,7 +130,7 @@ and open the template in the editor.
 }
 
 .notban{
-    color: lawngreen;
+    color: green;
     display: inline-block;
 }
 
@@ -137,8 +140,9 @@ and open the template in the editor.
 }
 
 #but{
+    margin-top: 20px;
     border-radius: 4px;
-    background-color: #f4511e;
+    background-color: #5aa6e2;
     border: none;
     color: #FFFFFF;
     text-align: center;
@@ -147,12 +151,13 @@ and open the template in the editor.
     transition: all 0.5s;
     cursor: pointer;
     float: left;
-    margin-left: 15px;
+    margin-right: 15px;
 }
 
 #but1 {
+    margin-top: 20px;
     border-radius: 4px;
-    background-color: #f4511e;
+    background-color: #5aa6e2;
     border: none;
     color: #FFFFFF;
     text-align: center;
@@ -161,12 +166,13 @@ and open the template in the editor.
     transition: all 0.5s;
     cursor: pointer;
     float: left;
-    margin-left: 15px;
+    margin-right: 15px;
 }
 
 #but2 {
+    margin-top: 20px;
     border-radius: 4px;
-    background-color: #f4511e;
+    background-color: #5aa6e2;
     border: none;
     color: #FFFFFF;
     text-align: center;
@@ -233,37 +239,32 @@ and open the template in the editor.
 
 .modifyright{
     /*display: inline-block;*/
-    width: 45%;
+    width: 50%;
     float: right;
 
 }
 
 .modifyleft{
     /*display: inline-block;*/
-    width: 45%;
+    width: 50%;
     float: left;
 }
 
 .modifyleftlast{
     display: inline-block;
-    width: 15%;
     float: left;
 }
 
 .modifynewsleftlast{
-     display: inline-block;
-    width: 45%;
     float: left;
 }
 
 .modifyrightlast{
     float: left;
-    margin-left: -5%;
 }
 
 .modifynewsrightlast{
     float: left;
-    margin-left: -35%;
 }
 
 
@@ -302,6 +303,7 @@ table {
     font-size: 14px;
     color: #808080;
     line-height: 1.4;
+    background-color: #fff;
 }
 
 .table100 th {
@@ -348,6 +350,7 @@ table {
 }
 
 .adminNewsRight{
+    min-height: 350px;
     float: right;
     width: 40%;
 }
@@ -357,8 +360,97 @@ table {
 }
 
 .emptyTable{
+    margin: 20px auto;
     text-align: center;
     font-weight: bold;
     font-size: 30px;
     color: #3b4754;
+}
+
+.tool{
+    width: 95%;
+    margin: auto;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #fff;
+    background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+    display: none;
+}
+/* Custom Select */
+.select {
+    margin-left: 5px;
+    position: relative;
+    display: flex;
+    width: 10em;
+    height: 2em;
+    line-height: 2;
+    background: #fff;
+    overflow: hidden;
+    border-radius: .25em;
+}
+select {
+    flex: 1;
+    padding: 0 .5em;
+    color: black;
+    cursor: pointer;
+}
+/* Arrow */
+.select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #5aa6e2;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+    color: white;
+}
+/* Transition */
+.select:hover::after {
+    color: black;
+}
+
+.inline{
+    display: inline-block;
+}
+
+.sortby #txtsearch{
+    width: 200px;
+    height: 20px;
+    border: 2px solid gray;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.adminSearch{
+    width: 65px;
+    height: 30px;
+    border: 2px solid gray;
+    border-radius: 20px;
+    background-color: #5aa6e2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.adminSearch:hover{
+    background-color: white;
+    color: black;
+    box-shadow: 5px 5px #888888;
 }
