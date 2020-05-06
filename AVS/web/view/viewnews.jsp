@@ -50,8 +50,8 @@
                         <div>Content:  </div> <div><textarea id="content" name="content" rows="10" cols="30" ></textarea></div><br>
                         <div>Source: </div> <div><input type="text" name="source" value=""></div>
                         <br>
-                        <div>Image: 
-                            <img id="image" class="adminNewsImg" src="">
+                        <div>Image: <br>
+                            <img id="image" class="adminNewsImg" src=""><br>
                             <input id="file" type="file" name="image"><br>
                         </div>
                         <br><br>

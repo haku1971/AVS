@@ -76,6 +76,7 @@
                     </div>
                 </form>
                 <% if (alluserlist.isEmpty()) {%>
+                <br>
                 <div class="emptyTable">No data!</div>
                 <%} else {%>
                 <div class="table100">

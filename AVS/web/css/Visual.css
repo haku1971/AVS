@@ -20,7 +20,7 @@ and open the template in the editor.
     /*width: 40%;*/
     /*min-width: 700px;*/
     overflow: auto;
-    margin-left: 30px;
+    margin-left: 20px;
     display: inline-block;
 }
 
@@ -81,6 +81,7 @@ and open the template in the editor.
 #stepButton{
     margin-bottom: 20px;
     margin-top: 20px;
+    
 }
 
 #progress{
@@ -315,6 +316,7 @@ pre{
     color: inherit;
     position: relative;
     z-index: 0;
+    
 }
 .button:focus {
     outline: none;
@@ -339,7 +341,7 @@ pre{
 
 /* Nuka */
 .button--nuka {
-    margin: 9px;
+    margin: 7px;
     transition: color 0.3s;
     transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
