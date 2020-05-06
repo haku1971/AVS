@@ -31,17 +31,15 @@
         <%@include file="header.jsp" %> 
         <style>
             .hiddeninputtag{
-                overflow:hidden;
-                pointer-events:none;
-                border: none;
-                width: 0px;
-                height: 0px;
+                display: none;
             }
             .show {
+                margin-left: 5px;
+                display: block;
                 overflow: auto;
                 border:solid 1px;
-                width:200px;
-                height: 80px;
+                width:400px;
+                height: 50px;
             }
             .likecounter1{           
                 pointer-events:none;
@@ -299,8 +297,8 @@
 
             <script>
                 var checkedit = 0;
-                setSaveButtonStatus(<%=commentid%>, 'hidden');
-                setCancelButtonStatus(<%=commentid%>, 'hidden');
+                setSaveButtonStatus(<%=commentid%>, 'none');
+                setCancelButtonStatus(<%=commentid%>, 'none');
                 //   setTxteditStatus(<%=commentid%>, 'hidden');
 
                 $('#txtedit_<%=commentid%>').keyup(function () {
@@ -348,16 +346,16 @@
 
                         document.getElementById("txtedit_" + commentid).className = "show";
 
-                        setDeleteButtonStatus(commentid, "hidden");
+                        setDeleteButtonStatus(commentid, "none");
                         // setTxteditStatus(commentid, "visible");
-                        setSaveButtonStatus(commentid, 'visible');
-                        setCancelButtonStatus(commentid, "visible");
-                        setEditButtonStatus(commentid, "hidden");
-                        document.getElementById('content_' + commentid).style.visibility = 'hidden';
+                        setSaveButtonStatus(commentid, 'block');
+                        setCancelButtonStatus(commentid, "block");
+                        setEditButtonStatus(commentid, "none");
+                        document.getElementById('content_' + commentid).style.display = 'none';
                     }
                 }
                 function btndelete(divpositiontodelete, commentid, newsid) {
-                    setDeleteButtonStatus(commentid, "hidden");
+                    setDeleteButtonStatus(commentid, "none");
 
                     $.ajax({
                         type: "post",
@@ -370,29 +368,29 @@
                 }
 
                 function setSaveButtonStatus(btn_position, status) {
-                    document.getElementById('save_' + btn_position).style.visibility = status;
+                    document.getElementById('save_' + btn_position).style.display = status;
                 }
                 function setCancelButtonStatus(btn_position, status) {
-                    document.getElementById('cancel_' + btn_position).style.visibility = status;
+                    document.getElementById('cancel_' + btn_position).style.display = status;
                 }
                 function setTxteditStatus(btn_position, status) {
                     document.getElementById("txtedit_" + btn_position).style.visibility = status;
                 }
                 function setDeleteButtonStatus(btn_position, status) {
-                    document.getElementById('delete_' + btn_position).style.visibility = status;
+                    document.getElementById('delete_' + btn_position).style.display = status;
                 }
                 function setEditButtonStatus(btn_position, status) {
-                    document.getElementById('edit_' + btn_position).style.visibility = status;
+                    document.getElementById('edit_' + btn_position).style.display = status;
                 }
                 function cancel(commentid) {
                     document.getElementById("txtedit_" + commentid).className = "hiddeninputtag";
-                    setDeleteButtonStatus(commentid, 'visible');
+                    setDeleteButtonStatus(commentid, 'block');
                     //  setTxteditStatus(commentid, 'hidden');
-                    setSaveButtonStatus(commentid, 'hidden');
-                    setCancelButtonStatus(commentid, "hidden");
-                    setEditButtonStatus(commentid, 'visible');
+                    setSaveButtonStatus(commentid, 'none');
+                    setCancelButtonStatus(commentid, "none");
+                    setEditButtonStatus(commentid, 'block');
                     //  document.getElementById("txtedit_" + commentid).value= content;
-                    document.getElementById('content_' + commentid).style.visibility = 'visible';
+                    document.getElementById('content_' + commentid).style.display = 'block';
                     checkedit = 0;
                 }
                 function escapeHtml(unsafe) {
@@ -406,11 +404,11 @@
                 function savecomment(commentid) {
                     document.getElementById("txtedit_" + commentid).className = "hiddeninputtag";
                     checkedit = 0;
-                    setSaveButtonStatus(commentid, "hidden");
-                    setDeleteButtonStatus(commentid, "visible");
+                    setSaveButtonStatus(commentid, "none");
+                    setDeleteButtonStatus(commentid, "block");
                     //  setTxteditStatus(commentid, "hidden");
-                    setCancelButtonStatus(commentid, "hidden");
-                    setEditButtonStatus(commentid, "visible");
+                    setCancelButtonStatus(commentid, "none");
+                    setEditButtonStatus(commentid, "block");
                     //var txt_edit_content = document.getElementById("txtedit_" + commentid).value;
                     var txt_edit_content = $('#txtedit_' + commentid).val().trim().replace("\\s+", " ");
 
@@ -419,7 +417,7 @@
                     } else {
                         $('#save_' + commentid).attr("disabled", false);
                         document.getElementById('content_' + commentid).innerHTML = escapeHtml(txt_edit_content);
-                        document.getElementById('content_' + commentid).style.visibility = 'visible';
+                        document.getElementById('content_' + commentid).style.display = 'block';
                         $.ajax({
                             type: "post",
                             url: "DeleteCommentServlet",
