@@ -44,7 +44,7 @@
                 <%if (!allhistorylist.isEmpty()) {%>
                 <div class="table100">
                     <%if (historytype == "user_history") {%>
-                    <div class="emptyTable">User History</div>
+                    <div class="tableName">User History</div>
                     <table>
                         <tr class="rowadmin head">
                             <th class="columnadmin">ID</th>
@@ -66,7 +66,7 @@
                     <%}%>
 
                     <%if (historytype == "algo_history") {%>
-                    <div class="emptyTable">Algorithm History</div>
+                    <div class="tableName">Algorithm History</div>
                     <table>
                         <tr class="rowadmin head">
                             <th class="columnadmin">ID</th>
@@ -88,7 +88,7 @@
                     <%}%>
 
                     <%if (historytype == "news_history") {%>
-                    <div class="emptyTable">News History</div>
+                    <div class="tableName">News History</div>
                     <table>
                         <tr class="rowadmin head">
                             <th class="columnadmin">ID</th>

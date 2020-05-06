@@ -95,10 +95,10 @@ public class TrackingDAO {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String statementstring = "SELECT tableSum.algo_ID, tableSum.totalTime, tableSum.TotalPeople \n"
-                    + "from (SELECT tabletime.algo_ID, Sum(tabletime.totalTime) as totalTime,Count(tabletime.IP) as TotalPeople,ROW_NUMBER() over(order by algo_ID asc) as rownumber \n"
-                    + "FROM (select *, ROW_NUMBER() over(order by history_ID desc) as rownumber from History where dateAccess > CURRENT_TIMESTAMP-?) as tabletime\n"
-                    + "GROUP BY algo_ID) as tableSum where tableSum.rownumber >= ? and tableSum.rownumber <= ?";
+            String statementstring = "SELECT tableSum.algo_ID,algo.algo_Name, tableSum.totalTime, tableSum.TotalPeople \n" +
+"                    from (SELECT tabletime.algo_ID, Sum(tabletime.totalTime) as totalTime,Count(tabletime.IP) as TotalPeople,ROW_NUMBER() over(order by algo_ID asc) as rownumber \n" +
+"                   FROM (select *, ROW_NUMBER() over(order by history_ID desc) as rownumber from History where dateAccess > CURRENT_TIMESTAMP-?) as tabletime\n" +
+"                    GROUP BY algo_ID) as tableSum inner join Algorithm algo on tableSum.algo_ID= algo.algo_ID where tableSum.rownumber >= ? and tableSum.rownumber <= ?";
 
             statement
                     = connection.prepareStatement(statementstring);
@@ -109,6 +109,7 @@ public class TrackingDAO {
             while (rs.next()) {
                 Tracking tracking = new Tracking();
                 tracking.setAlgoID(rs.getInt("algo_ID"));
+                tracking.setAlgoName(rs.getString("algo_Name"));
                 tracking.setTotalTime(new BigInteger(rs.getString("totalTime")));
                 tracking.setTotalPeople(rs.getInt("TotalPeople"));
                 listTracking.add(tracking);

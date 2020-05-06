@@ -57,6 +57,9 @@ public class SignupGoogleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
         String mail = "";
         String fullname = "";
         String userid = "";
@@ -97,6 +100,9 @@ public class SignupGoogleController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
         String dob = request.getParameter("birthday");
         String phone = request.getParameter("phone");
         String workplace = request.getParameter("workplace");

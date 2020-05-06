@@ -39,7 +39,9 @@ public class SignupController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
 
     }
 
@@ -55,6 +57,9 @@ public class SignupController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
         String mail = "";
         String fullname = "";
         String userid = "";
@@ -110,7 +115,10 @@ public class SignupController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String mail = request.getParameter("email");
@@ -177,7 +185,7 @@ public class SignupController extends HttpServlet {
 
             try {
                 UserDAO usermod = new UserDAO();
-                username=username.toLowerCase();
+                username = username.toLowerCase();
                 password = Base64.getEncoder().encodeToString(password.getBytes());
                 usermod.insertUser(username, password, fullname, birthday, job,
                         workplace, gender, mail, phone);

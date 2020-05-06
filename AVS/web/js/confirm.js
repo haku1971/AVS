@@ -6,7 +6,7 @@
 
 
 function checkyes() {
-  if (confirm('Bạn có muốn thay đổi này?')) {
+  if (confirm('Do you want to save this change?')) {
     document.getElementById("changeinfor").submit();
   }else{
       event.preventDefault()

@@ -18,7 +18,16 @@ public class Tracking {
     private Date dateAccess;
     private BigInteger totalTime;
     private int totalPeople;
+    private String AlgoName;
 
+    public String getAlgoName() {
+        return AlgoName;
+    }
+
+    public void setAlgoName(String AlgoName) {
+        this.AlgoName = AlgoName;
+    }
+    
     public int getTotalPeople() {
         return totalPeople;
     }

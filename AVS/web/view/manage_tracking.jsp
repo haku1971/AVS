@@ -80,6 +80,7 @@
                     <table>
                         <tr class="rowadmin head">
                             <th class="columnadmin">AlgoID</th>
+                             <th class="columnadmin">Algorithm Name</th>
                             <th class="columnadmin">Total Time</th>
                             <th class="columnadmin">Total People</th>
 
@@ -87,6 +88,7 @@
                         <% for (int i = 0; i < alltrackinglist.size(); i++) {%> 
                         <tr class="rowadmin">
                             <td class="columnadmin"><%=alltrackinglist.get(i).getAlgoID()%></td>
+                            <td class="columnadmin"><%=alltrackinglist.get(i).getAlgoName() %></td>
                             <%
                                 long millisecon = alltrackinglist.get(i).getTotalTime().longValue();
                                 long day = TimeUnit.MILLISECONDS.toDays(millisecon);

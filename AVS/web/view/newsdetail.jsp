@@ -355,15 +355,20 @@
                     }
                 }
                 function btndelete(divpositiontodelete, commentid, newsid) {
-                    setDeleteButtonStatus(commentid, "none");
+                    if (confirm('Do you want to delete this comment?')) {
+                        setDeleteButtonStatus(commentid, "none");
 
-                    $.ajax({
-                        type: "post",
-                        url: "DeleteCommentServlet", //this is my servlet
-                        data: {newsid: newsid, commentid: commentid}
-                    });
-                    var divdelete = document.getElementById(divpositiontodelete);
-                    divdelete.remove();
+                        $.ajax({
+                            type: "post",
+                            url: "DeleteCommentServlet", //this is my servlet
+                            data: {newsid: newsid, commentid: commentid}
+                        });
+                        var divdelete = document.getElementById(divpositiontodelete);
+                        divdelete.remove();
+                    } else {
+                        event.preventDefault()
+                    }
+
 
                 }
 
@@ -401,6 +406,7 @@
                             .replace(/"/g, "&quot;")
                             .replace(/'/g, "&#039;");
                 }
+              
                 function savecomment(commentid) {
                     document.getElementById("txtedit_" + commentid).className = "hiddeninputtag";
                     checkedit = 0;
@@ -415,20 +421,24 @@
                     if (txt_edit_content === "") {
                         $('#save_' + commentid).attr("disabled", true);
                     } else {
-                        $('#save_' + commentid).attr("disabled", false);
-                        document.getElementById('content_' + commentid).innerHTML = escapeHtml(txt_edit_content);
-                        document.getElementById('content_' + commentid).style.display = 'block';
-                        $.ajax({
-                            type: "post",
-                            url: "DeleteCommentServlet",
-                            data: {commentcontentedit: txt_edit_content, commentid: commentid},
-                            success: function (msg) {
-                                $('#output').append(msg);
-                            }
-                        });
+                        if (confirm('Do you want to save this change?')) {
+                            $('#save_' + commentid).attr("disabled", false);
+                            document.getElementById('content_' + commentid).innerHTML = escapeHtml(txt_edit_content);
+                            document.getElementById('content_' + commentid).style.display = 'block';
+                            $.ajax({
+                                type: "post",
+                                url: "DeleteCommentServlet",
+                                data: {commentcontentedit: txt_edit_content, commentid: commentid},
+                                success: function (msg) {
+                                    $('#output').append(msg);
+                                }
+                            });
+                        } else {
+                            cancel(commentid);
+                            event.preventDefault();
+                        }
                     }
                 }
-
             </script>
         </div>
 
@@ -458,24 +468,25 @@
         </div>
 
         <script>
-            function checkContentIsEmpty() {
-                if ($('#txtsavedb').val().trim() === "") {
+                function checkContentIsEmpty() {
+                    if ($('#txtsavedb').val().trim() === "") {
 
-                    $('#postcomment').attr("disabled", true);
-                } else {
-                    $('#postcomment').attr("disabled", false);
+                        $('#postcomment').attr("disabled", true);
+                    } else {
+                        $('#postcomment').attr("disabled", false);
+                    }
                 }
-            }
-            $('#txtsavedb').keyup(function () {
-                // Get the Login Name value and trim it
-                var name = $('#txtsavedb').val().trim();
-                // Check if empty of not
-                if (name.length < 1) {
-                    $('#postcomment').attr("disabled", true);
-                } else {
-                    $('#postcomment').attr("disabled", false);
+                $('#txtsavedb').keyup(function () {
+                    // Get the Login Name value and trim it
+                    var name = $('#txtsavedb').val().trim();
+                    // Check if empty of not
+                    if (name.length < 1) {
+                        $('#postcomment').attr("disabled", true);
+                    } else {
+                        $('#postcomment').attr("disabled", false);
+                    }
                 }
-            });
+                );
 
         </script>
 

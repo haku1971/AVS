@@ -110,7 +110,7 @@
 
                 } else {%>
                 <p>${searchnoti}</p>
-                <p>Do not have list of news now</p>
+                <p>There is no news list</p>
                 <%}%>
             </div>        
             <div class="col-lm-4" >
