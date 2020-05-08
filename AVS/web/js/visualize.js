@@ -826,7 +826,7 @@ function bubbleSort(array) {
                 color.push("swap");
                 eachStepArr.push(newarray(temparray));
                 highlightcheck.push([j, j + 1]);
-                highlightcode.push([5]);
+                highlightcode.push([4,5,6]);
                 if (i > 0) {
                     highlightsorted.push(newsortedarray(i));
                 } else {
@@ -841,7 +841,7 @@ function bubbleSort(array) {
         }
     }
     highlightcheck.push(0);
-    highlightcode.push([8]);
+    highlightcode.push([9]);
     eachStepArr.push(newarray(temparray));
     totalstep = eachStepArr.length - 1;
     highlightsorted.push(newsortedarray(initarray.length));
