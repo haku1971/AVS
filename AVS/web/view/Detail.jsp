@@ -21,11 +21,9 @@
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%=algo.getAlgoName()%></title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src="js/visualize.js"></script>
         <script type="text/javascript" src="js/readmore.js"></script>
         <link rel="stylesheet" type="text/css" href="css/Visual.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
 
     </head>
 

@@ -8,9 +8,6 @@
 <!DOCTYPE html>
 <html> <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="../css/style.css" />
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
         <meta name="google-signin-scope" content="profile email">
         <title>Login</title>
 

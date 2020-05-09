@@ -35,24 +35,16 @@ public class AlgorithmDAO {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT algo_ID algoid,algo_Name algoname ,algo_CodeJava algocodejava,algo_CodeCplus algocodecplus\n"
-                    + ",algo_Description algodescription,category_ID categoryid,algo_DateTime algodate,algo_CodeJS algocodejs ,\n"
-                    + "algo_Resource algoresource   FROM Algorithm WHERE algo_CompareStatus = 1 AND category_ID = ? ORDER BY algo_ID";
+            String sql = "SELECT algo_ID algoid,algo_Name algoname  FROM Algorithm \n"
+                    + "WHERE algo_CompareStatus = 1 AND category_ID = ? ORDER BY algo_ID";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryID);
             rs = statement.executeQuery();
             while (rs.next()) {
                 int algoid = rs.getInt("algoid");
                 String algoname = rs.getString("algoname");
-                String algocodejava = rs.getString("algocodejava");
-                String algocodecplus = rs.getString("algocodecplus");
-                String algocodejs = rs.getString("algocodejs");
-                String algodescription = rs.getString("algodescription");
-                int categoryid = rs.getInt("categoryid");
-                String algodatetime = rs.getString("algodate");
-                String algoresource = rs.getString("algoresource");
                 int number_of_step = 0;
-                listAllAlgorithms.add(new Algorithm(algoid, algoname, algocodejava, algocodecplus, algocodejs, algodescription, categoryid, algodatetime, algoresource, number_of_step));
+                listAllAlgorithms.add(new Algorithm(algoid, algoname, "", "", "", "", 0, "", "", number_of_step));
             }
         } catch (Exception e) {
             throw e;
@@ -101,7 +93,7 @@ public class AlgorithmDAO {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            statement = connection.prepareStatement("Select * from Algorithm");
+            statement = connection.prepareStatement("Select algo_ID from Algorithm");
             rs = statement.executeQuery();
             while (rs.next()) {
                 Algorithm algo = new Algorithm();

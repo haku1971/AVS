@@ -365,7 +365,7 @@ public class UserDAO {
     }
 
     public int getUserRole(int id) throws Exception {
-        String query = "select * from Users join UserRoles on Users.user_ID = UserRoles.user_ID where Users.user_ID=?";
+        String query = "select role_ID from Users join UserRoles on Users.user_ID = UserRoles.user_ID where Users.user_ID=?";
         Connection conn = null;
         PreparedStatement ps = null; //de nhan paramenter
         ResultSet rs = null;

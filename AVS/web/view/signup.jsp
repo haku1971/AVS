@@ -16,9 +16,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="../css/style.css" />
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <!--<meta name="google-signin-client_id" content="912620741556-58chb0o18k50h03oblr4gr5t8vrqi139.apps.googleusercontent.com">-->
         <title>Sign Up</title>
 
     </head>

@@ -1,28 +1,2 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId());
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-    console.log('id_token: ' + googleUser.getAuthResponse().id_token);
-
-    //do not post all above info to the server because that is not secure.
-    //just send the id_token
-
-    var redirectUrl = 'login';
-
-    //using jquery to post data dynamically
-    var form = $('<form action="' + redirectUrl + '" method="post">' +
-            '<input type="text" name="id_token" value="' +
-            googleUser.getAuthResponse().id_token + '" />' +
-            '</form>');
-    $('body').append(form);
-    form.submit();
-}
+function onSignIn(d){var a=d.getBasicProfile();console.log("ID: "+a.getId());console.log("Name: "+a.getName());console.log("Image URL: "+a.getImageUrl());console.log("Email: "+a.getEmail());console.log("id_token: "+d.getAuthResponse().id_token);var c="login";var b=$('<form action="'+c+'" method="post"><input type="text" name="id_token" value="'+d.getAuthResponse().id_token+'" /></form>');$("body").append(b);b.submit()};

@@ -22,10 +22,8 @@
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%=news.getNewstittles()%></title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-        <script src="https://kit.fontawesome.com/5a03b2ca60.js" crossorigin="anonymous"></script>      
-        <link rel="stylesheet" type="text/css" href="css/style.css" />        
+        <script src="https://kit.fontawesome.com/5a03b2ca60.js" crossorigin="anonymous"></script>          
 
 
         <%@include file="header.jsp" %> 
@@ -187,7 +185,7 @@
                     <div class="subdetail">                       
                         <ul>
                             <li>Time: <%=news.getNewsdaterealease().substring(0, 16)%></li>
-                            <li>Create By:<%=news.getUser().getFullname()%></li>
+                            <li>Create By: <%=news.getUser().getFullname()%></li>
                             <li>Has <%=listallcommentbynewid.size()%> comment in this news</li>
                         </ul>
                     </div>

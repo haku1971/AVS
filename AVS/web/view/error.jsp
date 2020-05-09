@@ -10,7 +10,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
-        <link rel="stylesheet" type="text/css" href="../css/style.css" />
         <title>Error</title>     
     </head>
     <body>
@@ -26,8 +25,6 @@
             <h1>Algorithm Visualize System</h1>
             
         </div>
-    </div>
-</div>
 <%@include file="footer.jsp" %>
 <script type="text/javascript" src="js/code.js"></script>
 </body>

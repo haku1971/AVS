@@ -35,7 +35,7 @@ public class CategoryDAO {
         ResultSet rs = null;
         try {
             connection = dbManager.getConnection();
-            String sql = "SELECT * FROM Category";
+            String sql = "SELECT category_ID, category_Name FROM Category";
             statement = connection.prepareStatement(sql);
             rs = statement.executeQuery();
             while (rs.next()) {
