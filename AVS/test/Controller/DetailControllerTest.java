@@ -22,6 +22,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.mockito.Mock;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
@@ -31,77 +32,154 @@ public class DetailControllerTest {
 
     public DetailControllerTest() {
     }
+     
+    protected int nullroleid;
+    protected int firstalgoid;
+    protected int secondalgoid;
 
-    //protected int length_of_algorithm_and_category_get_fromdb= 10;
-//    private ArrayList<Algorithm> createAlgoNameAndCategory(int length) {
-//       ArrayList<Algorithm> listofalgorithmandcategory= new ArrayList<>();
-//        for (int i = 0; i < length; i++) {
-//          listofalgorithmandcategory.add(createAlogithm(i));
-//        }
-//        return listofalgorithmandcategory;
-//    }
-//    private Algorithm createAlogithm(int id) {
-//        Algorithm algorithm = new Algorithm(id, "Algorithm_"+id, "", "", "", "", 0, "", "", 0);
-//        return algorithm;
-//    }
-//    @Before
-//    public void setUp() throws Exception {
-//        MockitoAnnotations.initMocks(this);          
-//         when(algorithmmodel.getAlgoNameAndCategory()).thenAnswer(new Answer<ArrayList<Algorithm>>() {          
-//                 public ArrayList<Algorithm> answer(InvocationOnMock invocation)
-//                    throws Throwable {           
-//                  return createAlgoNameAndCategory(length_of_algorithm_and_category_get_fromdb);
-//            }             
-//            
-//        });
-//         
-//         
-//    }
-//   
-    protected int algoid;
-
-    @Test
-    public void TestAlgoIdIsNotNumberOrNull() {
-        assertTrue("ALgoID is not an integer", !Character.isDigit(algoid));
+    @Before
+    public void setUp() {
+        firstalgoid = 1;
+        secondalgoid = 2;
     }
-
+  
     @Test
-    public void TestAlgoIdEqualNumberInRange1to10() {
-        algoid = 5;
-        int expectedvalue = 5;
-        assertEquals("Success", expectedvalue, algoid);
+    public void roleIdIsNull() {
+        assertTrue("Only admin can access this page, redirecting to homepage",nullroleid != firstalgoid && nullroleid != secondalgoid);
     }
-
+   
+     @Test
+    public void roleIdIsTwo() {
+       int expectedalgoid= 2;       
+        assertEquals("Only admin can access this page, redirecting to homepage", expectedalgoid,secondalgoid);
+    }
+   
+     @Test
+    public void roleIdIsOne() {
+       int expectedalgoid= 1;       
+        assertEquals("Success", expectedalgoid,firstalgoid);
+    }
     @Test
-    public void TestAlgoIdEqualNumberOne() {
-        algoid = 1;
-        int expectedvalue = 1;
-        assertEquals("Success", expectedvalue, algoid);
+    public void roleIdIsThree() throws Exception {
+       int expectedalgoid= 3;      
+               AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
     }
-
     @Test
-    public void TestAlgoIdEqualNumberTen() {
-        algoid = 10;
-        int expectedvalue = 10;
-        assertEquals("Success", expectedvalue, algoid);
+    public void roleIdIsFour() throws Exception {
+       int expectedalgoid= 4; 
+               AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
+       
     }
-
     @Test
-    public void TestAlgoIdEqualNumberZero() {
-        algoid = 0;
-        int expectedvalue = 0;
-        assertEquals("AlgoIdNotExist", expectedvalue, algoid);
+    public void roleIdIsFive() throws Exception {
+       int expectedalgoid= 5;    
+        AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
     }
-
-//    @Test
-//    public void testArrayAlgorithmAndCategorySizeValue() throws Exception {
-//        int expecte_result_record= 10;        
-//        assertEquals("Success", expecte_result_record, algorithmmodel.getAlgoNameAndCategory().size());
-//    }
-//    @Test
-//    public void testArrayAlgorithmAndCategorySizeValueIsNull() throws Exception {          
-//        length_of_algorithm_and_category_get_fromdb= 0;
-//        assertNull("Fail to get list of AlgoNameAndCategory",  algorithmmodel.getAlgoNameAndCategory().size());
-//    }
-//   
+    @Test
+    public void roleIdIsSix() throws Exception {
+        
+       int expectedalgoid= 6;   
+       AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
+         
+     
+    }
+    
+    @Test
+    public void roleIdIsSeven() throws Exception {
+       int expectedalgoid= 7;
+               AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
+    }
+    @Test
+    public void roleIdIsEight() throws Exception {
+       int expectedalgoid= 8;       
+               AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
+    }
+    @Test
+    public void roleIdIsNine() throws Exception {
+       int expectedalgoid= 9;       
+               AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
+    }
+    @Test
+    public void roleIdIsTen() throws Exception {
+       int expectedalgoid= 9; 
+               AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
+    }
+    @Test
+    public void roleIdIsEleven() throws Exception {
+       int expectedalgoid= 11; 
+               AlgorithmDAO test = mock(AlgorithmDAO.class);
+       when(test.getAlgoByID(expectedalgoid)).thenAnswer(new Answer<Algorithm>() {
+            public Algorithm answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new Algorithm(expectedalgoid, null, null, null, null, null, nullroleid, null, null, nullroleid);
+                  
+            }
+        });
+        assertEquals("Not exist", expectedalgoid,test.getAlgoByID(expectedalgoid).getAlgoID());
+    }
+    
 }

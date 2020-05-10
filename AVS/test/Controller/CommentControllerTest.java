@@ -5,9 +5,17 @@
  */
 package Controller;
 
+import DAO.NewsDAO;
+import DAO.UserDAO;
+import Model.Algorithm;
+import Model.News;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 /**
  *
@@ -18,26 +26,129 @@ public class CommentControllerTest {
     public CommentControllerTest() {
     }
 
-    protected String newsid = "";
+    protected int newsid;
 
     @Before
     public void setUp() {
+        newsid = 1;
     }
 
     @Test
-    public void testNewsIdIsEmptyOrNull() {
-        assertTrue("new id is not an integer", newsid == null || newsid.isEmpty());
+    public void newsIdIsTwo() throws Exception {
+        int expectednewsid = 2;
+        NewsDAO test = mock(NewsDAO.class);
+        when(test.getNewsByID(expectednewsid)).thenAnswer(new Answer<News>() {
+            public News answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new News(expectednewsid, null, null, null, null, null, null, newsid);
+
+            }
+        });
+        assertEquals("Only admin can access this page, redirecting to homepage", expectednewsid, test.getNewsByID(expectednewsid).getNewsID());
     }
 
     @Test
-    public void testNewsIdIsEqualZero() {
-        newsid = "0";
-        assertTrue("new not exist ", Integer.parseInt(newsid) == 0);
+    public void newsIdIsOne() throws Exception {
+        int expectednewsid = 1;
+        NewsDAO test = mock(NewsDAO.class);
+        when(test.getNewsByID(expectednewsid)).thenAnswer(new Answer<News>() {
+            public News answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new News(expectednewsid, null, null, null, null, null, null, newsid);
+
+            }
+        });
+        assertEquals("Success", expectednewsid, test.getNewsByID(expectednewsid).getNewsID());
     }
 
     @Test
-    public void testNewsIdIsBiggerThanZero() {
-        newsid = "1";
-        assertTrue("Success ", Integer.parseInt(newsid) >= 1);
+    public void newsIdIsThree() throws Exception {
+        int expectednewsid = 3;
+
+        NewsDAO test = mock(NewsDAO.class);
+        when(test.getNewsByID(expectednewsid)).thenAnswer(new Answer<News>() {
+            public News answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new News(expectednewsid, null, null, null, null, null, null, newsid);
+
+            }
+        });
+        assertEquals("Not exist", expectednewsid, test.getNewsByID(expectednewsid).getNewsID());
+
+    }
+
+    @Test
+    public void newsIdIsFour() throws Exception {
+        int expectednewsid = 4;
+        NewsDAO test = mock(NewsDAO.class);
+        when(test.getNewsByID(expectednewsid)).thenAnswer(new Answer<News>() {
+            public News answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new News(expectednewsid, null, null, null, null, null, null, newsid);
+
+            }
+        });
+        assertEquals("Not exist", expectednewsid, test.getNewsByID(expectednewsid).getNewsID());
+
+    }
+
+    @Test
+    public void newsIdIsFive() throws Exception {
+        int expectednewsid = 5;
+        NewsDAO test = mock(NewsDAO.class);
+        when(test.getNewsByID(expectednewsid)).thenAnswer(new Answer<News>() {
+            public News answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new News(expectednewsid, null, null, null, null, null, null, newsid);
+
+            }
+        });
+        assertEquals("Not exist", expectednewsid, test.getNewsByID(expectednewsid).getNewsID());
+
+    }
+
+    @Test
+    public void newsIdIsZero() throws Exception {
+        int expectednewsid = 0;
+        NewsDAO test = mock(NewsDAO.class);
+        when(test.getNewsByID(expectednewsid)).thenAnswer(new Answer<News>() {
+            public News answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new News(expectednewsid, null, null, null, null, null, null, newsid);
+
+            }
+        });
+        assertEquals("Not exist", expectednewsid, test.getNewsByID(expectednewsid).getNewsID());
+
+    }
+
+    @Test
+    public void newsIdIsNull() throws Exception {
+        int expectednewsid = 0;
+        NewsDAO test = mock(NewsDAO.class);
+        when(test.getNewsByID(expectednewsid)).thenAnswer(new Answer<News>() {
+            public News answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new News(expectednewsid, null, null, null, null, null, null, newsid);
+
+            }
+        });
+        assertEquals("Not exist", expectednewsid, test.getNewsByID(expectednewsid).getNewsID());
+
+    }
+
+    @Test
+    public void newsIdIsSix() throws Exception {
+        int expectednewsid = 6;
+        NewsDAO test = mock(NewsDAO.class);
+        when(test.getNewsByID(expectednewsid)).thenAnswer(new Answer<News>() {
+            public News answer(InvocationOnMock invocation)
+                    throws Throwable {
+                return new News(expectednewsid, null, null, null, null, null, null, newsid);
+
+            }
+        });
+        assertEquals("Not exist", expectednewsid, test.getNewsByID(expectednewsid).getNewsID());
+
     }
 }
