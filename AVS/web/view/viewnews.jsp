@@ -69,6 +69,7 @@
                     <!--trang view-->
                     <div class="algoid">News ID: <%=news.getNewsID()%></div>
                     <form method="POST" action="manage" enctype="multipart/form-data" onsubmit="return validate();">
+                        <input type="hidden" name="userid" value="<%=news.getUser().getId()%>">
                         <input type="hidden" name="newsid" value="<%=news.getNewsID()%>" >
                         <input type="hidden" name="managetype" value="editnews">
                         <input type="hidden" name="imageurl" value="<%=news.getNews_Imgs()%>" >

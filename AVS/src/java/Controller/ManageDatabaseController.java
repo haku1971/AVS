@@ -247,6 +247,7 @@ public class ManageDatabaseController extends HttpServlet {
                     break;
                 }
                 case "editnews": {
+                    String userid = request.getParameter("userid");
                     String newsid = request.getParameter("newsid");
                     String title = request.getParameter("title").trim();
                     String content = request.getParameter("content").trim();
@@ -261,7 +262,7 @@ public class ManageDatabaseController extends HttpServlet {
                     news.setNewscontent(content);
                     news.setNewsresource(source);
                     User user = new User();
-                    user.setId(Integer.parseInt(adminid));
+                    user.setId(Integer.parseInt(userid));
                     news.setUser(user);
 
                     InputStream inputStream = null; // input stream of the upload file
