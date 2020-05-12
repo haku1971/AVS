@@ -34,7 +34,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td rowspan="4">
+                        <td rowspan="3">
                             <img src="images\user.png" />
                         </td>
                         <td>
@@ -44,14 +44,6 @@
                         <td>
                             <span class="span_info">Date of Birth:</span>
                             <input class="su_infor3" type="date" name="birthday" value="<c:out value='${requestScope["birthday"]}' />" readonly/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            &nbsp;
-                        </td>
-                        <td>
-                            &nbsp;
                         </td>
                     </tr>
                     <tr>

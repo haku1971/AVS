@@ -51,7 +51,7 @@ public class NewsController extends HttpServlet {
                 NewsDAO newsmodeldao = new NewsDAO();
                 ArrayList<News> listallnews = null;
 
-                int recordPerPage = 2;
+                int recordPerPage = 10;
                 int page = 1;
                 int numberOfPage = 0;
 
@@ -115,7 +115,7 @@ public class NewsController extends HttpServlet {
             try {
                 NewsDAO newsmodeldao = new NewsDAO();
                 ArrayList<News> listallnews = null;
-                int recordPerPage = 2;
+                int recordPerPage = 10;
                 int page = 1;
                 int numberOfPage = 0;
                 if (request.getParameter("page") != null) {

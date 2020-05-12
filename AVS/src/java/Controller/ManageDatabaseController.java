@@ -86,7 +86,7 @@ public class ManageDatabaseController extends HttpServlet {
                 case "manageaccount": {
                     String userid = request.getParameter("userid");
                     String ban = request.getParameter("ban");
-                    String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
 
                     if (ban.equals("ban")) {
                         userdao.banUserID(Integer.parseInt(userid));
@@ -110,7 +110,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String codejs = request.getParameter("codejs").trim();
                     String description = request.getParameter("description").trim();
                     String categoryid = request.getParameter("category").trim();
-                    String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")) + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String resource = request.getParameter("resource").trim();
 
                     AlgorithmDAO algodao = new AlgorithmDAO();
@@ -153,7 +153,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String codejs = request.getParameter("codejs").trim();
                     String description = request.getParameter("description").trim();
                     String categoryid = request.getParameter("category").trim();
-                    String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString().trim();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString().trim();
                     String resource = request.getParameter("resource").trim();
 
                     codejava = codejava.replaceAll("â", "&emsp;");
@@ -180,7 +180,7 @@ public class ManageDatabaseController extends HttpServlet {
                 }
                 case "deletealgo": {
                     String algoid = request.getParameter("algoid");
-                    String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     System.out.println(algoid);
 
                     AlgorithmDAO algodao = new AlgorithmDAO();
@@ -192,7 +192,7 @@ public class ManageDatabaseController extends HttpServlet {
                 }
                 case "restorealgo": {
                     String algoid = request.getParameter("algoid");
-                    String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     System.out.println(algoid);
 
                     AlgorithmDAO algodao = new AlgorithmDAO();
@@ -207,7 +207,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String title = request.getParameter("title").trim();
                     String content = request.getParameter("content").trim();
                     String source = request.getParameter("source").trim();
-                    String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String imageurl = "";
                     InputStream inputStream = null; // input stream of the upload file
 
@@ -296,7 +296,7 @@ public class ManageDatabaseController extends HttpServlet {
                 }
                 case "deletenews": {
                     String newsid = request.getParameter("newsid");
-                    String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
 
                     NewsDAO newsdao = new NewsDAO();
                     newsdao.deleteNews(Integer.parseInt(newsid));
@@ -308,7 +308,7 @@ public class ManageDatabaseController extends HttpServlet {
                 }
                 case "restorenews": {
                     String newsid = request.getParameter("newsid");
-                    String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
+                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
 
                     NewsDAO newsdao = new NewsDAO();
                     newsdao.restoreNews(Integer.parseInt(newsid));
@@ -321,7 +321,7 @@ public class ManageDatabaseController extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
+            String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
             System.out.println("----Execute at " + currenttime + "----");
             System.out.println(ex);
             response.sendRedirect("error?error=" + ex);

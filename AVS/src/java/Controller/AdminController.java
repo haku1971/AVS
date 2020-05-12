@@ -103,7 +103,7 @@ public class AdminController extends HttpServlet {
                     int totaluser = userdao.getTotalUser();
 
                     int totalpage = (int) Math.ceil((double) userdao.getAllSearchUser(searchstring) / rowperpage);
-
+                    request.setAttribute("currentPage", page);
                     request.setAttribute("totalpage", totalpage);
                     request.setAttribute("searchstring", searchstring);
                     request.setAttribute("columnname", columnname);
@@ -139,7 +139,7 @@ public class AdminController extends HttpServlet {
                     algolist = algodao.getPagingSearchAlgo(searchstring, deleted, columnname, sortorder, start, end);
 
                     int totalpage = (int) Math.ceil((double) algodao.getAllSearchAlgo(searchstring, deleted) / rowperpage);
-
+                    request.setAttribute("currentPage", page);
                     request.setAttribute("totalpage", totalpage);
                     request.setAttribute("showdeleted", deleted);
                     request.setAttribute("searchstring", searchstring);
@@ -175,7 +175,7 @@ public class AdminController extends HttpServlet {
                     newslist = newsdao.getPagingSearchNews(searchstring, deleted, columnname, sortorder, start, end);
 
                     int totalpage = (int) Math.ceil((double) newsdao.getAllSearchNews(searchstring, deleted) / rowperpage);
-
+                    request.setAttribute("currentPage", page);
                     request.setAttribute("totalpage", totalpage);
                     request.setAttribute("showdeleted", deleted);
                     request.setAttribute("searchstring", searchstring);
@@ -195,7 +195,7 @@ public class AdminController extends HttpServlet {
                     int totalpage = (int) Math.ceil((double) historydao.getTotalUsersHistory() / rowperpage);
 
                     category = "history";
-
+                    request.setAttribute("currentPage", page);
                     request.setAttribute("totalpage", totalpage);
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
@@ -212,7 +212,7 @@ public class AdminController extends HttpServlet {
                     int totalpage = (int) Math.ceil((double) historydao.getTotalAlgoHistory() / rowperpage);
 
                     category = "history";
-
+                    request.setAttribute("currentPage", page);
                     request.setAttribute("totalpage", totalpage);
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
@@ -229,7 +229,7 @@ public class AdminController extends HttpServlet {
                     int totalpage = (int) Math.ceil((double) historydao.getTotalNewsHistory() / rowperpage);
 
                     category = "history";
-
+                    request.setAttribute("currentPage", page);
                     request.setAttribute("totalpage", totalpage);
                     request.setAttribute("historylist", historylist);
                     request.setAttribute("category", category);
@@ -241,11 +241,11 @@ public class AdminController extends HttpServlet {
                 case "tracking": {
                     int daysago;
                     if (request.getParameter("daystracking") == null || request.getParameter("daystracking").equals("")) {
-                        daysago = 1; 
+                        daysago = 1;
                     } else {
                         daysago = Integer.parseInt(request.getParameter("daystracking")); //1 là trong 24h qua, 7 là trong 1 tuần qua, 30 là trong 1 tháng qua
                     }
-                    
+
                     TrackingDAO trackingdao = new TrackingDAO();
                     ArrayList<Tracking> trackinglist = trackingdao.getPagingTrackingHistory(start, end, daysago);
                     int totalpage = (int) Math.ceil((double) trackingdao.getTotalTrackingHistory(daysago) / rowperpage);

@@ -28,6 +28,7 @@
             String searchstring = (String) request.getAttribute("searchstring");
             String columnname = (String) request.getAttribute("columnname");
             String sortorder = (String) request.getAttribute("sortorder");
+            int currentPage = (Integer) request.getAttribute("currentPage");
         %>
     </head>
 
@@ -117,9 +118,13 @@
                             String searchtxturl = "&searchtxt=" + searchstring;
                             String currenturl = currentpageurl + columnnameurl + sortorderurl + showdeletedurl + searchtxturl;
                         %>
-                        <% for (int i = 1; i <= totalpage; i++) {%>
+                        <% for (int i = 1; i <= totalpage; i++) {
+                                if (currentPage == i) {%>
                         <a class="pagging" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
-                        <%}%>
+                        <%} else {%>
+                        <a class="notactive" href="<%=currenturl + "&page=" + i%>"><%=i%></a>
+                        <%}
+                            }%>
                         <div class="addBtn">
                             <a href="addalgo"><button class="buttonheader type4">Add</button></a>
                         </div>

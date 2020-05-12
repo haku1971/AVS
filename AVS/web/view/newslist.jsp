@@ -24,6 +24,7 @@
             }
 
             .pagination a.active {
+                margin-bottom: 15px;
                 background-color: dodgerblue;
                 color: white;
                 content: none;

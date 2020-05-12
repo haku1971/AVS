@@ -63,16 +63,6 @@
                             &nbsp;
                             <%}%>
                         </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="span_info1">UserName:</span>
-                            <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)" maxlength="15" required/>
-                            <span class="red_star">(*)</span>
-                        </td>
-                    </tr>
-                    <tr>
                         <td>
                             <%if (request.getAttribute("errorMail") != null) {
                             %>
@@ -85,9 +75,13 @@
                             &nbsp;
                             <%}%>
                         </td>
-
                     </tr>
                     <tr>
+                        <td>
+                            <span class="span_info1">UserName:</span>
+                            <input class="su_info1" type="text" name="username" placeholder="6 to 15 characters, contain:a-z,0-9,(-),(_)" maxlength="15" required/>
+                            <span class="red_star">(*)</span>
+                        </td>
                         <td>
                             <span class="span_info1">Email:</span>
                             <input class="su_info1a" type="text" name="email" placeholder="xyz@qwe.abc.com"required value=<%=email%> readonly/>
@@ -132,7 +126,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="span_info1">DoB:</span>
+                            <span class="span_info1">Date ò Birth:</span>
                             <input class="su_info3" type="date" name="birthday" value="1900-01-01"/>
                         </td>
                         <td>
@@ -151,9 +145,11 @@
                     <tr>
                         <td>
                             <div class="signup_item5">
-                                <span>Gender :</span>
-                                <input type="radio" id="male" name="gender" value="1" checked="true">Male</input>
-                                <input type="radio" id="female" name="gender" value="0">Female</input>
+                                <span class="span_info0">Gender :</span>
+                                <div class="signupgender">
+                                    <input type="radio" id="male" name="gender" value="1" checked="true">Male</input>
+                                    <input type="radio" id="female" name="gender" value="0">Female</input>
+                                </div>
                             </div>
                         </td>
                         <td>

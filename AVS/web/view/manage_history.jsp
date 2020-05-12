@@ -23,6 +23,7 @@
             ArrayList<History> allhistorylist = (ArrayList<History>) request.getAttribute("historylist");
             String historytype = (String) request.getAttribute("historytype");
             int totalpage = (Integer) request.getAttribute("totalpage");
+            int currentPage = (Integer) request.getAttribute("currentPage");
         %>
     </head>
 
@@ -108,9 +109,13 @@
                         <%
                             String currentpageurl = "admin?category=" + historytype;
                         %>
-                        <% for (int i = 1; i <= totalpage; i++) {%>
-                        <a class="pagging" href="<%=currentpageurl + "&page=" + i%>"><%=i%></a>
-                        <%}%>
+                        <% for (int i = 1; i <= totalpage; i++) {
+                                if (currentPage == i) {%>
+                        <a class="pagging"> <%=i%></a>
+                        <%} else {%>    
+                        <a class="notactive" href="<%=currentpageurl + "&page=" + i%>"><%=i%></a>
+                        <%}
+                            }%>
                     </div>
                 </div>
                 <%} else {%>

@@ -53,60 +53,65 @@ public class SortStepServlet extends HttpServlet {
     }
     static int countquicksort = 0;
 
-    static int partition(int array[], int low, int high) {
+   public static void quickSort(int[] arr, int left, int right) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }
+        if (left >= right) {
+            return;
+        }
+        int middle = left + (right - left) / 2;
+        int pivot = arr[middle];
+        int i = left, j = right;
 
-        int pivot = array[high];
-        int i = (low - 1);
+        while (i <= j) {
 
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
+            while (arr[i] < pivot) {
                 i++;
-                int temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
+            }
+            while (arr[j] > pivot) {
+                j--;
+            }
+ 
+            if (i <= j) {            
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                i++;
+                j--;
                 countquicksort++;
             }
         }
-
-        int temp = array[i + 1];
-        array[i + 1] = array[high];
-        array[high] = temp;
-        countquicksort++;
-        return (i + 1);
-    }
-
-    static void quickSort(int array[], int low, int high) {
-        if (low < high) {
-            int pi = partition(array, low, high);
-            quickSort(array, low, pi - 1);
-            quickSort(array, pi + 1, high);
+        if (left < j) {
+            quickSort(arr, left, j);
         }
-
+        if (right > i) {
+            quickSort(arr, i, right);
+        }
     }
-
-    public static int insertionSort(int arr[]) {
-        int count = 0;
-        int n = arr.length;
-        for (int i = 1; i < n; ++i) {
-            int key = arr[i];
-            int j = i - 1;
-
-            /* Move elements of arr[0..i-1], that are 
-             greater than key, to one position ahead 
-             of their current position */
-            while (j >= 0 && arr[j] > key) {
-                count++;
-                arr[j + 1] = arr[j];
-                j = j - 1;
-
+    
+    public static int insertionSort(int[] arr) {
+        //base case
+        if (arr.length <= 1) {
+            return 0;
+        }
+        int shifts = 0;
+        //starting at 2nd element as first element is already sorted.
+        //Loop Invariant - left part of the array is already sorted.
+        for (int i = 1; i < arr.length; i++) {
+            int moveMe = arr[i];
+            int j = i;
+            while (j > 0 && moveMe < arr[j - 1]) {
+                //Move element
+                arr[j] = arr[j - 1];
+                --j;
+                //increase the count as element swap is happend
+                ++shifts;
             }
-            count++;
-            arr[j + 1] = key;
-
+            arr[j] = moveMe;
         }
-        return count;
+        return shifts;
     }
-
     public static int bubbleSort(int arr[]) {
         int n = arr.length;
         int count = 0;
@@ -124,22 +129,6 @@ public class SortStepServlet extends HttpServlet {
         }
         return count;
     }
-
-    /*
-     protected void doGet(HttpServletRequest request, HttpServletResponse response, AlgoSort algo)
-     throws ServletException, IOException {
-     Gson gson = new Gson();
-     String jsonData = gson.toJson(algo);
-     // request.setAttribute(jsonData, jsonData);
-     //  request.getRequestDispatcher("jsonjs.js").forward(request, response);
-     PrintWriter out = response.getWriter();
-     try {
-     out.println(jsonData);
-     } finally {
-     out.close();
-     }
-     }
-     */
     // A utility function to get maximum value in arr[] 
     static int getMax(int arr[], int n) {
         int max = arr[0];
@@ -373,10 +362,7 @@ public class SortStepServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            countquicksort = 0;
-            countheap = 0;
-            countmerge = 0;
-            countradixsort = 0;
+
             //goi ve cai mang ma duoc js truyen di
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
@@ -391,7 +377,10 @@ public class SortStepServlet extends HttpServlet {
                 int choosefunctionkey = listAlgo.get(i).getAlgoID();
                 listAlgo.get(i).setNumber_of_step(chooseSortFunctionByAlgoID(choosefunctionkey, tempArray(jsFileArray)));
             }
-
+            countquicksort = 0;
+            countheap = 0;
+            countmerge = 0;
+            countradixsort = 0;
             String jsonData = parser.toJson(listAlgo);
             PrintWriter out = response.getWriter();
 
