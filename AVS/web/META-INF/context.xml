@@ -15,7 +15,7 @@ username: tomcat
 pass: XrNwS1ar
 -->
 <Context path="/AVS">
-  <Environment name="serverName" type="java.lang.String" value="35.240.165.190"/>
+  <Environment name="serverName" type="java.lang.String" value="35.198.201.195"/>
   <Environment name="port" type="java.lang.String" value="1433"/>
   <Environment name="user" type="java.lang.String" value="sa"/>
   <Environment name="password" type="java.lang.String" value="232Ger$3fg"/>
