@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -230,7 +231,8 @@ public class AlgorithmDAO {
     }
 
     public void insertAlgo(Algorithm algo) throws Exception {
-        String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
+        String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " 
+                    + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
         String query = "Insert into [Algorithm] (algo_Name, algo_CodeJava, algo_CodeCplus, algo_CodeJS, algo_Description, \n"
                 + "category_ID, algo_DateTime, algo_Resource, algo_Files, algo_CompareStatus, delete_Status)\n"
                 + "values (?, ?, ?, ?, ?, ?, ?, ?, 'null', 0, 0)";
@@ -318,7 +320,6 @@ public class AlgorithmDAO {
     }
 
     public void updateAlgo(Algorithm algo) throws Exception {
-        String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
         String query = "update Algorithm\n"
                 + "set algo_Name=?, algo_CodeJava=?,algo_CodeCplus=?,algo_CodeJS=?,\n"
                 + "algo_Description=?,category_ID=?,algo_DateTime=?,algo_Resource=?\n"
@@ -335,7 +336,7 @@ public class AlgorithmDAO {
             ps.setString(4, algo.getAlgoCodeJS());
             ps.setString(5, algo.getAlgoDescription());
             ps.setInt(6, algo.getCategoryID());
-            ps.setString(7, currenttime);
+            ps.setString(7, algo.getAlgoDatetime());
             ps.setString(8, algo.getAlgoResource());
             ps.setInt(9, algo.getAlgoID());
             ps.executeQuery();

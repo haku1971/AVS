@@ -96,6 +96,7 @@
                     <br>
                     <form method="POST" action="manage" onsubmit="return validate();">
                         <input type="hidden" name="managetype" value="editalgo">
+                        <input type="hidden" name="createtime" value="<%=algo.getAlgoDatetime()%>">
                         <input type="hidden" name="algoid" value="<%=algo.getAlgoID()%>" >
                         <div class="modify">
                             <div style="display: inline-block;">Name: </div> 

@@ -80,14 +80,15 @@ public class ManageDatabaseController extends HttpServlet {
                 response.sendRedirect("home");
                 return;
             }
+            String currenttime = java.time.LocalDate.now(ZoneId.of("Asia/Bangkok")).toString() + " " 
+                    + java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")).toString();
             //ket thuc kiem tra            
             String managetype = request.getParameter("managetype");
             switch (managetype) {
                 case "manageaccount": {
                     String userid = request.getParameter("userid");
                     String ban = request.getParameter("ban");
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
-
+                    
                     if (ban.equals("ban")) {
                         userdao.banUserID(Integer.parseInt(userid));
                         historydao.insertUserHistory(Integer.parseInt(userid), Integer.parseInt(adminid), currenttime, 1);
@@ -110,7 +111,6 @@ public class ManageDatabaseController extends HttpServlet {
                     String codejs = request.getParameter("codejs").trim();
                     String description = request.getParameter("description").trim();
                     String categoryid = request.getParameter("category").trim();
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String resource = request.getParameter("resource").trim();
 
                     AlgorithmDAO algodao = new AlgorithmDAO();
@@ -137,7 +137,6 @@ public class ManageDatabaseController extends HttpServlet {
                         algo.setAlgoResource(resource);
                         algodao.insertAlgo(algo);
 
-//                    algodao.insertAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, "null");
                         int lastalgoid = algodao.getLastRecord().getAlgoID();
                         historydao.insertAlgoHistory(Integer.parseInt(adminid), lastalgoid, currenttime, "Add");
 
@@ -153,8 +152,8 @@ public class ManageDatabaseController extends HttpServlet {
                     String codejs = request.getParameter("codejs").trim();
                     String description = request.getParameter("description").trim();
                     String categoryid = request.getParameter("category").trim();
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString().trim();
                     String resource = request.getParameter("resource").trim();
+                    String createtime = request.getParameter("createtime").trim();
 
                     codejava = codejava.replaceAll("â", "&emsp;");
                     codecpp = codecpp.replaceAll("â", "&emsp;");
@@ -170,9 +169,9 @@ public class ManageDatabaseController extends HttpServlet {
                     algo.setAlgoDescription(description);
                     algo.setCategoryID(Integer.parseInt(categoryid));
                     algo.setAlgoResource(resource);
+                    algo.setAlgoDatetime(createtime);
 
                     algodao.updateAlgo(algo);
-//                    algodao.updateAlgo(algoname, codejava, codecpp, codejs, codevisual, description, categoryid, currenttime, resource, Integer.parseInt(algoid));
                     historydao.insertAlgoHistory(Integer.parseInt(adminid), Integer.parseInt(algoid), currenttime, "Edit");
 
                     response.sendRedirect("viewalgo?id=" + algoid);
@@ -180,7 +179,6 @@ public class ManageDatabaseController extends HttpServlet {
                 }
                 case "deletealgo": {
                     String algoid = request.getParameter("algoid");
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     System.out.println(algoid);
 
                     AlgorithmDAO algodao = new AlgorithmDAO();
@@ -192,7 +190,6 @@ public class ManageDatabaseController extends HttpServlet {
                 }
                 case "restorealgo": {
                     String algoid = request.getParameter("algoid");
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     System.out.println(algoid);
 
                     AlgorithmDAO algodao = new AlgorithmDAO();
@@ -207,7 +204,6 @@ public class ManageDatabaseController extends HttpServlet {
                     String title = request.getParameter("title").trim();
                     String content = request.getParameter("content").trim();
                     String source = request.getParameter("source").trim();
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
                     String imageurl = "";
                     InputStream inputStream = null; // input stream of the upload file
 
@@ -253,7 +249,7 @@ public class ManageDatabaseController extends HttpServlet {
                     String title = request.getParameter("title").trim();
                     String content = request.getParameter("content").trim();
                     String source = request.getParameter("source").trim();
-                    String currenttime = request.getParameter("createtime").trim();
+                    String createtime = request.getParameter("createtime").trim();
                     String imageurl = request.getParameter("imageurl").trim();
 
                     NewsDAO newsdao = new NewsDAO();
@@ -262,6 +258,7 @@ public class ManageDatabaseController extends HttpServlet {
                     news.setNewstittles(title);
                     news.setNewscontent(content);
                     news.setNewsresource(source);
+                    news.setNewsdaterealease(createtime);
                     User user = new User();
                     user.setId(Integer.parseInt(userid));
                     news.setUser(user);
@@ -296,8 +293,6 @@ public class ManageDatabaseController extends HttpServlet {
                 }
                 case "deletenews": {
                     String newsid = request.getParameter("newsid");
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
-
                     NewsDAO newsdao = new NewsDAO();
                     newsdao.deleteNews(Integer.parseInt(newsid));
 
@@ -308,7 +303,6 @@ public class ManageDatabaseController extends HttpServlet {
                 }
                 case "restorenews": {
                     String newsid = request.getParameter("newsid");
-                    String currenttime = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString();
 
                     NewsDAO newsdao = new NewsDAO();
                     newsdao.restoreNews(Integer.parseInt(newsid));
